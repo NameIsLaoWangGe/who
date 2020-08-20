@@ -1,0 +1,40 @@
+{ 
+"RECORDS": 
+[
+  {
+    "name": "assembly_1",
+    "explain": "获得咸蛋娃娃皮肤",
+    "condition": 1,
+    "resCondition": 0,
+    "complete": false
+  },
+  {
+    "name": "assembly_2",
+    "explain": "登录游戏",
+    "condition": 1,
+    "resCondition": 1,
+    "complete": true
+  },
+  {
+    "name": "assembly_3",
+    "explain": "任何广告",
+    "condition": 3,
+    "resCondition": 0,
+    "complete": false
+  },
+  {
+    "name": "assembly_4",
+    "explain": "宝箱获取",
+    "condition": 1,
+    "resCondition": 0,
+    "complete": false
+  },
+  {
+    "name": "assembly_5",
+    "explain": "点击页面咸蛋娃娃5次，然后看广告",
+    "condition": 1,
+    "resCondition": 0,
+    "complete": false
+  }
+]
+}

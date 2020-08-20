@@ -1,0 +1,188 @@
+{
+  "RECORDS": [
+    {
+      "name": "level_1",
+      "condition": [
+        "left",
+        "middle",
+        "leftTop"
+      ],
+      "resCondition": [
+        0,
+        0,
+        0
+      ],
+      "rewardType": [
+        "0",
+        "0",
+        "gold"
+      ],
+      "rewardNum": [
+        0,
+        0,
+        50
+      ]
+    },
+    {
+      "name": "level_2",
+      "condition": [
+        "side",
+        "right",
+        "middle",
+        "rightTop"
+      ],
+      "resCondition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewardType": [
+        "0",
+        "0",
+        "0",
+        "gold"
+      ],
+      "rewardNum": [
+        0,
+        0,
+        50
+      ]
+    },
+    {
+      "name": "level_3",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_4",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_5",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_6",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_7",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_8",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_9",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_10",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    },
+    {
+      "name": "level_11",
+      "condition": [
+        null
+      ],
+      "resCondition": [
+        null
+      ],
+      "rewardType": [
+        null
+      ],
+      "rewardNum": [
+        null
+      ]
+    }
+  ]
+}

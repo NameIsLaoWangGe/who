@@ -1,0 +1,65 @@
+{ 
+"RECORDS": 
+[
+  {
+    "name": "观看广告获得金币",
+    "explain": "任务中有个广告按钮",
+    "taskType": "ads",
+    "condition": 1,
+    "resCondition": 0,
+    "rewardType": "gold",
+    "rewardNum": 40,
+    "arrange": 1,
+    "time": 999,
+    "get": 0
+  },
+  {
+    "name": "每日服务10位客人",
+    "explain": "胜利10次",
+    "taskType": "victory",
+    "condition": 10,
+    "resCondition": 0,
+    "rewardType": "gold",
+    "rewardNum": 30,
+    "arrange": 2,
+    "time": 1,
+    "get": 0
+  },
+  {
+    "name": "每日观看两个广告",
+    "explain": "任何广告",
+    "taskType": "ads",
+    "condition": 2,
+    "resCondition": 0,
+    "rewardType": "gold",
+    "rewardNum": 80,
+    "arrange": 3,
+    "time": 1,
+    "get": 0
+  },
+  {
+    "name": "每日使用5种皮肤",
+    "explain": "三种不同皮肤",
+    "taskType": "useSkins",
+    "condition": 5,
+    "resCondition": 0,
+    "rewardType": "gold",
+    "rewardNum": 30,
+    "arrange": 4,
+    "time": 1,
+    "get": 0
+  },
+  {
+    "name": "每日开启10个宝箱",
+    "explain": "胜利之后的宝箱",
+    "taskType": "treasureBox",
+    "condition": 10,
+    "resCondition": 0,
+    "rewardType": "gold",
+    "rewardNum": 20,
+    "arrange": 5,
+    "time": 1,
+    "get": 0
+  }
+]
+}

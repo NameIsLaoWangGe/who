@@ -1,0 +1,6 @@
+{
+  "code": "import { lwg3D } from \"../Lwg_Template/lwg3D\";\r\nexport default class GameMain3D_Dianjupian extends lwg3D.Object3D {\r\n    lwgOnUpdate() {\r\n        if (this.self.name === 'dianjupian') {\r\n            this.self.transform.localRotationEulerZ -= 7;\r\n        }\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg3D.ts"
+  ]
+}

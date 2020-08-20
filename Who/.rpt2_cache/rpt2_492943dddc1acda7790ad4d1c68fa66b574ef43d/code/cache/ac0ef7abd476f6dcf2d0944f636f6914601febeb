@@ -1,0 +1,7 @@
+{
+  "code": "import { Admin, Click, EventAdmin } from \"../Lwg_Template/lwg\";\r\nimport ADManager from \"../TJ/Admanager\";\r\nexport default class UIADSHint extends Admin.Scene {\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);\r\n        Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);\r\n    }\r\n    lwgEventReg() {\r\n        EventAdmin.reg('continue', this, () => {\r\n            ADManager.ShowReward(() => {\r\n                if (ADManager._currentRewardAction) {\r\n                    ADManager._currentRewardAction();\r\n                }\r\n            });\r\n        });\r\n    }\r\n    btnCloseUp() {\r\n        this.self.close();\r\n    }\r\n    btnConfirmUp() {\r\n        EventAdmin.notify('continue');\r\n        this.self.close();\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/TJ/Admanager.ts"
+  ]
+}

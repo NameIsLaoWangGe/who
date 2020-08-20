@@ -1,0 +1,115 @@
+{ 
+"RECORDS": 
+[
+  {
+    "name": "anquanmao",
+    "getway": "free",
+    "condition": 0,
+    "resCondition": 0,
+    "arrange": 1,
+    "getOder": 1,
+    "have": true,
+    "classify": "head"
+  },
+  {
+    "name": "yuanyanjing",
+    "getway": "ads",
+    "condition": 1,
+    "resCondition": 0,
+    "arrange": 8,
+    "getOder": -1,
+    "have": false,
+    "classify": "eye"
+  },
+  {
+    "name": "jiemao_01",
+    "getway": "ads",
+    "condition": 1,
+    "resCondition": 0,
+    "arrange": 10,
+    "getOder": -1,
+    "have": false,
+    "classify": "eye"
+  },
+  {
+    "name": "hamajing",
+    "getway": "ads",
+    "condition": 2,
+    "resCondition": 0,
+    "arrange": 7,
+    "getOder": -1,
+    "have": false,
+    "classify": "eye"
+  },
+  {
+    "name": "yanshemao_gangtie",
+    "getway": "ads",
+    "condition": 2,
+    "resCondition": 0,
+    "arrange": 4,
+    "getOder": -1,
+    "have": false,
+    "classify": "head"
+  },
+  {
+    "name": "yanshemao",
+    "getway": "ads",
+    "condition": 2,
+    "resCondition": 0,
+    "arrange": 3,
+    "getOder": -1,
+    "have": false,
+    "classify": "head"
+  },
+  {
+    "name": "jiemao_02",
+    "getway": "ads",
+    "condition": 3,
+    "resCondition": 0,
+    "arrange": 11,
+    "getOder": -1,
+    "have": false,
+    "classify": "eye"
+  },
+  {
+    "name": "xiaochoumao",
+    "getway": "ineedwin",
+    "condition": 6,
+    "resCondition": 0,
+    "arrange": 2,
+    "getOder": -1,
+    "have": false,
+    "classify": "head"
+  },
+  {
+    "name": "xingxingyanjing",
+    "getway": "ads",
+    "condition": 1,
+    "resCondition": 0,
+    "arrange": 9,
+    "getOder": -1,
+    "have": false,
+    "classify": "eye"
+  },
+  {
+    "name": "yanshemao_shijie",
+    "getway": "ads",
+    "condition": 3,
+    "resCondition": 0,
+    "arrange": 5,
+    "getOder": -1,
+    "have": false,
+    "classify": "head"
+  },
+  {
+    "name": "maomaozi",
+    "getway": "ads",
+    "condition": 2,
+    "resCondition": 0,
+    "arrange": 6,
+    "getOder": -1,
+    "have": false,
+    "classify": "head"
+  }
+]
+}

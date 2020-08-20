@@ -1,0 +1,7 @@
+{
+  "code": "import { EventAdmin, Click, Admin, Shop } from \"../Lwg_Template/lwg\";\r\nexport default class UIShop_Goods extends Admin.Object {\r\n    lwgOnEnable() {\r\n        this.Select = this.self.getChildByName('Select');\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self, this, null, null, this.up, null);\r\n    }\r\n    up() {\r\n        EventAdmin.notify(Shop.EventType.select, [this.self['_dataSource']]);\r\n    }\r\n}\r\n",
+  "references": [
+    "F:/Work/Game/06_CutHair_2.30/CutHair/src/script/Lwg_Template/lwg.ts",
+    "F:/Work/Game/06_CutHair_2.30/CutHair/src/script/Lwg_Template/Global.ts"
+  ]
+}

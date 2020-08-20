@@ -1,0 +1,8 @@
+{
+  "code": "import { Click, EventAdmin, Admin, Task } from \"../Lwg_Template/lwg\";\r\nexport default class UITask_GetAward extends Admin.Object {\r\n    lwgBtnClick() {\r\n        let BtnGet = this.self.getChildByName('BtnGet');\r\n        Click.on(Click.Type.largen, BtnGet, this, null, null, this.btnGetUp);\r\n    }\r\n    btnGetUp() {\r\n        if (this.self['dataSource'][Task.TaskProperty.name] === '观看广告获得金币') {\r\n            EventAdmin.notify(Task.EventType.adsGetAward_Every, [this.self['dataSource']]);\r\n            return;\r\n        }\r\n        if (this.self['dataSource'][Task.TaskProperty.get] === 1) {\r\n            EventAdmin.notify(Task.EventType.getAward, [this.self['dataSource']]);\r\n        }\r\n        else if (this.self['dataSource'][Task.TaskProperty.get] === 0) {\r\n            console.log('任务没有完成');\r\n        }\r\n        else if (this.self['dataSource'][Task.TaskProperty.get] === -1) {\r\n            console.log('或者已经领取过！');\r\n        }\r\n    }\r\n}\r\n",
+  "references": [
+    "F:/Work/Game/06_CutHair_2.30/CutHair/src/script/Lwg_Template/lwg.ts",
+    "F:/Work/Game/06_CutHair_2.30/CutHair/src/script/TJ/Admanager.ts",
+    "F:/Work/Game/06_CutHair_2.30/CutHair/src/script/Lwg_Template/Global.ts"
+  ]
+}

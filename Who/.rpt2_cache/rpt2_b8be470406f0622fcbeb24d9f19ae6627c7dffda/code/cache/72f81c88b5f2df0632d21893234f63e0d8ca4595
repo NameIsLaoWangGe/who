@@ -1,0 +1,7 @@
+{
+  "code": "import { EasterEgg } from \"../Lwg_Template/EasterEgg\";\r\nimport { Click, Setting, Gold } from \"../Lwg_Template/lwg\";\r\nexport default class UIEasterEgg extends EasterEgg.EasterEggScene {\r\n    easterEggOnAwake() {\r\n        Setting.setBtnVinish();\r\n        Gold.goldVinish();\r\n    }\r\n    easterEggBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {\r\n            this.self.close();\r\n        });\r\n    }\r\n    ;\r\n    easterEggOnDisable() {\r\n        Setting.setBtnAppear();\r\n        Gold.goldAppear();\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/EasterEgg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts"
+  ]
+}

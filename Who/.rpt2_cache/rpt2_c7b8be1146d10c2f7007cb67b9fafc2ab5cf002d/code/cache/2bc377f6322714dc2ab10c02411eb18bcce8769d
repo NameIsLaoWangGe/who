@@ -1,0 +1,8 @@
+{
+  "code": "import { Admin, Click } from \"../Lwg_Template/lwg\";\r\nimport ADManager from \"../TJ/Admanager\";\r\nexport default class UIADSHint extends Admin.Scene {\r\n    setCallBack(_adAction) {\r\n        this.adAction = _adAction;\r\n    }\r\n    lwgOnEnable() {\r\n        this.self.x = 0;\r\n        this.self.y = 0;\r\n        this.self['BtnClose'].visible = false;\r\n        Laya.timer.frameOnce(120, this, () => {\r\n            this.self['BtnClose'].visible = true;\r\n        });\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);\r\n        Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);\r\n    }\r\n    btnCloseUp() {\r\n        this.self.close();\r\n    }\r\n    btnConfirmUp() {\r\n        ADManager.ShowReward(this.adAction, null);\r\n        this.self.close();\r\n    }\r\n    lwgOnDisable() {\r\n        console.log('退出');\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/TJ/Admanager.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/Game.ts"
+  ]
+}

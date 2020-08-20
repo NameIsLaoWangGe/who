@@ -1,0 +1,7 @@
+{
+  "code": "import { lwg3D } from \"../Lwg_Template/lwg3D\";\r\nexport default class GameMain3D_Floor extends lwg3D.Object3D {\r\n    lwgOnEnable() {\r\n        this.rig3D.restitution = 0;\r\n    }\r\n    onTriggerEnter(other) {\r\n        let owner = other.owner;\r\n        switch (owner.name) {\r\n            case 'Beard':\r\n                break;\r\n            case 'cutHairline':\r\n                owner.parent.removeSelf();\r\n                break;\r\n            default:\r\n                break;\r\n        }\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg3D.ts"
+  ]
+}

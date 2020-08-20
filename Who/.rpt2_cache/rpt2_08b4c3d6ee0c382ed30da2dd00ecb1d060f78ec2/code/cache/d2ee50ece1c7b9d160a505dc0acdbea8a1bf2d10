@@ -1,0 +1,20 @@
+{
+  "code": "import UICheckIn from \"./script/Game/UICheckIn\";\r\nimport UIDefeated from \"./script/Game/UIDefeated\";\r\nimport UILoding from \"./script/Game/UILoding\";\r\nimport UIOperation from \"./script/Game/UIOperation\";\r\nimport UIShare from \"./script/Game/UIShare\";\r\nimport UIShop_Goods from \"./script/Game/UIShop_Goods\";\r\nimport UIShop from \"./script/Game/UIShop\";\r\nimport UIStart from \"./script/Game/UIStart\";\r\nimport UITask_GetAward from \"./script/Game/UITask_GetAward\";\r\nimport UITask from \"./script/Game/UITask\";\r\nimport UIVictory from \"./script/Game/UIVictory\";\r\nimport UIVictoryBox_Cell from \"./script/Game/UIVictoryBox_Cell\";\r\nimport UIVictoryBox from \"./script/Game/UIVictoryBox\";\r\nimport UIXDSkin from \"./script/Game/UIXDSkin\";\r\nimport GameUI from \"./script/GameUI\";\r\nexport default class GameConfig {\r\n    constructor() { }\r\n    static init() {\r\n        var reg = Laya.ClassUtils.regClass;\r\n        reg(\"script/Game/UICheckIn.ts\", UICheckIn);\r\n        reg(\"script/Game/UIDefeated.ts\", UIDefeated);\r\n        reg(\"script/Game/UILoding.ts\", UILoding);\r\n        reg(\"script/Game/UIOperation.ts\", UIOperation);\r\n        reg(\"script/Game/UIShare.ts\", UIShare);\r\n        reg(\"script/Game/UIShop_Goods.ts\", UIShop_Goods);\r\n        reg(\"script/Game/UIShop.ts\", UIShop);\r\n        reg(\"script/Game/UIStart.ts\", UIStart);\r\n        reg(\"script/Game/UITask_GetAward.ts\", UITask_GetAward);\r\n        reg(\"script/Game/UITask.ts\", UITask);\r\n        reg(\"script/Game/UIVictory.ts\", UIVictory);\r\n        reg(\"script/Game/UIVictoryBox_Cell.ts\", UIVictoryBox_Cell);\r\n        reg(\"script/Game/UIVictoryBox.ts\", UIVictoryBox);\r\n        reg(\"script/Game/UIXDSkin.ts\", UIXDSkin);\r\n        reg(\"script/GameUI.ts\", GameUI);\r\n    }\r\n}\r\nGameConfig.width = 720;\r\nGameConfig.height = 1280;\r\nGameConfig.scaleMode = \"fixedwidth\";\r\nGameConfig.screenMode = \"vertical\";\r\nGameConfig.alignV = \"top\";\r\nGameConfig.alignH = \"left\";\r\nGameConfig.startScene = \"Scene/UILoding.scene\";\r\nGameConfig.sceneRoot = \"\";\r\nGameConfig.debug = false;\r\nGameConfig.stat = true;\r\nGameConfig.physicsDebug = false;\r\nGameConfig.exportSceneToJson = true;\r\nGameConfig.init();\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UICheckIn.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIDefeated.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UILoding.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIOperation.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIShare.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIShop_Goods.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIShop.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIStart.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UITask_GetAward.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UITask.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIVictory.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIVictoryBox_Cell.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIVictoryBox.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/UIXDSkin.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/GameUI.ts"
+  ]
+}

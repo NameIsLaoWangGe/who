@@ -1,0 +1,8 @@
+{
+  "code": "import { lwg, Click } from \"../Lwg_Template/lwg\";\r\nimport { GVariate } from \"../Lwg_Template/Global\";\r\nexport default class UITask extends lwg.Task.TaskScene {\r\n    taskOnAwake() {\r\n        GVariate._stageClick = false;\r\n    }\r\n    taskList_Update(cell, index) {\r\n        let dataSource = cell.dataSource;\r\n        let Name = cell.getChildByName('Name');\r\n        Name.text = dataSource.name;\r\n        let BtnGet = cell.getChildByName('BtnGet');\r\n        if (dataSource.get === 0) {\r\n            BtnGet.skin = 'UI/Task/jinxing.png';\r\n        }\r\n        else if (dataSource.get === 1) {\r\n            BtnGet.skin = 'UI/Task/linqu.png';\r\n        }\r\n        else if (dataSource.get === -1) {\r\n            BtnGet.skin = 'UI/Task/yilingqu.png';\r\n        }\r\n        let ProgressBar = cell.getChildByName('ProgressBar');\r\n        ProgressBar.width = dataSource.resCondition / dataSource.condition * 169;\r\n        let AwardNum = cell.getChildByName('AwardNum');\r\n        AwardNum.text = dataSource.rewardNum;\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.noEffect, null, this.self['BtnBack'], this, null, null, this.btnBackeUp);\r\n    }\r\n    ;\r\n    btnBackeUp() {\r\n        this.self.close();\r\n    }\r\n    taskDisable() {\r\n        GVariate._stageClick = true;\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/TJ/Admanager.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/Global.ts"
+  ]
+}

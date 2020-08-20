@@ -1,0 +1,7 @@
+{
+  "code": "import { Admin } from \"../Lwg_Template/lwg\";\r\nimport { SubpackController } from \"./SubpackController\";\r\nlet isInit = false;\r\nTJ.Common.PriorityInit.Add(100, () => {\r\n    isInit = true;\r\n});\r\nexport default class UISubpackages extends Laya.Script {\r\n    onAwake() {\r\n        let act = () => {\r\n            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {\r\n                let gameContrl = new SubpackController();\r\n                gameContrl.init(() => {\r\n                    Admin._openScene('UILoding');\r\n                });\r\n            }\r\n            else {\r\n                Admin._openScene('UILoding');\r\n            }\r\n        };\r\n        if (isInit) {\r\n            act();\r\n        }\r\n        else {\r\n            TJ.Common.PriorityInit.Add(100, act);\r\n        }\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
+    "D:/Game/project/CutHair/Project/CutHair/src/script/Game/SubpackController.ts"
+  ]
+}
