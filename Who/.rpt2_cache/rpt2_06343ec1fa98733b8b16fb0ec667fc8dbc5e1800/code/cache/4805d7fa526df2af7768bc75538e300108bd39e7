@@ -1,8 +1,0 @@
-{
-  "code": "import { Admin, Click, EventAdmin } from \"../Lwg_Template/lwg\";\r\nimport ADManager, { TaT } from \"../TJ/Admanager\";\r\nexport default class UIResurgence extends Admin.Scene {\r\n    lwgOnEnable() {\r\n        Admin._gameStart = false;\r\n        ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');\r\n        ADManager.TAPoint(TaT.BtnShow, 'ADrevivebt_revive');\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, this.btnResurgenceUp);\r\n        Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, this.btnNoUp);\r\n    }\r\n    btnResurgenceUp() {\r\n        ADManager.ShowReward(() => {\r\n            ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');\r\n            Admin._gameStart = true;\r\n            EventAdmin.notify(EventAdmin.EventType.scene3DResurgence);\r\n            this.self.close();\r\n        });\r\n    }\r\n    btnNoUp() {\r\n        ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');\r\n        EventAdmin.notify(EventAdmin.EventType.closeOperation);\r\n        Admin._openScene(Admin.SceneName.UIDefeated);\r\n        this.self.close();\r\n    }\r\n}\r\n",
-  "references": [
-    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/lwg.ts",
-    "D:/Game/project/CutHair/Project/CutHair/src/script/TJ/Admanager.ts",
-    "D:/Game/project/CutHair/Project/CutHair/src/script/Lwg_Template/Global.ts"
-  ]
-}

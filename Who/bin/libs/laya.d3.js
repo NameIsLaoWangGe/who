@@ -1,5 +1,6 @@
 (function (exports, Laya) {
 	'use strict';
+
 	class MathUtils3D {
 	    constructor() {
 	    }
@@ -460,7 +461,7 @@
 
 	class Config3D {
 	    constructor() {
-	        this._defaultPhysicsMemory = 100;
+	        this._defaultPhysicsMemory = 16;
 	        this._maxLightCount = 32;
 	        this._lightClusterCount = new Vector3(12, 12, 12);
 	        this._editerEnvironment = false;
