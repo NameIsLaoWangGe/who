@@ -1,7 +1,5 @@
-import { CheckIn, Setting, Click, Animation2D, Effects, Gold } from "../Frame/lwg";
-import { Game } from "../Frame/Game";
+import { CheckIn, Setting, Click, Animation2D, Effects, Gold, Game } from "../Frame/lwg";
 import ADManager, { TaT } from "../TJ/Admanager";
-
 export default class UICheckIn extends CheckIn.CheckInScene {
 
     checkInNodeDec(): void {

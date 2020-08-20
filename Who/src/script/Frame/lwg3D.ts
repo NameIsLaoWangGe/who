@@ -18,6 +18,7 @@ export module lwg3D {
         }
         onAwake(): void {
             this.self = this.owner as Laya.Scene3D;
+            _currentScene = this.self;
             // 类名
             this.calssName = this['__proto__']['constructor'].name;
             this.MainCamera = this.self.getChildByName("Main Camera") as Laya.MeshSprite3D;
@@ -31,7 +32,6 @@ export module lwg3D {
             this.lwgAdaptive();
         }
         lwgOnAwake(): void {
-
         }
         onEnable() {
             // 组件变为的self属性

@@ -112,7 +112,7 @@ export module lwg {
             event.currentTarget.scale(1, 1);
             event.stopPropagation();
 
-            Admin._openScene(Admin.SceneName.UISmallHint, null, null, f => { });
+            Admin._openScene(Admin.SceneName.UISmallHint);
 
         }
 
@@ -1032,15 +1032,14 @@ export module lwg {
             /**失败*/
             Defeated = 'defeated',
         }
-
         /**
           * 打开界面
           * @param name 界面名称
-          * @param zOder 指定层级
           * @param cloesScene 需要关闭的场景，如果不需要关闭，传入null
           * @param func 回调函数
+          * @param zOder 指定层级
          */
-        export function _openScene(openName: string, zOder?: number, cloesScene?: Laya.Scene, func?: Function): void {
+        export function _openScene(openName: string, cloesScene?: Laya.Scene, func?: Function, zOder?: number): void {
             Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene: Laya.Scene) {
                 scene.width = Laya.stage.width;
                 scene.height = Laya.stage.height;
@@ -1083,22 +1082,28 @@ export module lwg {
                 this.self[this.calssName] = this;
                 this.gameState(this.calssName);
                 this.lwgNodeDec();
+                this.moduleOnAwake();
                 this.lwgOnAwake();
                 this.lwgVariateInit();
                 this.lwgAdaptive();
 
-                Tomato.scenePrintPoint(this.calssName, Tomato.scenePointType.open);
+                // Tomato.scenePrintPoint(this.calssName, Tomato.scenePointType.open);
             }
             /**游戏开始前执行一次，重写覆盖*/
             lwgOnAwake(): void { };
-            /**每个模块中需要初始化的内容，不和lwgOnAwake*/
-            lwgModuleOnAwake(): void {
+            /**每个模块优先执行的页面开始前执行的函数，比lwgOnAwake更早执行*/
+            moduleOnAwake(): void {
 
             }
             onEnable() {
+                this.moduleEventReg();
                 this.lwgEventReg();
+                this.moduleOnEnable();
                 this.lwgOnEnable();
                 this.btnAndlwgOpenAni();
+            }
+            /**每个模块优先执行的初始化函数，比lwgOnEnable早执行*/
+            moduleOnEnable(): void {
             }
             /**声明场景里的一些节点*/
             lwgNodeDec(): void {
@@ -1106,6 +1111,10 @@ export module lwg {
             /**场景中的一些事件，在lwgOnAwake和lwgOnEnable之间执行*/
             lwgEventReg(): void {
             }
+            moduleEventReg(): void {
+
+            }
+
             /**初始化一些变量*/
             lwgVariateInit() {
             }
@@ -1145,8 +1154,8 @@ export module lwg {
             }
             /**按钮点击事件注册*/
             lwgBtnClick(): void {
-            }
 
+            }
             /**开场或者离场动画单位时间,默认为100*/
             aniTime: number = 100;
             /**开场或者离场动画单位延迟时间,默认为100*/
@@ -1179,7 +1188,7 @@ export module lwg {
                 Laya.timer.clearAll(this);
                 Laya.Tween.clearAll(this);
                 EventAdmin.offCaller(this);
-                Tomato.scenePrintPoint(this.calssName, Tomato.scenePointType.close);
+                // Tomato.scenePrintPoint(this.calssName, Tomato.scenePointType.close);
             }
             /**离开时执行，子类不执行onDisable，只执行lwgDisable*/
             lwgOnDisable(): void { }
@@ -3912,40 +3921,16 @@ export module lwg {
             }
         }
 
+        /**对任务场景进行初始化*/
         export class TaskScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.initData();
-                this.taskOnAwake();
-            }
-            /**初始化json数据*/
-            initData(): void {
-                /**结构，如果没有则为null*/
+            moduleOnAwake(): void {
                 Task._TaskTap = this.self['TaskTap'];
                 Task._TaskList = this.self['TaskList'];
                 TaskClassArr = [Task.everydayTask];
             }
-
-            lwgEventReg(): void {
-                this.taskEventReg();
-            }
-            /**任务中注册的一些事件*/
-            taskEventReg(): void { }
-
-            /**任务界面初始化前执行一次*/
-            taskOnAwake(): void { }
-            lwgNodeDec(): void {
-                this.taskNodeDec();
-            }
-            /**任务中的节点声明*/
-            taskNodeDec(): void { }
-
-            lwgOnEnable(): void {
+            moduleOnEnable(): void {
                 this.taskTap_Create();
                 this.taskList_Create();
-                this.taskOnEnable();
-            }
-            /**任务界面开始后执行*/
-            taskOnEnable(): void {
             }
             /**Tap初始化*/
             taskTap_Create(): void {
@@ -3974,15 +3959,8 @@ export module lwg {
                     Task._TaskList.refresh();
                 }
             }
-            lwgOnDisable(): void {
-                this.taskOnDisable();
-            }
-            /**页面关闭后执行*/
-            taskOnDisable(): void {
-            }
         }
     }
-
 
     /**商城模块,用于购买和穿戴，主要是购买和存储，次要是穿戴*/
     export module Shop {
@@ -4330,22 +4308,13 @@ export module lwg {
             /**其他商品*/
             Other = 'Shop_Other',
         }
-
-
         /**事件名称*/
         export enum EventType {
             select = 'select',
         }
 
         export class ShopScene extends Admin.Scene {
-
-            lwgOnAwake(): void {
-                this.initData();
-                this.shopOnAwake();
-            }
-
-            /**初始化json数据*/
-            initData(): void {
+            moduleOnAwake(): void {
                 /**结构，如果没有则为null*/
                 Shop._ShopTap = this.self['MyTap'];
                 Shop._ShopList = this.self['MyList'];
@@ -4361,30 +4330,10 @@ export module lwg {
                 goodsClassArr = [Shop.allSkin, Shop.allProps, Shop.allOther];
                 classWarehouse = [GoodsClass.Skin, GoodsClass.Props, GoodsClass.Skin];
             }
-
-            lwgEventReg(): void {
-                this.shopEventReg();
-            }
-            /**商店中注册的一些事件*/
-            shopEventReg(): void { }
-
-            /**界面初始化前执行一次*/
-            shopOnAwake(): void { }
-            lwgNodeDec(): void {
-                this.shopNodeDec();
-            }
-
-            /**商店中的节点声明*/
-            shopNodeDec(): void { }
-
-            lwgOnEnable(): void {
+            moduleOnEnable(): void {
                 this.myList_Create();
                 this.myTap_Create();
-                this.shopOnEnable();
             }
-            /**游戏开始前执行*/
-            shopOnEnable(): void { }
-
             /**Tap初始化*/
             myTap_Create(): void {
                 Shop._ShopTap.selectHandler = new Laya.Handler(this, this.myTap_Select);
@@ -4411,13 +4360,6 @@ export module lwg {
                     Shop._ShopList.array = goodsClassArr[0];
                     Shop._ShopList.refresh();
                 }
-            }
-            lwgOnDisable(): void {
-                this.shopOnDisable();
-            }
-            /**页面关闭后执行*/
-            shopOnDisable(): void {
-
             }
         }
     }
@@ -4502,15 +4444,9 @@ export module lwg {
             /**开宝箱*/
             openBox = 'openBox',
         }
-
         /**胜利宝箱场景父类*/
         export class VictoryBoxScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.initData();
-                this.victoryBoxOnAwake();
-            }
-            /**初始化json数据*/
-            initData(): void {
+            moduleOnAwake(): void {
                 /**结构，如果没有则为null*/
                 VictoryBox._BoxList = this.self['BoxList'];
                 //注意这里要复制数组，不可以直接赋值
@@ -4521,15 +4457,9 @@ export module lwg {
                 _adsMaxOpenNum = 6;
                 _alreadyOpenNum = 0;
             }
-            /**VictoryBoxScene开始前执行一次，重写覆盖*/
-            victoryBoxOnAwake(): void { }
-
-            lwgOnEnable(): void {
+            moduleOnEnable(): void {
                 this.boxList_Create();
-                this.victoryBoxOnEnable();
             }
-
-            victoryBoxOnEnable(): void { }
             /**初始化list*/
             boxList_Create(): void {
                 VictoryBox._BoxList.selectEnable = true;
@@ -4551,35 +4481,6 @@ export module lwg {
                     VictoryBox._BoxList.refresh();
                 }
             }
-
-            lwgNodeDec(): void {
-                this.victoryBoxNodeDec();
-            }
-            /**NodeDec*/
-            victoryBoxNodeDec(): void { }
-
-            lwgBtnClick(): void {
-                this.victoryBoxBtnClick();
-            }
-            victoryBoxBtnClick(): void { }
-
-            lwgEventReg(): void {
-                this.victoryBoxEventReg();
-            }
-            /**场景中的一些事件*/
-            victoryBoxEventReg(): void { }
-
-            lwgOnDisable(): void {
-                this.victoryBoxOnDisable();
-            }
-            /**离开时执行，子类不执行onDisable，只执行victoryBoxDisable*/
-            victoryBoxOnDisable(): void { }
-
-            lwgOnUpdate(): void {
-                this.victoryOnUpdate();
-            }
-            /**每帧执行*/
-            victoryOnUpdate(): void { }
         }
     }
 
@@ -4713,26 +4614,15 @@ export module lwg {
         }
 
         export class CheckInScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.initData();
-                this.checkInOnAwake();
-            }
-            /**初始化json数据*/
-            initData(): void {
+            moduleOnAwake(): void {
                 /**结构，如果没有则为null*/
                 CheckIn._checkList = this.self['CheckList'];
                 //注意这里要复制数组，不可以直接赋值
                 _checkArray = Tools.dataCompare('GameData/CheckIn/CheckIn.json', CheckClass.chek_7Days, CheckProPerty.name);
             }
-            /**CheckInScene开始前执行一次，重写覆盖*/
-            checkInOnAwake(): void { }
-
-            lwgOnEnable(): void {
+            moduleOnEnable(): void {
                 this.checkList_Create();
-                this.checkInOnEnable();
             }
-
-            checkInOnEnable(): void { }
             /**初始化list*/
             checkList_Create(): void {
                 CheckIn._checkList.selectEnable = true;
@@ -4754,35 +4644,6 @@ export module lwg {
                     CheckIn._checkList.refresh();
                 }
             }
-
-            lwgNodeDec(): void {
-                this.checkInNodeDec();
-            }
-            /**NodeDec*/
-            checkInNodeDec(): void { }
-
-            lwgBtnClick(): void {
-                this.checkInBtnClick();
-            }
-            checkInBtnClick(): void { }
-
-            lwgEventReg(): void {
-                this.checkInEventReg();
-            }
-            /**场景中的一些事件*/
-            checkInEventReg(): void { }
-
-            lwgOnDisable(): void {
-                this.checkInOnDisable();
-            }
-            /**离开时执行，子类不执行onDisable，只执行checkInDisable*/
-            checkInOnDisable(): void { }
-
-            lwgOnUpdate(): void {
-                this.checkInOnUpdate();
-            }
-            /**每帧执行*/
-            checkInOnUpdate(): void { }
         }
     }
 
@@ -4823,53 +4684,9 @@ export module lwg {
 
         /**限定皮肤场景父类*/
         export class SkinXDScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.initData();
-                this.skinXDOnAwake();
-            }
-            /**初始化json数据*/
-            initData(): void {
+            moduleOnEnable(): void {
                 _needAdsNum = 3;
             }
-            /**CheckInScene开始前执行一次，重写覆盖*/
-            skinXDOnAwake(): void { }
-
-            lwgAdaptive(): void {
-                this.skinXDAdaptive();
-            }
-            skinXDAdaptive(): void { };
-            lwgOnEnable(): void {
-                this.skinXDOnEnable();
-            }
-            skinXDOnEnable(): void { }
-            lwgNodeDec(): void {
-                this.skinXDNodeDec();
-            }
-            /**节点声明*/
-            skinXDNodeDec(): void { }
-
-            lwgBtnClick(): void {
-                this.skinXDBtnClick();
-            }
-            skinXDBtnClick(): void { }
-
-            lwgEventReg(): void {
-                this.skinXDEventReg();
-            }
-            /**场景中的一些事件*/
-            skinXDEventReg(): void { }
-
-            lwgOnDisable(): void {
-                this.skinXDOnDisable();
-            }
-            /**离开时执行，子类不执行onDisable，只执行skinXDDisable*/
-            skinXDOnDisable(): void { }
-
-            lwgOnUpdate(): void {
-                this.skinXDOnUpdate();
-            }
-            /**每帧执行*/
-            skinXDOnUpdate(): void { }
         }
     }
 
@@ -4943,46 +4760,17 @@ export module lwg {
             select = 'select',
         }
         export class SkinScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.initData();
-                this.skinOnAwake();
-            }
-            /**初始化json数据*/
-            initData(): void {
+            moduleOnAwake(): void {
                 /**结构，如果没有则为null*/
                 Skin._SkinTap = this.self['SkinTap'];
                 Skin._SkinList = this.self['SkinList'];
 
                 _skinClassArr = [_eyeSkinArr, _headSkinArr];
             }
-
-            lwgEventReg(): void {
-                this.skinEventReg();
-            }
-            /**任务中注册的一些事件*/
-            skinEventReg(): void { }
-
-            /**初始化前执行一次*/
-            skinOnAwake(): void { }
-            lwgNodeDec(): void {
-                this.skinNodeDec();
-            }
-            /**节点声明*/
-            skinNodeDec(): void { }
-
-            lwgOnEnable(): void {
+            moduleOnEnable(): void {
                 this.skinList_Create();
                 this.skinTap_Create();
-                this.skinOnEnable();
             }
-            /**开始后执行*/
-            skinOnEnable(): void { }
-            lwgOpenAni(): number { return this.skinOpenAin(); }
-            /**开场动画*/
-            skinOpenAin(): number { return 0; }
-            /**按钮点击事件*/
-            lwgBtnClick(): void { this.skinBtnClick() }
-            skinBtnClick(): void { };
             /**Tap初始化*/
             skinTap_Create(): void {
                 Skin._SkinTap.selectHandler = new Laya.Handler(this, this.skinTap_Select);
@@ -5009,12 +4797,6 @@ export module lwg {
                     Skin._SkinList.array = _skinClassArr[0];
                     Skin._SkinList.refresh();
                 }
-            }
-            lwgOnDisable(): void {
-                this.skinOnDisable();
-            }
-            /**页面关闭后执行*/
-            skinOnDisable(): void {
             }
         }
     }
@@ -5322,24 +5104,18 @@ export module lwg {
                 }
             },
         };
-
         /**加载事件类型*/
         export enum LodingType {
             complete = 'complete',
             loding = 'loding',
             progress = 'progress',
         }
-
-        export class LodeScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.lodingResList();
+        export class LodingScene extends Admin.Scene {
+            moduleOnAwake(): void {
             }
-
-            /**初始化的时候填写需要加载的内容，在三种加载数组中填写资源地址*/
-            lodingResList(): void { }
-            lwgEventReg(): void {
+            moduleEventReg(): void {
                 EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule() });
-                EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); this.lwgInterior(); this.lodingTaskEventReg() });
+                EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete() });
                 EventAdmin.reg(LodingType.progress, this, (skip) => {
                     currentProgress.value++;
                     if (currentProgress.value < sumProgress) {
@@ -5348,8 +5124,7 @@ export module lwg {
                     }
                 });
             }
-
-            lwgOnEnable(): void {
+            moduleOnEnable():void{
                 loadOrder = [lodingList_2D, lodingList_3DScene, lodingList_3DPrefab, lodingList_Json];
                 for (let index = 0; index < loadOrder.length; index++) {
                     sumProgress += loadOrder[index].length;
@@ -5429,16 +5204,155 @@ export module lwg {
             }
             /**每个资源加载成功后，进度条每次增加后的回调*/
             lodingPhaseComplete(): void { }
-
-            /**完成后，内部结构初始化，重写覆盖*/
-            lwgInterior(): void {
-            }
-            /**任务系统中的事件注册，caller指向Task模块*/
-            lodingTaskEventReg(): void {
-            }
-
             /**加载完成回调,每个游戏不一样*/
             lodingComplete(): void { }
+        }
+    }
+
+    /**游戏中的一些基础数值,例如等级、体力等*/
+    export module Game {
+        /**渠道类型*/
+        export enum _platformTpye {
+            WeChat = 'WeChat',
+            OPPO = 'OPPO',
+            Bytedance = 'Bytedance',
+            /**通用*/
+            All = 'All',
+        }
+        /**平摊，控制一些节点的变化,默认为字节*/
+        export let _platform: string = _platformTpye.Bytedance;
+
+        /**游戏控制开关*/
+        export let _gameSwitch: boolean = false;
+
+        /**等级*/
+        export let _gameLevel = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_gameLevel') ? Number(Laya.LocalStorage.getItem('_gameLevel')) : 1;
+            },
+            set value(val) {
+                Laya.LocalStorage.setItem('_gameLevel', val.toString());
+            }
+        };
+
+        /**当前实际打开后者停留的关卡数，而非真实的关卡等级*/
+        export let _practicalLevel = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_practicalLevel') ? Number(Laya.LocalStorage.getItem('_practicalLevel')) : _gameLevel.value;
+            },
+            set value(val) {
+                Laya.LocalStorage.setItem('_practicalLevel', val.toString());
+            }
+        };
+
+        /**
+         * 获取当前关卡的信息
+         * @param levelNum 关卡数
+        */
+        export function getLevelData(levelNum?: number): Array<any> {
+            let dataArr: Array<any> = Laya.loader.getRes("GameData/Game/GameLevel.json")['RECORDS'];
+            let level;
+            let num;
+            if (levelNum) {
+                num = levelNum;
+            } else {
+                num = _gameLevel.value;
+            }
+            for (let index = 0; index < dataArr.length; index++) {
+                const element = dataArr[index];
+                if (element['name'] === 'level' + num) {
+                    level = element;
+                    break;
+                }
+            }
+            if (level) {
+                return level;
+            } else {
+                return dataArr[num - 1];
+            }
+        }
+
+        /**
+         * 获取当前关卡的任务描述数组
+         * @param levelNum 关卡数，默认为当前关卡数
+        */
+        export function getLevelData_Condition(levelNum?: number): Array<any> {
+            let level: Object = getLevelData(levelNum ? levelNum : _gameLevel.value);
+            let arr0;
+            for (const key in level) {
+                if (level.hasOwnProperty(key)) {
+                    if (key === 'condition') {
+                        arr0 = level[key];
+                    }
+                }
+            }
+            if (arr0) {
+                return arr0;
+            } else {
+                console.log('获取关卡描述失败');
+            }
+        }
+
+        /**关卡属性*/
+        export enum gameProperty {
+            /**关卡名称，必须有*/
+            name = 'name',
+            /**过关条件*/
+            condition = 'condition',
+            /**过关完成状态*/
+            resCondition = 'resCondition',
+            /**过关奖励类型*/
+            rewardType = 'rewardType',
+            /**过关奖励数量*/
+            rewardNum = 'rewardNum',
+        }
+
+        /**奖励类型*/
+        export enum rewardType {
+            gold = 'gold',
+            diamond = 'diamond',
+        }
+
+        /**等级的显示节点*/
+        export let LevelNode: Laya.Sprite;
+        /**
+         * 创建一个等级的显示节点
+         * @param parent 父节点
+         * @param x x位置
+         * @param y y位置
+         */
+        export function _createLevel(parent, x, y): void {
+            let sp: Laya.Sprite;
+            Laya.loader.load('prefab/LevelNode.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
+                let _prefab = new Laya.Prefab();
+                _prefab.json = prefab;
+                sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
+                parent.addChild(sp);
+                sp.pos(x, y);
+                sp.zOrder = 0;
+                let level = sp.getChildByName('level') as Laya.Label;
+                LevelNode = sp;
+            }));
+        }
+
+        /**体力*/
+        export let _execution = {
+            get value(): number {
+                return this.val = Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
+            },
+            set value(val) {
+                this.val = val;
+                Laya.LocalStorage.setItem('_execution', val.toString());
+            }
+        };
+        /**游戏进行时候的场景*/
+        export class GameScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            }
+            moduleOnEnable(): void {
+
+            }
         }
     }
 
@@ -5511,6 +5425,7 @@ export module lwg {
                     break;
             }
         }
+
         /**按钮打点类型*/
         export enum btnPointType {
             show = 'show',
@@ -5535,8 +5450,9 @@ export let Dialog = lwg.Dialog;
 export let Animation2D = lwg.Animation2D;
 export let Animation3D = lwg.Animation3D;
 //场景相关 
+export let Game = lwg.Game;
 export let Loding = lwg.Loding;
-export let LodeScene = lwg.Loding.LodeScene;
+export let LodeScene = lwg.Loding.LodingScene;
 export let Shop = lwg.Shop;
 export let ShopScene = lwg.Shop.ShopScene;
 export let Task = lwg.Task;

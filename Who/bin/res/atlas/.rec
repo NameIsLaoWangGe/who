@@ -38,3 +38,103 @@ P 0587871F vscroll$up.png
 P 5FD17798 vscroll.png
 P DDDDFB9E vslider$bar.png
 P 01BAE7F5 vslider.png
+D Frame
+D UI
+D Frame/Effects
+P 03F236DC cir_black.png
+P EBB4CAAE cir_blue.png
+P E694A5F0 cir_bluish.png
+P D165748B cir_cyan.png
+P F7728D50 cir_grass.png
+P 30581C82 cir_green.png
+P 7708FD29 cir_orange.png
+P 4D0B7685 cir_pink.png
+P 1883DA9A cir_purple.png
+P 39CFFB28 cir_red.png
+P C732726D cir_white.png
+P 664AAF37 cir_yellow.png
+P D474AF7E star_black.png
+P 325DC547 star_blue.png
+P D1775015 star_bluish.png
+P FCDFFBEB star_cyan.png
+P 53EE737C star_grass.png
+P 9CD789A6 star_green.png
+P 96C0999A star_orange.png
+P 0E8B72DC star_pink.png
+P 4C5EE1E0 star_purple.png
+P 80759C24 star_red.png
+P 2A688C74 star_white.png
+P C87E74F5 star_yellow.png
+D Frame/UI
+P C36AA67B icon_execution.png
+P A5763191 icon_gold.png
+P BF63B6AC icon_set.png
+P A173F0A1 ui_circle_001.png
+P 14E83654 ui_circle_002.png
+P 1AB75078 ui_circle_003.png
+P 4AB22EE0 ui_circle_004.png
+P AF3ACABA ui_circle_005.png
+P ECECEB3E ui_circle_006.png
+P 76420719 ui_circle_007.png
+P 4B8F002A ui_circle_008.png
+P C821F52B ui_circle_009.png
+P 792D2812 ui_circle_010.png
+P B52609C5 ui_circle_011.png
+P 5EC8E08B ui_circle_012.png
+P AB3CFDC6 ui_circle_c_001.png
+P 613F5DE5 ui_circle_c_002.png
+P 8DD4D934 ui_circle_c_003.png
+P CE1366C7 ui_circle_c_004.png
+P DEC74FC4 ui_circle_c_005.png
+P FE411EB4 ui_circle_c_006.png
+P 2AFA2E56 ui_circle_c_007.png
+P 9B47F9A2 ui_circle_c_008.png
+P 96604B1E ui_circle_c_009.png
+P 316A475D ui_circle_c_010.png
+P FE444F46 ui_circle_c_011.png
+P 6AABC0D1 ui_circle_c_012.png
+P 4A839BCB ui_orthogon_black.png
+P 88399698 ui_square_001.png
+P 1BDF6103 ui_square_002.png
+P 0D1207AB ui_square_003.png
+P 614A6D03 ui_square_004.png
+P B52DE9C1 ui_square_005.png
+P 0C409281 ui_square_006.png
+P 79673CF9 ui_square_007.png
+P B5128B5F ui_square_008.png
+P A5A88AAA ui_square_009.png
+P 71958FF5 ui_square_010.png
+P 52052F29 ui_square_011.png
+P 94421D4C ui_square_012.png
+P 090C0262 ui_square_c_001.png
+P E94C9957 ui_square_c_002.png
+P 276229F0 ui_square_c_003.png
+P C453B675 ui_square_c_004.png
+P 29FA157B ui_square_c_005.png
+P 13BF593B ui_square_c_006.png
+P 2F561D9D ui_square_c_007.png
+P 06EEE25E ui_square_c_008.png
+P D6262B24 ui_square_c_009.png
+P 7331617A ui_square_c_010.png
+P 87918B79 ui_square_c_011.png
+P B253D6A3 ui_square_c_012.png
+D Frame/Voice
+R 285FF3DD bgm.mp3
+R 626CADAF btn.wav
+R 9B501DC8 chijinbi.wav
+R E23D09D2 guoguan.wav
+R 6E72E92F wancheng.wav
+D UI/Common
+D UI/GameMain
+D UI/UICheckIn
+D UI/UILoding
+D UI/UIResurgence
+D UI/UISet
+D UI/UISettle
+D UI/UIShare
+D UI/UIShop
+D UI/UISkin
+D UI/UIStart
+D UI/UITask
+D UI/UIVictoryBox
+D UI/UIXDSkin

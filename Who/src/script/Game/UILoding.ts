@@ -1,8 +1,8 @@
-import { Loding, Admin, Gold, Setting } from "../Frame/lwg";
+import { Loding, Admin, Gold, Setting, PalyAudio } from "../Frame/lwg";
 import GameMain3D from "./GameMain3D";
 
-export default class UILoding extends Loding.LodeScene {
-    lodingResList(): void {
+export default class UILoding extends Loding.LodingScene {
+    lwgOnAwake(): void {
         Loding.lodingList_2D = [
             "res/atlas/Frame/Effects.png",
             "res/atlas/Frame/UI.png",
@@ -56,61 +56,15 @@ export default class UILoding extends Loding.LodeScene {
             "Scene/UITask.json",
             "Scene/UIADSHint.json",
         ];
-
-        this.shearAni();
     }
-
+    lwgOnEnable(): void {
+    }
     lodingPhaseComplete(): void {
-        // console.log(Loding.currentProgress.value);
     }
-
     lodingComplete(): void {
-        this.self['Mask'].x = 0;
-        this.self['Shear'].x = this.self['Mask'].width;
-        this.self['Per'].text = 100 + '%';
-        this.maskMoveSwitch = false;
-        // 获取场景
-        let Scene3D = Laya.loader.getRes("3DScene/LayaScene_SampleScene/Conventional/SampleScene.ls") as Laya.Scene3D;
-        Laya.stage.addChildAt(Scene3D, 0);
-        Admin._sceneControl[Admin.SceneName.GameMain3D] = Scene3D;
-        Scene3D.addComponent(GameMain3D);
-
-        Laya.timer.once(500, this, () => {
-            Gold.createGoldNode(Laya.stage);
-            Setting.createSetBtn(65, 104, 47, 54, 'UI/GameStart/shezhi.png', Laya.stage);
-            Admin._openScene(Admin.SceneName.UIStart, null, this.self);
-        })
     }
-
-    lwgInterior(): void {
-        this.self.addComponent(Init);//误删i
-    }
-
     lwgAdaptive(): void {
-        this.self['Bg'].y = Laya.stage.height / 2;
-        this.self['Logo'].y = Laya.stage.height * 0.174;
-        this.self['Progress'].y = Laya.stage.height * 0.827;
-        this.self['FCM'].y = Laya.stage.height * 0.910;
     }
-
-    /**剪刀动画*/
-    shearAni(): void {
-        Laya.timer.loop(20, this, () => {
-            if (this.self['Shear_02'].rotation > 15) {
-                this.self['Shear_02']['dir'] = 'up';
-            } else if (this.self['Shear_02'].rotation <= 0) {
-                this.self['Shear_02']['dir'] = 'down';
-            }
-            if (this.self['Shear_02']['dir'] === 'up') {
-                this.self['Shear_02'].rotation -= this.shearSpeed;
-                this.self['Shear_01'].rotation += this.shearSpeed;
-            } else if (this.self['Shear_02']['dir'] === 'down') {
-                this.self['Shear_02'].rotation += this.shearSpeed;
-                this.self['Shear_01'].rotation -= this.shearSpeed;
-            }
-        });
-    }
-
     /**进度条动画开关*/
     maskMoveSwitch: boolean = true;
     /**剪刀修剪速度*/
@@ -119,20 +73,10 @@ export default class UILoding extends Loding.LodeScene {
     shearSwitch: boolean = true;
 
     lwgOnUpdate(): void {
-        // 模拟加载进度,非真实进度，最后为1时为真实进度
-        if (this.maskMoveSwitch) {
-            if (this.self['Mask'].x < -20) {
-                this.self['Mask'].x += 3;
-                this.self['Shear'].x += 3;
-                // 百分比数字
-                let str: string = ((- this.self['Mask'].width - this.self['Mask'].x) / - this.self['Mask'].width * 100).toString().substring(0, 2);
-                this.self['Per'].text = str + '%';
-            }
-        }
     }
 
     lwgOnDisable(): void {
-        lwg.PalyAudio.playMusic();
+        PalyAudio.playMusic();
     }
 }
 

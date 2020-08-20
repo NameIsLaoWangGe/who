@@ -1,7 +1,6 @@
 import RecordManager from "../TJ/RecordManager";
-import { Admin, Setting, PalyAudio, Click, EventAdmin } from "../Frame/lwg";
+import { Admin, Setting, PalyAudio, Click, EventAdmin, Game } from "../Frame/lwg";
 import ADManager, { TaT } from "../TJ/Admanager";
-import { Game } from "../Frame/Game";
 
 export default class UIDefeated extends Admin.Scene {
 
@@ -96,7 +95,7 @@ export default class UIDefeated extends Admin.Scene {
 
         console.log('重新开始！');
         EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
-        Admin._openScene(Admin.SceneName.UIStart, null, this.self);
+        Admin._openScene(Admin.SceneName.UIStart, this.self);
     }
 
     btnNextUp(): void {
@@ -106,7 +105,7 @@ export default class UIDefeated extends Admin.Scene {
 
             Game._gameLevel.value += 1;
             EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
-            Admin._openScene(Admin.SceneName.UIStart, null, this.self);
+            Admin._openScene(Admin.SceneName.UIStart, this.self);
         })
     }
 

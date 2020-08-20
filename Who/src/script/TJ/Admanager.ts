@@ -1,7 +1,5 @@
-import { Game } from "../Frame/Game";
-import { EventAdmin, Task, EasterEgg, PalyAudio, Admin, Dialog } from "../Frame/lwg";
-import UIADSHint from "../Game/UIADSHint";
-
+import { EventAdmin, Task, EasterEgg, PalyAudio, Admin, Dialog, Game } from "../Frame/lwg";
+// import UIADSHint from "../Game/UIADSHint";
 export default class ADManager {
 
     public static ShowBanner() {
@@ -66,8 +64,8 @@ export default class ADManager {
                     //UIMgr.show("UISubSkinTry", 2);
                     // Dialog.createHint_Middle(Dialog.HintContent["观看完整广告才能获取奖励哦！"]);
                     console.log('观看完整广告才能获取奖励哦！');
-                    Admin._openScene(Admin.SceneName.UIADSHint, null, null, () => {
-                        Admin._sceneControl['UIADSHint'].getComponent(UIADSHint).setCallBack(rewardAction);
+                    Admin._openScene(Admin.SceneName.UIADSHint, null, () => {
+                        // Admin._sceneControl['UIADSHint'].getComponent(UIADSHint).setCallBack(rewardAction);
                     });
                     //TipPanel.ins.showString("观看完整广告才能获取奖励哦！");
                 }

@@ -1,0 +1,6 @@
+{
+  "code": "import { lwg3D } from \"../Frame/lwg3D\";\r\nexport default class GameMain3D extends lwg3D.Scene3D {\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg3D.ts"
+  ]
+}

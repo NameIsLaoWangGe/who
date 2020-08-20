@@ -40,7 +40,7 @@ export default class UIEasterEgg extends EasterEgg.EasterEggScene {
                 case 0:
                     if (complete !== 1) {
                         Click.on(Click.Type.largen, this.self['BtnGoUp'], this, null, null, () => {
-                            Admin._openScene(Admin.SceneName.UISkinXD, null, this.self);
+                            Admin._openScene(Admin.SceneName.UISkinXD, this.self);
                         });
                     }
                     break;

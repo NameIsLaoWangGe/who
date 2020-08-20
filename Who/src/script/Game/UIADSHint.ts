@@ -1,6 +1,5 @@
 import { Admin, Click } from "../Frame/lwg";
 import ADManager from "../TJ/Admanager";
-
 export default class UIADSHint extends Admin.Scene {
 
     adAction;
