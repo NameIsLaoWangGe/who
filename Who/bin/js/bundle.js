@@ -837,7 +837,6 @@
         let Admin;
         (function (Admin) {
             Admin._sceneControl = {};
-            Admin._gameStart = false;
             let JsonProperty;
             (function (JsonProperty) {
                 JsonProperty["RECORDS"] = "RECORDS";
@@ -873,6 +872,7 @@
                 SceneName["UISkin"] = "UISkin";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
                 SceneName["UIADSHint"] = "UIADSHint";
+                SceneName["LwgInit"] = "LwgInit";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             let GameState;
             (function (GameState) {
@@ -2227,10 +2227,10 @@
         (function (PalyAudio) {
             let voiceUrl;
             (function (voiceUrl) {
-                voiceUrl["btn"] = "res/Voice/btn.wav";
-                voiceUrl["bgm"] = "res/Voice/bgm.mp3";
-                voiceUrl["victory"] = "res/Voice/guoguan.wav";
-                voiceUrl["defeated"] = "res/Voice/wancheng.wav";
+                voiceUrl["btn"] = "Frame/Voice/btn.wav";
+                voiceUrl["bgm"] = "Frame/Voice/bgm.mp3";
+                voiceUrl["victory"] = "Frame/Voice/guoguan.wav";
+                voiceUrl["defeated"] = "Frame/Voice/wancheng.wav";
             })(voiceUrl = PalyAudio.voiceUrl || (PalyAudio.voiceUrl = {}));
             function playSound(url, number, func) {
                 if (!url) {
@@ -3615,39 +3615,24 @@
                 EventType["easterEggAds"] = "easterEggAds";
             })(EventType = EasterEgg.EventType || (EasterEgg.EventType = {}));
             class EasterEggScene extends Admin.Scene {
-                lwgOnAwake() {
-                    this.easterEggInitData();
-                    this.easterEggOnAwake();
+                moduleOnAwake() {
                 }
-                easterEggInitData() { }
-                lwgEventReg() { this.easterEggEventReg(); }
-                easterEggEventReg() { }
-                easterEggOnAwake() { }
-                lwgNodeDec() { this.easterEggNodeDec(); }
-                easterEggNodeDec() { }
-                lwgOnEnable() { this.easterEggOnEnable(); }
-                easterEggOnEnable() { }
-                lwgOpenAni() { return this.easterEggOpenAin(); }
-                easterEggOpenAin() { return 0; }
-                lwgBtnClick() { this.easterEggBtnClick(); }
-                easterEggBtnClick() { }
-                ;
-                lwgOnUpdate() { this.easterEggOnUpdate(); }
-                easterEggOnUpdate() { }
-                lwgOnDisable() { this.easterEggOnDisable(); }
-                easterEggOnDisable() { }
+                moduleOnEnable() {
+                }
+                moduleEventReg() {
+                }
             }
             EasterEgg.EasterEggScene = EasterEggScene;
         })(EasterEgg = lwg.EasterEgg || (lwg.EasterEgg = {}));
         let Loding;
         (function (Loding) {
-            Loding.lodingList_3DScene = [];
-            Loding.lodingList_3DPrefab = [];
-            Loding.lodingList_3DMesh = [];
-            Loding.lodingList_3DBaseMaterial = [];
-            Loding.lodingList_3DTexture2D = [];
-            Loding.lodingList_2D = [];
-            Loding.lodingList_Json = [];
+            Loding.list_3DScene = [];
+            Loding.list_3DPrefab = [];
+            Loding.list_3DMesh = [];
+            Loding.lolist_3DBaseMaterial = [];
+            Loding.list_3DTexture2D = [];
+            Loding.list_2D = [];
+            Loding.list_Json = [];
             Loding.sumProgress = 0;
             Loding.currentProgress = {
                 val: 0,
@@ -3685,7 +3670,7 @@
                 }
                 moduleEventReg() {
                     EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule(); });
-                    EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); });
+                    EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); PalyAudio.playMusic(); Admin._openScene(Admin.SceneName.LwgInit, this.self); });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
                         if (Loding.currentProgress.value < Loding.sumProgress) {
@@ -3695,7 +3680,7 @@
                     });
                 }
                 moduleOnEnable() {
-                    Loding.loadOrder = [Loding.lodingList_2D, Loding.lodingList_3DScene, Loding.lodingList_3DPrefab, Loding.lodingList_Json];
+                    Loding.loadOrder = [Loding.list_2D, Loding.list_3DScene, Loding.list_3DPrefab, Loding.list_Json];
                     for (let index = 0; index < Loding.loadOrder.length; index++) {
                         Loding.sumProgress += Loding.loadOrder[index].length;
                         if (Loding.loadOrder[index].length <= 0) {
@@ -3717,46 +3702,46 @@
                     }
                     let index = Loding.currentProgress.value - alreadyPro;
                     switch (Loding.loadOrder[Loding.loadOrderIndex]) {
-                        case Loding.lodingList_2D:
-                            Laya.loader.load(Loding.lodingList_2D[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_2D:
+                            Laya.loader.load(Loding.list_2D[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX2D资源' + Loding.lodingList_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX2D资源' + Loding.list_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('2D资源' + Loding.lodingList_2D[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('2D资源' + Loding.list_2D[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
                             break;
-                        case Loding.lodingList_3DScene:
-                            Laya.Scene3D.load(Loding.lodingList_3DScene[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_3DScene:
+                            Laya.Scene3D.load(Loding.list_3DScene[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX3D场景' + Loding.lodingList_3DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX3D场景' + Loding.list_3DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('3D场景' + Loding.lodingList_3DScene[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('3D场景' + Loding.list_3DScene[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
                             break;
-                        case Loding.lodingList_3DPrefab:
-                            Laya.Sprite3D.load(Loding.lodingList_3DPrefab[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_3DPrefab:
+                            Laya.Sprite3D.load(Loding.list_3DPrefab[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX3D预设体' + Loding.lodingList_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX3D预设体' + Loding.list_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('3D场景' + Loding.lodingList_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('3D场景' + Loding.list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
                             break;
-                        case Loding.lodingList_Json:
-                            Laya.loader.load(Loding.lodingList_Json[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_Json:
+                            Laya.loader.load(Loding.list_Json[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX数据表' + Loding.lodingList_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('数据表' + Loding.lodingList_Json[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('数据表' + Loding.list_Json[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }), null, Laya.Loader.JSON);
@@ -3770,6 +3755,12 @@
             }
             Loding.LodingScene = LodingScene;
         })(Loding = lwg.Loding || (lwg.Loding = {}));
+        let Start;
+        (function (Start) {
+            class StartScene {
+            }
+            Start.StartScene = StartScene;
+        })(Start = lwg.Start || (lwg.Start = {}));
         let Game;
         (function (Game) {
             let _platformTpye;
@@ -3991,6 +3982,8 @@
     let Skin = lwg.Skin;
     let SkinScene = lwg.Skin.SkinScene;
     let EasterEgg = lwg.EasterEgg;
+    let Start = lwg.Start;
+    let StartScene = lwg.Start.StartScene;
     let Tomato = lwg.Tomato;
 
     class LwgInit extends Admin.Scene {
@@ -4022,72 +4015,26 @@
     }
 
     class UILoding extends Loding.LodingScene {
-        constructor() {
-            super(...arguments);
-            this.maskMoveSwitch = true;
-            this.shearSpeed = 5;
-            this.shearSwitch = true;
-        }
         lwgOnAwake() {
-            Loding.lodingList_2D = [
+            Loding.list_2D = [
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
-                "res/atlas/UI/GameStart.png",
-                "res/atlas/UI/Common.png",
-                "res/atlas/UI/Shop/Skin.png",
-                "res/atlas/UI/Shop/Props.png",
-                "res/atlas/UI/Shop/Other.png",
-                "res/atlas/UI/Shop.png",
-                "res/atlas/UI/Skin.png",
-                "res/atlas/UI/EasterEgg_Aotoman/Congratulation.png",
-                "res/atlas/UI/EasterEgg_Aotoman/GameStart.png",
-                "res/atlas/UI/EasterEgg_Aotoman/Hint.png",
-                "res/atlas/UI/EasterEgg_Aotoman/Unworthy.png",
-                "res/atlas/UI/EasterEgg_Aotoman/Task.png",
-                "res/atlas/UI/XDSkin.png",
-                "res/atlas/UI/Set.png",
-                "res/atlas/UI/Task.png",
-                "res/atlas/UI/Register.png",
-                "res/atlas/UI/Common.png",
             ];
-            Loding.lodingList_3DScene = [
-                "3DScene/LayaScene_SampleScene/Conventional/SampleScene.ls"
+            Loding.list_3DScene = [
+                "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
-            Loding.lodingList_3DPrefab = [
-                "3DPrefab/LayaScene_SampleScene/Conventional/LevelParent.lh"
-            ];
-            Loding.lodingList_Json = [
-                "GameData/Shop/Other.json",
-                "GameData/Shop/Props.json",
-                "GameData/Shop/Skin.json",
-                'GameData/Task/everydayTask.json',
-                "GameData/VictoryBox/VictoryBox.json",
-                "GameData/CheckIn/CheckIn.json",
-                "GameData/Dialog/Dialog.json",
-                "GameData/Game/GameLevel.json",
-                "GameData/EasterEgg/EasterEgg.json",
-                "Scene/UICheckIn.json",
-                "Scene/UIEasterEgg.json",
-                "Scene/UIOperation.json",
-                "Scene/UISet.json",
-                "Scene/UIShop.json",
-                "Scene/UISkinXD.json",
-                "Scene/UITask.json",
-                "Scene/UIADSHint.json",
-            ];
+            Loding.list_3DPrefab = [];
+            Loding.list_Json = [];
         }
         lwgOnEnable() {
         }
         lodingPhaseComplete() {
         }
         lodingComplete() {
-        }
-        lwgAdaptive() {
+            let Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+            Laya.stage.addChild(Scene3D);
         }
         lwgOnUpdate() {
-        }
-        lwgOnDisable() {
-            PalyAudio.playMusic();
         }
     }
 

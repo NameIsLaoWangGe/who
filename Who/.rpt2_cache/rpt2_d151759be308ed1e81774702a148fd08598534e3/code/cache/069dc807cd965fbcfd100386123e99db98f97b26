@@ -1,0 +1,7 @@
+{
+  "code": "import { Loding } from \"../Frame/lwg\";\r\nexport default class UILoding extends Loding.LodingScene {\r\n    lwgOnAwake() {\r\n        Loding.list_2D = [\r\n            \"res/atlas/Frame/Effects.png\",\r\n            \"res/atlas/Frame/UI.png\",\r\n        ];\r\n        Loding.list_3DScene = [\r\n            \"3DScene/LayaScene_GameMain/Conventional/GameMain.ls\"\r\n        ];\r\n        Loding.list_3DPrefab = [];\r\n        Loding.list_Json = [];\r\n    }\r\n    lwgOnEnable() {\r\n    }\r\n    lodingPhaseComplete() {\r\n    }\r\n    lodingComplete() {\r\n        let Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);\r\n        Laya.stage.addChild(Scene3D);\r\n    }\r\n    lwgOnUpdate() {\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/GameMain3D.ts"
+  ]
+}

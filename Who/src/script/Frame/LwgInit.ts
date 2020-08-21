@@ -2,6 +2,7 @@ import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg } from "./lwg";
 export default class LwgInit extends Admin.Scene {
     lwgOnAwake(): void {
         console.log('开始游戏每个模块的初始化');
+        //如果加载时间过长，可以复制loding页面的内容到init界面
         this.gameInit();
         this.shopInit();
         this.skinInit();

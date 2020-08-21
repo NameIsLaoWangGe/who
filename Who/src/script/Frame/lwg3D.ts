@@ -10,7 +10,7 @@ export module lwg3D {
         /**类名*/
         calssName: string;
         /**摄像机节点*/
-        MainCamera: Laya.MeshSprite3D;
+        MainCamera: Laya.MeshSprite3D | Laya.Camera;
         /**摄像机的初始位置*/
         mainCameraFpos: Laya.Vector3 = new Laya.Vector3();
         constructor() {

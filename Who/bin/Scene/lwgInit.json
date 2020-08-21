@@ -1,1 +1,1 @@
-{"type":"View","props":{"width":720,"height":1280},"compId":2,"child":[{"type":"Script","props":{"runtime":"script/Frame/LwgInit.ts"},"compId":4}],"loadList":[],"loadList3D":[]}
+{"type":"View","props":{"width":720,"height":1280},"compId":2,"child":[{"type":"Script","props":{"runtime":"script/Frame/LwgInit.ts"},"compId":4},{"type":"Sprite","props":{"y":640,"x":336.5,"texture":"Frame/UI/icon_set.png"},"compId":5}],"loadList":["Frame/UI/icon_set.png"],"loadList3D":[]}

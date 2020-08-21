@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":720,"height":1280},"compId":2,"child":[{"type":"Sprite","props":{"y":586,"x":390,"texture":"Frame/UI/ui_circle_001.png"},"compId":3}],"loadList":["Frame/UI/ui_circle_001.png"],"loadList3D":[]}

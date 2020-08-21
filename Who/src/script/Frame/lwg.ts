@@ -977,15 +977,11 @@ export module lwg {
         export let _sceneControl: any = {};
         /**游戏当前处于什么状态中*/
         export let _gameState: string;
-        /**游戏是否结束*/
-        export let _gameStart: boolean = false;
-
         /**管理数据表中的一些属性命名，数据表必须参考此命名方式*/
         export enum JsonProperty {
             /**当数据表艺术组形式呈现出来时， 表中属性RECORDS就代表了整个数据表数组*/
             RECORDS = 'RECORDS',
         }
-
         /**常用场景的名称，和脚本名称保持一致*/
         export enum SceneName {
             UILoding = 'UILoding',
@@ -1017,6 +1013,7 @@ export module lwg {
             UISkin = 'UISkin',
             UIEasterEgg = 'UIEasterEgg',
             UIADSHint = 'UIADSHint',
+            LwgInit = 'LwgInit',
         }
 
         /**游戏当前的状态*/
@@ -3082,10 +3079,10 @@ export module lwg {
 
         /**音效地址*/
         export enum voiceUrl {
-            btn = 'res/Voice/btn.wav',
-            bgm = 'res/Voice/bgm.mp3',
-            victory = 'res/Voice/guoguan.wav',
-            defeated = 'res/Voice/wancheng.wav',
+            btn = 'Frame/Voice/btn.wav',
+            bgm = 'Frame/Voice/bgm.mp3',
+            victory = 'Frame/Voice/guoguan.wav',
+            defeated = 'Frame/Voice/wancheng.wav',
         }
 
         /**通用音效播放
@@ -4690,7 +4687,6 @@ export module lwg {
         }
     }
 
-
     /**皮肤装扮界面*/
     export module Skin {
         /**皮肤list*/
@@ -5012,60 +5008,34 @@ export module lwg {
 
         /**彩蛋场景继承类*/
         export class EasterEggScene extends Admin.Scene {
-            lwgOnAwake(): void {
-                this.easterEggInitData();
-                this.easterEggOnAwake();
+            moduleOnAwake(): void {
             }
             /**初始化json数据*/
-            easterEggInitData(): void { }
-            lwgEventReg(): void { this.easterEggEventReg(); }
-            /**任务中注册的一些事件*/
-            easterEggEventReg(): void { }
+            moduleOnEnable(): void {
 
-            /**初始化前执行一次*/
-            easterEggOnAwake(): void { }
-            lwgNodeDec(): void { this.easterEggNodeDec(); }
-            /**节点声明*/
-            easterEggNodeDec(): void { }
+            }
+            moduleEventReg(): void {
 
-            lwgOnEnable(): void { this.easterEggOnEnable(); }
-            /**开始后执行*/
-            easterEggOnEnable(): void { }
-            lwgOpenAni(): number { return this.easterEggOpenAin(); }
-            /**开场动画*/
-            easterEggOpenAin(): number { return 0; }
-
-            lwgBtnClick(): void { this.easterEggBtnClick() }
-            /**按钮点击事件*/
-            easterEggBtnClick(): void { };
-
-            lwgOnUpdate(): void { this.easterEggOnUpdate(); }
-            /**每帧执行*/
-            easterEggOnUpdate(): void { }
-
-            lwgOnDisable(): void { this.easterEggOnDisable(); }
-            /**页面关闭后执行*/
-            easterEggOnDisable(): void { }
-
+            }
         }
     }
 
     export module Loding {
         /**3D场景的加载，其他3D物体，贴图，Mesh详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
-        export let lodingList_3DScene: Array<any> = [];
+        export let list_3DScene: Array<any> = [];
         /**3D预设的加载，其他3D物体，贴图，Mesh详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
-        export let lodingList_3DPrefab: Array<any> = [];
+        export let list_3DPrefab: Array<any> = [];
         /**模型网格详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
-        export let lodingList_3DMesh: Array<any> = [];
+        export let list_3DMesh: Array<any> = [];
         /**材质详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
-        export let lodingList_3DBaseMaterial: Array<any> = [];
+        export let lolist_3DBaseMaterial: Array<any> = [];
         /**纹理加载详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
-        export let lodingList_3DTexture2D: Array<any> = [];
+        export let list_3DTexture2D: Array<any> = [];
 
         /**需要加载的图片资源列表,一般是界面的图片*/
-        export let lodingList_2D: Array<any> = [];
+        export let list_2D: Array<any> = [];
         /**数据表的加载，在框架中，json为必须加载的项目*/
-        export let lodingList_Json: Array<any> = [];
+        export let list_Json: Array<any> = [];
 
         /**进度条总长度,长度为以上三个加载资源类型的数组总长度*/
         export let sumProgress: number = 0;
@@ -5115,7 +5085,7 @@ export module lwg {
             }
             moduleEventReg(): void {
                 EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule() });
-                EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete() });
+                EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); PalyAudio.playMusic(); Admin._openScene(Admin.SceneName.LwgInit, this.self) });
                 EventAdmin.reg(LodingType.progress, this, (skip) => {
                     currentProgress.value++;
                     if (currentProgress.value < sumProgress) {
@@ -5124,8 +5094,8 @@ export module lwg {
                     }
                 });
             }
-            moduleOnEnable():void{
-                loadOrder = [lodingList_2D, lodingList_3DScene, lodingList_3DPrefab, lodingList_Json];
+            moduleOnEnable(): void {
+                loadOrder = [list_2D, list_3DScene, list_3DPrefab, list_Json];
                 for (let index = 0; index < loadOrder.length; index++) {
                     sumProgress += loadOrder[index].length;
                     if (loadOrder[index].length <= 0) {
@@ -5153,45 +5123,45 @@ export module lwg {
                 let index = currentProgress.value - alreadyPro;
 
                 switch (loadOrder[loadOrderIndex]) {
-                    case lodingList_2D:
+                    case list_2D:
 
-                        Laya.loader.load(lodingList_2D[index], Laya.Handler.create(this, (any) => {
+                        Laya.loader.load(list_2D[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
-                                console.log('XXXXXXXXXXX2D资源' + lodingList_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                console.log('XXXXXXXXXXX2D资源' + list_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('2D资源' + lodingList_2D[index] + '加载完成！', '数组下标为：', index);
+                                console.log('2D资源' + list_2D[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
                         }));
                         break;
-                    case lodingList_3DScene:
-                        Laya.Scene3D.load(lodingList_3DScene[index], Laya.Handler.create(this, (any) => {
+                    case list_3DScene:
+                        Laya.Scene3D.load(list_3DScene[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
-                                console.log('XXXXXXXXXXX3D场景' + lodingList_3DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                console.log('XXXXXXXXXXX3D场景' + list_3DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('3D场景' + lodingList_3DScene[index] + '加载完成！', '数组下标为：', index);
-                            }
-                            EventAdmin.notify(LodingType.progress);
-
-                        }));
-                        break;
-                    case lodingList_3DPrefab:
-                        Laya.Sprite3D.load(lodingList_3DPrefab[index], Laya.Handler.create(this, (any) => {
-                            if (any == null) {
-                                console.log('XXXXXXXXXXX3D预设体' + lodingList_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
-                            } else {
-                                console.log('3D场景' + lodingList_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                console.log('3D场景' + list_3DScene[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
 
                         }));
                         break;
-                    case lodingList_Json:
-                        Laya.loader.load(lodingList_Json[index], Laya.Handler.create(this, (any) => {
+                    case list_3DPrefab:
+                        Laya.Sprite3D.load(list_3DPrefab[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
-                                console.log('XXXXXXXXXXX数据表' + lodingList_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                console.log('XXXXXXXXXXX3D预设体' + list_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('数据表' + lodingList_Json[index] + '加载完成！', '数组下标为：', index);
+                                console.log('3D场景' + list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                            }
+                            EventAdmin.notify(LodingType.progress);
+
+                        }));
+                        break;
+                    case list_Json:
+                        Laya.loader.load(list_Json[index], Laya.Handler.create(this, (any) => {
+                            if (any == null) {
+                                console.log('XXXXXXXXXXX数据表' + list_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                            } else {
+                                console.log('数据表' + list_Json[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
 
@@ -5204,8 +5174,15 @@ export module lwg {
             }
             /**每个资源加载成功后，进度条每次增加后的回调*/
             lodingPhaseComplete(): void { }
-            /**加载完成回调,每个游戏不一样*/
+            /**资源全部加载完成回调,每个游戏不一样*/
             lodingComplete(): void { }
+        }
+    }
+
+    /**开始游戏模块*/
+    export module Start {
+        export class StartScene {
+
         }
     }
 
@@ -5219,7 +5196,7 @@ export module lwg {
             /**通用*/
             All = 'All',
         }
-        /**平摊，控制一些节点的变化,默认为字节*/
+        /**平台，控制一些节点的变化,默认为字节*/
         export let _platform: string = _platformTpye.Bytedance;
 
         /**游戏控制开关*/
@@ -5345,6 +5322,9 @@ export module lwg {
                 Laya.LocalStorage.setItem('_execution', val.toString());
             }
         };
+
+        /**暂停当前的游戏*/ 
+
         /**游戏进行时候的场景*/
         export class GameScene extends Admin.Scene {
             moduleOnAwake(): void {
@@ -5466,6 +5446,9 @@ export let SkinXDScene = lwg.SkinXD.SkinXDScene;
 export let Skin = lwg.Skin;
 export let SkinScene = lwg.Skin.SkinScene;
 export let EasterEgg = lwg.EasterEgg;
+export let Start = lwg.Start;
+export let StartScene = lwg.Start.StartScene;
+
 // 其他
 export let Tomato = lwg.Tomato;
 
