@@ -1,32 +1,42 @@
-import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg } from "./lwg";
+import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding } from "./lwg";
+import { Game3D } from "../Game/Game3D";
 export default class LwgInit extends Admin.Scene {
     lwgOnAwake(): void {
         console.log('开始游戏每个模块的初始化');
         //如果加载时间过长，可以复制loding页面的内容到init界面
-        this.gameInit();
-        this.shopInit();
-        this.skinInit();
-        this.taskInit();
-        this.easterEggInit();
+        this.admin();
+        this.game3D();
+        this.shop();
+        this.skin();
+        this.task();
+        this.easterEgg();
     }
+
     /**基础参数初始化*/
-    gameInit(): void {
+    admin(): void {
 
     };
+    /**3D模块初始化*/
+    game3D(): void {
+        Game3D.dataInit();
+        Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+        Laya.stage.addChild(Game3D.Scene3D);
+        Game3D.Scene3D.addComponent(Game3D.MainScene);
+    }
     /**皮肤初始化*/
-    skinInit(): void {
+    skin(): void {
 
     };
     /**商店初始化*/
-    shopInit(): void {
+    shop(): void {
 
     };
     /**任务始化*/
-    taskInit(): void {
+    task(): void {
 
     }
     /**彩蛋始化*/
-    easterEggInit(): void {
+    easterEgg(): void {
 
     }
     lwgOnEnable(): void {

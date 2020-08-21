@@ -1,6 +1,5 @@
 import { Loding, Admin, Gold, Setting, PalyAudio } from "../Frame/lwg";
-import GameMain3D from "./GameMain3D";
-
+import { Game3D } from "./Game3D";
 export default class UILoding extends Loding.LodingScene {
     lwgOnAwake(): void {
         Loding.list_2D = [
@@ -21,7 +20,8 @@ export default class UILoding extends Loding.LodingScene {
             // "GameData/VictoryBox/VictoryBox.json",
             // "GameData/CheckIn/CheckIn.json",
             // "GameData/Dialog/Dialog.json",
-            // "GameData/Game/GameLevel.json",
+            "GameData/Game/characteristics.json",
+            "GameData/Game/Person.json",
             // "GameData/EasterEgg/EasterEgg.json",
             // "Scene/UICheckIn.json",
             // "Scene/UIEasterEgg.json",
@@ -33,14 +33,11 @@ export default class UILoding extends Loding.LodingScene {
             // "Scene/UIADSHint.json",
         ];
     }
-
     lwgOnEnable(): void {
     }
     lodingPhaseComplete(): void {
     }
     lodingComplete(): void {
-        let Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-        Laya.stage.addChild(Scene3D);
     }
     lwgOnUpdate(): void {
 

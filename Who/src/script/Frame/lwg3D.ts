@@ -1,8 +1,6 @@
 import { EventAdmin } from "./lwg";
 /**管理3D的模块*/
 export module lwg3D {
-    /**当前场景*/
-    export let _currentScene: Laya.Scene3D;
     /**3D场景通用父类*/
     export class Scene3D extends Laya.Script3D {
         /**挂载当前脚本的节点*/
@@ -18,7 +16,6 @@ export module lwg3D {
         }
         onAwake(): void {
             this.self = this.owner as Laya.Scene3D;
-            _currentScene = this.self;
             // 类名
             this.calssName = this['__proto__']['constructor'].name;
             this.MainCamera = this.self.getChildByName("Main Camera") as Laya.MeshSprite3D;

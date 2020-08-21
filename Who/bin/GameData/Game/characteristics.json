@@ -1,0 +1,135 @@
+{ 
+"RECORDS": 
+[
+  {
+    "serial": 1,
+    "characteristics": "胖子",
+    "question": "胖子？"
+  },
+  {
+    "serial": 2,
+    "characteristics": "瘦子",
+    "question": "瘦子？"
+  },
+  {
+    "serial": 3,
+    "characteristics": "不胖不瘦",
+    "question": "不胖不瘦？"
+  },
+  {
+    "serial": 4,
+    "characteristics": "滑稽",
+    "question": "滑稽？"
+  },
+  {
+    "serial": 5,
+    "characteristics": "微笑",
+    "question": "微笑？"
+  },
+  {
+    "serial": 6,
+    "characteristics": "笑哭",
+    "question": "笑哭？"
+  },
+  {
+    "serial": 7,
+    "characteristics": "惊讶",
+    "question": "惊讶？"
+  },
+  {
+    "serial": 8,
+    "characteristics": "生气",
+    "question": "生气？"
+  },
+  {
+    "serial": 9,
+    "characteristics": "很爱财",
+    "question": "很爱财？"
+  },
+  {
+    "serial": 10,
+    "characteristics": "有可能住在王者峡谷",
+    "question": "有可能住在&#10;王者峡谷？"
+  },
+  {
+    "serial": 11,
+    "characteristics": "有可能是p城刚枪王",
+    "question": "有可能是&#10;p城刚枪王？"
+  },
+  {
+    "serial": 12,
+    "characteristics": "有可能会自己造房子",
+    "question": "有可能会自己造房子？"
+  },
+  {
+    "serial": 13,
+    "characteristics": "有可能来自scp",
+    "question": "有可能来自scp？"
+  },
+  {
+    "serial": 14,
+    "characteristics": "有可能会是茶艺大师",
+    "question": "有可能会&#10;是茶艺&#10;大师&#10;？"
+  },
+  {
+    "serial": 15,
+    "characteristics": "有可能喜欢爬山",
+    "question": "有可能喜欢爬山？"
+  },
+  {
+    "serial": 16,
+    "characteristics": "有可能是程序员",
+    "question": "有可能是程序员？"
+  },
+  {
+    "serial": 17,
+    "characteristics": "有可能是个小学生",
+    "question": "有可能是个小学生？"
+  },
+  {
+    "serial": 18,
+    "characteristics": "有可能喜欢打篮球",
+    "question": "有可能喜欢打篮球？"
+  },
+  {
+    "serial": 19,
+    "characteristics": "有可能是街溜子",
+    "question": "有可能是街溜子？"
+  },
+  {
+    "serial": 20,
+    "characteristics": "年纪很大",
+    "question": "年纪很大？"
+  },
+  {
+    "serial": 21,
+    "characteristics": "有点邋遢",
+    "question": "有点邋遢？"
+  },
+  {
+    "serial": 22,
+    "characteristics": "有可能是个国王",
+    "question": "有可能是个国王？"
+  },
+  {
+    "serial": 23,
+    "characteristics": "有可能经常挨打",
+    "question": "有可能经常挨打？"
+  },
+  {
+    "serial": 24,
+    "characteristics": "有可能会变身",
+    "question": "有可能会变身？"
+  },
+  {
+    "serial": 25,
+    "characteristics": "男",
+    "question": "男？"
+  },
+  {
+    "serial": 26,
+    "characteristics": "女",
+    "question": "女？"
+  }
+]
+}

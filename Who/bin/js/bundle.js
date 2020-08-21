@@ -19,7 +19,7 @@
             TJ.API.AdService.ShowNormal(new TJ.API.AdService.Param());
         }
         static ShowReward(rewardAction, CDTime = 500) {
-            if (Game._platform === Game._platformTpye.OPPO) {
+            if (Admin._platform === Admin._platformTpye.OPPO) {
                 rewardAction();
                 EventAdmin.notify(Task.EventType.adsTime);
                 EventAdmin.notify(EasterEgg.EventType.easterEggAds);
@@ -155,40 +155,8 @@
 
     var lwg;
     (function (lwg) {
-        let Global;
-        (function (Global) {
-            function _createKeyNum(parent, x, y) {
-                let sp;
-                Laya.loader.load('prefab/KeyNum.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    sp.pos(x, y);
-                    sp.zOrder = 0;
-                    let num = sp.getChildByName('Num');
-                    Global.KeyNumNode = sp;
-                }));
-            }
-            Global._createKeyNum = _createKeyNum;
-            function _createExecutionNum(parent) {
-                let sp;
-                Laya.loader.load('prefab/ExecutionNum.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    let num = sp.getChildByName('Num');
-                    sp.pos(297, 90);
-                    sp.zOrder = 50;
-                    Global.ExecutionNumNode = sp;
-                    Global.ExecutionNumNode.name = 'ExecutionNumNode';
-                }));
-            }
-            Global._createExecutionNum = _createExecutionNum;
-            function _addExecution(number) {
-            }
-            Global._addExecution = _addExecution;
+        let Pause;
+        (function (Pause) {
             function _createBtnPause(parent) {
                 let sp;
                 Laya.loader.load('prefab/BtnPause.json', Laya.Handler.create(this, function (prefab) {
@@ -198,59 +166,21 @@
                     parent.addChild(sp);
                     sp.pos(645, 167);
                     sp.zOrder = 0;
-                    Global.BtnPauseNode = sp;
-                    Global.BtnPauseNode.name = 'BtnPauseNode';
+                    Pause.BtnPauseNode = sp;
+                    Pause.BtnPauseNode.name = 'BtnPauseNode';
                     Click.on(Click.Type.largen, sp, null, null, null, btnPauseUp, null);
                 }));
             }
-            Global._createBtnPause = _createBtnPause;
+            Pause._createBtnPause = _createBtnPause;
             function btnPauseUp(event) {
                 event.stopPropagation();
                 event.currentTarget.scale(1, 1);
                 lwg.Admin._openScene('UIPause', null, null, null);
             }
-            Global.btnPauseUp = btnPauseUp;
-            function _createBtnHint(parent) {
-                let sp;
-                Laya.loader.load('prefab/BtnHint.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    sp.pos(645, 293);
-                    sp.zOrder = 0;
-                    Global.BtnHintNode = sp;
-                    Global.BtnHintNode.name = 'BtnHintNode';
-                    Click.on(Click.Type.largen, sp, null, null, null, btnHintUp, null);
-                }));
-            }
-            Global._createBtnHint = _createBtnHint;
-            function btnHintUp(event) {
-                event.currentTarget.scale(1, 1);
-                event.stopPropagation();
-                Admin._openScene(Admin.SceneName.UISmallHint);
-            }
-            Global.btnHintUp = btnHintUp;
-            function _createBtnAgain(parent) {
-                let sp;
-                Laya.loader.load('prefab/BtnAgain.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    sp.pos(645, 409);
-                    sp.zOrder = 0;
-                    Click.on(Click.Type.largen, sp, null, btnAgainUp, null, null, null);
-                    Global.BtnAgainNode = sp;
-                }));
-            }
-            Global._createBtnAgain = _createBtnAgain;
-            function btnAgainUp(event) {
-                event.stopPropagation();
-                event.currentTarget.scale(1, 1);
-                Global.refreshNum++;
-            }
-            Global.btnAgainUp = btnAgainUp;
+            Pause.btnPauseUp = btnPauseUp;
+        })(Pause = lwg.Pause || (lwg.Pause = {}));
+        let Elect;
+        (function (Elect) {
             function _createP201_01(parent) {
                 let sp;
                 Laya.loader.load('prefab/P201.json', Laya.Handler.create(this, function (prefab) {
@@ -260,145 +190,10 @@
                     parent.addChild(sp);
                     sp.pos(80, 290);
                     sp.zOrder = 65;
-                    Global.P201_01Node = sp;
                 }));
             }
-            Global._createP201_01 = _createP201_01;
-            function _createStimulateDec(parent) {
-                let sp;
-                Laya.loader.load('prefab/StimulateDec.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('StimulateDec', _prefab.create, _prefab);
-                    let dec = sp.getChildByName('Dec');
-                    parent.addChild(sp);
-                    sp.pos(35, 150);
-                    sp.zOrder = 65;
-                    Global.StimulateDecNode = sp;
-                }));
-            }
-            Global._createStimulateDec = _createStimulateDec;
-            function _createHint_InPut(input) {
-                let sp;
-                Laya.loader.load('prefab/HintPre_01.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    Laya.stage.addChild(sp);
-                    sp.pos(Laya.stage.width / 2, Laya.stage.height / 2);
-                    let dec = sp.getChildByName('dec');
-                    dec.text = input;
-                    sp.zOrder = 100;
-                    dec.alpha = 0;
-                    Animation2D.scale_Alpha(sp, 0, 1, 0, 1, 1, 1, 200, null, 0, f => {
-                        Animation2D.fadeOut(dec, 0, 1, 150, 0, f => {
-                            Animation2D.fadeOut(dec, 1, 0, 200, 1500, f => {
-                                Animation2D.scale_Alpha(sp, 1, 1, 1, 1, 0, 0, 200, null, 0, f => {
-                                    sp.removeSelf();
-                                });
-                            });
-                        });
-                    });
-                }));
-            }
-            Global._createHint_InPut = _createHint_InPut;
-            function createConsumeEx(subEx) {
-                let label = Laya.Pool.getItemByClass('label', Laya.Label);
-                label.name = 'label';
-                Laya.stage.addChild(label);
-                label.text = '-2';
-                label.fontSize = 40;
-                label.bold = true;
-                label.color = '#59245c';
-                label.x = Global.ExecutionNumNode.x + 100;
-                label.y = Global.ExecutionNumNode.y - label.height / 2 + 4;
-                label.zOrder = 100;
-                lwg.Animation2D.fadeOut(label, 0, 1, 200, 150, f => {
-                    lwg.Animation2D.leftRight_Shake(Global.ExecutionNumNode, 15, 60, 0, null);
-                    lwg.Animation2D.fadeOut(label, 1, 0, 600, 400, f => {
-                    });
-                });
-            }
-            Global.createConsumeEx = createConsumeEx;
-            function _createGold(type, parent, x, y) {
-                let sp;
-                Laya.loader.load('prefab/GolPre.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    sp.pos(x, y);
-                }));
-            }
-            Global._createGold = _createGold;
-            function _createAddExecution(x, y, func) {
-                let sp;
-                Laya.loader.load('prefab/execution.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    Laya.stage.addChild(sp);
-                    sp.x = Laya.stage.width / 2;
-                    sp.y = Laya.stage.height / 2;
-                    sp.zOrder = 50;
-                    if (Global.ExecutionNumNode) {
-                        Animation2D.move_Simple_01(sp, sp.x, sp.y, Global.ExecutionNumNode.x, Global.ExecutionNumNode.y, 800, null, 100, f => {
-                            Animation2D.fadeOut(sp, 1, 0, 200, 0, f => {
-                                lwg.Animation2D.upDwon_Shake(Global.ExecutionNumNode, 10, 80, 0, null);
-                                if (func) {
-                                    func();
-                                }
-                            });
-                        });
-                    }
-                }));
-            }
-            Global._createAddExecution = _createAddExecution;
-        })(Global = lwg.Global || (lwg.Global = {}));
-        let EventAdmin;
-        (function (EventAdmin) {
-            let EventType;
-            (function (EventType) {
-                EventType["taskReach"] = "taskReach";
-                EventType["defeated"] = "defeated";
-                EventType["scene3DRefresh"] = "Scene3DRefresh";
-                EventType["scene3DResurgence"] = "scene3DResurgence";
-                EventType["operationRefresh"] = "operationRefresh";
-                EventType["resurgence"] = "resurgence";
-                EventType["closeOperation"] = "closeOperation";
-            })(EventType = EventAdmin.EventType || (EventAdmin.EventType = {}));
-            EventAdmin.dispatcher = new Laya.EventDispatcher();
-            function reg(type, caller, listener) {
-                if (!caller) {
-                    console.error("事件的执行域必须存在!");
-                }
-                EventAdmin.dispatcher.on(type.toString(), caller, listener);
-            }
-            EventAdmin.reg = reg;
-            function regOnce(type, caller, listener) {
-                if (!caller) {
-                    console.error("事件的执行域必须存在!");
-                }
-                EventAdmin.dispatcher.once(type.toString(), caller, listener);
-            }
-            EventAdmin.regOnce = regOnce;
-            function notify(type, args) {
-                EventAdmin.dispatcher.event(type.toString(), args);
-            }
-            EventAdmin.notify = notify;
-            function off(type, caller, listener) {
-                this.dispatcher.off(type.toString(), caller, listener);
-            }
-            EventAdmin.off = off;
-            function offAll(type) {
-                EventAdmin.dispatcher.offAll(type.toString());
-            }
-            EventAdmin.offAll = offAll;
-            function offCaller(caller) {
-                EventAdmin.dispatcher.offAllCaller(caller);
-            }
-            EventAdmin.offCaller = offCaller;
-        })(EventAdmin = lwg.EventAdmin || (lwg.EventAdmin = {}));
+            Elect._createP201_01 = _createP201_01;
+        })(Elect = lwg.Elect || (lwg.Elect = {}));
         let Dialog;
         (function (Dialog) {
             let HintContent;
@@ -611,6 +406,74 @@
             }
             Dialog.createDialogHint = createDialogHint;
         })(Dialog = lwg.Dialog || (lwg.Dialog = {}));
+        let Execution;
+        (function (Execution) {
+            Execution._execution = {
+                get value() {
+                    return this.val = Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
+                },
+                set value(val) {
+                    this.val = val;
+                    Laya.LocalStorage.setItem('_execution', val.toString());
+                }
+            };
+            function _createExecutionNum(parent) {
+                let sp;
+                Laya.loader.load('prefab/ExecutionNum.json', Laya.Handler.create(this, function (prefab) {
+                    let _prefab = new Laya.Prefab();
+                    _prefab.json = prefab;
+                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
+                    parent.addChild(sp);
+                    let num = sp.getChildByName('Num');
+                    sp.pos(297, 90);
+                    sp.zOrder = 50;
+                    Execution.ExecutionNumNode = sp;
+                    Execution.ExecutionNumNode.name = 'ExecutionNumNode';
+                }));
+            }
+            Execution._createExecutionNum = _createExecutionNum;
+            function _createAddExecution(x, y, func) {
+                let sp;
+                Laya.loader.load('prefab/execution.json', Laya.Handler.create(this, function (prefab) {
+                    let _prefab = new Laya.Prefab();
+                    _prefab.json = prefab;
+                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
+                    Laya.stage.addChild(sp);
+                    sp.x = Laya.stage.width / 2;
+                    sp.y = Laya.stage.height / 2;
+                    sp.zOrder = 50;
+                    if (Execution.ExecutionNumNode) {
+                        Animation2D.move_Simple_01(sp, sp.x, sp.y, Execution.ExecutionNumNode.x, Execution.ExecutionNumNode.y, 800, null, 100, f => {
+                            Animation2D.fadeOut(sp, 1, 0, 200, 0, f => {
+                                lwg.Animation2D.upDwon_Shake(Execution.ExecutionNumNode, 10, 80, 0, null);
+                                if (func) {
+                                    func();
+                                }
+                            });
+                        });
+                    }
+                }));
+            }
+            Execution._createAddExecution = _createAddExecution;
+            function createConsumeEx(subEx) {
+                let label = Laya.Pool.getItemByClass('label', Laya.Label);
+                label.name = 'label';
+                Laya.stage.addChild(label);
+                label.text = '-2';
+                label.fontSize = 40;
+                label.bold = true;
+                label.color = '#59245c';
+                label.x = Execution.ExecutionNumNode.x + 100;
+                label.y = Execution.ExecutionNumNode.y - label.height / 2 + 4;
+                label.zOrder = 100;
+                lwg.Animation2D.fadeOut(label, 0, 1, 200, 150, f => {
+                    lwg.Animation2D.leftRight_Shake(Execution.ExecutionNumNode, 15, 60, 0, null);
+                    lwg.Animation2D.fadeOut(label, 1, 0, 600, 400, f => {
+                    });
+                });
+            }
+            Execution.createConsumeEx = createConsumeEx;
+        })(Execution = lwg.Execution || (lwg.Execution = {}));
         let Gold;
         (function (Gold_1) {
             Gold_1._goldNum = 0;
@@ -834,13 +697,116 @@
             }
             Gold_1.AddGold = AddGold;
         })(Gold = lwg.Gold || (lwg.Gold = {}));
+        let EventAdmin;
+        (function (EventAdmin) {
+            let EventType;
+            (function (EventType) {
+                EventType["taskReach"] = "taskReach";
+                EventType["defeated"] = "defeated";
+                EventType["scene3DRefresh"] = "Scene3DRefresh";
+                EventType["scene3DResurgence"] = "scene3DResurgence";
+                EventType["operationRefresh"] = "operationRefresh";
+                EventType["resurgence"] = "resurgence";
+                EventType["closeOperation"] = "closeOperation";
+            })(EventType = EventAdmin.EventType || (EventAdmin.EventType = {}));
+            EventAdmin.dispatcher = new Laya.EventDispatcher();
+            function reg(type, caller, listener) {
+                if (!caller) {
+                    console.error("事件的执行域必须存在!");
+                }
+                EventAdmin.dispatcher.on(type.toString(), caller, listener);
+            }
+            EventAdmin.reg = reg;
+            function regOnce(type, caller, listener) {
+                if (!caller) {
+                    console.error("事件的执行域必须存在!");
+                }
+                EventAdmin.dispatcher.once(type.toString(), caller, listener);
+            }
+            EventAdmin.regOnce = regOnce;
+            function notify(type, args) {
+                EventAdmin.dispatcher.event(type.toString(), args);
+            }
+            EventAdmin.notify = notify;
+            function off(type, caller, listener) {
+                this.dispatcher.off(type.toString(), caller, listener);
+            }
+            EventAdmin.off = off;
+            function offAll(type) {
+                EventAdmin.dispatcher.offAll(type.toString());
+            }
+            EventAdmin.offAll = offAll;
+            function offCaller(caller) {
+                EventAdmin.dispatcher.offAllCaller(caller);
+            }
+            EventAdmin.offCaller = offCaller;
+        })(EventAdmin = lwg.EventAdmin || (lwg.EventAdmin = {}));
         let Admin;
         (function (Admin) {
+            let _platformTpye;
+            (function (_platformTpye) {
+                _platformTpye["WeChat"] = "WeChat";
+                _platformTpye["OPPO"] = "OPPO";
+                _platformTpye["Bytedance"] = "Bytedance";
+                _platformTpye["All"] = "All";
+            })(_platformTpye = Admin._platformTpye || (Admin._platformTpye = {}));
+            Admin._platform = _platformTpye.Bytedance;
+            Admin._gameSwitch = false;
+            Admin._gameLevel = {
+                get value() {
+                    return Laya.LocalStorage.getItem('_gameLevel') ? Number(Laya.LocalStorage.getItem('_gameLevel')) : 1;
+                },
+                set value(val) {
+                    Laya.LocalStorage.setItem('_gameLevel', val.toString());
+                }
+            };
+            Admin._practicalLevel = {
+                get value() {
+                    return Laya.LocalStorage.getItem('_practicalLevel') ? Number(Laya.LocalStorage.getItem('_practicalLevel')) : Admin._gameLevel.value;
+                },
+                set value(val) {
+                    Laya.LocalStorage.setItem('_practicalLevel', val.toString());
+                }
+            };
+            function _createLevel(parent, x, y) {
+                let sp;
+                Laya.loader.load('prefab/LevelNode.json', Laya.Handler.create(this, function (prefab) {
+                    let _prefab = new Laya.Prefab();
+                    _prefab.json = prefab;
+                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
+                    parent.addChild(sp);
+                    sp.pos(x, y);
+                    sp.zOrder = 0;
+                    let level = sp.getChildByName('level');
+                    Admin.LevelNode = sp;
+                }));
+            }
+            Admin._createLevel = _createLevel;
+            Admin._pause = {
+                get switch() {
+                    return Admin._gameSwitch;
+                },
+                set switch(bool) {
+                    this.bool = bool;
+                    if (bool) {
+                        Admin._gameSwitch = false;
+                        Laya.timer.pause();
+                    }
+                    else {
+                        Admin._gameSwitch = true;
+                        Laya.timer.resume();
+                    }
+                }
+            };
             Admin._sceneControl = {};
-            let JsonProperty;
-            (function (JsonProperty) {
-                JsonProperty["RECORDS"] = "RECORDS";
-            })(JsonProperty = Admin.JsonProperty || (Admin.JsonProperty = {}));
+            let OpenAniType;
+            (function (OpenAniType) {
+                OpenAniType["fadeOut"] = "fadeOut";
+                OpenAniType["leftMove"] = "fadeOut";
+                OpenAniType["rightMove"] = "rightMove";
+                OpenAniType["centerRotate"] = "centerRotate";
+            })(OpenAniType = Admin.OpenAniType || (Admin.OpenAniType = {}));
+            Admin._commonOpenAni = OpenAniType.fadeOut;
             let SceneName;
             (function (SceneName) {
                 SceneName["UILoding"] = "UILoding";
@@ -876,7 +842,7 @@
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             let GameState;
             (function (GameState) {
-                GameState["GameStart"] = "GameStart";
+                GameState["Start"] = "Start";
                 GameState["Play"] = "Play";
                 GameState["Pause"] = "pause";
                 GameState["Victory"] = "victory";
@@ -922,13 +888,11 @@
                     this.lwgNodeDec();
                     this.moduleOnAwake();
                     this.lwgOnAwake();
-                    this.lwgVariateInit();
                     this.lwgAdaptive();
                 }
                 lwgOnAwake() { }
                 ;
-                moduleOnAwake() {
-                }
+                moduleOnAwake() { }
                 onEnable() {
                     this.moduleEventReg();
                     this.lwgEventReg();
@@ -936,20 +900,14 @@
                     this.lwgOnEnable();
                     this.btnAndlwgOpenAni();
                 }
-                moduleOnEnable() {
-                }
-                lwgNodeDec() {
-                }
-                lwgEventReg() {
-                }
-                moduleEventReg() {
-                }
-                lwgVariateInit() {
-                }
+                moduleOnEnable() { }
+                lwgNodeDec() { }
+                lwgEventReg() { }
+                moduleEventReg() { }
                 gameState(calssName) {
                     switch (calssName) {
                         case SceneName.UIStart:
-                            Admin._gameState = GameState.GameStart;
+                            Admin._gameState = GameState.Start;
                             break;
                         case SceneName.UIMain:
                             Admin._gameState = GameState.Play;
@@ -966,32 +924,43 @@
                 }
                 lwgOnEnable() {
                 }
+                commonOpenAni() {
+                    let time = 0;
+                    let delay = 0;
+                    switch (Admin._commonOpenAni) {
+                        case OpenAniType.fadeOut:
+                            time = 500;
+                            delay = 400;
+                            if (this.self['Background']) {
+                                Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
+                            }
+                            Animation2D.fadeOut(this.self, 0, 1, time);
+                            break;
+                        case OpenAniType.leftMove:
+                            break;
+                        default:
+                            break;
+                    }
+                    return time;
+                }
                 btnAndlwgOpenAni() {
                     let time = this.lwgOpenAni();
-                    if (time) {
-                        Laya.timer.once(time, this, f => {
-                            this.lwgBtnClick();
-                        });
+                    if (time == null) {
+                        time = this.commonOpenAni();
+                        if (time == null) {
+                            time = 0;
+                        }
                     }
-                    else {
+                    Laya.timer.once(time, this, f => {
                         this.lwgBtnClick();
-                    }
+                    });
                 }
-                lwgBtnClick() {
-                }
-                lwgOpenAni() {
-                    return this.aniTime;
-                }
-                lwgAdaptive() {
-                }
-                lwgVanishAni() {
-                    return 0;
-                }
-                onUpdate() {
-                    this.lwgOnUpdate();
-                }
-                lwgOnUpdate() {
-                }
+                lwgBtnClick() { }
+                lwgOpenAni() { return null; }
+                lwgAdaptive() { }
+                lwgVanishAni() { return 0; }
+                onUpdate() { this.lwgOnUpdate(); }
+                lwgOnUpdate() { }
                 onDisable() {
                     this.lwgOnDisable();
                     Laya.timer.clearAll(this);
@@ -1006,6 +975,7 @@
                     super();
                 }
                 onAwake() {
+                    this.lwgOnAwake();
                 }
                 lwgOnAwake() {
                 }
@@ -1695,6 +1665,9 @@
             Animation2D.upDwon_Shake = upDwon_Shake;
             function fadeOut(node, alpha1, alpha2, time, delayed, func) {
                 node.alpha = alpha1;
+                if (!delayed) {
+                    delayed = 0;
+                }
                 Laya.Tween.to(node, { alpha: alpha2 }, time, null, Laya.Handler.create(this, function () {
                     if (func) {
                         func();
@@ -2302,6 +2275,15 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
+            function randomNumer(section1, section2) {
+                if (section2) {
+                    return Math.floor(Math.random() * section2) + section1;
+                }
+                else {
+                    return Math.floor(Math.random() * section1);
+                }
+            }
+            Tools.randomNumer = randomNumer;
             function randomNumOfArray(arr, num) {
                 let arr0 = [];
                 if (num > arr.length) {
@@ -2682,9 +2664,9 @@
                     Laya.LocalStorage.setItem('Task_todayData', date.toString());
                 }
             };
-            function getTaskProperty(ClassName, name, property) {
+            function getProperty(ClassName, name, property) {
                 let pro = null;
-                let arr = getTaskClassArr(ClassName);
+                let arr = getClassArr(ClassName);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -2700,9 +2682,9 @@
                     return null;
                 }
             }
-            Task.getTaskProperty = getTaskProperty;
-            function setTaskProperty(ClassName, name, property, value) {
-                let arr = getTaskClassArr(ClassName);
+            Task.getProperty = getProperty;
+            function setProperty(ClassName, name, property, value) {
+                let arr = getClassArr(ClassName);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -2717,8 +2699,8 @@
                     Task._TaskList.refresh();
                 }
             }
-            Task.setTaskProperty = setTaskProperty;
-            function getTaskClassArr(ClassName) {
+            Task.setProperty = setProperty;
+            function getClassArr(ClassName) {
                 let arr = [];
                 switch (ClassName) {
                     case TaskClass.everyday:
@@ -2732,35 +2714,35 @@
                 }
                 return arr;
             }
-            Task.getTaskClassArr = getTaskClassArr;
-            function doDetectionTask(calssName, name, number) {
+            Task.getClassArr = getClassArr;
+            function doDetection(calssName, name, number) {
                 if (!number) {
                     number = 1;
                 }
-                let resCondition = Task.getTaskProperty(calssName, name, Task.TaskProperty.resCondition);
-                let condition = Task.getTaskProperty(calssName, name, Task.TaskProperty.condition);
-                if (Task.getTaskProperty(calssName, name, Task.TaskProperty.get) !== -1) {
+                let resCondition = Task.getProperty(calssName, name, Task.TaskProperty.resCondition);
+                let condition = Task.getProperty(calssName, name, Task.TaskProperty.condition);
+                if (Task.getProperty(calssName, name, Task.TaskProperty.get) !== -1) {
                     if (condition <= resCondition + number) {
-                        Task.setTaskProperty(calssName, name, Task.TaskProperty.resCondition, condition);
-                        Task.setTaskProperty(calssName, name, Task.TaskProperty.get, 1);
+                        Task.setProperty(calssName, name, Task.TaskProperty.resCondition, condition);
+                        Task.setProperty(calssName, name, Task.TaskProperty.get, 1);
                         if (Task._TaskList) {
                             Task._TaskList.refresh();
                         }
-                        return 1;
+                        return true;
                     }
                     else {
-                        Task.setTaskProperty(calssName, name, Task.TaskProperty.resCondition, resCondition + number);
+                        Task.setProperty(calssName, name, Task.TaskProperty.resCondition, resCondition + number);
                         if (Task._TaskList) {
                             Task._TaskList.refresh();
                         }
-                        return 0;
+                        return false;
                     }
                 }
                 else {
                     return -1;
                 }
             }
-            Task.doDetectionTask = doDetectionTask;
+            Task.doDetection = doDetection;
             let TaskProperty;
             (function (TaskProperty) {
                 TaskProperty["name"] = "name";
@@ -2898,9 +2880,9 @@
                 return Shop.useSkinType.length;
             }
             Shop.setUseSkinType = setUseSkinType;
-            function getGoodsProperty(goodsClass, name, property) {
+            function getProperty(goodsClass, name, property) {
                 let pro = null;
-                let arr = getGoodsClassArr(goodsClass);
+                let arr = getClassArr(goodsClass);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -2916,9 +2898,9 @@
                     return null;
                 }
             }
-            Shop.getGoodsProperty = getGoodsProperty;
-            function setGoodsProperty(goodsClass, name, property, value) {
-                let arr = getGoodsClassArr(goodsClass);
+            Shop.getProperty = getProperty;
+            function setProperty(goodsClass, name, property, value) {
+                let arr = getClassArr(goodsClass);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -2933,9 +2915,9 @@
                     Shop._ShopList.refresh();
                 }
             }
-            Shop.setGoodsProperty = setGoodsProperty;
+            Shop.setProperty = setProperty;
             function getHaveArr(goodsClass) {
-                let arr = getGoodsClassArr(goodsClass);
+                let arr = getClassArr(goodsClass);
                 let arrHave = [];
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
@@ -2947,7 +2929,7 @@
             }
             Shop.getHaveArr = getHaveArr;
             function getwayGoldArr(goodsClass, have, excludeCurrent) {
-                let arr = getGoodsClassArr(goodsClass);
+                let arr = getClassArr(goodsClass);
                 let arrNoHave = [];
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
@@ -2980,7 +2962,7 @@
             }
             Shop.getwayGoldArr = getwayGoldArr;
             function getwayIneedwinArr(goodsClass, have) {
-                let arr = getGoodsClassArr(goodsClass);
+                let arr = getClassArr(goodsClass);
                 let arrIneedwin = [];
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
@@ -3021,7 +3003,7 @@
                 return _current;
             }
             Shop.get_Current = get_Current;
-            function getGoodsClassArr(goodsClass) {
+            function getClassArr(goodsClass) {
                 let arr = [];
                 switch (goodsClass) {
                     case GoodsClass.Skin:
@@ -3038,29 +3020,29 @@
                 }
                 return arr;
             }
-            Shop.getGoodsClassArr = getGoodsClassArr;
+            Shop.getClassArr = getClassArr;
             function buyGoods(calssName, name, number) {
                 if (!number) {
                     number = 1;
                 }
-                let resCondition = getGoodsProperty(calssName, name, GoodsProperty.resCondition);
-                let condition = getGoodsProperty(calssName, name, GoodsProperty.condition);
-                let have = getGoodsProperty(calssName, name, GoodsProperty.have);
+                let resCondition = getProperty(calssName, name, GoodsProperty.resCondition);
+                let condition = getProperty(calssName, name, GoodsProperty.condition);
+                let have = getProperty(calssName, name, GoodsProperty.have);
                 if (have !== true && have !== null) {
                     if (condition <= resCondition + number) {
-                        setGoodsProperty(calssName, name, GoodsProperty.resCondition, condition);
-                        setGoodsProperty(calssName, name, GoodsProperty.have, true);
+                        setProperty(calssName, name, GoodsProperty.resCondition, condition);
+                        setProperty(calssName, name, GoodsProperty.have, true);
                         if (Shop._ShopList) {
                             Shop._ShopList.refresh();
                         }
-                        return 1;
+                        return true;
                     }
                     else {
-                        setGoodsProperty(calssName, name, GoodsProperty.resCondition, resCondition + number);
+                        setProperty(calssName, name, GoodsProperty.resCondition, resCondition + number);
                         if (Shop._ShopList) {
                             Shop._ShopList.refresh();
                         }
-                        return 0;
+                        return false;
                     }
                 }
                 else {
@@ -3153,7 +3135,7 @@
             VictoryBox._alreadyOpenNum = 0;
             VictoryBox._adsMaxOpenNum = 6;
             VictoryBox._openVictoryBoxNum = 0;
-            function getBoxProperty(name, property) {
+            function getProperty(name, property) {
                 let pro = null;
                 for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
                     const element = VictoryBox._BoxArray[index];
@@ -3170,8 +3152,8 @@
                     return null;
                 }
             }
-            VictoryBox.getBoxProperty = getBoxProperty;
-            function setBoxProperty(name, property, value) {
+            VictoryBox.getProperty = getProperty;
+            function setProperty(name, property, value) {
                 for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
                     const element = VictoryBox._BoxArray[index];
                     if (element['name'] === name) {
@@ -3183,7 +3165,7 @@
                     VictoryBox._BoxList.refresh();
                 }
             }
-            VictoryBox.setBoxProperty = setBoxProperty;
+            VictoryBox.setProperty = setProperty;
             let BoxProperty;
             (function (BoxProperty) {
                 BoxProperty["name"] = "name";
@@ -3245,7 +3227,7 @@
                     Laya.LocalStorage.setItem('Check_checkInNum', num.toString());
                 }
             };
-            function getCheckProperty(name, property) {
+            function getProperty(name, property) {
                 let pro = null;
                 for (let index = 0; index < CheckIn._checkArray.length; index++) {
                     const element = CheckIn._checkArray[index];
@@ -3262,8 +3244,8 @@
                     return null;
                 }
             }
-            CheckIn.getCheckProperty = getCheckProperty;
-            function setCheckProperty(className, name, property, value) {
+            CheckIn.getProperty = getProperty;
+            function setProperty(className, name, property, value) {
                 for (let index = 0; index < CheckIn._checkArray.length; index++) {
                     const element = CheckIn._checkArray[index];
                     if (element['name'] === name) {
@@ -3278,7 +3260,7 @@
                     CheckIn._checkList.refresh();
                 }
             }
-            CheckIn.setCheckProperty = setCheckProperty;
+            CheckIn.setProperty = setProperty;
             function openCheckIn() {
                 let todayDate = (new Date).getDate();
                 if (todayDate !== CheckIn._lastCheckDate.date) {
@@ -3294,8 +3276,8 @@
                 let todayDate = (new Date).getDate();
                 CheckIn._lastCheckDate.date = todayDate;
                 CheckIn._checkInNum.number++;
-                setCheckProperty(CheckClass.chek_7Days, 'day' + CheckIn._checkInNum.number, CheckProPerty.checkInState, true);
-                let rewardNum = getCheckProperty('day' + CheckIn._checkInNum.number, CheckProPerty.rewardNum);
+                setProperty(CheckClass.chek_7Days, 'day' + CheckIn._checkInNum.number, CheckProPerty.checkInState, true);
+                let rewardNum = getProperty('day' + CheckIn._checkInNum.number, CheckProPerty.rewardNum);
                 if (CheckIn._checkInNum.number === 7) {
                     CheckIn._checkInNum.number = 0;
                     Laya.LocalStorage.removeItem(CheckClass.chek_7Days);
@@ -3476,7 +3458,7 @@
             EasterEgg.initEasterEgg = initEasterEgg;
             function getProperty(classify, name, property) {
                 let pro = null;
-                let arr = getClassify(classify);
+                let arr = getClassArr(classify);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -3494,7 +3476,7 @@
             }
             EasterEgg.getProperty = getProperty;
             function setProperty(classify, name, property, value) {
-                let arr = getClassify(classify);
+                let arr = getClassArr(classify);
                 for (let index = 0; index < arr.length; index++) {
                     const element = arr[index];
                     if (element['name'] === name) {
@@ -3507,26 +3489,7 @@
                 Laya.LocalStorage.setJSON(classify, JSON.stringify(data));
             }
             EasterEgg.setProperty = setProperty;
-            function getTaskProperty(classify, name, property) {
-                let pro = null;
-                let arr = getClassify(classify);
-                for (let index = 0; index < arr.length; index++) {
-                    const element = arr[index];
-                    if (element['name'] === name) {
-                        pro = element[property];
-                        break;
-                    }
-                }
-                if (pro !== null) {
-                    return pro;
-                }
-                else {
-                    console.log(name + '找不到属性:' + property, pro);
-                    return null;
-                }
-            }
-            EasterEgg.getTaskProperty = getTaskProperty;
-            function getClassify(classify) {
+            function getClassArr(classify) {
                 let arr = [];
                 switch (classify) {
                     case Classify.EasterEgg_01:
@@ -3537,7 +3500,7 @@
                 }
                 return arr;
             }
-            EasterEgg.getClassify = getClassify;
+            EasterEgg.getClassArr = getClassArr;
             function doDetection(classify, name, number) {
                 if (!number) {
                     number = 0;
@@ -3549,21 +3512,21 @@
                         setProperty(classify, name, Property.resCondition, condition);
                         setProperty(classify, name, Property.complete, true);
                         console.log(getProperty(classify, name, Property.complete));
-                        return 1;
+                        return true;
                     }
                     else {
                         setProperty(classify, name, Property.resCondition, resCondition + number);
-                        return 0;
+                        return false;
                     }
                 }
                 else {
-                    return 1;
+                    return true;
                 }
             }
             EasterEgg.doDetection = doDetection;
             function detectAllTasks(classify) {
                 let num = 1;
-                let arr = getClassify(classify);
+                let arr = getClassArr(classify);
                 for (const key in arr) {
                     if (arr.hasOwnProperty(key)) {
                         const element = arr[key];
@@ -3757,124 +3720,16 @@
         })(Loding = lwg.Loding || (lwg.Loding = {}));
         let Start;
         (function (Start) {
-            class StartScene {
-            }
-            Start.StartScene = StartScene;
-        })(Start = lwg.Start || (lwg.Start = {}));
-        let Game;
-        (function (Game) {
-            let _platformTpye;
-            (function (_platformTpye) {
-                _platformTpye["WeChat"] = "WeChat";
-                _platformTpye["OPPO"] = "OPPO";
-                _platformTpye["Bytedance"] = "Bytedance";
-                _platformTpye["All"] = "All";
-            })(_platformTpye = Game._platformTpye || (Game._platformTpye = {}));
-            Game._platform = _platformTpye.Bytedance;
-            Game._gameSwitch = false;
-            Game._gameLevel = {
-                get value() {
-                    return Laya.LocalStorage.getItem('_gameLevel') ? Number(Laya.LocalStorage.getItem('_gameLevel')) : 1;
-                },
-                set value(val) {
-                    Laya.LocalStorage.setItem('_gameLevel', val.toString());
-                }
-            };
-            Game._practicalLevel = {
-                get value() {
-                    return Laya.LocalStorage.getItem('_practicalLevel') ? Number(Laya.LocalStorage.getItem('_practicalLevel')) : Game._gameLevel.value;
-                },
-                set value(val) {
-                    Laya.LocalStorage.setItem('_practicalLevel', val.toString());
-                }
-            };
-            function getLevelData(levelNum) {
-                let dataArr = Laya.loader.getRes("GameData/Game/GameLevel.json")['RECORDS'];
-                let level;
-                let num;
-                if (levelNum) {
-                    num = levelNum;
-                }
-                else {
-                    num = Game._gameLevel.value;
-                }
-                for (let index = 0; index < dataArr.length; index++) {
-                    const element = dataArr[index];
-                    if (element['name'] === 'level' + num) {
-                        level = element;
-                        break;
-                    }
-                }
-                if (level) {
-                    return level;
-                }
-                else {
-                    return dataArr[num - 1];
-                }
-            }
-            Game.getLevelData = getLevelData;
-            function getLevelData_Condition(levelNum) {
-                let level = getLevelData(levelNum ? levelNum : Game._gameLevel.value);
-                let arr0;
-                for (const key in level) {
-                    if (level.hasOwnProperty(key)) {
-                        if (key === 'condition') {
-                            arr0 = level[key];
-                        }
-                    }
-                }
-                if (arr0) {
-                    return arr0;
-                }
-                else {
-                    console.log('获取关卡描述失败');
-                }
-            }
-            Game.getLevelData_Condition = getLevelData_Condition;
-            let gameProperty;
-            (function (gameProperty) {
-                gameProperty["name"] = "name";
-                gameProperty["condition"] = "condition";
-                gameProperty["resCondition"] = "resCondition";
-                gameProperty["rewardType"] = "rewardType";
-                gameProperty["rewardNum"] = "rewardNum";
-            })(gameProperty = Game.gameProperty || (Game.gameProperty = {}));
-            let rewardType;
-            (function (rewardType) {
-                rewardType["gold"] = "gold";
-                rewardType["diamond"] = "diamond";
-            })(rewardType = Game.rewardType || (Game.rewardType = {}));
-            function _createLevel(parent, x, y) {
-                let sp;
-                Laya.loader.load('prefab/LevelNode.json', Laya.Handler.create(this, function (prefab) {
-                    let _prefab = new Laya.Prefab();
-                    _prefab.json = prefab;
-                    sp = Laya.Pool.getItemByCreateFun('prefab', _prefab.create, _prefab);
-                    parent.addChild(sp);
-                    sp.pos(x, y);
-                    sp.zOrder = 0;
-                    let level = sp.getChildByName('level');
-                    Game.LevelNode = sp;
-                }));
-            }
-            Game._createLevel = _createLevel;
-            Game._execution = {
-                get value() {
-                    return this.val = Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
-                },
-                set value(val) {
-                    this.val = val;
-                    Laya.LocalStorage.setItem('_execution', val.toString());
-                }
-            };
-            class GameScene extends Admin.Scene {
+            class StartScene extends Admin.Scene {
                 moduleOnAwake() {
                 }
                 moduleOnEnable() {
                 }
+                moduleEventReg() {
+                }
             }
-            Game.GameScene = GameScene;
-        })(Game = lwg.Game || (lwg.Game = {}));
+            Start.StartScene = StartScene;
+        })(Start = lwg.Start || (lwg.Start = {}));
         let Tomato;
         (function (Tomato) {
             let scenePointType;
@@ -3956,17 +3811,19 @@
         })(Tomato = lwg.Tomato || (lwg.Tomato = {}));
     })(lwg || (lwg = {}));
     let Admin = lwg.Admin;
-    let Gold = lwg.Gold;
-    let Click = lwg.Click;
     let EventAdmin = lwg.EventAdmin;
-    let Tools = lwg.Tools;
-    let Effects = lwg.Effects;
-    let PalyAudio = lwg.PalyAudio;
+    let Pause = lwg.Pause;
+    let Execution = lwg.Execution;
+    let Gold = lwg.Gold;
     let Setting = lwg.Setting;
+    let PalyAudio = lwg.PalyAudio;
+    let Click = lwg.Click;
+    let Effects = lwg.Effects;
     let Dialog = lwg.Dialog;
     let Animation2D = lwg.Animation2D;
     let Animation3D = lwg.Animation3D;
-    let Game = lwg.Game;
+    let Tools = lwg.Tools;
+    let Elect = lwg.Elect;
     let Loding = lwg.Loding;
     let LodeScene = lwg.Loding.LodingScene;
     let Shop = lwg.Shop;
@@ -3986,27 +3843,192 @@
     let StartScene = lwg.Start.StartScene;
     let Tomato = lwg.Tomato;
 
+    var lwg3D;
+    (function (lwg3D) {
+        class Scene3D extends Laya.Script3D {
+            constructor() {
+                super();
+                this.mainCameraFpos = new Laya.Vector3();
+            }
+            onAwake() {
+                this.self = this.owner;
+                this.calssName = this['__proto__']['constructor'].name;
+                this.MainCamera = this.self.getChildByName("Main Camera");
+                if (this.MainCamera) {
+                    this.mainCameraFpos.x = this.MainCamera.transform.localPositionX;
+                    this.mainCameraFpos.y = this.MainCamera.transform.localPositionY;
+                    this.mainCameraFpos.z = this.MainCamera.transform.localPositionZ;
+                }
+                this.lwgOnAwake();
+                this.lwgNodeDec();
+                this.lwgAdaptive();
+            }
+            lwgOnAwake() {
+            }
+            onEnable() {
+                this.self[this.calssName] = this;
+                this.lwgEventReg();
+                this.lwgOnEnable();
+                this.lwgBtnClick();
+                this.lwgAdaptive();
+                this.lwgOpenAni();
+            }
+            lwgNodeDec() {
+            }
+            lwgEventReg() {
+            }
+            lwgOnEnable() {
+            }
+            lwgBtnClick() {
+            }
+            lwgAdaptive() {
+            }
+            lwgOpenAni() {
+            }
+            lwgVanishAni() {
+            }
+            onUpdate() {
+                this.lwgOnUpDate();
+            }
+            lwgOnUpDate() {
+            }
+            onDisable() {
+                this.lwgOnDisable();
+                Laya.timer.clearAll(this);
+                Laya.Tween.clearAll(this);
+                EventAdmin.offCaller(this);
+            }
+            lwgOnDisable() {
+            }
+        }
+        lwg3D.Scene3D = Scene3D;
+        class Object3D extends Laya.Script3D {
+            constructor() {
+                super();
+            }
+            onAwake() {
+                this.self = this.owner;
+                this.selfTransform = this.self.transform;
+                this.selfScene = this.self.scene;
+                let calssName = this['__proto__']['constructor'].name;
+                this.self[calssName] = this;
+                this.rig3D = this.self.getComponent(Laya.Rigidbody3D);
+                this.BoxCol3D = this.self.getComponent(Laya.PhysicsCollider);
+                this.lwgNodeDec();
+            }
+            lwgNodeDec() { }
+            onEnable() {
+                this.lwgEventReg();
+                this.lwgOnEnable();
+            }
+            lwgOnEnable() { }
+            lwgBtnClick() {
+            }
+            lwgEventReg() {
+            }
+            onUpdate() {
+                this.lwgOnUpdate();
+            }
+            lwgOnUpdate() {
+            }
+            onDisable() {
+                this.lwgOnDisable();
+                Laya.Tween.clearAll(this);
+                Laya.timer.clearAll(this);
+                EventAdmin.offCaller(this);
+            }
+            lwgOnDisable() {
+            }
+        }
+        lwg3D.Object3D = Object3D;
+    })(lwg3D || (lwg3D = {}));
+
+    var Game3D;
+    (function (Game3D) {
+        Game3D.MyCardArr = [];
+        Game3D.OppositeCardArr = [];
+        function randomlyTakeOut(type) {
+            let index16 = Tools.randomNumOfArray(Game3D.personData, 16);
+            let startZ = 0.3;
+            for (let index = 0; index < index16.length; index++) {
+                const element = Game3D.AllCardTem.getChildByName(index16[index]['name']);
+                if (type === WhoScard.MyCard) {
+                    Game3D.MyCardArr.push(index16[index]['name']);
+                    Game3D.MyCard.addChild(element);
+                    if (index % 4 == 0) {
+                        startZ -= 0.5;
+                    }
+                    element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    element.transform.localRotationEulerX = 10;
+                }
+                else if (type === WhoScard.OppositeCard) {
+                    Game3D.OppositeCardArr.push(index16[index]['name']);
+                    Game3D.OppositeCard.addChild(element);
+                    if (index % 4 == 0) {
+                        startZ += 0.5;
+                    }
+                    element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    element.transform.localRotationEulerX = -10;
+                }
+            }
+        }
+        Game3D.randomlyTakeOut = randomlyTakeOut;
+        let WhoScard;
+        (function (WhoScard) {
+            WhoScard["OppositeCard"] = "OppositeCard";
+            WhoScard["MyCard"] = "MyCard";
+        })(WhoScard = Game3D.WhoScard || (Game3D.WhoScard = {}));
+        Game3D.characteristicsData = [];
+        Game3D.personData = [];
+        function dataInit() {
+            Game3D.characteristicsData = Laya.loader.getRes("GameData/Game/characteristics.json")['RECORDS'];
+            Game3D.personData = Laya.loader.getRes("GameData/Game/Person.json")['RECORDS'];
+        }
+        Game3D.dataInit = dataInit;
+        class MainScene extends lwg3D.Scene3D {
+            lwgOnAwake() {
+                Game3D.Scene3D = this.self;
+                Game3D.MainCamera = Game3D.Scene3D.getChildByName('Main Camera');
+                Game3D.MyCard = Game3D.Scene3D.getChildByName('MyCard');
+                Game3D.OppositeCard = Game3D.Scene3D.getChildByName('OppositeCard');
+                Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
+            }
+            lwgOnEnable() {
+                randomlyTakeOut(WhoScard.MyCard);
+                randomlyTakeOut(WhoScard.OppositeCard);
+            }
+        }
+        Game3D.MainScene = MainScene;
+    })(Game3D || (Game3D = {}));
+
     class LwgInit extends Admin.Scene {
         lwgOnAwake() {
             console.log('开始游戏每个模块的初始化');
-            this.gameInit();
-            this.shopInit();
-            this.skinInit();
-            this.taskInit();
-            this.easterEggInit();
+            this.admin();
+            this.game3D();
+            this.shop();
+            this.skin();
+            this.task();
+            this.easterEgg();
         }
-        gameInit() {
-        }
-        ;
-        skinInit() {
+        admin() {
         }
         ;
-        shopInit() {
+        game3D() {
+            Game3D.dataInit();
+            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+            Laya.stage.addChild(Game3D.Scene3D);
+            Game3D.Scene3D.addComponent(Game3D.MainScene);
+        }
+        skin() {
         }
         ;
-        taskInit() {
+        shop() {
         }
-        easterEggInit() {
+        ;
+        task() {
+        }
+        easterEgg() {
         }
         lwgOnEnable() {
             console.log('完成初始化');
@@ -4024,18 +4046,22 @@
                 "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
             Loding.list_3DPrefab = [];
-            Loding.list_Json = [];
+            Loding.list_Json = [
+                "GameData/Game/characteristics.json",
+                "GameData/Game/Person.json",
+            ];
         }
         lwgOnEnable() {
         }
         lodingPhaseComplete() {
         }
         lodingComplete() {
-            let Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-            Laya.stage.addChild(Scene3D);
         }
         lwgOnUpdate() {
         }
+    }
+
+    class UIStart extends Start.StartScene {
     }
 
     var REG = Laya.ClassUtils.regClass;
@@ -4110,19 +4136,20 @@
             var reg = Laya.ClassUtils.regClass;
             reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UILoding.ts", UILoding);
+            reg("script/Game/UIStart.ts", UIStart);
             reg("script/GameUI.ts", GameUI);
         }
     }
-    GameConfig.width = 640;
-    GameConfig.height = 1136;
+    GameConfig.width = 720;
+    GameConfig.height = 1280;
     GameConfig.scaleMode = "fixedwidth";
-    GameConfig.screenMode = "none";
+    GameConfig.screenMode = "vertical";
     GameConfig.alignV = "top";
     GameConfig.alignH = "left";
     GameConfig.startScene = "Scene/UILoding.scene";
     GameConfig.sceneRoot = "";
     GameConfig.debug = false;
-    GameConfig.stat = false;
+    GameConfig.stat = true;
     GameConfig.physicsDebug = false;
     GameConfig.exportSceneToJson = true;
     GameConfig.init();

@@ -186,7 +186,6 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
 									"path":"Assets/Mesh/Temporary/body.lmat"
 								}
 							]
@@ -222,7 +221,6 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
 									"path":"Assets/Mesh/Temporary/body.lmat"
 								}
 							]
@@ -332,43 +330,15 @@
 				"child":[]
 			},
 			{
-				"type":"Sprite3D",
+				"type":"MeshSprite3D",
 				"instanceID":9,
 				"props":{
-					"name":"CardParent",
+					"name":"CardTem",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
-						-0.29,
-						-1.07,
-						-5.79
-					],
-					"rotation":[
-						0,
-						0,
-						0,
-						-1
-					],
-					"scale":[
-						1,
-						1,
-						1
-					]
-				},
-				"components":[],
-				"child":[]
-			},
-			{
-				"type":"MeshSprite3D",
-				"instanceID":10,
-				"props":{
-					"name":"Card",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						4.23,
+						8.19,
 						-0.935,
 						-4.12
 					],
@@ -387,7 +357,6 @@
 					"enableRender":true,
 					"materials":[
 						{
-							"type":"Laya.BlinnPhongMaterial",
 							"path":"Resources/unity_builtin_extra.lmat"
 						}
 					]
@@ -420,7 +389,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":11,
+				"instanceID":10,
 				"props":{
 					"name":"EventSystem",
 					"active":true,
@@ -448,9 +417,37 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":12,
+				"instanceID":11,
 				"props":{
 					"name":"MyCard",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.2556089,
+						-1.206441,
+						-5.76
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					]
+				},
+				"components":[],
+				"child":[]
+			},
+			{
+				"type":"Sprite3D",
+				"instanceID":12,
+				"props":{
+					"name":"OppositeCard",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
@@ -472,309 +469,47 @@
 					]
 				},
 				"components":[],
+				"child":[]
+			},
+			{
+				"type":"Sprite3D",
+				"instanceID":13,
+				"props":{
+					"name":"AllCard",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						3.59,
+						-1.062715,
+						-5.61
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					]
+				},
+				"components":[],
 				"child":[
-					{
-						"type":"MeshSprite3D",
-						"instanceID":13,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.03439111,
-								0.1364408,
-								0.1441059
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxy1.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
 					{
 						"type":"MeshSprite3D",
 						"instanceID":14,
 						"props":{
-							"name":"Card",
+							"name":"zds1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.03439111,
-								0.1364408,
-								-0.3058944
-							],
-							"rotation":[
 								0,
 								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/zds2.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":15,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.03439111,
-								0.1364408,
-								-0.7558942
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/lyy3.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":16,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.03439111,
-								0.1364408,
-								-1.205894
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxk3.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":17,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0.4656089,
-								0.1364408,
-								0.1441059
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/zds5.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":18,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0.4656089,
-								0.1364408,
-								-0.3058944
+								0
 							],
 							"rotation":[
 								0,
@@ -823,16 +558,16 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":19,
+						"instanceID":15,
 						"props":{
-							"name":"Card",
+							"name":"zds2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								-0.7558942
+								0,
+								0,
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -849,7 +584,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Material/Card/lyy2.lmat"
+									"path":"Assets/Material/Card/zds2.lmat"
 								}
 							]
 						},
@@ -881,132 +616,16 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":20,
+						"instanceID":16,
 						"props":{
-							"name":"Card",
+							"name":"zds3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								-1.205894
-							],
-							"rotation":[
 								0,
 								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxk2.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":21,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.534391,
-								0.1364408,
-								0.1441059
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxy2.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":22,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.534391,
-								0.1364408,
-								-0.3058944
+								0.45
 							],
 							"rotation":[
 								0,
@@ -1055,132 +674,16 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":23,
+						"instanceID":17,
 						"props":{
-							"name":"Card",
+							"name":"zds4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.534391,
-								0.1364408,
-								-0.7558942
-							],
-							"rotation":[
 								0,
 								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/lyy4.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":24,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								-0.534391,
-								0.1364408,
-								-1.205894
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxk4.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":25,
-						"props":{
-							"name":"Card",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0.965609,
-								0.1364408,
-								0.1441059
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -1229,16 +732,16 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":26,
+						"instanceID":18,
 						"props":{
-							"name":"Card",
+							"name":"zds5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								-0.3058944
+								0,
+								0,
+								0.9
 							],
 							"rotation":[
 								0,
@@ -1255,7 +758,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Material/Card/lyy5.lmat"
+									"path":"Assets/Material/Card/zds5.lmat"
 								}
 							]
 						},
@@ -1287,16 +790,16 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":27,
+						"instanceID":19,
 						"props":{
-							"name":"Card",
+							"name":"lyy1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								-0.7558942
+								0,
+								0,
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -1345,16 +848,248 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":28,
+						"instanceID":20,
 						"props":{
-							"name":"Card",
+							"name":"lyy2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								-1.205894
+								0,
+								0,
+								1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/lyy2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":21,
+						"props":{
+							"name":"lyy3",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0,
+								0,
+								-1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/lyy3.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":22,
+						"props":{
+							"name":"lyy4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0,
+								0,
+								1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/lyy4.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":23,
+						"props":{
+							"name":"lyy5",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0,
+								0,
+								-2.25
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/lyy5.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":24,
+						"props":{
+							"name":"cxk1",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								0
 							],
 							"rotation":[
 								0,
@@ -1400,48 +1135,19 @@
 							}
 						],
 						"child":[]
-					}
-				]
-			},
-			{
-				"type":"Sprite3D",
-				"instanceID":29,
-				"props":{
-					"name":"Opposite",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						-0.2556089,
-						-1.206441,
-						-6.384106
-					],
-					"rotation":[
-						0,
-						0,
-						0,
-						-1
-					],
-					"scale":[
-						1,
-						1,
-						1
-					]
-				},
-				"components":[],
-				"child":[
+					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":30,
+						"instanceID":25,
 						"props":{
-							"name":"Card",
+							"name":"cxk2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.03439111,
-								0.1364408,
-								0.5941057
+								0.5,
+								0,
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -1458,8 +1164,297 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/cxk2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":26,
+						"props":{
+							"name":"cxk3",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								0.45
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/cxk3.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":27,
+						"props":{
+							"name":"cxk4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								-0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/cxk4.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":28,
+						"props":{
+							"name":"cxk5",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/cxk5.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":29,
+						"props":{
+							"name":"cxy1",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								-1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/cxy1.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":30,
+						"props":{
+							"name":"cxy2",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0.5,
+								0,
+								1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/cxy2.lmat"
 								}
 							]
 						},
@@ -1493,14 +1488,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":31,
 						"props":{
-							"name":"Card",
+							"name":"cxy3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.03439111,
-								0.1364408,
-								1.044106
+								0.5,
+								0,
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -1517,8 +1512,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/cxy3.lmat"
 								}
 							]
 						},
@@ -1552,14 +1546,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":32,
 						"props":{
-							"name":"Card",
+							"name":"cxy4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.03439111,
-								0.1364408,
-								1.494106
+								0.5,
+								0,
+								1.8
 							],
 							"rotation":[
 								0,
@@ -1576,8 +1570,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/cxy4.lmat"
 								}
 							]
 						},
@@ -1611,14 +1604,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":33,
 						"props":{
-							"name":"Card",
+							"name":"cxy5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.03439111,
-								0.1364408,
-								1.944106
+								0.5,
+								0,
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -1635,8 +1628,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/cxy5.lmat"
 								}
 							]
 						},
@@ -1670,14 +1662,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":34,
 						"props":{
-							"name":"Card",
+							"name":"xxs1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								0.5941057
+								-0.5,
+								0,
+								0
 							],
 							"rotation":[
 								0,
@@ -1694,8 +1686,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/xxs1.lmat"
 								}
 							]
 						},
@@ -1729,14 +1720,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":35,
 						"props":{
-							"name":"Card",
+							"name":"xxs2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								1.044106
+								-0.5,
+								0,
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -1753,8 +1744,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/xxs2.lmat"
 								}
 							]
 						},
@@ -1788,14 +1778,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":36,
 						"props":{
-							"name":"Card",
+							"name":"xxs3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								1.494106
+								-0.5,
+								0,
+								0.45
 							],
 							"rotation":[
 								0,
@@ -1812,8 +1802,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/xxs3.lmat"
 								}
 							]
 						},
@@ -1847,14 +1836,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":37,
 						"props":{
-							"name":"Card",
+							"name":"xxs4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.4656089,
-								0.1364408,
-								1.944106
+								-0.5,
+								0,
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -1871,8 +1860,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/xxs4.lmat"
 								}
 							]
 						},
@@ -1906,14 +1894,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":38,
 						"props":{
-							"name":"Card",
+							"name":"xxs5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.534391,
-								0.1364408,
-								0.5941057
+								-0.5,
+								0,
+								0.9
 							],
 							"rotation":[
 								0,
@@ -1930,8 +1918,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/xxs5.lmat"
 								}
 							]
 						},
@@ -1965,14 +1952,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":39,
 						"props":{
-							"name":"Card",
+							"name":"scp1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.534391,
-								0.1364408,
-								1.044106
+								-0.5,
+								0,
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -1989,8 +1976,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/scp1.lmat"
 								}
 							]
 						},
@@ -2024,14 +2010,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":40,
 						"props":{
-							"name":"Card",
+							"name":"scp2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.534391,
-								0.1364408,
-								1.494106
+								-0.5,
+								0,
+								1.35
 							],
 							"rotation":[
 								0,
@@ -2048,8 +2034,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/scp2.lmat"
 								}
 							]
 						},
@@ -2083,14 +2068,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":41,
 						"props":{
-							"name":"Card",
+							"name":"scp3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.534391,
-								0.1364408,
-								1.944106
+								-0.5,
+								0,
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -2107,8 +2092,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/scp3.lmat"
 								}
 							]
 						},
@@ -2142,14 +2126,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":42,
 						"props":{
-							"name":"Card",
+							"name":"scp4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								0.5941057
+								-0.5,
+								0,
+								1.8
 							],
 							"rotation":[
 								0,
@@ -2166,8 +2150,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/scp4.lmat"
 								}
 							]
 						},
@@ -2201,14 +2184,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":43,
 						"props":{
-							"name":"Card",
+							"name":"scp5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								1.044106
+								-0.5,
+								0,
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -2225,8 +2208,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/scp5.lmat"
 								}
 							]
 						},
@@ -2260,14 +2242,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":44,
 						"props":{
-							"name":"Card",
+							"name":"fkr1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								1.494106
+								1,
+								0,
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -2284,8 +2266,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/fkr1.lmat"
 								}
 							]
 						},
@@ -2319,14 +2300,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":45,
 						"props":{
-							"name":"Card",
+							"name":"fkr2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.965609,
-								0.1364408,
-								1.944106
+								1,
+								0,
+								1.35
 							],
 							"rotation":[
 								0,
@@ -2343,8 +2324,1167 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"type":"Laya.BlinnPhongMaterial",
-									"path":"Resources/unity_builtin_extra.lmat"
+									"path":"Assets/Material/Card/fkr2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":46,
+						"props":{
+							"name":"fkr3",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								-1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr3.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":47,
+						"props":{
+							"name":"fkr4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":48,
+						"props":{
+							"name":"fkr5",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								-2.25
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr5.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":49,
+						"props":{
+							"name":"fkr6",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								0
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr6.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":50,
+						"props":{
+							"name":"fkr7",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-0.45
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr7.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":51,
+						"props":{
+							"name":"fkr8",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								0.45
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr8.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":52,
+						"props":{
+							"name":"fkr9",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr9.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":53,
+						"props":{
+							"name":"atmzw",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atmzw.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":54,
+						"props":{
+							"name":"atm2",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atm2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":55,
+						"props":{
+							"name":"atm3",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atm4.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":56,
+						"props":{
+							"name":"atm4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atm4.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":57,
+						"props":{
+							"name":"atm5",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								1.8
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atm5.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":58,
+						"props":{
+							"name":"atm6",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-2.25
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/atm6.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":59,
+						"props":{
+							"name":"lb",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								0
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/lb.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":60,
+						"props":{
+							"name":"zbj",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								-0.45
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/zbj.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":61,
+						"props":{
+							"name":"swk",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								0.45
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/swk.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":62,
+						"props":{
+							"name":"yj",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								-0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/yj.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":63,
+						"props":{
+							"name":"nz",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								0.9
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/nz.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":64,
+						"props":{
+							"name":"nm",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1.532,
+								0,
+								-1.35
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/nm.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":65,
+						"props":{
+							"name":"dj",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1.58,
+								0,
+								0.4499998
+							],
+							"rotation":[
+								0,
+								0,
+								0,
+								-1
+							],
+							"scale":[
+								0.3,
+								0.35,
+								0.02
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/swk.lmat"
 								}
 							]
 						},

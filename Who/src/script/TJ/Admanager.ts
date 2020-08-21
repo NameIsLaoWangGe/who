@@ -1,4 +1,4 @@
-import { EventAdmin, Task, EasterEgg, PalyAudio, Admin, Dialog, Game } from "../Frame/lwg";
+import { EventAdmin, Task, EasterEgg, PalyAudio, Admin, Dialog } from "../Frame/lwg";
 // import UIADSHint from "../Game/UIADSHint";
 export default class ADManager {
 
@@ -16,8 +16,6 @@ export default class ADManager {
         p.place = TJ.ADS.Place.BOTTOM | TJ.ADS.Place.CENTER;
         TJ.ADS.Api.RemoveBanner(p);
     }
-
-
     public static ShowNormal() {
         // let p = new TJ.ADS.Param();
         // TJ.ADS.Api.ShowNormal(p);
@@ -33,7 +31,7 @@ export default class ADManager {
     public static ShowReward(rewardAction: Function, CDTime: number = 500)//展示激励广告，一般是视频
     {
 
-        if (Game._platform === Game._platformTpye.OPPO) {
+        if (Admin._platform === Admin._platformTpye.OPPO) {
             rewardAction();
             EventAdmin.notify(Task.EventType.adsTime);
             EventAdmin.notify(EasterEgg.EventType.easterEggAds);
