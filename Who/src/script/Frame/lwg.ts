@@ -256,7 +256,7 @@ export module lwg {
             }
             Laya.timer.once(startDelayed, this, () => {
                 let Pre_Dialogue;
-                Laya.loader.load('Prefab/Pre_Dialogue.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
+                Laya.loader.load('Prefab/Dialogue_Common.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
                     let _prefab = new Laya.Prefab();
                     _prefab.json = prefab;
                     Pre_Dialogue = Laya.Pool.getItemByCreateFun('Pre_Dialogue', _prefab.create, _prefab);
@@ -301,11 +301,23 @@ export module lwg {
             })
         }
 
-
-        export function createDialogHint(): void {
-            Laya.loader.load('Prefab/Pre_Dialogue.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
-
-
+        /**
+         * 创建一个普通的对话框
+         * @param parent 父节点
+         * @param x x位置
+         * @param y y位置
+         * @param content 
+         */
+        export function createCommonDialog(parent, x, y, content: string): void {
+            let Dialogue_Common;
+            Laya.loader.load('Prefab/Dialogue_Common.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
+                let _prefab = new Laya.Prefab();
+                _prefab.json = prefab;
+                Dialogue_Common = Laya.Pool.getItemByCreateFun('Dialogue_Common', _prefab.create, _prefab);
+                parent.addChild(Dialogue_Common);
+                Dialogue_Common.pos(x, y);
+                let Content = Dialogue_Common.getChildByName('Dialogue_Common') as Laya.Label;
+                Content.text = content;
             }))
         }
     }
@@ -868,8 +880,6 @@ export module lwg {
                 LevelNode = sp;
             }));
         }
-
-
         /**暂停当前游戏*/
         export let _pause = {
             get switch(): boolean {
@@ -886,6 +896,22 @@ export module lwg {
                 }
             }
         }
+
+        // /**预制体池，每次创建一个新的预制体后，将会被保存在预制体池当中*/
+        // export let _prefabPool;
+        // /**
+        //  * 创建一个预制体，预制体必须在Prefab文件夹中
+        //  * @param name 预制体名称
+        // */
+        // export function _createPrefab(name): void {
+        //     let sp: Laya.Sprite;
+        //     Laya.loader.load('Prefab/GoldNode.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
+        //         let _prefab = new Laya.Prefab();
+        //         _prefab.json = prefab;
+        //         sp = Laya.Pool.getItemByCreateFun('gold', _prefab.create, _prefab);
+        //         let num = sp.getChildByName('Num') as Laya.Label;
+        //     }));
+        // }
 
         /**场景控制,访问特定场景用_sceneControl[name]访问*/
         export let _sceneControl: any = {};
@@ -935,6 +961,7 @@ export module lwg {
             UIEasterEgg = 'UIEasterEgg',
             UIADSHint = 'UIADSHint',
             LwgInit = 'LwgInit',
+            GameScene = 'GameScene'
         }
 
         /**游戏当前的状态*/
@@ -1606,6 +1633,16 @@ export module lwg {
     */
     export module Click {
 
+        /**
+         * 动态创建一个按钮
+         */
+        export function createButton(): void {
+            let Btn = new Laya.Sprite();
+            let img = new Laya.Image();
+            let label = new Laya.Label();
+
+        }
+
         /**点击事件类型*/
         export enum Type {
             /**无效果*/
@@ -1815,7 +1852,7 @@ export module lwg {
         /**缓动集合，用于清除当前this上的所有缓动*/
         export let tweenMap: any = {};
         /**帧率*/
-        export let frame: number = 1;
+        export let frameRate: number = 1;
         /**
           * 移动物体
           * @param target 目标物体
@@ -1829,7 +1866,7 @@ export module lwg {
           * @param update 更新函数
           * @param frame 帧数间隔
           */
-        export function MoveTo(target: Laya.Sprite3D, toPos: Laya.Vector3, duration: number, caller: any
+        export function moveTo(target: Laya.Sprite3D, toPos: Laya.Vector3, duration: number, caller: any
             , ease?: Function, complete?: Function, delay: number = 0, coverBefore: boolean = true, update?: Function, frame?: number) {
             let position: Laya.Vector3 = target.transform.position.clone();
             // target["position"] = target.transform.position;
@@ -1839,7 +1876,7 @@ export module lwg {
                 return;
             }
             if (frame <= 0 || frame === undefined || frame === null) {
-                frame = this.frame;
+                frame = frameRate;
             }
             let updateRenderPos = function () {
                 if (target.transform) {
@@ -1866,7 +1903,6 @@ export module lwg {
             tweenMap[target.id].push(tween);
         }
 
-
         /**
           * 旋转物体
           * @param target 目标物体
@@ -1880,7 +1916,7 @@ export module lwg {
           * @param update 更新函数
           * @param frame 帧数间隔
           */
-        export function RotateTo(target: Laya.Sprite3D, toRotation: Laya.Vector3, duration: number, caller: any
+        export function rotateTo(target: Laya.Sprite3D, toRotation: Laya.Vector3, duration: number, caller: any
             , ease?: Function, complete?: Function, delay?: number, coverBefore?: boolean, update?: Function, frame?: number) {
             let rotation: Laya.Vector3 = target.transform.localRotationEuler.clone();
             if (duration == 0 || duration === undefined || duration === null) {
@@ -1889,7 +1925,7 @@ export module lwg {
                 return;
             }
             if (frame <= 0 || frame === undefined || frame === null) {
-                frame = this.frame;
+                frame = frameRate;
             }
             let updateRenderRotation = function () {
                 if (target.transform) {
@@ -1930,7 +1966,7 @@ export module lwg {
         * @param update 更新函数
         * @param frame 帧数间隔
         */
-        export function ScaleTo(target: Laya.Sprite3D, toScale: Laya.Vector3, duration: number, caller: any
+        export function scaleTo(target: Laya.Sprite3D, toScale: Laya.Vector3, duration: number, caller: any
             , ease?: Function, complete?: Function, delay?: number, coverBefore?: boolean, update?: Function, frame?: number) {
             let localScale = target.transform.localScale.clone();
             if (duration == 0 || duration === undefined || duration === null) {
@@ -1939,7 +1975,7 @@ export module lwg {
                 return;
             }
             if (frame <= 0 || frame === undefined || frame === null) {
-                frame = this.frame;
+                frame = frameRate;
             }
             let updateRenderPos = function () {
                 target.transform.localScale = localScale.clone();
@@ -1974,6 +2010,38 @@ export module lwg {
             Laya.timer.clearAll(target);
         }
 
+        /**
+         * 摇头动画，左右各摇摆一次，然后回到原来位置
+         * @param target 目标
+         * @param range 幅度
+         * @param duration 时间
+         * @param caller 回调执行域
+         * @param func 回调函数
+         * @param delayed 延时 
+         * @param ease 缓动效果
+         */
+        export function rock(target: Laya.MeshSprite3D, range: Laya.Vector3, duration: number, caller: any, func?: Function, delayed?: number, ease?: Function): void {
+            if (!delayed) {
+                delayed = 0;
+            }
+            let v1: Laya.Vector3 = new Laya.Vector3(target.transform.localRotationEulerX + range.x, target.transform.localRotationEulerY + range.y, target.transform.localRotationEulerZ + range.z);
+
+            rotateTo(target, v1, duration / 2, caller, ease, () => {
+
+                let v2: Laya.Vector3 = new Laya.Vector3(target.transform.localRotationEulerX - range.x * 2, target.transform.localRotationEulerY - range.y * 2, target.transform.localRotationEulerZ - range.z * 2);
+
+                rotateTo(target, v2, duration, caller, ease, () => {
+
+                    let v3: Laya.Vector3 = new Laya.Vector3(target.transform.localRotationEulerX + range.x, target.transform.localRotationEulerY + range.y, target.transform.localRotationEulerZ + range.z);
+
+                    rotateTo(target, v3, duration / 2, caller, ease, () => {
+                        if (func) {
+                            func();
+                        }
+                    });
+                });
+            }, delayed);
+        }
     }
 
     /**动画模块*/
@@ -3503,8 +3571,8 @@ export module lwg {
 
         /**
          * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序
-         * @param arr 
-         * @param num 
+         * @param arr 数组
+         * @param num 取出几个元素
          */
         export function arrayRandomGetOut(arr: Array<any>, num: number): any {
             let arr0 = [];

@@ -31,7 +31,7 @@
 					"position":[
 						0,
 						1.37,
-						-10
+						-9.3
 					],
 					"rotation":[
 						0,
@@ -141,8 +141,8 @@
 					"layer":0,
 					"position":[
 						-0.11,
-						-2.71,
-						-3.03
+						-2.95,
+						-3.357
 					],
 					"rotation":[
 						0,
@@ -186,7 +186,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Mesh/Temporary/body.lmat"
+									"path":"Assets/Material/Card/cxk3.lmat"
 								}
 							]
 						},
@@ -221,7 +221,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Mesh/Temporary/body.lmat"
+									"path":"Assets/Material/Card/cxk1.lmat"
 								}
 							]
 						},
@@ -357,6 +357,7 @@
 					"enableRender":true,
 					"materials":[
 						{
+							"type":"Laya.BlinnPhongMaterial",
 							"path":"Resources/unity_builtin_extra.lmat"
 						}
 					]
@@ -3515,6 +3516,65 @@
 						"child":[]
 					}
 				]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":66,
+				"props":{
+					"name":"OppositeHandParent",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.085,
+						-1.022,
+						-4.53
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
 			}
 		]
 	}

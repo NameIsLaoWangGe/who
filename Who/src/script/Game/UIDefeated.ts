@@ -1,11 +1,11 @@
 import RecordManager from "../TJ/RecordManager";
-import { Admin, Setting, PalyAudio, Click, EventAdmin, Game } from "../Frame/lwg";
+import { Admin, Setting, PalyAudio, Click, EventAdmin } from "../Frame/lwg";
 import ADManager, { TaT } from "../TJ/Admanager";
 
 export default class UIDefeated extends Admin.Scene {
 
     lwgOnAwake(): void {
-        Admin._gameStart = false;
+        Admin._gameSwitch = false;
     }
 
     lwgNodeDec(): void {
@@ -15,7 +15,7 @@ export default class UIDefeated extends Admin.Scene {
     }
 
     lwgOnEnable(): void {
-        ADManager.TAPoint(TaT.LevelFail, 'level' + Game._gameLevel.value);
+        ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
 
         ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
         ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
@@ -23,20 +23,20 @@ export default class UIDefeated extends Admin.Scene {
         Setting.setBtnAppear();
         PalyAudio.playDefeatedSound();
 
-        switch (Game._platform) {
-            case Game._platformTpye.OPPO:
+        switch (Admin._platform) {
+            case Admin._platformTpye.OPPO:
                 this.self['OPPO'].visible = true;
                 this.self['WeChat'].visible = false;
                 this.self['Bytedance'].visible = false;
                 this.self['P202'].removeSelf();
                 break;
-            case Game._platformTpye.WeChat:
+            case Admin._platformTpye.WeChat:
                 this.self['OPPO'].visible = false;
                 this.self['WeChat'].visible = true;
                 this.self['Bytedance'].visible = false;
                 this.self['P202'].removeSelf();
                 break;
-            case Game._platformTpye.Bytedance:
+            case Admin._platformTpye.Bytedance:
                 this.self['OPPO'].visible = false;
                 this.self['WeChat'].visible = false;
                 this.self['Bytedance'].visible = true;
@@ -61,11 +61,11 @@ export default class UIDefeated extends Admin.Scene {
 
     btnSelectUp(): void {
         let Dot;
-        switch (Game._platform) {
-            case Game._platformTpye.WeChat:
+        switch (Admin._platform) {
+            case Admin._platformTpye.WeChat:
                 Dot = this.self['Dot_WeChat'];
                 break;
-            case Game._platformTpye.Bytedance:
+            case Admin._platformTpye.Bytedance:
                 Dot = this.self['Dot_Bytedance'];
                 break;
 
@@ -103,7 +103,7 @@ export default class UIDefeated extends Admin.Scene {
         ADManager.ShowReward(() => {
             ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
 
-            Game._gameLevel.value += 1;
+            Admin._gameLevel.value += 1;
             EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
             Admin._openScene(Admin.SceneName.UIStart, this.self);
         })

@@ -39,6 +39,9 @@ export default class LwgInit extends Admin.Scene {
     easterEgg(): void {
 
     }
+
+    Playaodiu
+    
     lwgOnEnable(): void {
         console.log('完成初始化');
         Admin._openScene(Admin.SceneName.UIStart, this.self);
