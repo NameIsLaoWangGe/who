@@ -9,23 +9,25 @@ export module Game3D {
     export let OppositeCard: Laya.MeshSprite3D;
     export let AllCardTem: Laya.MeshSprite3D;
 
-    /**本局我方卡牌数组*/
-    export let MyCardArr: Array<string> = [];
-    /**本局對方卡牌数组*/
-    export let OppositeCardArr: Array<string> = [];
+    /**本局我方卡牌名称数组*/
+    export let myCardArr: Array<string> = [];
+    /**本局對方卡牌名称数组*/
+    export let oppositeCardArr: Array<string> = [];
+    /**本回合需我方需要提问的特征*/
+    export let questionArr: Array<string> = [];
 
     /**
-     * 随机取出16张卡牌
+     * 随机取出16张卡牌，放在合适的位置
      * @param type 取出到我方还是对方
      * */
     export function randomlyTakeOut(type): void {
-        let index16 = Tools.randomNumOfArray(personData, 16);
+        let index16 = Tools.arrayRandomGetOut(personData, 16);
 
         let startZ = 0.3;
         for (let index = 0; index < index16.length; index++) {
             const element = AllCardTem.getChildByName(index16[index]['name']) as Laya.MeshSprite3D;
-            if (type === WhoScard.MyCard) {
-                MyCardArr.push(index16[index]);
+            if (type === WhichScard.MyCard) {
+                myCardArr.push(index16[index]);
                 MyCard.addChild(element);
 
                 if (index % 4 == 0) {
@@ -33,8 +35,8 @@ export module Game3D {
                 }
                 element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
                 element.transform.localRotationEulerX = 10;
-            } else if (type === WhoScard.OppositeCard) {
-                OppositeCardArr.push(index16[index]);
+            } else if (type === WhichScard.OppositeCard) {
+                oppositeCardArr.push(index16[index]);
                 OppositeCard.addChild(element);
 
                 if (index % 4 == 0) {
@@ -45,17 +47,18 @@ export module Game3D {
             }
         }
     }
+
     /**
      * 随机出一张需要猜的牌，规则是:
-     * 1.初始化一个和characteristicsData长度相等的数组arr[{}]，每个元素开始都为{name，0}，
-     * 2.循环出每个角色的属性名，如果这个属性存在，那么在arr中对应索引值的元素+1，
+     * 1.初始化一个和characteristicsData长度相等的数组arr[{}]，每个元素开始都为{index：index，value：0}，
+     * 2.循环出每个角色的属性索引值，匹配arr数组的索引值，如果匹配到，那么在arr中对应索引值的value+1，
      * 3.循环结束后，凡是有的属性，在arr中的对象中的值会递增，
-     * 4.排除0的属性，然后排序，那么在中间的位置，则是我们需要找到的属性
-     * @param type 是我的卡牌还是对应的卡牌
+     * 4.排除0的属性，然后排序，那么在中间的位置，则是我们需要找到的属性,然后对此提问
+     * @param type 是我的卡牌还是对方的卡牌 
      * */
     export function randomTaskCard(type): void {
+        // 空白属性表格
         let contrastArr = [];
-        
         for (let index = 0; index < characteristicsData.length; index++) {
             let index1 = characteristicsData[index][characteristicsProperty.index];
             contrastArr.push({
@@ -63,8 +66,17 @@ export module Game3D {
                 value: 0
             });
         }
-        for (let i = 0; i < MyCardArr.length; i++) {
-            const characteristicsArr = MyCardArr[i][personProperty.characteristicsArr];
+
+        // 在空白表格上对属性数量进行数量标记
+        let whichArr;
+        if (type === WhichScard.MyCard) {
+            whichArr = myCardArr;
+        } else {
+            whichArr = oppositeCardArr;
+        }
+
+        for (let i = 0; i < myCardArr.length; i++) {
+            const characteristicsArr = myCardArr[i][personProperty.characteristicsArr];
             for (let j = 0; j < characteristicsArr.length; j++) {
                 const characteristicsIndex = characteristicsArr[j];
                 contrastArr[characteristicsIndex - 1]['value']++;
@@ -77,17 +89,38 @@ export module Game3D {
                 index--;
             }
         }
-        Tools.objPropertySort(contrastArr, 'value');
+        // 对属性排序去重
+        Tools.objArrPropertySort(contrastArr, 'value');
+        Tools.objArrUnique(contrastArr, 'value');
+        // 根据当前属性剩余数量，和卡牌剩余数量取出问题
+        var fetch = () => {
+            if (contrastArr.length === 4) {
+                // questionArr = Tools.objArrGetValue(ch);
+            } else {
+
+            }
+        }
+
+        if (whichArr.length == 1) {
+
+        } else if (whichArr.length == 2) {
+
+        } else if (whichArr.length == 3) {
+
+        } else if (whichArr.length >= 4) {
+            fetch();
+        }
     }
 
     /**谁的卡牌*/
-    export enum WhoScard {
+    export enum WhichScard {
         OppositeCard = 'OppositeCard',
         MyCard = 'MyCard',
     }
-    
+
     /**特征总表*/
     export let characteristicsData = [];
+
     /**特征表中的属性*/
     export enum characteristicsProperty {
         /**属性表中的序号*/
@@ -121,9 +154,10 @@ export module Game3D {
         }
 
         lwgOnEnable(): void {
-            randomlyTakeOut(WhoScard.MyCard);
-            randomlyTakeOut(WhoScard.OppositeCard);
-            randomTaskCard(WhoScard.MyCard);
+
+            randomlyTakeOut(WhichScard.MyCard);
+            randomlyTakeOut(WhichScard.OppositeCard);
+            randomTaskCard(WhichScard.MyCard);
 
         }
     }

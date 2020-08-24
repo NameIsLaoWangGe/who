@@ -655,8 +655,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -1094,8 +1094,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -2275,32 +2275,54 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
-            function randomNumer(section1, section2) {
+            function randomNumber(section1, section2) {
                 if (section2) {
-                    return Math.floor(Math.random() * section2) + section1;
+                    return Math.floor(Math.random() * (section2 - section1)) + section1;
                 }
                 else {
                     return Math.floor(Math.random() * section1);
                 }
             }
-            Tools.randomNumer = randomNumer;
-            function randomNumOfArray(arr, num) {
-                let arr0 = [];
-                if (num > arr.length) {
-                    return '数组长度小于取出的数！';
+            Tools.randomNumber = randomNumber;
+            function randomCountNumer(section1, section2, count, intSet) {
+                let arr = [];
+                if (!count) {
+                    count = 1;
+                }
+                if (!intSet) {
+                    intSet = true;
+                }
+                if (section2) {
+                    while (count > arr.length) {
+                        let num;
+                        if (intSet) {
+                            num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                        }
+                        else {
+                            num = Math.random() * (section2 - section1) + section1;
+                        }
+                        arr.push(num);
+                        Tools.arrayUnique_01(arr);
+                    }
+                    return arr;
                 }
                 else {
-                    for (let index = 0; index < num; index++) {
-                        let ran = Math.floor(Math.random() * (arr.length - 1));
-                        let a1 = arr[ran];
-                        arr.splice(ran, 1);
-                        arr0.push(a1);
+                    while (count > arr.length) {
+                        let num;
+                        if (intSet) {
+                            num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                        }
+                        else {
+                            num = Math.random() * (section2 - section1) + section1;
+                        }
+                        arr.push(num);
+                        Tools.arrayUnique_01(arr);
                     }
-                    return arr0;
+                    return arr;
                 }
             }
-            Tools.randomNumOfArray = randomNumOfArray;
-            function rayScanning(camera, scene3D, point, filtrate) {
+            Tools.randomCountNumer = randomCountNumer;
+            function d3_rayScanning(camera, scene3D, point, filtrate) {
                 let _ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
                 let outs = new Array();
                 camera.viewportPointToRay(point, _ray);
@@ -2319,18 +2341,18 @@
                     return outs;
                 }
             }
-            Tools.rayScanning = rayScanning;
-            function dotRotateXY(x0, y0, x1, y1, angle) {
+            Tools.d3_rayScanning = d3_rayScanning;
+            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
                 let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
                 let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
                 return new Laya.Point(x2, y2);
             }
-            Tools.dotRotateXY = dotRotateXY;
-            function toHexString(r, g, b) {
+            Tools.d2_dotRotateXY = d2_dotRotateXY;
+            function color_toHexString(r, g, b) {
                 return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
             }
-            Tools.toHexString = toHexString;
-            function twoObjectsLen_3D(obj1, obj2) {
+            Tools.color_toHexString = color_toHexString;
+            function d3_twoObjectsLen(obj1, obj2) {
                 let obj1V3 = obj1.transform.position;
                 let obj2V3 = obj2.transform.position;
                 let p = new Laya.Vector3();
@@ -2338,20 +2360,20 @@
                 let lenp = Laya.Vector3.scalarLength(p);
                 return lenp;
             }
-            Tools.twoObjectsLen_3D = twoObjectsLen_3D;
-            function twoPositionLen_3D(v1, v2) {
-                let p = twoSubV3_3D(v1, v2);
+            Tools.d3_twoObjectsLen = d3_twoObjectsLen;
+            function d3_twoPositionLen(v1, v2) {
+                let p = d3_twoSubV3(v1, v2);
                 let lenp = Laya.Vector3.scalarLength(p);
                 return lenp;
             }
-            Tools.twoPositionLen_3D = twoPositionLen_3D;
-            function twoObjectsLen_2D(obj1, obj2) {
+            Tools.d3_twoPositionLen = d3_twoPositionLen;
+            function d2_twoObjectsLen(obj1, obj2) {
                 let point = new Laya.Point(obj1.x, obj1.y);
                 let len = point.distance(obj2.x, obj2.y);
                 return len;
             }
-            Tools.twoObjectsLen_2D = twoObjectsLen_2D;
-            function twoSubV3_3D(V3_01, V3_02, normalizing) {
+            Tools.d2_twoObjectsLen = d2_twoObjectsLen;
+            function d3_twoSubV3(V3_01, V3_02, normalizing) {
                 let p = new Laya.Vector3();
                 Laya.Vector3.subtract(V3_01, V3_02, p);
                 if (normalizing) {
@@ -2363,8 +2385,8 @@
                     return p;
                 }
             }
-            Tools.twoSubV3_3D = twoSubV3_3D;
-            function reverseVector(type, Vecoter1, Vecoter2, normalizing) {
+            Tools.d3_twoSubV3 = d3_twoSubV3;
+            function dAll_reverseVector(type, Vecoter1, Vecoter2, normalizing) {
                 let p;
                 if (type === '2d') {
                     p = new Laya.Point(Vecoter1.x - Vecoter2.x, Vecoter1.y - Vecoter2.y);
@@ -2385,8 +2407,8 @@
                     }
                 }
             }
-            Tools.reverseVector = reverseVector;
-            function vector_Angle(x, y) {
+            Tools.dAll_reverseVector = dAll_reverseVector;
+            function d2_Vector_Angle(x, y) {
                 let radian = Math.atan2(x, y);
                 let angle = 90 - radian * (180 / Math.PI);
                 if (angle <= 0) {
@@ -2394,16 +2416,16 @@
                 }
                 return angle - 90;
             }
-            Tools.vector_Angle = vector_Angle;
-            function angle_Vector(angle) {
+            Tools.d2_Vector_Angle = d2_Vector_Angle;
+            function d2_angle_Vector(angle) {
                 angle -= 90;
                 let radian = (90 - angle) / (180 / Math.PI);
                 let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
                 p.normalize();
                 return p;
             }
-            Tools.angle_Vector = angle_Vector;
-            function maximumDistanceLimi_3D(originV3, obj, length) {
+            Tools.d2_angle_Vector = d2_angle_Vector;
+            function d3_maximumDistanceLimi(originV3, obj, length) {
                 let subP = new Laya.Vector3();
                 let objP = obj.transform.position;
                 Laya.Vector3.subtract(objP, originV3, subP);
@@ -2419,8 +2441,8 @@
                     return p;
                 }
             }
-            Tools.maximumDistanceLimi_3D = maximumDistanceLimi_3D;
-            function drawPieMask(parent, startAngle, endAngle) {
+            Tools.d3_maximumDistanceLimi = d3_maximumDistanceLimi;
+            function img_drawPieMask(parent, startAngle, endAngle) {
                 parent.cacheAs = "bitmap";
                 let drawPieSpt = new Laya.Sprite();
                 drawPieSpt.blendMode = "destination-out";
@@ -2428,8 +2450,8 @@
                 let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
                 return drawPie;
             }
-            Tools.drawPieMask = drawPieMask;
-            function transitionScreenPointfor3D(v3, camera) {
+            Tools.img_drawPieMask = img_drawPieMask;
+            function d3_TransitionScreenPointfor(v3, camera) {
                 let ScreenV3 = new Laya.Vector3();
                 camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
                 let point = new Laya.Vector2();
@@ -2437,8 +2459,8 @@
                 point.y = ScreenV3.y;
                 return point;
             }
-            Tools.transitionScreenPointfor3D = transitionScreenPointfor3D;
-            function objPropertySort(array, property) {
+            Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
+            function objArrPropertySort(array, property) {
                 var compare = function (obj1, obj2) {
                     var val1 = obj1[property];
                     var val2 = obj2[property];
@@ -2459,8 +2481,8 @@
                 array.sort(compare);
                 return array;
             }
-            Tools.objPropertySort = objPropertySort;
-            function dataCompareDifferent(data1, data2, property) {
+            Tools.objArrPropertySort = objArrPropertySort;
+            function objArrCompareDifferent(data1, data2, property) {
                 var result = [];
                 for (var i = 0; i < data1.length; i++) {
                     var obj1 = data1[i];
@@ -2480,8 +2502,8 @@
                 }
                 return result;
             }
-            Tools.dataCompareDifferent = dataCompareDifferent;
-            function dataComparEidentical(data1, data2, property) {
+            Tools.objArrCompareDifferent = objArrCompareDifferent;
+            function objArrComparEidentical(data1, data2, property) {
                 var result = [];
                 for (var i = 0; i < data1.length; i++) {
                     var obj1 = data1[i];
@@ -2501,20 +2523,53 @@
                 }
                 return result;
             }
-            Tools.dataComparEidentical = dataComparEidentical;
-            function data1AddToData2(data1, data2) {
+            Tools.objArrComparEidentical = objArrComparEidentical;
+            function objArrUnique(arr, property) {
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    for (var j = i + 1, len = arr.length; j < len; j++) {
+                        if (arr[i][property] === arr[j][property]) {
+                            arr.splice(j, 1);
+                            j--;
+                            len--;
+                        }
+                    }
+                }
+                return arr;
+            }
+            Tools.objArrUnique = objArrUnique;
+            function objArrGetValue(objArr, property) {
+                let arr = [];
+                for (let i = 0; i < objArr.length; i++) {
+                    if (objArr[i][property]) {
+                        arr.push(objArr[i][property]);
+                    }
+                }
+                return arr;
+            }
+            Tools.objArrGetValue = objArrGetValue;
+            function arrayAddToarray(data1, data2) {
                 for (let index = 0; index < data2.length; index++) {
                     const element = data2[index];
                     data1.push(element);
                 }
             }
-            Tools.data1AddToData2 = data1AddToData2;
-            function random(range1, range2) {
-                range1 = range1 || 10;
-                const c = range1 - range2 + 1;
-                return Math.floor(Math.random() * c + range1);
+            Tools.arrayAddToarray = arrayAddToarray;
+            function arrayRandomGetOut(arr, num) {
+                let arr0 = [];
+                if (num > arr.length) {
+                    return '数组长度小于取出的数！';
+                }
+                else {
+                    for (let index = 0; index < num; index++) {
+                        let ran = Math.floor(Math.random() * (arr.length - 1));
+                        let a1 = arr[ran];
+                        arr.splice(ran, 1);
+                        arr0.push(a1);
+                    }
+                    return arr0;
+                }
             }
-            Tools.random = random;
+            Tools.arrayRandomGetOut = arrayRandomGetOut;
             function array_Copy(arr1) {
                 var arr = [];
                 for (var i = 0; i < arr1.length; i++) {
@@ -2526,70 +2581,18 @@
             function objArray_Copy(source) {
                 var sourceCopy = source instanceof Array ? [] : {};
                 for (var item in source) {
-                    sourceCopy[item] = typeof source[item] === 'object' ? obj_DeepCopy(source[item]) : source[item];
+                    sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
                 }
                 return sourceCopy;
             }
             Tools.objArray_Copy = objArray_Copy;
-            function obj_DeepCopy(source) {
+            function obj_Copy(source) {
                 var sourceCopy = {};
                 for (var item in source)
-                    sourceCopy[item] = typeof source[item] === 'object' ? obj_DeepCopy(source[item]) : source[item];
+                    sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
                 return sourceCopy;
             }
-            Tools.obj_DeepCopy = obj_DeepCopy;
-            function speedByAngle(angle, XY) {
-                if (angle % 90 === 0 || !angle) {
-                    console.error("计算的角度异常,需要查看：", angle);
-                    return;
-                }
-                let speedXY = { x: 0, y: 0 };
-                speedXY.y = XY.y;
-                speedXY.x = speedXY.y / Math.tan(angle * Math.PI / 180);
-                return speedXY;
-            }
-            Tools.speedByAngle = speedByAngle;
-            function speedXYByAngle(angle, speed) {
-                const speedXY = { x: 0, y: 0 };
-                speedXY.x = speed * Math.cos(angle * Math.PI / 180);
-                speedXY.y = speed * Math.sin(angle * Math.PI / 180);
-                return speedXY;
-            }
-            Tools.speedXYByAngle = speedXYByAngle;
-            function getRad(degree) {
-                return degree / 180 * Math.PI;
-            }
-            Tools.getRad = getRad;
-            function getRoundPos(angle, radius, centerPos) {
-                var center = centerPos;
-                var radius = radius;
-                var hudu = (2 * Math.PI / 360) * angle;
-                var X = center.x + Math.sin(hudu) * radius;
-                var Y = center.y - Math.cos(hudu) * radius;
-                return { x: X, y: Y };
-            }
-            Tools.getRoundPos = getRoundPos;
-            function converteNum(number) {
-                if (typeof (number) !== "number") {
-                    console.warn("要转化的数字并不为number");
-                    return number;
-                }
-                let backNum;
-                if (number < 1000) {
-                    backNum = "" + number;
-                }
-                else if (number < 1000000) {
-                    backNum = "" + (number / 1000).toFixed(1) + "k";
-                }
-                else if (number < 10e8) {
-                    backNum = "" + (number / 1000000).toFixed(1) + "m";
-                }
-                else {
-                    backNum = "" + number;
-                }
-                return backNum;
-            }
-            Tools.converteNum = converteNum;
+            Tools.obj_Copy = obj_Copy;
             function arrayUnique_01(arr) {
                 for (var i = 0, len = arr.length; i < len; i++) {
                     for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -2618,7 +2621,48 @@
                 return Array.from(new Set(arr));
             }
             Tools.arrayUnique_03 = arrayUnique_03;
-            function dataCompare(url, storageName, propertyName) {
+            function point_speedXYByAngle(angle, speed) {
+                const speedXY = { x: 0, y: 0 };
+                speedXY.x = speed * Math.cos(angle * Math.PI / 180);
+                speedXY.y = speed * Math.sin(angle * Math.PI / 180);
+                return new Laya.Point(speedXY.x, speedXY.y);
+            }
+            Tools.point_speedXYByAngle = point_speedXYByAngle;
+            function point_GetRoundPos(angle, radius, centerPos) {
+                var center = centerPos;
+                var radius = radius;
+                var hudu = (2 * Math.PI / 360) * angle;
+                var X = center.x + Math.sin(hudu) * radius;
+                var Y = center.y - Math.cos(hudu) * radius;
+                return new Laya.Point(X, Y);
+            }
+            Tools.point_GetRoundPos = point_GetRoundPos;
+            function Angle_GetRad(degree) {
+                return degree / 180 * Math.PI;
+            }
+            Tools.Angle_GetRad = Angle_GetRad;
+            function numberConverte(number) {
+                if (typeof (number) !== "number") {
+                    console.warn("要转化的数字并不为number");
+                    return number;
+                }
+                let backNum;
+                if (number < 1000) {
+                    backNum = "" + number;
+                }
+                else if (number < 1000000) {
+                    backNum = "" + (number / 1000).toFixed(1) + "k";
+                }
+                else if (number < 10e8) {
+                    backNum = "" + (number / 1000000).toFixed(1) + "m";
+                }
+                else {
+                    backNum = "" + number;
+                }
+                return backNum;
+            }
+            Tools.numberConverte = numberConverte;
+            function jsonCompare(url, storageName, propertyName) {
                 let dataArr;
                 if (Laya.LocalStorage.getJSON(storageName)) {
                     dataArr = JSON.parse(Laya.LocalStorage.getJSON(storageName))[storageName];
@@ -2626,9 +2670,9 @@
                     try {
                         let dataArr_0 = Laya.loader.getRes(url)['RECORDS'];
                         if (dataArr_0.length >= dataArr.length) {
-                            let diffArray = Tools.dataCompareDifferent(dataArr_0, dataArr, propertyName);
+                            let diffArray = Tools.objArrCompareDifferent(dataArr_0, dataArr, propertyName);
                             console.log('两个数据的差值为：', diffArray);
-                            Tools.data1AddToData2(dataArr, diffArray);
+                            Tools.arrayAddToarray(dataArr, diffArray);
                         }
                         else {
                             console.log(storageName + '数据表填写有误，长度不能小于之前的长度');
@@ -2651,7 +2695,7 @@
                 Laya.LocalStorage.setJSON(storageName, JSON.stringify(data));
                 return dataArr;
             }
-            Tools.dataCompare = dataCompare;
+            Tools.jsonCompare = jsonCompare;
         })(Tools = lwg.Tools || (lwg.Tools = {}));
         let Task;
         (function (Task) {
@@ -2792,7 +2836,7 @@
                     Task.todayData.date = (new Date).getDate();
                 }
                 else {
-                    Task.everydayTask = Tools.dataCompare('GameData/Task/everydayTask.json', TaskClass.everyday, TaskProperty.name);
+                    Task.everydayTask = Tools.jsonCompare('GameData/Task/everydayTask.json', TaskClass.everyday, TaskProperty.name);
                     console.log('是同一天！，继续每日任务');
                 }
             }
@@ -3051,9 +3095,9 @@
             }
             Shop.buyGoods = buyGoods;
             function initShop() {
-                Shop.allSkin = Tools.dataCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
-                Shop.allProps = Tools.dataCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
-                Shop.allOther = Tools.dataCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
+                Shop.allSkin = Tools.jsonCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
+                Shop.allProps = Tools.jsonCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
+                Shop.allOther = Tools.jsonCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
             }
             Shop.initShop = initShop;
             let GoodsProperty;
@@ -3092,13 +3136,13 @@
                     Shop._ShopTap = this.self['MyTap'];
                     Shop._ShopList = this.self['MyList'];
                     if (!Shop.allSkin) {
-                        Shop.allSkin = Tools.dataCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
+                        Shop.allSkin = Tools.jsonCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
                     }
                     if (!Shop.allProps) {
-                        Shop.allProps = Tools.dataCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
+                        Shop.allProps = Tools.jsonCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
                     }
                     if (!Shop.allOther) {
-                        Shop.allOther = Tools.dataCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
+                        Shop.allOther = Tools.jsonCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
                     }
                     Shop.goodsClassArr = [Shop.allSkin, Shop.allProps, Shop.allOther];
                     Shop.classWarehouse = [GoodsClass.Skin, GoodsClass.Props, GoodsClass.Skin];
@@ -3306,7 +3350,7 @@
             class CheckInScene extends Admin.Scene {
                 moduleOnAwake() {
                     CheckIn._checkList = this.self['CheckList'];
-                    CheckIn._checkArray = Tools.dataCompare('GameData/CheckIn/CheckIn.json', CheckClass.chek_7Days, CheckProPerty.name);
+                    CheckIn._checkArray = Tools.jsonCompare('GameData/CheckIn/CheckIn.json', CheckClass.chek_7Days, CheckProPerty.name);
                 }
                 moduleOnEnable() {
                     this.checkList_Create();
@@ -3452,7 +3496,7 @@
                 }
             };
             function initEasterEgg() {
-                EasterEgg._easterEgg_1Arr = Tools.dataCompare("GameData/EasterEgg/EasterEgg.json", Classify.EasterEgg_01, Property.name);
+                EasterEgg._easterEgg_1Arr = Tools.jsonCompare("GameData/EasterEgg/EasterEgg.json", Classify.EasterEgg_01, Property.name);
                 Laya.loader.getRes("GameData/EasterEgg/EasterEgg.json")['RECORDS'];
             }
             EasterEgg.initEasterEgg = initEasterEgg;
@@ -3945,15 +3989,16 @@
 
     var Game3D;
     (function (Game3D) {
-        Game3D.MyCardArr = [];
-        Game3D.OppositeCardArr = [];
+        Game3D.myCardArr = [];
+        Game3D.oppositeCardArr = [];
+        Game3D.questionArr = [];
         function randomlyTakeOut(type) {
-            let index16 = Tools.randomNumOfArray(Game3D.personData, 16);
+            let index16 = Tools.arrayRandomGetOut(Game3D.personData, 16);
             let startZ = 0.3;
             for (let index = 0; index < index16.length; index++) {
                 const element = Game3D.AllCardTem.getChildByName(index16[index]['name']);
-                if (type === WhoScard.MyCard) {
-                    Game3D.MyCardArr.push(index16[index]);
+                if (type === WhichScard.MyCard) {
+                    Game3D.myCardArr.push(index16[index]);
                     Game3D.MyCard.addChild(element);
                     if (index % 4 == 0) {
                         startZ -= 0.5;
@@ -3961,8 +4006,8 @@
                     element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
                     element.transform.localRotationEulerX = 10;
                 }
-                else if (type === WhoScard.OppositeCard) {
-                    Game3D.OppositeCardArr.push(index16[index]);
+                else if (type === WhichScard.OppositeCard) {
+                    Game3D.oppositeCardArr.push(index16[index]);
                     Game3D.OppositeCard.addChild(element);
                     if (index % 4 == 0) {
                         startZ += 0.5;
@@ -3982,9 +4027,15 @@
                     value: 0
                 });
             }
-            console.log(Game3D.MyCardArr);
-            for (let i = 0; i < Game3D.MyCardArr.length; i++) {
-                const characteristicsArr = Game3D.MyCardArr[i][personProperty.characteristicsArr];
+            let whichArr;
+            if (type === WhichScard.MyCard) {
+                whichArr = Game3D.myCardArr;
+            }
+            else {
+                whichArr = Game3D.oppositeCardArr;
+            }
+            for (let i = 0; i < Game3D.myCardArr.length; i++) {
+                const characteristicsArr = Game3D.myCardArr[i][personProperty.characteristicsArr];
                 for (let j = 0; j < characteristicsArr.length; j++) {
                     const characteristicsIndex = characteristicsArr[j];
                     contrastArr[characteristicsIndex - 1]['value']++;
@@ -3997,15 +4048,19 @@
                     index--;
                 }
             }
-            Tools.objPropertySort(contrastArr, 'value');
-            console.log(contrastArr);
+            Tools.objArrPropertySort(contrastArr, 'value');
+            Tools.objArrUnique(contrastArr, 'value');
+            if (whichArr.length == 1) ;
+            else if (whichArr.length == 2) ;
+            else if (whichArr.length == 3) ;
+            else if (whichArr.length >= 4) ;
         }
         Game3D.randomTaskCard = randomTaskCard;
-        let WhoScard;
-        (function (WhoScard) {
-            WhoScard["OppositeCard"] = "OppositeCard";
-            WhoScard["MyCard"] = "MyCard";
-        })(WhoScard = Game3D.WhoScard || (Game3D.WhoScard = {}));
+        let WhichScard;
+        (function (WhichScard) {
+            WhichScard["OppositeCard"] = "OppositeCard";
+            WhichScard["MyCard"] = "MyCard";
+        })(WhichScard = Game3D.WhichScard || (Game3D.WhichScard = {}));
         Game3D.characteristicsData = [];
         let characteristicsProperty;
         (function (characteristicsProperty) {
@@ -4034,9 +4089,9 @@
                 Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
             }
             lwgOnEnable() {
-                randomlyTakeOut(WhoScard.MyCard);
-                randomlyTakeOut(WhoScard.OppositeCard);
-                randomTaskCard(WhoScard.MyCard);
+                randomlyTakeOut(WhichScard.MyCard);
+                randomlyTakeOut(WhichScard.OppositeCard);
+                randomTaskCard(WhichScard.MyCard);
             }
         }
         Game3D.MainScene = MainScene;

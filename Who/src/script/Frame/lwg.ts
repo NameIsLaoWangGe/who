@@ -30,7 +30,7 @@ export module lwg {
         }
     }
 
-    /**互推模块*/ 
+    /**互推模块*/
     export module Elect {
         /**
          * 创建通用重来prefab
@@ -676,8 +676,8 @@ export module lwg {
               * @param basedSpeed 基础速度
               */
             commonSpeedXYByAngle(angle, speed) {
-                this.self.x += Tools.speedXYByAngle(angle, speed + this.accelerated).x;
-                this.self.y += Tools.speedXYByAngle(angle, speed + this.accelerated).y;
+                this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
+                this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
             }
             /**移动规则*/
             moveRules(): void {
@@ -1309,8 +1309,8 @@ export module lwg {
               * @param basedSpeed 基础速度
               */
             commonSpeedXYByAngle(angle, speed) {
-                this.self.x += Tools.speedXYByAngle(angle, speed + this.accelerated).x;
-                this.self.y += Tools.speedXYByAngle(angle, speed + this.accelerated).y;
+                this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
+                this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
             }
             /**移动规则*/
             moveRules(): void {
@@ -3095,37 +3095,58 @@ export module lwg {
 
     /**工具模块*/
     export module Tools {
-
         /**
          * 在某个区间内取一个整数
-         * @param section1 区间1，如果区间2没有，那么就是0~section1中随机取一个数
-         * @param section2 区间2，如果区间2有，那么取整数范围是section1~section2
+         * @param section1 区间1
+         * @param section2 区间2，不输入则是0~section1
          */
-        export function randomNumer(section1, section2?: number): number {
+        export function randomNumber(section1, section2?: number): number {
             if (section2) {
-                return Math.floor(Math.random() * section2) + section1;
+                return Math.floor(Math.random() * (section2 - section1)) + section1;
             } else {
                 return Math.floor(Math.random() * section1);
             }
         }
 
         /**
-         * 从一个数组中随机取出几个数，如果刚好是数组长度，则等于是乱序
-         * @param arr 
-         * @param num 
+         * 返回一个数值区间内的数个随机数
+         * @param section1 区间1
+         * @param section2 区间2,不输入则是0~section1
+         * @param count 数量默认是1
+         * @param intSet 是否是整数,默认是true
          */
-        export function randomNumOfArray(arr: Array<any>, num: number): any {
-            let arr0 = [];
-            if (num > arr.length) {
-                return '数组长度小于取出的数！';
+        export function randomCountNumer(section1: number, section2?: number, count?: number, intSet?: boolean): Array<number> {
+            let arr = [];
+            if (!count) {
+                count = 1;
+            }
+            if (!intSet) {
+                intSet = true;
+            }
+            if (section2) {
+                while (count > arr.length) {
+                    let num;
+                    if (intSet) {
+                        num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                    } else {
+                        num = Math.random() * (section2 - section1) + section1;
+                    }
+                    arr.push(num);
+                    Tools.arrayUnique_01(arr);
+                };
+                return arr;
             } else {
-                for (let index = 0; index < num; index++) {
-                    let ran = Math.floor(Math.random() * (arr.length - 1));
-                    let a1 = arr[ran];
-                    arr.splice(ran, 1);
-                    arr0.push(a1);
+                while (count > arr.length) {
+                    let num;
+                    if (intSet) {
+                        num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                    } else {
+                        num = Math.random() * (section2 - section1) + section1;
+                    }
+                    arr.push(num);
+                    Tools.arrayUnique_01(arr);
                 }
-                return arr0;
+                return arr;
             }
         }
 
@@ -3136,7 +3157,7 @@ export module lwg {
          * @param point 触摸点
          * @param filtrate 找出指定触摸的模型的信息，如果不传则返回全部信息；
          */
-        export function rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, point: Laya.Vector2, filtrate?: string): any {
+        export function d3_rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, point: Laya.Vector2, filtrate?: string): any {
             /**射线*/
             let _ray: Laya.Ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
             /**射线扫描结果*/
@@ -3170,7 +3191,7 @@ export module lwg {
          * @param y1 旋转点Y
          * @param angle 角度
          */
-        export function dotRotateXY(x0, y0, x1, y1, angle): Laya.Point {
+        export function d2_dotRotateXY(x0, y0, x1, y1, angle): Laya.Point {
             let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
             let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
             return new Laya.Point(x2, y2);
@@ -3179,7 +3200,7 @@ export module lwg {
         /**
          * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
          * */
-        export function toHexString(r, g, b) {
+        export function color_toHexString(r, g, b) {
             return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
         }
 
@@ -3188,7 +3209,7 @@ export module lwg {
          * @param obj1 物体1
          * @param obj2 物体2
          */
-        export function twoObjectsLen_3D(obj1: Laya.MeshSprite3D, obj2: Laya.MeshSprite3D): number {
+        export function d3_twoObjectsLen(obj1: Laya.MeshSprite3D, obj2: Laya.MeshSprite3D): number {
             let obj1V3: Laya.Vector3 = obj1.transform.position;
             let obj2V3: Laya.Vector3 = obj2.transform.position;
             let p = new Laya.Vector3();
@@ -3203,14 +3224,14 @@ export module lwg {
         * @param v1 物体1
         * @param v2 物体2
         */
-        export function twoPositionLen_3D(v1: Laya.Vector3, v2: Laya.Vector3): number {
-            let p = twoSubV3_3D(v1, v2);
+        export function d3_twoPositionLen(v1: Laya.Vector3, v2: Laya.Vector3): number {
+            let p = d3_twoSubV3(v1, v2);
             let lenp = Laya.Vector3.scalarLength(p);
             return lenp;
         }
 
         /**返回两个二维物体的距离*/
-        export function twoObjectsLen_2D(obj1: Laya.Sprite, obj2: Laya.Sprite): number {
+        export function d2_twoObjectsLen(obj1: Laya.Sprite, obj2: Laya.Sprite): number {
             let point = new Laya.Point(obj1.x, obj1.y);
             let len = point.distance(obj2.x, obj2.y);
             return len;
@@ -3222,7 +3243,7 @@ export module lwg {
           * @param V3_02 向量2
           * @param normalizing 是否是单位向量,默认为不是
           */
-        export function twoSubV3_3D(V3_01: Laya.Vector3, V3_02: Laya.Vector3, normalizing?: boolean): Laya.Vector3 {
+        export function d3_twoSubV3(V3_01: Laya.Vector3, V3_02: Laya.Vector3, normalizing?: boolean): Laya.Vector3 {
             let p = new Laya.Vector3();
             // 向量相减后计算长度
             Laya.Vector3.subtract(V3_01, V3_02, p);
@@ -3242,7 +3263,7 @@ export module lwg {
           * @param Vecoter2 反弹物体向量
           * @param normalizing 是否归一成单位向量
           */
-        export function reverseVector(type: string, Vecoter1: any, Vecoter2: any, normalizing: boolean): Laya.Vector3 {
+        export function dAll_reverseVector(type: string, Vecoter1: any, Vecoter2: any, normalizing: boolean): Laya.Vector3 {
             let p;
             if (type === '2d') {
                 p = new Laya.Point(Vecoter1.x - Vecoter2.x, Vecoter1.y - Vecoter2.y);
@@ -3262,14 +3283,13 @@ export module lwg {
                 }
             }
         }
-
         /**
          * 在Laya2维世界中
          * 求向量的夹角在坐标系中的角度
          * @param x 坐标x
          * @param y 坐标y
          * */
-        export function vector_Angle(x, y): number {
+        export function d2_Vector_Angle(x, y): number {
             let radian: number = Math.atan2(x, y) //弧度  0.6435011087932844
             let angle: number = 90 - radian * (180 / Math.PI); //角度  36.86989764584402;
             if (angle <= 0) {
@@ -3284,7 +3304,7 @@ export module lwg {
          * @param x 坐标x
          * @param y 坐标y
          * */
-        export function angle_Vector(angle): Laya.Point {
+        export function d2_angle_Vector(angle): Laya.Point {
             angle -= 90;
             let radian = (90 - angle) / (180 / Math.PI);
             let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
@@ -3293,12 +3313,12 @@ export module lwg {
         };
 
         /**
-          * 3D世界中，一个物体不会超过和另一个点的最长距离,如果超过或者等于则设置这个球面坐标，并且返回这个坐标
+          * 3D世界中，制约一个物体不会超过和另一个点的最长距离,如果超过或者等于则设置这个球面坐标，并且返回这个坐标
           * @param originV3 原点的位置
           * @param obj 物体
           * @param length 长度
          */
-        export function maximumDistanceLimi_3D(originV3: Laya.Vector3, obj: Laya.Sprite3D, length: number): Laya.Vector3 {
+        export function d3_maximumDistanceLimi(originV3: Laya.Vector3, obj: Laya.Sprite3D, length: number): Laya.Vector3 {
             // 两个向量相减等于手臂到手的向量
             let subP = new Laya.Vector3();
             let objP = obj.transform.position;
@@ -3326,7 +3346,7 @@ export module lwg {
          * @param startAngle 扇形的初始角度
          * @param endAngle 扇形结束角度
         */
-        export function drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
+        export function img_drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
             // 父节点cacheAs模式必须为"bitmap"
             parent.cacheAs = "bitmap";
             //新建一个sprite作为绘制扇形节点
@@ -3345,7 +3365,7 @@ export module lwg {
          * @param v3 3D世界的坐标
          * @param camera 摄像机
         */
-        export function transitionScreenPointfor3D(v3: Laya.Vector3, camera: Laya.Camera): Laya.Vector2 {
+        export function d3_TransitionScreenPointfor(v3: Laya.Vector3, camera: Laya.Camera): Laya.Vector2 {
             let ScreenV3 = new Laya.Vector3();
             camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
             let point: Laya.Vector2 = new Laya.Vector2();
@@ -3359,7 +3379,7 @@ export module lwg {
          * @param array 对象数组
          * @param property 对象中一个相同的属性名称
          */
-        export function objPropertySort(array: Array<any>, property: string): Array<any> {
+        export function objArrPropertySort(array: Array<any>, property: string): Array<any> {
             var compare = function (obj1, obj2) {
                 var val1 = obj1[property];
                 var val2 = obj2[property];
@@ -3385,7 +3405,7 @@ export module lwg {
          * @param data2 对象数组2
          * @param property 需要对比的属性名称
         */
-        export function dataCompareDifferent(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
+        export function objArrCompareDifferent(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
             var result = [];
             for (var i = 0; i < data1.length; i++) {
                 var obj1 = data1[i];
@@ -3414,7 +3434,7 @@ export module lwg {
          * @param data2 对象数组2
          * @param property 需要对比的属性名称
          */
-        export function dataComparEidentical(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
+        export function objArrComparEidentical(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
             var result = [];
             for (var i = 0; i < data1.length; i++) {
                 var obj1 = data1[i];
@@ -3437,11 +3457,44 @@ export module lwg {
         }
 
         /**
+         * 对象数组去重，根据对象的某个属性值去重
+         * @param arr 数组
+         * @param property 属性
+         * */
+        export function objArrUnique(arr, property): void {
+            for (var i = 0, len = arr.length; i < len; i++) {
+                for (var j = i + 1, len = arr.length; j < len; j++) {
+                    if (arr[i][property] === arr[j][property]) {
+                        arr.splice(j, 1);
+                        j--;        // 每删除一个数j的值就减1
+                        len--;      // j值减小时len也要相应减1（减少循环次数，节省性能）   
+                    }
+                }
+            }
+            return arr;
+        }
+
+        /**
+         * 根据一个对像的属性，从对象数组中返回某个属性的值数组
+         * @param arr 
+         * @param property 
+         */
+        export function objArrGetValue(objArr, property): Array<any> {
+            let arr = [];
+            for (let i = 0; i < objArr.length; i++) {
+                if (objArr[i][property]) {
+                    arr.push(objArr[i][property]);
+                }
+            }
+            return arr;
+        }
+
+        /**
          * 往第一个数组中陆续添加第二个数组中的元素
          * @param data1 
          * @param data2 
          */
-        export function data1AddToData2(data1, data2): void {
+        export function arrayAddToarray(data1, data2): void {
             for (let index = 0; index < data2.length; index++) {
                 const element = data2[index];
                 data1.push(element);
@@ -3449,14 +3502,23 @@ export module lwg {
         }
 
         /**
-         * 返回一个数值区间内两个随机数
-         * @param range1 第一个随机数
-         * @param range2 第二个随机数不存在的话默认为10
+         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序
+         * @param arr 
+         * @param num 
          */
-        export function random(range1: number, range2?: number) {
-            range1 = range1 || 10;
-            const c: number = range1 - range2 + 1;
-            return Math.floor(Math.random() * c + range1)
+        export function arrayRandomGetOut(arr: Array<any>, num: number): any {
+            let arr0 = [];
+            if (num > arr.length) {
+                return '数组长度小于取出的数！';
+            } else {
+                for (let index = 0; index < num; index++) {
+                    let ran = Math.floor(Math.random() * (arr.length - 1));
+                    let a1 = arr[ran];
+                    arr.splice(ran, 1);
+                    arr0.push(a1);
+                }
+                return arr0;
+            }
         }
 
         /**
@@ -3478,100 +3540,25 @@ export module lwg {
         export function objArray_Copy(source): any {
             var sourceCopy = source instanceof Array ? [] : {};
             for (var item in source) {
-                sourceCopy[item] = typeof source[item] === 'object' ? obj_DeepCopy(source[item]) : source[item];
+                sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
             }
             return sourceCopy;
         }
+
         /**
          * 对象的拷贝
          * @param source 需要拷贝的对象
          */
-        export function obj_DeepCopy(source) {
+        export function obj_Copy(source) {
             var sourceCopy = {};
-            for (var item in source) sourceCopy[item] = typeof source[item] === 'object' ? obj_DeepCopy(source[item]) : source[item];
+            for (var item in source) sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
             return sourceCopy;
         }
 
         /**
-         * 根据不同的角度，
-         * @param angle 角度
-         * @param XY XY坐标，同时存在
-         */
-        export function speedByAngle(angle: number, XY: any) {
-            if (angle % 90 === 0 || !angle) {
-                console.error("计算的角度异常,需要查看：", angle);
-                // debugger
-                return;
-            }
-            let speedXY = { x: 0, y: 0 };
-            speedXY.y = XY.y;
-            speedXY.x = speedXY.y / Math.tan(angle * Math.PI / 180);
-            return speedXY;
-        }
-
-        /**
-         * 根据不同的角度和速度计算坐标,从而产生位移
-         * @param angle 角度
-         * @param speed 移动速度
-         * */
-        export function speedXYByAngle(angle: number, speed: number) {
-            if (angle % 90 === 0 || !angle) {
-                //debugger
-            }
-            const speedXY = { x: 0, y: 0 };
-            speedXY.x = speed * Math.cos(angle * Math.PI / 180);
-            speedXY.y = speed * Math.sin(angle * Math.PI / 180);
-            return speedXY;
-        }
-
-        /**
-         * 
-         * @param degree 角度
-         * 根据角度计算弧度
-         */
-        export function getRad(degree) {
-            return degree / 180 * Math.PI;
-        }
-
-        /**
-         * 求圆上的点的坐标，可以根据角度和半径作出圆形位移
-         * @param angle 角度
-         * @param radius 半径
-         * @param centerPos 原点
-         */
-        export function getRoundPos(angle: number, radius: number, centerPos: any) {
-            var center = centerPos; //圆心坐标
-            var radius = radius; //半径
-            var hudu = (2 * Math.PI / 360) * angle; //90度角的弧度
-
-            var X = center.x + Math.sin(hudu) * radius; //求出90度角的x坐标
-            var Y = center.y - Math.cos(hudu) * radius; //求出90度角的y坐标
-            return { x: X, y: Y };
-        }
-
-        /**
-         * 将数字格式化，例如1000 = 1k；
-         * @param number 数字
-         */
-        export function converteNum(number: number): string {
-            if (typeof (number) !== "number") {
-                console.warn("要转化的数字并不为number");
-                return number;
-            }
-            let backNum: string;
-            if (number < 1000) {
-                backNum = "" + number;
-            } else if (number < 1000000) {
-                backNum = "" + (number / 1000).toFixed(1) + "k";
-            } else if (number < 10e8) {
-                backNum = "" + (number / 1000000).toFixed(1) + "m";
-            } else {
-                backNum = "" + number;
-            }
-            return backNum;
-        }
-
-        /**数组去重*/
+         * 数组去重
+         * @param arr 数组
+        */
         export function arrayUnique_01(arr): Array<any> {
             for (var i = 0, len = arr.length; i < len; i++) {
                 for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -3602,13 +3589,76 @@ export module lwg {
             return Array.from(new Set(arr));
         }
 
+
+        /**
+         * 根据不同的角度和速度计算坐标,从而产生位移
+         * @param angle 角度
+         * @param speed 移动速度
+         * */
+        export function point_speedXYByAngle(angle: number, speed: number): Laya.Point {
+            if (angle % 90 === 0 || !angle) {
+                //debugger
+            }
+            const speedXY = { x: 0, y: 0 };
+            speedXY.x = speed * Math.cos(angle * Math.PI / 180);
+            speedXY.y = speed * Math.sin(angle * Math.PI / 180);
+            return new Laya.Point(speedXY.x, speedXY.y);
+        }
+        /**
+        * 求圆上的点的坐标，可以根据角度和半径作出圆形位移
+        * @param angle 角度
+        * @param radius 半径
+        * @param centerPos 原点
+        */
+        export function point_GetRoundPos(angle: number, radius: number, centerPos: any): Laya.Point {
+            var center = centerPos; //圆心坐标
+            var radius = radius; //半径
+            var hudu = (2 * Math.PI / 360) * angle; //90度角的弧度
+
+            var X = center.x + Math.sin(hudu) * radius; //求出90度角的x坐标
+            var Y = center.y - Math.cos(hudu) * radius; //求出90度角的y坐标
+            return new Laya.Point(X, Y);
+        }
+
+        /**
+         * 
+         * @param degree 角度
+         * 根据角度计算弧度
+         */
+        export function Angle_GetRad(degree) {
+            return degree / 180 * Math.PI;
+        }
+
+        /**
+         * 将数字格式化，例如1000 = 1k；
+         * @param number 数字
+         */
+        export function numberConverte(number: number): string {
+            if (typeof (number) !== "number") {
+                console.warn("要转化的数字并不为number");
+                return number;
+            }
+            let backNum: string;
+            if (number < 1000) {
+                backNum = "" + number;
+            } else if (number < 1000000) {
+                backNum = "" + (number / 1000).toFixed(1) + "k";
+            } else if (number < 10e8) {
+                backNum = "" + (number / 1000000).toFixed(1) + "m";
+            } else {
+                backNum = "" + number;
+            }
+            return backNum;
+        }
+
+
         /**
           * 获取本地存储数据并且和文件中数据表对比,对比后会上传
           * @param url 本地数据表地址
           * @param storageName 本地存储中的json名称
           * @param propertyName 数组中每个对象中同一个属性名，通过这个名称进行对比
           */
-        export function dataCompare(url: string, storageName: string, propertyName: string): Array<any> {
+        export function jsonCompare(url: string, storageName: string, propertyName: string): Array<any> {
             // 第一步，先尝试从本地缓存获取数据，
             // 第二步，如果本地缓存有，那么需要和数据表中的数据进行对比，把缓存没有的新增对象复制进去
             // 第三步，如果本地缓存没有，那么直接从数据表获取
@@ -3620,9 +3670,9 @@ export module lwg {
                     let dataArr_0: Array<any> = Laya.loader.getRes(url)['RECORDS'];
                     // 如果本地数据条数大于json条数，说明json减东西了，不会对比，json只能增加不能删减
                     if (dataArr_0.length >= dataArr.length) {
-                        let diffArray = Tools.dataCompareDifferent(dataArr_0, dataArr, propertyName);
+                        let diffArray = Tools.objArrCompareDifferent(dataArr_0, dataArr, propertyName);
                         console.log('两个数据的差值为：', diffArray);
-                        Tools.data1AddToData2(dataArr, diffArray);
+                        Tools.arrayAddToarray(dataArr, diffArray);
                     } else {
                         console.log(storageName + '数据表填写有误，长度不能小于之前的长度');
                     }
@@ -3844,7 +3894,7 @@ export module lwg {
                 console.log('不是同一天，每日任务重制！');
                 todayData.date = (new Date).getDate();
             } else {
-                Task.everydayTask = Tools.dataCompare('GameData/Task/everydayTask.json', TaskClass.everyday, TaskProperty.name);
+                Task.everydayTask = Tools.jsonCompare('GameData/Task/everydayTask.json', TaskClass.everyday, TaskProperty.name);
                 console.log('是同一天！，继续每日任务');
             }
         }
@@ -4183,9 +4233,9 @@ export module lwg {
         /**在loding界面或者开始界面执行一次！*/
         export function initShop(): void {
             //如果上个日期等于今天的日期，那么从存储中获取，如果不相等则直接从数据表中获取
-            Shop.allSkin = Tools.dataCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
-            Shop.allProps = Tools.dataCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
-            Shop.allOther = Tools.dataCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
+            Shop.allSkin = Tools.jsonCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
+            Shop.allProps = Tools.jsonCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
+            Shop.allOther = Tools.jsonCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
         }
 
         /**商品属性列表，数据表中的商品应该有哪些属性,name和have是必须有的属性,可以无限增加*/
@@ -4246,13 +4296,13 @@ export module lwg {
                 Shop._ShopTap = this.self['MyTap'];
                 Shop._ShopList = this.self['MyList'];
                 if (!Shop.allSkin) {
-                    Shop.allSkin = Tools.dataCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
+                    Shop.allSkin = Tools.jsonCompare('GameData/Shop/Skin.json', GoodsClass.Skin, GoodsProperty.name);
                 }
                 if (!Shop.allProps) {
-                    Shop.allProps = Tools.dataCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
+                    Shop.allProps = Tools.jsonCompare('GameData/Shop/Props.json', GoodsClass.Props, GoodsProperty.name);
                 }
                 if (!Shop.allOther) {
-                    Shop.allOther = Tools.dataCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
+                    Shop.allOther = Tools.jsonCompare('GameData/Shop/Other.json', GoodsClass.Other, GoodsProperty.name);
                 }
                 goodsClassArr = [Shop.allSkin, Shop.allProps, Shop.allOther];
                 classWarehouse = [GoodsClass.Skin, GoodsClass.Props, GoodsClass.Skin];
@@ -4545,7 +4595,7 @@ export module lwg {
                 /**结构，如果没有则为null*/
                 CheckIn._checkList = this.self['CheckList'];
                 //注意这里要复制数组，不可以直接赋值
-                _checkArray = Tools.dataCompare('GameData/CheckIn/CheckIn.json', CheckClass.chek_7Days, CheckProPerty.name);
+                _checkArray = Tools.jsonCompare('GameData/CheckIn/CheckIn.json', CheckClass.chek_7Days, CheckProPerty.name);
             }
             moduleOnEnable(): void {
                 this.checkList_Create();
@@ -4749,7 +4799,7 @@ export module lwg {
 
         /**初始化彩蛋模块*/
         export function initEasterEgg(): void {
-            _easterEgg_1Arr = Tools.dataCompare("GameData/EasterEgg/EasterEgg.json", Classify.EasterEgg_01, Property.name);
+            _easterEgg_1Arr = Tools.jsonCompare("GameData/EasterEgg/EasterEgg.json", Classify.EasterEgg_01, Property.name);
             Laya.loader.getRes("GameData/EasterEgg/EasterEgg.json")['RECORDS'];
         }
 
