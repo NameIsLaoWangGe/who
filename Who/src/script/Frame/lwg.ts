@@ -3222,17 +3222,17 @@ export module lwg {
          * 射线检测，返回射线扫描结果，可以筛选结果
          * @param camera 摄像机
          * @param scene3D 当前场景
-         * @param point 触摸点
+         * @param vector2 触摸点
          * @param filtrate 找出指定触摸的模型的信息，如果不传则返回全部信息；
          */
-        export function d3_rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, point: Laya.Vector2, filtrate?: string): any {
+        export function d3_rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, vector2: Laya.Vector2, filtrate?: string): any {
             /**射线*/
             let _ray: Laya.Ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
             /**射线扫描结果*/
             let outs: Array<Laya.HitResult> = new Array<Laya.HitResult>();
             //产生射线
             //射线碰撞到挡屏，用来设置手的初始位置，挡屏的属性isTrigger 要勾上，这样只检测碰撞，不产生碰撞反应
-            camera.viewportPointToRay(point, _ray);
+            camera.viewportPointToRay(vector2, _ray);
             scene3D.physicsSimulation.rayCastAll(_ray, outs);
             //找到挡屏的位置，把手的位置放在投屏位置的上方，也就是触摸点的上方
             if (outs.length != 0 && filtrate) {
@@ -3590,7 +3590,7 @@ export module lwg {
         }
 
         /**
-         * 数组复制 
+         * 普通数组复制 
          * @param arr1 被复制的数组
          */
         export function array_Copy(arr1): Array<any> {
@@ -3605,22 +3605,37 @@ export module lwg {
          * 对象数组的拷贝
          * @param ObjArray 需要拷贝的对象数组 
          */
-        export function objArray_Copy(source): any {
-            var sourceCopy = source instanceof Array ? [] : {};
-            for (var item in source) {
-                sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
+        export function objArray_Copy(ObjArray): any {
+            var sourceCopy = ObjArray instanceof Array ? [] : {};
+            for (var item in ObjArray) {
+                sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
             }
             return sourceCopy;
         }
 
         /**
          * 对象的拷贝
-         * @param source 需要拷贝的对象
+         * @param obj 需要拷贝的对象
          */
-        export function obj_Copy(source) {
-            var sourceCopy = {};
-            for (var item in source) sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
-            return sourceCopy;
+        export function obj_Copy(obj) {
+            var objCopy = {};
+            for (const item in obj) {
+                if (obj.hasOwnProperty(item)) {
+                    const element = obj[item];
+                    if (typeof element === 'object') {
+                        // 其中有一种情况是对某个对象值为数组的拷贝
+                        if (Array.isArray(element)) {
+                            let arr1 = array_Copy(element);
+                            objCopy[item] = arr1;
+                        } else {
+                            obj_Copy(element);
+                        }
+                    } else {
+                        objCopy[item] = element;
+                    }
+                }
+            }
+            return objCopy;
         }
 
         /**

@@ -1,12 +1,20 @@
-import { Admin, Dialog, Click, EventAdmin } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
+
+export enum GameEventType {
+    /**下一回合*/
+    nextRound = 'nextRound',
+
+
+}
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
     public Option: Laya.Prefab;
-
+    /**选项卡*/
     OptionParent: Laya.Sprite;
     lwgOnAwake(): void {
+        console.log('这是第一个脚本');
         this.creatQuestion();
     }
 
@@ -15,12 +23,16 @@ export default class GameScene extends Admin.Scene {
     }
 
     lwgEventReg(): void {
-        EventAdmin.reg('nextRound', this, () => {
+        EventAdmin.reg(GameEventType.nextRound, this, () => {
             this.creatQuestion();
         })
     }
     lwgOnEnable(): void {
 
+    }
+
+    onStageMouseDown(e: Laya.Event): void {
+        Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY), );
     }
 
     /**创建问题*/
@@ -86,3 +98,4 @@ export default class GameScene extends Admin.Scene {
 
     }
 }
+

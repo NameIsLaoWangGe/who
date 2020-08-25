@@ -420,7 +420,7 @@
 				"type":"Sprite3D",
 				"instanceID":11,
 				"props":{
-					"name":"MyCard",
+					"name":"MyCardParent",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
@@ -448,7 +448,7 @@
 				"type":"Sprite3D",
 				"instanceID":12,
 				"props":{
-					"name":"OppositeCard",
+					"name":"OppositeCardParent",
 					"active":true,
 					"isStatic":false,
 					"layer":0,

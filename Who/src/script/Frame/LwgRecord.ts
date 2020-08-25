@@ -152,6 +152,10 @@ export module record {
     export enum TypeScript {
         " if(0)" = 'false',
         " if(1)" = 'true',
-        
+
+    }
+
+    export enum ObjArray {
+        "一般会从json文件中取出对象数组" = '若想使用这个数组，必须每次深度拷贝，否则会修改json文件',
     }
 }

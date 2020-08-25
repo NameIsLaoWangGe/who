@@ -2611,19 +2611,34 @@
                 return arr;
             }
             Tools.array_Copy = array_Copy;
-            function objArray_Copy(source) {
-                var sourceCopy = source instanceof Array ? [] : {};
-                for (var item in source) {
-                    sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
+            function objArray_Copy(ObjArray) {
+                var sourceCopy = ObjArray instanceof Array ? [] : {};
+                for (var item in ObjArray) {
+                    sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
                 }
                 return sourceCopy;
             }
             Tools.objArray_Copy = objArray_Copy;
-            function obj_Copy(source) {
-                var sourceCopy = {};
-                for (var item in source)
-                    sourceCopy[item] = typeof source[item] === 'object' ? obj_Copy(source[item]) : source[item];
-                return sourceCopy;
+            function obj_Copy(obj) {
+                var objCopy = {};
+                for (const item in obj) {
+                    if (obj.hasOwnProperty(item)) {
+                        const element = obj[item];
+                        if (typeof element === 'object') {
+                            if (Array.isArray(element)) {
+                                let arr1 = array_Copy(element);
+                                objCopy[item] = arr1;
+                            }
+                            else {
+                                obj_Copy(element);
+                            }
+                        }
+                        else {
+                            objCopy[item] = element;
+                        }
+                    }
+                }
+                return objCopy;
             }
             Tools.obj_Copy = obj_Copy;
             function arrayUnique_01(arr) {
@@ -4022,89 +4037,126 @@
 
     var Game3D;
     (function (Game3D) {
-        Game3D.myCardArr = [];
-        Game3D.oppositeCardArr = [];
         Game3D.questionArr = [];
+        Game3D.characteristicsData = [];
+        Game3D.CardData = [];
+        let WhichScard;
+        (function (WhichScard) {
+            WhichScard["OppositeCardParent"] = "OppositeCardParent";
+            WhichScard["MyCardParent"] = "MyCardParent";
+        })(WhichScard = Game3D.WhichScard || (Game3D.WhichScard = {}));
+        let CharacteristicsProperty;
+        (function (CharacteristicsProperty) {
+            CharacteristicsProperty["index"] = "index";
+            CharacteristicsProperty["describe"] = "describe";
+            CharacteristicsProperty["question"] = "question";
+        })(CharacteristicsProperty = Game3D.CharacteristicsProperty || (Game3D.CharacteristicsProperty = {}));
+        let CardProperty;
+        (function (CardProperty) {
+            CardProperty["characteristicsArr"] = "characteristicsArr";
+            CardProperty["ChName"] = "ChName";
+            CardProperty["name"] = "name";
+            CardProperty["fall"] = "fall";
+        })(CardProperty = Game3D.CardProperty || (Game3D.CardProperty = {}));
+        let WhichBoutType;
+        (function (WhichBoutType) {
+            WhichBoutType["me"] = "me";
+            WhichBoutType["opposite"] = "opposite";
+        })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
+        let EventType;
+        (function (EventType) {
+            EventType["judgeQuestion"] = "judgeQuestion";
+            EventType["judgeClickCard"] = "judgeClickCard";
+        })(EventType = Game3D.EventType || (Game3D.EventType = {}));
+        let CameraMoveType;
+        (function (CameraMoveType) {
+            CameraMoveType["nod"] = "nod";
+            CameraMoveType["shake"] = "shake";
+        })(CameraMoveType = Game3D.CameraMoveType || (Game3D.CameraMoveType = {}));
         function randomlyTakeOut(type) {
-            let index16 = Tools.arrayRandomGetOut(Game3D.CardData, 16);
-            if (type === WhichScard.MyCard) {
-                Game3D.oppositeHandCard = Tools.arrayRandomGetOut(Tools.array_Copy(index16), 1);
+            let CardData1 = Tools.objArray_Copy(Game3D.CardData);
+            let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
+            if (type === WhichScard.MyCardParent) {
+                Game3D.oppositeHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
             }
-            else if (type === WhichScard.OppositeCard) {
-                Game3D.myHandCard = Tools.arrayRandomGetOut(Tools.array_Copy(index16), 1);
+            else if (type === WhichScard.OppositeCardParent) {
+                Game3D.myHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
             }
             let startZ = 0.3;
-            for (let index = 0; index < index16.length; index++) {
-                const element = Game3D.AllCardTem.getChildByName(index16[index][CardProperty.name]);
-                if (type === WhichScard.MyCard) {
-                    if (element.name === Game3D.oppositeHandCard[0][CardProperty.name]) {
-                        let HandCard = element.clone();
+            for (let index = 0; index < cardData16.length; index++) {
+                const Card = Game3D.AllCardTem.getChildByName(cardData16[index][CardProperty.name]);
+                if (type === WhichScard.MyCardParent) {
+                    if (Card.name === Game3D.oppositeHandCard[0][CardProperty.name]) {
+                        let HandCard = Card.clone();
                         Game3D.OppositeHandParent.addChild(HandCard);
                         HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
                     }
-                    Game3D.myCardArr.push(index16[index]);
-                    Game3D.MyCard.addChild(element);
+                    Game3D.MyCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ -= 0.5;
                     }
-                    element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
-                    element.transform.localRotationEulerX = 10;
+                    Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    Card.transform.localRotationEulerX = 10;
                 }
-                else if (type === WhichScard.OppositeCard) {
-                    Game3D.oppositeCardArr.push(index16[index]);
-                    Game3D.OppositeCard.addChild(element);
+                else if (type === WhichScard.OppositeCardParent) {
+                    Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
                     }
-                    element.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
-                    element.transform.localRotationEulerX = -10;
+                    Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    Card.transform.localRotationEulerX = -10;
                 }
-                element[CardProperty.characteristicsArr] = index16[index][CardProperty.characteristicsArr];
+                Card[CardProperty.characteristicsArr] = cardData16[index][CardProperty.characteristicsArr];
+                Card[CardProperty.fall] = false;
             }
         }
         Game3D.randomlyTakeOut = randomlyTakeOut;
         function randomTaskCard(type) {
             let contrastArr = [];
-            for (let index = 0; index < Game3D.characteristicsData.length; index++) {
-                let index1 = Game3D.characteristicsData[index][CharacteristicsProperty.index];
+            for (let i = 0; i < Game3D.characteristicsData.length; i++) {
+                let index = Game3D.characteristicsData[i][CharacteristicsProperty.index];
                 contrastArr.push({
-                    index: index1,
+                    index: index,
                     value: 0
                 });
             }
             let whichArr;
-            if (type === WhichScard.MyCard) {
-                whichArr = Game3D.MyCard;
+            if (type === WhichScard.MyCardParent) {
+                whichArr = Game3D.MyCardParent;
             }
             else {
-                whichArr = Game3D.OppositeCard;
+                whichArr = Game3D.OppositeCardParent;
             }
-            for (let i = 0; i < Game3D.myCardArr.length; i++) {
-                const characteristicsArr = Game3D.myCardArr[i][CardProperty.characteristicsArr];
-                for (let j = 0; j < characteristicsArr.length; j++) {
-                    const characteristicsIndex = characteristicsArr[j];
-                    contrastArr[characteristicsIndex - 1]['value']++;
+            let residueNum = 0;
+            for (let i = 0; i < whichArr.numChildren; i++) {
+                let Card = whichArr.getChildAt(i);
+                if (!Card[CardProperty.fall]) {
+                    residueNum++;
+                    const characteristicsArr = Card[CardProperty.characteristicsArr];
+                    for (let j = 0; j < characteristicsArr.length; j++) {
+                        const characteristicsIndex = characteristicsArr[j];
+                        contrastArr[characteristicsIndex - 1]['value']++;
+                    }
                 }
             }
-            for (let index = 0; index < contrastArr.length; index++) {
-                const element = contrastArr[index];
+            for (let i = 0; i < contrastArr.length; i++) {
+                const element = contrastArr[i];
                 if (element['value'] === 0) {
-                    contrastArr.splice(index, 1);
-                    index--;
+                    contrastArr.splice(i, 1);
+                    i--;
                 }
             }
-            console.log('提问前：', contrastArr);
             Tools.objArrPropertySort(contrastArr, 'value');
-            if (whichArr.numChildren == 1) {
+            if (residueNum == 1) {
                 Game3D.questionArr = ['是谁？'];
             }
-            else if (whichArr.numChildren == 2) {
+            else if (residueNum == 2) {
                 Game3D.questionArr = ['是谁？'];
             }
-            else if (whichArr.numChildren == 3) {
+            else if (residueNum == 3) {
                 Game3D.questionArr = questionForindex(contrastArr);
             }
-            else if (whichArr.numChildren >= 4) {
+            else if (residueNum >= 4) {
                 Game3D.questionArr = questionForindex(contrastArr);
             }
             console.log(contrastArr, Game3D.questionArr);
@@ -4112,10 +4164,12 @@
         Game3D.randomTaskCard = randomTaskCard;
         function questionForindex(contrastArr) {
             let indexArr = [];
-            let content1 = contrastArr[0]['index'];
-            let content2 = contrastArr[1]['index'];
-            let content3 = contrastArr[2]['index'];
-            let content4 = contrastArr[3]['index'];
+            let medianIndex = Math.floor(contrastArr.length / 2);
+            let content1 = contrastArr[medianIndex]['index'];
+            let content2 = contrastArr[medianIndex + 1]['index'];
+            let content3 = contrastArr[medianIndex - 1]['index'];
+            let randIndex = Math.floor(Math.random() * 2) === 1 ? -2 : 2;
+            let content4 = contrastArr[medianIndex + randIndex]['index'];
             indexArr.push(content1, content2, content3, content4);
             let arr = [];
             for (let i = 0; i < Game3D.characteristicsData.length; i++) {
@@ -4128,52 +4182,6 @@
             return arr;
         }
         Game3D.questionForindex = questionForindex;
-        function getCharacteristicsOfName(name) {
-            let arr;
-            for (let index = 0; index < Game3D.characteristicsData.length; index++) {
-                const element = Game3D.characteristicsData[index];
-                if (Game3D.characteristicsData[index][CardProperty.name] === name) {
-                    arr = Game3D.characteristicsData[index][CardProperty.characteristicsArr];
-                    break;
-                }
-            }
-            return arr;
-        }
-        Game3D.getCharacteristicsOfName = getCharacteristicsOfName;
-        let WhichScard;
-        (function (WhichScard) {
-            WhichScard["OppositeCard"] = "OppositeCard";
-            WhichScard["MyCard"] = "MyCard";
-        })(WhichScard = Game3D.WhichScard || (Game3D.WhichScard = {}));
-        Game3D.characteristicsData = [];
-        let CharacteristicsProperty;
-        (function (CharacteristicsProperty) {
-            CharacteristicsProperty["index"] = "index";
-            CharacteristicsProperty["describe"] = "describe";
-            CharacteristicsProperty["question"] = "question";
-        })(CharacteristicsProperty = Game3D.CharacteristicsProperty || (Game3D.CharacteristicsProperty = {}));
-        Game3D.CardData = [];
-        let CardProperty;
-        (function (CardProperty) {
-            CardProperty["characteristicsArr"] = "characteristicsArr";
-            CardProperty["ChName"] = "ChName";
-            CardProperty["name"] = "name";
-        })(CardProperty = Game3D.CardProperty || (Game3D.CardProperty = {}));
-        let WhichBoutType;
-        (function (WhichBoutType) {
-            WhichBoutType["me"] = "me";
-            WhichBoutType["opposite"] = "opposite";
-        })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
-        let EventType;
-        (function (EventType) {
-            EventType["judgeQuestion"] = "judgeQuestion";
-            EventType["cardClick"] = "cardClick";
-        })(EventType = Game3D.EventType || (Game3D.EventType = {}));
-        let CameraMoveType;
-        (function (CameraMoveType) {
-            CameraMoveType["nod"] = "nod";
-            CameraMoveType["shake"] = "shake";
-        })(CameraMoveType = Game3D.CameraMoveType || (Game3D.CameraMoveType = {}));
         function dataInit() {
             Game3D.characteristicsData = Laya.loader.getRes("GameData/Game/characteristics.json")['RECORDS'];
             Game3D.CardData = Laya.loader.getRes("GameData/Game/Card.json")['RECORDS'];
@@ -4183,8 +4191,8 @@
             lwgOnAwake() {
                 Game3D.Scene3D = this.self;
                 Game3D.MainCamera = Game3D.Scene3D.getChildByName('Main Camera');
-                Game3D.MyCard = Game3D.Scene3D.getChildByName('MyCard');
-                Game3D.OppositeCard = Game3D.Scene3D.getChildByName('OppositeCard');
+                Game3D.MyCardParent = Game3D.Scene3D.getChildByName('MyCardParent');
+                Game3D.OppositeCardParent = Game3D.Scene3D.getChildByName('OppositeCardParent');
                 Game3D.OppositeHandParent = Game3D.Scene3D.getChildByName('OppositeHandParent');
                 Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
             }
@@ -4198,25 +4206,25 @@
                     }
                     let CardArr;
                     if (Game3D.whichBout == WhichBoutType.me) {
-                        CardArr = Game3D.MyCard;
+                        CardArr = Game3D.MyCardParent;
                     }
                     else if (WhichBoutType.opposite) {
-                        CardArr = Game3D.OppositeCard;
+                        CardArr = Game3D.OppositeCardParent;
                     }
                     let haveCardArr = [];
                     let nohaveCardArr = [];
                     for (let i = 0; i < CardArr.numChildren; i++) {
-                        let element = CardArr.getChildAt(i);
+                        let Card = CardArr.getChildAt(i);
                         let have;
-                        for (let j = 0; j < element[CardProperty.characteristicsArr].length; j++) {
-                            if (ChaIndex === element[CardProperty.characteristicsArr][j]) {
-                                haveCardArr.push(element.name);
+                        for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
+                            if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
+                                haveCardArr.push(Card.name);
                                 have = true;
                                 break;
                             }
                         }
                         if (!have) {
-                            nohaveCardArr.push(element.name);
+                            nohaveCardArr.push(Card.name);
                         }
                     }
                     console.log(haveCardArr);
@@ -4241,68 +4249,71 @@
                         });
                     }
                 });
+                EventAdmin.reg(EventType.judgeClickCard, this, (MeshSprite3D) => {
+                    if (Game3D.whichBout == WhichBoutType.me) {
+                        if (MeshSprite3D.parent !== Game3D.MyCardParent) {
+                            return;
+                        }
+                    }
+                    else if (Game3D.whichBout == WhichBoutType.opposite) {
+                        if (MeshSprite3D.parent !== Game3D.OppositeCardParent) {
+                            return;
+                        }
+                    }
+                    console.log(MeshSprite3D.name);
+                });
             }
             carFallAni(arr) {
                 let CardArr;
                 if (Game3D.whichBout == WhichBoutType.me) {
-                    CardArr = Game3D.MyCard;
+                    CardArr = Game3D.MyCardParent;
                 }
                 else if (WhichBoutType.opposite) {
-                    CardArr = Game3D.OppositeCard;
+                    CardArr = Game3D.OppositeCardParent;
                 }
-                for (let i = 0; i < CardArr.numChildren; i++) {
-                    for (let j = 0; j < arr.length; j++) {
-                        if (arr[j] == CardArr.getChildAt(i).name) {
-                            CardArr.getChildAt(i).removeSelf();
-                            Game3D.myCardArr.splice(i, 1);
-                        }
-                    }
+                for (let i = 0; i < arr.length; i++) {
+                    let Card = CardArr.getChildByName(arr[i]);
+                    Card[CardProperty.fall] = true;
+                    Card.transform.localRotationEulerX = 90;
                 }
                 this.nextRound();
             }
-            cameraNodOrShaking(type) {
-                if (type === CameraMoveType.nod) {
-                    Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(3, 0, 0), 500, this, () => {
-                        console.log('点头完成');
-                    });
-                }
-                else {
-                    Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 3, 0), 500, this, () => {
-                        console.log('摇头完成！');
-                    });
-                }
-            }
             nextRound() {
-                randomTaskCard(WhichScard.MyCard);
-                EventAdmin.notify('nextRound');
+                randomTaskCard(WhichScard.MyCardParent);
+                EventAdmin.notify(GameEventType.nextRound);
             }
             lwgOnEnable() {
                 this.opening();
             }
             opening() {
                 Game3D.whichBout = WhichBoutType.me;
-                if (Game3D.MyCard.numChildren > 0) {
-                    Game3D.MyCard.removeChildren(0, Game3D.MyCard.numChildren - 1);
+                if (Game3D.MyCardParent.numChildren > 0) {
+                    Game3D.MyCardParent.removeChildren(0, Game3D.MyCardParent.numChildren - 1);
                 }
-                if (Game3D.OppositeCard.numChildren > 0) {
-                    Game3D.OppositeCard.removeChildren(0, Game3D.OppositeCard.numChildren - 1);
+                if (Game3D.OppositeCardParent.numChildren > 0) {
+                    Game3D.OppositeCardParent.removeChildren(0, Game3D.OppositeCardParent.numChildren - 1);
                 }
-                randomlyTakeOut(WhichScard.MyCard);
-                randomTaskCard(WhichScard.MyCard);
+                randomlyTakeOut(WhichScard.MyCardParent);
+                randomTaskCard(WhichScard.MyCardParent);
             }
         }
         Game3D.MainScene = MainScene;
     })(Game3D || (Game3D = {}));
 
+    var GameEventType;
+    (function (GameEventType) {
+        GameEventType["nextRound"] = "nextRound";
+    })(GameEventType || (GameEventType = {}));
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
+            console.log('这是第一个脚本');
             this.creatQuestion();
         }
         lwgNodeDec() {
             this.OptionParent = this.self['OptionParent'];
         }
         lwgEventReg() {
-            EventAdmin.reg('nextRound', this, () => {
+            EventAdmin.reg(GameEventType.nextRound, this, () => {
                 this.creatQuestion();
             });
         }
