@@ -3,6 +3,7 @@ import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
 import UILoding from "./script/Game/UILoding"
 import UIStart from "./script/Game/UIStart"
+import UIVictory from "./script/Game/UIVictory"
 import GameUI from "./script/GameUI"
 /*
 * 游戏初始化配置;
@@ -27,6 +28,7 @@ export default class GameConfig{
         reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UILoding.ts",UILoding);
         reg("script/Game/UIStart.ts",UIStart);
+        reg("script/Game/UIVictory.ts",UIVictory);
         reg("script/GameUI.ts",GameUI);
     }
 }

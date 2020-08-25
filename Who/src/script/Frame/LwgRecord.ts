@@ -127,8 +127,12 @@ export module record {
 
 
     export enum Laya3D {
-        '_defaultPhysicsMemory' = '如果出现内存不够的情况‘abort Cannot enlarge memory arrays’，在Laya.d3.js中的构造函数中改变this._defaultPhysicsMemory = 512;'
+        '_defaultPhysicsMemory' = '如果出现内存不够的情况‘abort Cannot enlarge memory arrays’，在Laya.d3.js中的构造函数中改变this._defaultPhysicsMemory = 512;',
+        '单个资源加载过大' = '如果某个3D资源，比如场景，预制体过大，加载时间过长，可以用分解法，分解后再进行加载，这样进度条更加流畅'
+    }
 
+    export enum Loding {
+        '单个资源加载过大' = '如果某个3D资源，比如场景，预制体过大，加载时间过长，可以用分解法，分解后再进行加载，这样进度条更加流畅'
     }
 
     export enum LocalStorage {

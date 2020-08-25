@@ -1,12 +1,6 @@
 import { Admin, Dialog, Click, EventAdmin, Tools } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
-export enum GameEventType {
-    /**下一回合*/
-    nextRound = 'nextRound',
-
-
-}
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
@@ -23,21 +17,22 @@ export default class GameScene extends Admin.Scene {
     }
 
     lwgEventReg(): void {
-        EventAdmin.reg(GameEventType.nextRound, this, () => {
+        EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
             this.creatQuestion();
         })
+
+        EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
+            Admin._gameSwitch = false;
+            Admin._openScene(Admin.SceneName.UIVictory, this.self);
+        })
     }
+    
     lwgOnEnable(): void {
 
     }
 
-    onStageMouseDown(e: Laya.Event): void {
-        Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY), );
-    }
-
     /**创建问题*/
     creatQuestion(): void {
-        // console.log(Game3D.questionArr);
         if (this.OptionParent.numChildren > 0) {
             this.OptionParent.removeChildren(0, this.OptionParent.numChildren - 1);
         }
@@ -72,6 +67,8 @@ export default class GameScene extends Admin.Scene {
             }
         }
     }
+
+    /**创建选项卡*/
     createOption(parent, x, y, question: string, click: boolean): Laya.Sprite {
         let Option = Laya.Pool.getItemByCreateFun('Option', this.Option.create, this.Option) as Laya.Sprite;
         let Content = Option.getChildByName('Content') as Laya.Label;
@@ -86,12 +83,20 @@ export default class GameScene extends Admin.Scene {
         return Option;
     }
 
-    /**
-     * 特征判断
-     * 
-    */
-    judgeCharacteristic(): void {
+    onStageMouseDown(e: Laya.Event): void {
+        let hitResult: Laya.HitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
+        let sprite3D;
+        if (hitResult) {
+            sprite3D = hitResult.collider.owner;
+            EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
+        }
+    }
 
+    /**
+    * 特征判断
+    * 
+   */
+    judgeCharacteristic(): void {
     }
 
     lwgBtnClick(): void {

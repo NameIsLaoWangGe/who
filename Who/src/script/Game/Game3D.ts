@@ -1,7 +1,5 @@
 import { lwg3D } from "../Frame/lwg3D";
-import { Tools, EventAdmin, Animation3D } from "../Frame/lwg";
-import { GameEventType } from "./GameScene";
-
+import { Tools, EventAdmin, Animation3D, Admin } from "../Frame/lwg";
 export module Game3D {
     /**场景节点枚举*/
     export let Scene3D: Laya.Scene3D;
@@ -61,7 +59,10 @@ export module Game3D {
     /**轮到谁了*/
     export enum WhichBoutType {
         me = 'me',
-        opposite = 'opposite'
+        opposite = 'opposite',
+        stop = 'stop',
+        victory = 'victory',
+        defeated = 'defeted',
     }
 
     /**事件*/
@@ -69,7 +70,9 @@ export module Game3D {
         /**检验答题*/
         judgeQuestion = 'judgeQuestion',
         /**检测卡牌的点击*/
-        judgeClickCard = 'judgeClickCard'
+        judgeClickCard = 'judgeClickCard',
+        /**下一回合*/
+        nextRound = 'nextRound',
     }
 
     /**摄像机动画类型*/
@@ -94,9 +97,10 @@ export module Game3D {
             myHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
         }
 
+        let AllCardParent = AllCardTem.clone() as Laya.MeshSprite3D;
         let startZ = 0.3;
         for (let index = 0; index < cardData16.length; index++) {
-            const Card = AllCardTem.getChildByName(cardData16[index][CardProperty.name]) as Laya.MeshSprite3D;
+            const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]) as Laya.MeshSprite3D;
             if (type === WhichScard.MyCardParent) {
                 if (Card.name === oppositeHandCard[0][CardProperty.name]) {
                     let HandCard = Card.clone() as Laya.MeshSprite3D;
@@ -183,7 +187,7 @@ export module Game3D {
         } else if (residueNum >= 4) {
             questionArr = questionForindex(contrastArr);
         }
-        console.log(contrastArr, questionArr);
+        // console.log(contrastArr, questionArr);
     }
 
     /**
@@ -229,20 +233,22 @@ export module Game3D {
 
         lwgEventReg(): void {
             EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
+                // 在特征表中的索引值
                 let ChaIndex;
                 for (let i = 0; i < characteristicsData.length; i++) {
                     if (question === characteristicsData[i][CharacteristicsProperty.question]) {
                         ChaIndex = characteristicsData[i][CharacteristicsProperty.index];
                     }
                 }
+                // 查找节点中有这个特征的数组
+                let haveCardArr = [];
+                let nohaveCardArr = [];
                 let CardArr: Laya.MeshSprite3D;
                 if (whichBout == WhichBoutType.me) {
                     CardArr = MyCardParent;
                 } else if (WhichBoutType.opposite) {
                     CardArr = OppositeCardParent;
                 }
-                let haveCardArr = [];
-                let nohaveCardArr = [];
                 for (let i = 0; i < CardArr.numChildren; i++) {
                     let Card = CardArr.getChildAt(i);
                     let have;
@@ -257,13 +263,13 @@ export module Game3D {
                         nohaveCardArr.push(Card.name);
                     }
                 }
-                console.log(haveCardArr);
-                console.log(nohaveCardArr);
-                console.log(oppositeHandCard[0]['name']);
-                // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则删掉不匹配的牌
+                // console.log(haveCardArr);
+                // console.log(nohaveCardArr);
+                // console.log(oppositeHandCard[0][CardProperty.name]);
+                // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则也删掉不匹配的牌
                 let matching;
                 for (let index = 0; index < haveCardArr.length; index++) {
-                    if (haveCardArr[index] == oppositeHandCard[0]['name']) {
+                    if (haveCardArr[index] == oppositeHandCard[0][CardProperty.name]) {
                         matching = true;
                     }
                 }
@@ -282,40 +288,87 @@ export module Game3D {
             })
 
             EventAdmin.reg(EventType.judgeClickCard, this, (MeshSprite3D: Laya.MeshSprite3D) => {
-                console.log(MeshSprite3D);
+                if (MeshSprite3D[CardProperty.fall]) {
+                    return;
+                }
                 if (whichBout == WhichBoutType.me) {
-                    if (MeshSprite3D.parent !== MyCardParent) {
-                        return;
+                    if (MeshSprite3D.parent === MyCardParent) {
+                        if (MeshSprite3D.name == oppositeHandCard[0][CardProperty.name]) {
+                            console.log('我方赢了！');
+                            this.carFallAni([MeshSprite3D.name], true);
+                            EventAdmin.notify(EventAdmin.EventType.victory);
+                            // whichBout = WhichBoutType.victory;
+                        } else {
+                            console.log('选错了！');
+                            this.carFallAni([MeshSprite3D.name]);
+                        }
                     }
                 } else if (whichBout == WhichBoutType.opposite) {
                     if (MeshSprite3D.parent !== OppositeCardParent) {
-                        return;
+                        if (MeshSprite3D.name == myHandCard[0][CardProperty.name]) {
+                            console.log('对方赢了！');
+                            this.carFallAni([MeshSprite3D.name], true);
+                            // whichBout = WhichBoutType.defeated;
+                        }
                     }
                 }
-                console.log(MeshSprite3D.name);
+            })
+
+            // 胜利
+            EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
+
+            })
+            // 下一关
+            EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
+                this.opening();
+            })
+
+            //下一回合
+            EventAdmin.reg(EventType.nextRound, this, () => {
+                if (whichBout == WhichBoutType.victory) {
+
+                } else if (whichBout == WhichBoutType.defeated) {
+
+                } else {
+                    randomTaskCard(WhichScard.MyCardParent);
+                }
             })
         }
 
-
-        /**卡牌倒下动画*/
-        carFallAni(arr): void {
-            let CardArr: Laya.MeshSprite3D;
+        /**
+         * 卡牌倒下动画
+         * @param arrName 名称数组，那些卡牌需要倒下
+         * @param exclude 是否是反向排除这些卡牌，默认是不排除为false
+         */
+        carFallAni(arrName: Array<string>, exclude?: boolean): void {
+            let CardParent: Laya.MeshSprite3D;
             if (whichBout == WhichBoutType.me) {
-                CardArr = MyCardParent;
+                CardParent = MyCardParent;
             } else if (WhichBoutType.opposite) {
-                CardArr = OppositeCardParent;
+                CardParent = OppositeCardParent;
+            } else {
+                return;
             }
-            for (let i = 0; i < arr.length; i++) {
-                let Card = CardArr.getChildByName(arr[i]) as Laya.MeshSprite3D;
-                Card[CardProperty.fall] = true;
-                Card.transform.localRotationEulerX = 90;
+            if (exclude) {
+                for (let i = 0; i < CardParent.numChildren; i++) {
+                    const Card = CardParent.getChildAt(i) as Laya.MeshSprite3D;
+                    for (let j = 0; j < arrName.length; j++) {
+                        if (Card.name !== arrName[j] && !Card[CardProperty.fall]) {
+                            Card[CardProperty.fall] = true;
+                            Card.transform.localRotationEulerX = -90;
+                        }
+                    }
+                }
+            } else {
+                for (let i = 0; i < arrName.length; i++) {
+                    let Card = CardParent.getChildByName(arrName[i]) as Laya.MeshSprite3D;
+                    if (!Card[CardProperty.fall]) {
+                        Card[CardProperty.fall] = true;
+                        Card.transform.localRotationEulerX = -90;
+                    }
+                }
             }
-            this.nextRound();
-        }
-
-        nextRound(): void {
-            randomTaskCard(WhichScard.MyCardParent);
-            EventAdmin.notify(GameEventType.nextRound);
+            EventAdmin.notify(EventType.nextRound);
         }
 
         lwgOnEnable(): void {

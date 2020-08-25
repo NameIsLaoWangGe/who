@@ -125,16 +125,17 @@ R 9B501DC8 chijinbi.wav
 R E23D09D2 guoguan.wav
 R 6E72E92F wancheng.wav
 D UI/Common
-D UI/GameMain
+D UI/GameScene
 D UI/UICheckIn
+D UI/UIDefeated
 D UI/UILoding
 D UI/UIResurgence
 D UI/UISet
-D UI/UISettle
 D UI/UIShare
 D UI/UIShop
 D UI/UISkin
+D UI/UISkinLimit
 D UI/UIStart
 D UI/UITask
+D UI/UIVictory
 D UI/UIVictoryBox
-D UI/UIXDSkin

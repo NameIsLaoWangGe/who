@@ -16,6 +16,7 @@ export default class LwgInit extends Admin.Scene {
     admin(): void {
 
     };
+
     /**3D模块初始化*/
     game3D(): void {
         Game3D.dataInit();
@@ -23,6 +24,7 @@ export default class LwgInit extends Admin.Scene {
         Laya.stage.addChild(Game3D.Scene3D);
         Game3D.Scene3D.addComponent(Game3D.MainScene);
     }
+    
     /**皮肤初始化*/
     skin(): void {
 
@@ -40,8 +42,6 @@ export default class LwgInit extends Admin.Scene {
 
     }
 
-    Playaodiu
-    
     lwgOnEnable(): void {
         console.log('完成初始化');
         Admin._openScene(Admin.SceneName.UIStart, this.self);

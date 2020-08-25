@@ -746,18 +746,20 @@ export module lwg {
         export enum EventType {
             /**完成任务*/
             taskReach = 'taskReach',
+            /**开始游戏*/
+            startGame = 'startGame',
             /**失败*/
             defeated = 'defeated',
+            /**胜利*/
+            victory = 'victory',
             /**刷新3D场景*/
             scene3DRefresh = 'Scene3DRefresh',
-            /**刷新3D场景*/
-            scene3DResurgence = 'scene3DResurgence',
-            /**刷新操作场景*/
-            operationRefresh = 'operationRefresh',
+            /**刷新主游戏场景，不是3d场景*/
+            gameSceneRefresh = 'gameSceneRefresh',
+            /**下一关*/
+            nextCustoms = 'nextCustoms',
             /**复活*/
             resurgence = 'resurgence',
-            /**关闭操作界面*/
-            closeOperation = 'closeOperation',
         }
 
         /**以节点为单位，在节点内注册事件，节点移除或者关闭后，关闭事件监听；如果需要在节点外注册事件，this为EventAdmin，不要写在节点脚本中，否则每次打开一次就会注册一次*/
@@ -1043,13 +1045,13 @@ export module lwg {
                 this.btnAndlwgOpenAni();
             }
             /**每个模块优先执行的初始化函数，比lwgOnEnable早执行*/
-            moduleOnEnable(): void { }
+            moduleOnEnable(): void { };
             /**声明场景里的一些节点*/
-            lwgNodeDec(): void { }
+            lwgNodeDec(): void { };
             /**场景中的一些事件，在lwgOnAwake和lwgOnEnable之间执行*/
-            lwgEventReg(): void { }
+            lwgEventReg(): void { };
             /**模块中的事件*/
-            moduleEventReg(): void { }
+            moduleEventReg(): void { };
             /**游戏当前的状态,有些页面没有状态*/
             private gameState(calssName): void {
                 switch (calssName) {
@@ -1069,11 +1071,13 @@ export module lwg {
                         break;
                 }
             }
+
             /**初始化，在onEnable中执行，重写即可覆盖*/
             lwgOnEnable(): void {
 
             }
-            /**通用场景动画*/
+
+            /**通用场景进场动画*/
             private commonOpenAni(): number {
                 let time = 0;
                 let delay = 0;
@@ -1096,7 +1100,7 @@ export module lwg {
                 return time;
             }
             /**通过openni返回的时间来延时开启点击事件*/
-            btnAndlwgOpenAni(): void {
+            private btnAndlwgOpenAni(): void {
                 let time = this.lwgOpenAni();
                 if (time == null) {
                     time = this.commonOpenAni();
@@ -1108,24 +1112,63 @@ export module lwg {
                     this.lwgBtnClick();
                 });
             }
-            /**按钮点击事件注册*/
-            lwgBtnClick(): void { }
             /**开场或者离场动画单位时间,默认为100*/
             aniTime: number = 100;
             /**开场或者离场动画单位延迟时间,默认为100*/
             aniDelayde: number = 100;
             /**开场动画,返回的数字为时间倒计时，倒计时结束后开启点击事件*/
-            lwgOpenAni(): number { return null }
+            lwgOpenAni(): number { return null };
+            /**按钮点击事件注册*/
+            lwgBtnClick(): void { };
             /**一些节点的自适应*/
-            lwgAdaptive(): void { }
-            /**离场动画*/
-            lwgVanishAni(): number { return 0 }
+            lwgAdaptive(): void { };
 
-            onUpdate(): void { this.lwgOnUpdate() }
+            onUpdate(): void { this.lwgOnUpdate() };
             /**每帧执行*/
-            lwgOnUpdate(): void { }
+            lwgOnUpdate(): void { };
 
+            private commonVaishAni(): number {
+                let time = 0;
+                let delay = 0;
+                switch (_commonOpenAni) {
+                    case OpenAniType.fadeOut:
+                        time = 500;
+                        delay = 400;
+                        if (this.self['Background']) {
+                            Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
+                        }
+                        Animation2D.fadeOut(this.self, 0, 1, time);
+                        break;
+                    case OpenAniType.leftMove:
+
+                        break;
+
+                    default:
+                        break;
+                }
+                return time;
+            }
+
+             /**通过计时器计时，当*/
+             private btnAndlwgVanishAni(): void {
+                // let time = this.lwgOpenAni();
+                // if (time == null) {
+                //     time = this.commonOpenAni();
+                //     if (time == null) {
+                //         time = 0;
+                //     }
+                // }
+                // Laya.timer.once(time, this, f => {
+                //     this.lwgBtnClick();
+                // });
+            }
+
+            /**离场动画*/
+            lwgVanishAni(): number {
+              return 0;
+            };
             onDisable(): void {
+                Animation2D.fadeOut(this.self, 1, 0, 2000, 1);
                 this.lwgOnDisable();
                 Laya.timer.clearAll(this);
                 Laya.Tween.clearAll(this);
@@ -1133,8 +1176,9 @@ export module lwg {
                 // Tomato.scenePrintPoint(this.calssName, Tomato.scenePointType.close);
             }
             /**离开时执行，子类不执行onDisable，只执行lwgDisable*/
-            lwgOnDisable(): void { }
+            lwgOnDisable(): void { };
         }
+
         /**2D角色通用父类*/
         export class Person extends Laya.Script {
             /**挂载当前脚本的节点*/
@@ -3223,9 +3267,9 @@ export module lwg {
          * @param camera 摄像机
          * @param scene3D 当前场景
          * @param vector2 触摸点
-         * @param filtrate 找出指定触摸的模型的信息，如果不传则返回全部信息；
+         * @param filtrateName 找出指定触摸的模型的信息，如果不传则返回全部信息数组；
          */
-        export function d3_rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, vector2: Laya.Vector2, filtrate?: string): any {
+        export function d3_rayScanning(camera: Laya.Camera, scene3D: Laya.Scene3D, vector2: Laya.Vector2, filtrateName?: string): any {
             /**射线*/
             let _ray: Laya.Ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
             /**射线扫描结果*/
@@ -3235,12 +3279,12 @@ export module lwg {
             camera.viewportPointToRay(vector2, _ray);
             scene3D.physicsSimulation.rayCastAll(_ray, outs);
             //找到挡屏的位置，把手的位置放在投屏位置的上方，也就是触摸点的上方
-            if (outs.length != 0 && filtrate) {
+            if (outs.length != 0 && filtrateName) {
                 let outsChaild = null;
                 for (var i = 0; i < outs.length; i++) {
                     //找到挡屏
                     let hitResult = outs[i].collider.owner;
-                    if (hitResult.name === filtrate) {
+                    if (hitResult.name === filtrateName) {
                         // 开启移动
                         outsChaild = outs[i];
                     }
@@ -4708,7 +4752,7 @@ export module lwg {
     }
 
     /**限定皮肤模块*/
-    export module SkinXD {
+    export module SkinQualified {
         /**从哪个界面弹出了XDSkin*/
         export let _fromScene: string;
         /**需要看几次广告才可以获得限定皮肤,默认三次，重写覆盖*/
@@ -4743,7 +4787,7 @@ export module lwg {
         }
 
         /**限定皮肤场景父类*/
-        export class SkinXDScene extends Admin.Scene {
+        export class SkinQualifiedScene extends Admin.Scene {
             moduleOnEnable(): void {
                 _needAdsNum = 3;
             }
@@ -5057,6 +5101,35 @@ export module lwg {
         }
     }
 
+    /**胜利模块*/
+    export module Victory {
+        export class VictoryScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+    }
+    /**失败模块*/
+    export module Defeated {
+        export class DefeatedScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+    }
+
     export module Loding {
         /**3D场景的加载，其他3D物体，贴图，Mesh详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
         export let list_3DScene: Array<any> = [];
@@ -5314,6 +5387,7 @@ export module lwg {
 }
 
 export default lwg;
+// 全局控制
 export let Admin = lwg.Admin;
 export let EventAdmin = lwg.EventAdmin;
 export let Pause = lwg.Pause;
@@ -5327,7 +5401,7 @@ export let Dialog = lwg.Dialog;
 export let Animation2D = lwg.Animation2D;
 export let Animation3D = lwg.Animation3D;
 export let Tools = lwg.Tools;
-export let Elect = lwg.Elect
+export let Elect = lwg.Elect;
 //场景相关 
 export let Loding = lwg.Loding;
 export let LodeScene = lwg.Loding.LodingScene;
@@ -5339,13 +5413,17 @@ export let VictoryBox = lwg.VictoryBox;
 export let VictoryBoxScene = lwg.VictoryBox.VictoryBoxScene;
 export let CheckIn = lwg.CheckIn;
 export let CheckInScene = lwg.CheckIn.CheckInScene;
-export let SkinXD = lwg.SkinXD;
-export let SkinXDScene = lwg.SkinXD.SkinXDScene;
+export let SkinQualified = lwg.SkinQualified;
+export let SkinXDScene = lwg.SkinQualified.SkinQualifiedScene;
 export let Skin = lwg.Skin;
 export let SkinScene = lwg.Skin.SkinScene;
 export let EasterEgg = lwg.EasterEgg;
 export let Start = lwg.Start;
 export let StartScene = lwg.Start.StartScene;
+export let Victory = lwg.Victory;
+export let VictoryScene = lwg.Victory.VictoryScene;
+export let Defeated = lwg.Defeated;
+export let DefeatedScene = lwg.Defeated.DefeatedScene;
 // 其他
 export let Tomato = lwg.Tomato;
 
