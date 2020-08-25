@@ -1,0 +1,4 @@
+{
+  "code": "export default class PreGuessCard extends Laya.Script {\r\n    onAwake() {\r\n    }\r\n    onEnable() {\r\n    }\r\n    onDisable() {\r\n    }\r\n}\r\n",
+  "references": []
+}

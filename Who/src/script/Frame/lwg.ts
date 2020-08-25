@@ -849,7 +849,7 @@ export module lwg {
             set value(val) {
                 Laya.LocalStorage.setItem('_gameLevel', val.toString());
             }
-        };
+        }
 
         /**当前实际打开后者停留的关卡数，而非真实的关卡等级*/
         export let _practicalLevel = {
@@ -859,7 +859,7 @@ export module lwg {
             set value(val) {
                 Laya.LocalStorage.setItem('_practicalLevel', val.toString());
             }
-        };
+        }
 
         /**等级的显示节点*/
         export let LevelNode: Laya.Sprite;
@@ -930,22 +930,24 @@ export module lwg {
         }
         /**为了统一，每个游戏只有一种通用动效，在初始化的时候设置，默认为渐隐渐出，如果场景内的openAni函数启用，则这个场景的通用场景动效将会被替代*/
         export let _commonOpenAni: string = OpenAniType.fadeOut;
+        /**有时候我们并不需要离场动画*/
+        export let _commonVanishAni: boolean = false;
 
         /**常用场景的名称，和脚本名称保持一致*/
         export enum SceneName {
             UILoding = 'UILoding',
             UIStart = 'UIStart',
-            UIMain = 'UIMain',
-            GameMain3D = 'GameMain3D',
-            UIVictory = 'UIVictory',
-            UIDefeated = 'UIDefeated',
-            UIExecutionHint = 'UIExecutionHint',
-            UIPassHint = 'UIPassHint',
+            UISkin = 'UISkin',
+            UIShop = 'UIShop',
+            UITask = 'UITask',
             UISet = 'UISet',
             UIPifu = 'UIPifu',
             UIPuase = 'UIPuase',
             UIShare = 'UIShare',
-            UISmallHint = 'UISmallHint',
+            GameMain3D = 'GameMain3D',
+            UIVictory = 'UIVictory',
+            UIDefeated = 'UIDefeated',
+            UIPassHint = 'UIPassHint',
             UISkinXD = 'UISkinXD',
             UISkinTry = 'UISkinTry',
             UIRedeem = 'UIRedeem',
@@ -954,16 +956,16 @@ export module lwg {
             UICaiDanQiang = 'UICaiDanQiang',
             UICaidanPifu = 'UICaidanPifu',
             UIOperation = 'UIOperation',
-            UIShop = 'UIShop',
-            UITask = 'UITask',
             UIVictoryBox = 'UIVictoryBox',
             UICheckIn = 'UICheckIn',
             UIResurgence = 'UIResurgence',
-            UISkin = 'UISkin',
             UIEasterEgg = 'UIEasterEgg',
             UIADSHint = 'UIADSHint',
             LwgInit = 'LwgInit',
-            GameScene = 'GameScene'
+            GameScene = 'GameScene',
+            UISmallHint = 'UISmallHint',
+            UIExecutionHint = 'UIExecutionHint',
+
         }
 
         /**游戏当前的状态*/
@@ -979,6 +981,33 @@ export module lwg {
             /**失败*/
             Defeated = 'defeated',
         }
+
+        /**
+         * 设置一个屏蔽场景内点击事件的的节点，用于各种动画执行的时候，反复点击
+         * @param scene 场景
+        */
+        export function _secneLockClick(scene: Laya.Scene): void {
+            _unlockPreventClick(scene);
+            let __lockClick__ = new Laya.Sprite();
+            scene.addChild(__lockClick__);
+            __lockClick__.zOrder = 1000;
+            __lockClick__.width = Laya.stage.width;
+            __lockClick__.height = Laya.stage.height;
+            __lockClick__.pos(0, 0);
+            Click.on(Click.Type.noEffect, __lockClick__, this, (e: Laya.Event) => {
+                console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
+                e.stopPropagation();
+            });
+        }
+
+        /**解除该场景的不可点击效果*/
+        export function _unlockPreventClick(scene: Laya.Scene): void {
+            let __lockClick__ = scene.getChildByName('__lockClick__') as Laya.Sprite;
+            if (__lockClick__) {
+                __lockClick__.removeSelf();
+            }
+        }
+
         /**
           * 打开界面
           * @param name 界面名称
@@ -990,13 +1019,15 @@ export module lwg {
             Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene: Laya.Scene) {
                 scene.width = Laya.stage.width;
                 scene.height = Laya.stage.height;
-                if (zOder) {
-                    Laya.stage.addChildAt(scene, zOder);
-                } else {
-                    Laya.stage.addChild(scene);
+                var openf = () => {
+                    if (zOder) {
+                        Laya.stage.addChildAt(scene, zOder);
+                    } else {
+                        Laya.stage.addChild(scene);
+                    }
                 }
                 scene.name = openName;
-                _sceneControl[openName] = scene;//装入场景容器，此时场景唯一
+                _sceneControl[openName] = scene;//装入场景容器，此容器内每个场景唯一
                 // 背景图自适应并且居中
                 let background = scene.getChildByName('Background') as Laya.Image;
                 if (background) {
@@ -1004,7 +1035,7 @@ export module lwg {
                     background.height = Laya.stage.height;
                 }
                 if (cloesScene) {
-                    cloesScene.close();
+                    _closeScene(cloesScene, openf);
                 }
                 if (func) {
                     func();
@@ -1012,10 +1043,73 @@ export module lwg {
             }));
         }
 
+        /**
+         * 关闭场景，使用此方法会先播放场景消失动画，但是必须是通过_openScene（）方法打开的场景且继承自Admin.Scene，场景消失动画和出场动画是统一的，无需设置
+         * @param cloesScene 需要关闭的场景
+         * @param func 关闭后的回调函数
+         * */
+        export function _closeScene(cloesScene?: Laya.Scene, func?: Function): void {
+
+            /**传入的回调函数*/
+            var closef = () => {
+                if (func) {
+                    func();
+                }
+                cloesScene.close();
+            }
+            // 如果关闭了场景消失动画，则不会执行任何动画
+            if (!_commonVanishAni) {
+                closef();
+                return;
+            }
+            /**消失动画*/
+            var vanishAni = () => {
+                let time = 0;
+                let delay = 0;
+                switch (_commonOpenAni) {
+                    case OpenAniType.fadeOut:
+                        time = 200;
+                        delay = 100;
+                        if (cloesScene['Background']) {
+                            Animation2D.fadeOut(cloesScene, 1, 0, time / 2);
+                        }
+                        Animation2D.fadeOut(cloesScene, 1, 0, time, delay, () => {
+                            closef();
+                        })
+                        break;
+                    case OpenAniType.leftMove:
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            //如果内部场景消失动画被重写了，则执行内部场景消失动画，而不执行通用动画
+            let cloesSceneScript = cloesScene[cloesScene.name];
+            if (cloesSceneScript) {
+                if (cloesSceneScript) {
+                    _secneLockClick(cloesScene);
+                    let time0 = cloesSceneScript.lwgVanishAni();
+                    if (time0 !== null) {
+                        Laya.timer.once(time0, this, () => {
+                            closef();
+                        })
+                    } else {
+                        vanishAni();
+                    }
+                }
+            } else {
+                console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
+            }
+        }
+
         /**2D场景通用父类*/
         export class Scene extends Laya.Script {
             /**挂载当前脚本的节点*/
             self: Laya.Scene;
+            /**类名*/
             calssName: string;
             constructor() {
                 super();
@@ -1058,7 +1152,7 @@ export module lwg {
                     case SceneName.UIStart:
                         _gameState = GameState.Start;
                         break;
-                    case SceneName.UIMain:
+                    case SceneName.GameScene:
                         _gameState = GameState.Play;
                         break;
                     case SceneName.UIDefeated:
@@ -1071,12 +1165,8 @@ export module lwg {
                         break;
                 }
             }
-
             /**初始化，在onEnable中执行，重写即可覆盖*/
-            lwgOnEnable(): void {
-
-            }
-
+            lwgOnEnable(): void { }
             /**通用场景进场动画*/
             private commonOpenAni(): number {
                 let time = 0;
@@ -1122,51 +1212,11 @@ export module lwg {
             lwgBtnClick(): void { };
             /**一些节点的自适应*/
             lwgAdaptive(): void { };
-
             onUpdate(): void { this.lwgOnUpdate() };
             /**每帧执行*/
             lwgOnUpdate(): void { };
-
-            private commonVaishAni(): number {
-                let time = 0;
-                let delay = 0;
-                switch (_commonOpenAni) {
-                    case OpenAniType.fadeOut:
-                        time = 500;
-                        delay = 400;
-                        if (this.self['Background']) {
-                            Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
-                        }
-                        Animation2D.fadeOut(this.self, 0, 1, time);
-                        break;
-                    case OpenAniType.leftMove:
-
-                        break;
-
-                    default:
-                        break;
-                }
-                return time;
-            }
-
-             /**通过计时器计时，当*/
-             private btnAndlwgVanishAni(): void {
-                // let time = this.lwgOpenAni();
-                // if (time == null) {
-                //     time = this.commonOpenAni();
-                //     if (time == null) {
-                //         time = 0;
-                //     }
-                // }
-                // Laya.timer.once(time, this, f => {
-                //     this.lwgBtnClick();
-                // });
-            }
-
             /**离场动画*/
-            lwgVanishAni(): number {
-              return 0;
-            };
+            lwgVanishAni(): number { return null };
             onDisable(): void {
                 Animation2D.fadeOut(this.self, 1, 0, 2000, 1);
                 this.lwgOnDisable();
@@ -5154,19 +5204,17 @@ export module lwg {
         /**当前加载到哪个分类数组*/
         export let loadOrderIndex: number;
 
-        /**当前进度条进度,起始位0，每加载成功1个资源，则加1*/
+        /**当前进度条进度,起始位0，每加载成功1个资源，则加1,currentProgress.value / sumProgress为进度百分比*/
         export let currentProgress = {
-            val: 0,
-
-            /**获取进度条的值*/
+            p: 0,
+            /**获取进度条的数量值，currentProgress.value / sumProgress为进度百分比*/
             get value(): number {
-                return this.val;
+                return this.p;
             },
-
             /**设置进度条的值*/
             set value(v: number) {
-                this.val = v;
-                if (this.val >= sumProgress) {
+                this.p = v;
+                if (this.p >= sumProgress) {
                     console.log('当前进度条进度为:', currentProgress.value / sumProgress);
                     console.log('进度条停止！');
                     console.log('所有资源加载完成！此时所有资源可通过例如 Laya.loader.getRes("Data/levelsData.json")获取')
@@ -5177,7 +5225,7 @@ export module lwg {
                     for (let index = 0; index <= loadOrderIndex; index++) {
                         number += loadOrder[index].length;
                     }
-                    if (this.val === number) {
+                    if (this.p === number) {
                         loadOrderIndex++;
                     }
                     EventAdmin.notify(Loding.LodingType.loding);
@@ -5197,7 +5245,13 @@ export module lwg {
             }
             moduleEventReg(): void {
                 EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule() });
-                EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); PalyAudio.playMusic(); Admin._openScene(Admin.SceneName.LwgInit, this.self) });
+
+                EventAdmin.reg(LodingType.complete, this, () => {
+                    let time = this.lodingComplete();
+                    PalyAudio.playMusic();
+                    Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self) })
+                });
+
                 EventAdmin.reg(LodingType.progress, this, (skip) => {
                     currentProgress.value++;
                     if (currentProgress.value < sumProgress) {
@@ -5217,11 +5271,17 @@ export module lwg {
                     }
                 }
                 loadOrderIndex = 0;
-                EventAdmin.notify(Loding.LodingType.loding);
+                let time = this.lwgOpenAni();
+                if (time == null) {
+                    time = 0;
+                }
+                Laya.timer.once(time, this, () => {
+                    EventAdmin.notify(Loding.LodingType.loding);
+                })
             }
 
-            /**根据加载顺序依次加载*/
-            lodingRule(): void {
+            /**根据加载顺序依次加载,第一次加载将会在openAni动画结束之后*/
+            private lodingRule(): void {
                 if (loadOrder.length <= 0) {
                     console.log('没有加载项');
                     return;
@@ -5284,10 +5344,10 @@ export module lwg {
                         break;
                 }
             }
-            /**每个资源加载成功后，进度条每次增加后的回调*/
+            /**每个资源加载成功后，进度条每次增加后的回调，第一次加载将会在openAni动画结束之后*/
             lodingPhaseComplete(): void { }
-            /**资源全部加载完成回调,每个游戏不一样*/
-            lodingComplete(): void { }
+            /**资源全部加载完成回调,每个游戏不一样,此方法执行后，自动进入UIStrat界面，可以延时进入*/
+            lodingComplete(): number { return 0 };
         }
     }
 

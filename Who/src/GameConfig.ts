@@ -5,6 +5,7 @@ import UILoding from "./script/Game/UILoding"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
 import GameUI from "./script/GameUI"
+import PreGuessCard from "./script/Game/PreGuessCard"
 /*
 * 游戏初始化配置;
 */
@@ -30,6 +31,7 @@ export default class GameConfig{
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);
         reg("script/GameUI.ts",GameUI);
+        reg("script/Game/PreGuessCard.ts",PreGuessCard);
     }
 }
 GameConfig.init();

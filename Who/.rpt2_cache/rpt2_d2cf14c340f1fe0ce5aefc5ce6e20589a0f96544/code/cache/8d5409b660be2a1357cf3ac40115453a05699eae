@@ -1,0 +1,7 @@
+{
+  "code": "import { Loding } from \"../Frame/lwg\";\r\nexport default class UILoding extends Loding.LodingScene {\r\n    lwgOnAwake() {\r\n        Loding.list_2D = [\r\n            \"res/atlas/Frame/Effects.png\",\r\n            \"res/atlas/Frame/UI.png\",\r\n        ];\r\n        Loding.list_3DScene = [\r\n            \"3DScene/LayaScene_GameMain/Conventional/GameMain.ls\"\r\n        ];\r\n        Loding.list_3DPrefab = [];\r\n        Loding.list_Json = [\r\n            \"GameData/Game/characteristics.json\",\r\n            \"GameData/Game/Card.json\",\r\n            \"Scene/LwgInit.json\",\r\n        ];\r\n    }\r\n    lwgOnEnable() {\r\n    }\r\n    lodingPhaseComplete() {\r\n        this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;\r\n    }\r\n    lodingComplete() {\r\n        this.self['Progress'].mask.x = 0;\r\n        return 200;\r\n    }\r\n    lwgOnUpdate() {\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/Game3D.ts"
+  ]
+}

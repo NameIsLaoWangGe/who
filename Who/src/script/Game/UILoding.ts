@@ -30,17 +30,19 @@ export default class UILoding extends Loding.LodingScene {
             // "Scene/UIShop.json",
             // "Scene/UISkinXD.json",
             // "Scene/UITask.json",
-            // "Scene/UIADSHint.json",
+            "Scene/LwgInit.json",
         ];
     }
     lwgOnEnable(): void {
     }
     lodingPhaseComplete(): void {
+        this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;
     }
-    lodingComplete(): void {
+    lodingComplete(): number {
+        this.self['Progress'].mask.x = 0;
+        return 200;
     }
     lwgOnUpdate(): void {
-
     }
 }
 

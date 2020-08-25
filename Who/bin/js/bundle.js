@@ -816,21 +816,22 @@
                 OpenAniType["centerRotate"] = "centerRotate";
             })(OpenAniType = Admin.OpenAniType || (Admin.OpenAniType = {}));
             Admin._commonOpenAni = OpenAniType.fadeOut;
+            Admin._commonVanishAni = false;
             let SceneName;
             (function (SceneName) {
                 SceneName["UILoding"] = "UILoding";
                 SceneName["UIStart"] = "UIStart";
-                SceneName["UIMain"] = "UIMain";
-                SceneName["GameMain3D"] = "GameMain3D";
-                SceneName["UIVictory"] = "UIVictory";
-                SceneName["UIDefeated"] = "UIDefeated";
-                SceneName["UIExecutionHint"] = "UIExecutionHint";
-                SceneName["UIPassHint"] = "UIPassHint";
+                SceneName["UISkin"] = "UISkin";
+                SceneName["UIShop"] = "UIShop";
+                SceneName["UITask"] = "UITask";
                 SceneName["UISet"] = "UISet";
                 SceneName["UIPifu"] = "UIPifu";
                 SceneName["UIPuase"] = "UIPuase";
                 SceneName["UIShare"] = "UIShare";
-                SceneName["UISmallHint"] = "UISmallHint";
+                SceneName["GameMain3D"] = "GameMain3D";
+                SceneName["UIVictory"] = "UIVictory";
+                SceneName["UIDefeated"] = "UIDefeated";
+                SceneName["UIPassHint"] = "UIPassHint";
                 SceneName["UISkinXD"] = "UISkinXD";
                 SceneName["UISkinTry"] = "UISkinTry";
                 SceneName["UIRedeem"] = "UIRedeem";
@@ -839,16 +840,15 @@
                 SceneName["UICaiDanQiang"] = "UICaiDanQiang";
                 SceneName["UICaidanPifu"] = "UICaidanPifu";
                 SceneName["UIOperation"] = "UIOperation";
-                SceneName["UIShop"] = "UIShop";
-                SceneName["UITask"] = "UITask";
                 SceneName["UIVictoryBox"] = "UIVictoryBox";
                 SceneName["UICheckIn"] = "UICheckIn";
                 SceneName["UIResurgence"] = "UIResurgence";
-                SceneName["UISkin"] = "UISkin";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
                 SceneName["UIADSHint"] = "UIADSHint";
                 SceneName["LwgInit"] = "LwgInit";
                 SceneName["GameScene"] = "GameScene";
+                SceneName["UISmallHint"] = "UISmallHint";
+                SceneName["UIExecutionHint"] = "UIExecutionHint";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             let GameState;
             (function (GameState) {
@@ -858,16 +858,39 @@
                 GameState["Victory"] = "victory";
                 GameState["Defeated"] = "defeated";
             })(GameState = Admin.GameState || (Admin.GameState = {}));
+            function _secneLockClick(scene) {
+                _unlockPreventClick(scene);
+                let __lockClick__ = new Laya.Sprite();
+                scene.addChild(__lockClick__);
+                __lockClick__.zOrder = 1000;
+                __lockClick__.width = Laya.stage.width;
+                __lockClick__.height = Laya.stage.height;
+                __lockClick__.pos(0, 0);
+                Click.on(Click.Type.noEffect, __lockClick__, this, (e) => {
+                    console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
+                    e.stopPropagation();
+                });
+            }
+            Admin._secneLockClick = _secneLockClick;
+            function _unlockPreventClick(scene) {
+                let __lockClick__ = scene.getChildByName('__lockClick__');
+                if (__lockClick__) {
+                    __lockClick__.removeSelf();
+                }
+            }
+            Admin._unlockPreventClick = _unlockPreventClick;
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
                     scene.width = Laya.stage.width;
                     scene.height = Laya.stage.height;
-                    if (zOder) {
-                        Laya.stage.addChildAt(scene, zOder);
-                    }
-                    else {
-                        Laya.stage.addChild(scene);
-                    }
+                    var openf = () => {
+                        if (zOder) {
+                            Laya.stage.addChildAt(scene, zOder);
+                        }
+                        else {
+                            Laya.stage.addChild(scene);
+                        }
+                    };
                     scene.name = openName;
                     Admin._sceneControl[openName] = scene;
                     let background = scene.getChildByName('Background');
@@ -876,7 +899,7 @@
                         background.height = Laya.stage.height;
                     }
                     if (cloesScene) {
-                        cloesScene.close();
+                        _closeScene(cloesScene, openf);
                     }
                     if (func) {
                         func();
@@ -884,6 +907,57 @@
                 }));
             }
             Admin._openScene = _openScene;
+            function _closeScene(cloesScene, func) {
+                var closef = () => {
+                    if (func) {
+                        func();
+                    }
+                    cloesScene.close();
+                };
+                if (!Admin._commonVanishAni) {
+                    closef();
+                    return;
+                }
+                var vanishAni = () => {
+                    let time = 0;
+                    let delay = 0;
+                    switch (Admin._commonOpenAni) {
+                        case OpenAniType.fadeOut:
+                            time = 200;
+                            delay = 100;
+                            if (cloesScene['Background']) {
+                                Animation2D.fadeOut(cloesScene, 1, 0, time / 2);
+                            }
+                            Animation2D.fadeOut(cloesScene, 1, 0, time, delay, () => {
+                                closef();
+                            });
+                            break;
+                        case OpenAniType.leftMove:
+                            break;
+                        default:
+                            break;
+                    }
+                };
+                let cloesSceneScript = cloesScene[cloesScene.name];
+                if (cloesSceneScript) {
+                    if (cloesSceneScript) {
+                        _secneLockClick(cloesScene);
+                        let time0 = cloesSceneScript.lwgVanishAni();
+                        if (time0 !== null) {
+                            Laya.timer.once(time0, this, () => {
+                                closef();
+                            });
+                        }
+                        else {
+                            vanishAni();
+                        }
+                    }
+                }
+                else {
+                    console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
+                }
+            }
+            Admin._closeScene = _closeScene;
             class Scene extends Laya.Script {
                 constructor() {
                     super();
@@ -923,7 +997,7 @@
                         case SceneName.UIStart:
                             Admin._gameState = GameState.Start;
                             break;
-                        case SceneName.UIMain:
+                        case SceneName.GameScene:
                             Admin._gameState = GameState.Play;
                             break;
                         case SceneName.UIDefeated:
@@ -936,8 +1010,7 @@
                             break;
                     }
                 }
-                lwgOnEnable() {
-                }
+                lwgOnEnable() { }
                 commonOpenAni() {
                     let time = 0;
                     let delay = 0;
@@ -979,30 +1052,7 @@
                 ;
                 lwgOnUpdate() { }
                 ;
-                commonVaishAni() {
-                    let time = 0;
-                    let delay = 0;
-                    switch (Admin._commonOpenAni) {
-                        case OpenAniType.fadeOut:
-                            time = 500;
-                            delay = 400;
-                            if (this.self['Background']) {
-                                Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
-                            }
-                            Animation2D.fadeOut(this.self, 0, 1, time);
-                            break;
-                        case OpenAniType.leftMove:
-                            break;
-                        default:
-                            break;
-                    }
-                    return time;
-                }
-                btnAndlwgVanishAni() {
-                }
-                lwgVanishAni() {
-                    return 0;
-                }
+                lwgVanishAni() { return null; }
                 ;
                 onDisable() {
                     Animation2D.fadeOut(this.self, 1, 0, 2000, 1);
@@ -3756,13 +3806,13 @@
             Loding.list_Json = [];
             Loding.sumProgress = 0;
             Loding.currentProgress = {
-                val: 0,
+                p: 0,
                 get value() {
-                    return this.val;
+                    return this.p;
                 },
                 set value(v) {
-                    this.val = v;
-                    if (this.val >= Loding.sumProgress) {
+                    this.p = v;
+                    if (this.p >= Loding.sumProgress) {
                         console.log('当前进度条进度为:', Loding.currentProgress.value / Loding.sumProgress);
                         console.log('进度条停止！');
                         console.log('所有资源加载完成！此时所有资源可通过例如 Laya.loader.getRes("Data/levelsData.json")获取');
@@ -3773,7 +3823,7 @@
                         for (let index = 0; index <= Loding.loadOrderIndex; index++) {
                             number += Loding.loadOrder[index].length;
                         }
-                        if (this.val === number) {
+                        if (this.p === number) {
                             Loding.loadOrderIndex++;
                         }
                         EventAdmin.notify(Loding.LodingType.loding);
@@ -3791,7 +3841,11 @@
                 }
                 moduleEventReg() {
                     EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule(); });
-                    EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); PalyAudio.playMusic(); Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                    EventAdmin.reg(LodingType.complete, this, () => {
+                        let time = this.lodingComplete();
+                        PalyAudio.playMusic();
+                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                    });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
                         if (Loding.currentProgress.value < Loding.sumProgress) {
@@ -3810,7 +3864,13 @@
                         }
                     }
                     Loding.loadOrderIndex = 0;
-                    EventAdmin.notify(Loding.LodingType.loding);
+                    let time = this.lwgOpenAni();
+                    if (time == null) {
+                        time = 0;
+                    }
+                    Laya.timer.once(time, this, () => {
+                        EventAdmin.notify(Loding.LodingType.loding);
+                    });
                 }
                 lodingRule() {
                     if (Loding.loadOrder.length <= 0) {
@@ -3872,7 +3932,8 @@
                     }
                 }
                 lodingPhaseComplete() { }
-                lodingComplete() { }
+                lodingComplete() { return 0; }
+                ;
             }
             Loding.LodingScene = LodingScene;
         })(Loding = lwg.Loding || (lwg.Loding = {}));
@@ -4403,6 +4464,9 @@
                 if (Game3D.OppositeCardParent.numChildren > 0) {
                     Game3D.OppositeCardParent.removeChildren(0, Game3D.OppositeCardParent.numChildren - 1);
                 }
+                if (Game3D.OppositeHandParent.numChildren > 0) {
+                    Game3D.OppositeHandParent.removeChildren(0, Game3D.OppositeHandParent.numChildren - 1);
+                }
                 randomlyTakeOut(WhichScard.MyCardParent);
                 randomTaskCard(WhichScard.MyCardParent);
             }
@@ -4412,7 +4476,6 @@
 
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
-            console.log('这是第一个脚本');
             this.creatQuestion();
         }
         lwgNodeDec() {
@@ -4484,15 +4547,12 @@
                 EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
             }
         }
-        judgeCharacteristic() {
-        }
         lwgBtnClick() {
         }
     }
 
     class LwgInit extends Admin.Scene {
         lwgOnAwake() {
-            console.log('开始游戏每个模块的初始化');
             this.admin();
             this.game3D();
             this.shop();
@@ -4501,8 +4561,8 @@
             this.easterEgg();
         }
         admin() {
+            Admin._commonVanishAni = true;
         }
-        ;
         game3D() {
             Game3D.dataInit();
             Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
@@ -4511,10 +4571,8 @@
         }
         skin() {
         }
-        ;
         shop() {
         }
-        ;
         task() {
         }
         easterEgg() {
@@ -4538,13 +4596,17 @@
             Loding.list_Json = [
                 "GameData/Game/characteristics.json",
                 "GameData/Game/Card.json",
+                "Scene/LwgInit.json",
             ];
         }
         lwgOnEnable() {
         }
         lodingPhaseComplete() {
+            this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;
         }
         lodingComplete() {
+            this.self['Progress'].mask.x = 0;
+            return 200;
         }
         lwgOnUpdate() {
         }
@@ -4559,7 +4621,7 @@
         }
     }
 
-    class victory extends VictoryScene {
+    class UIVictory extends VictoryScene {
         lwgNodeDec() {
         }
         lwgOnEnable() {
@@ -4667,6 +4729,15 @@
         }
     }
 
+    class PreGuessCard extends Laya.Script {
+        onAwake() {
+        }
+        onEnable() {
+        }
+        onDisable() {
+        }
+    }
+
     class GameConfig {
         constructor() { }
         static init() {
@@ -4675,8 +4746,9 @@
             reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UILoding.ts", UILoding);
             reg("script/Game/UIStart.ts", UIStart);
-            reg("script/Game/UIVictory.ts", victory);
+            reg("script/Game/UIVictory.ts", UIVictory);
             reg("script/GameUI.ts", GameUI);
+            reg("script/Game/PreGuessCard.ts", PreGuessCard);
         }
     }
     GameConfig.width = 720;

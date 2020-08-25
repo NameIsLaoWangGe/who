@@ -1,14 +1,12 @@
 import { Admin, Dialog, Click, EventAdmin, Tools } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
-
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
     public Option: Laya.Prefab;
     /**选项卡*/
     OptionParent: Laya.Sprite;
     lwgOnAwake(): void {
-        console.log('这是第一个脚本');
         this.creatQuestion();
     }
 
@@ -92,12 +90,6 @@ export default class GameScene extends Admin.Scene {
         }
     }
 
-    /**
-    * 特征判断
-    * 
-   */
-    judgeCharacteristic(): void {
-    }
 
     lwgBtnClick(): void {
 

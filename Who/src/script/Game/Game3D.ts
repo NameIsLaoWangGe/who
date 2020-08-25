@@ -384,6 +384,13 @@ export module Game3D {
             if (OppositeCardParent.numChildren > 0) {
                 OppositeCardParent.removeChildren(0, OppositeCardParent.numChildren - 1);
             }
+            // if (myHandCard.numChildren > 0) {
+            //     myHandCard.removeChildren(0, myHandCard.numChildren - 1);
+            // }
+            if (OppositeHandParent.numChildren > 0) {
+                OppositeHandParent.removeChildren(0, OppositeHandParent.numChildren - 1);
+            }
+          
             randomlyTakeOut(WhichScard.MyCardParent);
             // randomlyTakeOut(WhichScard.OppositeCardParent);
             randomTaskCard(WhichScard.MyCardParent);

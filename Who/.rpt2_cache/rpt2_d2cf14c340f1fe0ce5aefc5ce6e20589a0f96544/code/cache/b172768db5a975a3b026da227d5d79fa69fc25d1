@@ -1,0 +1,6 @@
+{
+  "code": "import { Start, Click, Admin } from \"../Frame/lwg\";\r\nexport default class UIStart extends Start.StartScene {\r\n    lwgOnAwake() { }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.GameScene, this.self);\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts"
+  ]
+}

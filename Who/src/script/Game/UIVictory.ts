@@ -1,7 +1,7 @@
 import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click } from "../Frame/lwg";
 import ADManager, { TaT } from "../TJ/Admanager";
 
-export default class victory extends VictoryScene {
+export default class UIVictory extends VictoryScene {
 
     lwgNodeDec(): void {
     }
@@ -13,7 +13,6 @@ export default class victory extends VictoryScene {
     getGoldDisPlay(number): void {
 
     }
-
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UIStart, this.self);
