@@ -899,6 +899,32 @@ export module lwg {
             }
         }
 
+        /**
+        * 设置一个屏蔽场景内点击事件的的节点，用于各种动画执行的时候，反复点击
+        * @param scene 场景
+       */
+        export function _secneLockClick(scene: Laya.Scene): void {
+            _unlockPreventClick(scene);
+            let __lockClick__ = new Laya.Sprite();
+            scene.addChild(__lockClick__);
+            __lockClick__.zOrder = 1000;
+            __lockClick__.width = Laya.stage.width;
+            __lockClick__.height = Laya.stage.height;
+            __lockClick__.pos(0, 0);
+            Click.on(Click.Type.noEffect, __lockClick__, this, (e: Laya.Event) => {
+                console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
+                e.stopPropagation();
+            });
+        }
+
+        /**解除该场景的不可点击效果*/
+        export function _unlockPreventClick(scene: Laya.Scene): void {
+            let __lockClick__ = scene.getChildByName('__lockClick__') as Laya.Sprite;
+            if (__lockClick__) {
+                __lockClick__.removeSelf();
+            }
+        }
+
         // /**预制体池，每次创建一个新的预制体后，将会被保存在预制体池当中*/
         // export let _prefabPool;
         // /**
@@ -965,51 +991,10 @@ export module lwg {
             GameScene = 'GameScene',
             UISmallHint = 'UISmallHint',
             UIExecutionHint = 'UIExecutionHint',
-
-        }
-
-        /**游戏当前的状态*/
-        export enum GameState {
-            /**开始界面*/
-            Start = 'Start',
-            /**游戏中*/
-            Play = 'Play',
-            /**暂停中*/
-            Pause = 'pause',
-            /**胜利*/
-            Victory = 'victory',
-            /**失败*/
-            Defeated = 'defeated',
         }
 
         /**
-         * 设置一个屏蔽场景内点击事件的的节点，用于各种动画执行的时候，反复点击
-         * @param scene 场景
-        */
-        export function _secneLockClick(scene: Laya.Scene): void {
-            _unlockPreventClick(scene);
-            let __lockClick__ = new Laya.Sprite();
-            scene.addChild(__lockClick__);
-            __lockClick__.zOrder = 1000;
-            __lockClick__.width = Laya.stage.width;
-            __lockClick__.height = Laya.stage.height;
-            __lockClick__.pos(0, 0);
-            Click.on(Click.Type.noEffect, __lockClick__, this, (e: Laya.Event) => {
-                console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
-                e.stopPropagation();
-            });
-        }
-
-        /**解除该场景的不可点击效果*/
-        export function _unlockPreventClick(scene: Laya.Scene): void {
-            let __lockClick__ = scene.getChildByName('__lockClick__') as Laya.Sprite;
-            if (__lockClick__) {
-                __lockClick__.removeSelf();
-            }
-        }
-
-        /**
-          * 打开界面
+          * 打开场景
           * @param name 界面名称
           * @param cloesScene 需要关闭的场景，如果不需要关闭，传入null
           * @param func 回调函数
@@ -1049,7 +1034,6 @@ export module lwg {
          * @param func 关闭后的回调函数
          * */
         export function _closeScene(cloesScene?: Laya.Scene, func?: Function): void {
-
             /**传入的回调函数*/
             var closef = () => {
                 if (func) {
@@ -1103,6 +1087,20 @@ export module lwg {
             } else {
                 console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
             }
+        }
+
+        /**游戏当前的状态*/
+        export enum GameState {
+            /**开始界面*/
+            Start = 'Start',
+            /**游戏中*/
+            Play = 'Play',
+            /**暂停中*/
+            Pause = 'pause',
+            /**胜利*/
+            Victory = 'victory',
+            /**失败*/
+            Defeated = 'defeated',
         }
 
         /**2D场景通用父类*/
@@ -1281,41 +1279,33 @@ export module lwg {
                 this.self[calssName] = this;
                 // this.rig = this.self.getComponent(Laya.RigidBody);
                 this.lwgNodeDec();
+                this.lwgOnAwake();
             }
-            /**声明场景里的一些节点*/
-            lwgNodeDec(): void {
-
-            }
+            /**声明一些节点*/
+            lwgNodeDec(): void { }
+            lwgOnAwake(): void { }
             onEnable(): void {
-                this.lwgOnEnable();
                 this.lwgBtnClick();
                 this.lwgEventReg();
+                this.lwgOnEnable();
             }
             /**初始化，在onEnable中执行，重写即可覆盖*/
-            lwgOnEnable(): void {
-                // console.log('父类的初始化！');
-            }
+            lwgOnEnable(): void { }
             /**点击事件注册*/
-            lwgBtnClick(): void {
-            }
+            lwgBtnClick(): void { }
             /**事件注册*/
-            lwgEventReg(): void {
-            }
+            lwgEventReg(): void { }
             onUpdate(): void {
                 this.lwgOnUpdate();
             }
-            lwgOnUpdate(): void {
-
-            }
+            lwgOnUpdate(): void { }
             onDisable(): void {
                 this.lwgOnDisable();
                 Laya.timer.clearAll(this);
                 EventAdmin.offCaller(this);
             }
             /**离开时执行，子类不执行onDisable，只执行lwgDisable*/
-            lwgOnDisable(): void {
-
-            }
+            lwgOnDisable(): void { }
         }
     }
 
@@ -3257,6 +3247,7 @@ export module lwg {
 
     /**工具模块*/
     export module Tools {
+
         /**
          * 在某个区间内取一个整数
          * @param section1 区间1
@@ -5193,9 +5184,14 @@ export module lwg {
         export let list_3DTexture2D: Array<any> = [];
 
         /**需要加载的图片资源列表,一般是界面的图片*/
-        export let list_2D: Array<any> = [];
-        /**数据表的加载，在框架中，json为必须加载的项目*/
-        export let list_Json: Array<any> = [];
+        export let list_2DPic: Array<any> = [];
+        /**2D场景*/
+        export let list_2DScene: Array<any> = [];
+        /**2D预制体*/
+        export let list_2DPrefab: Array<any> = [];
+
+        /**数据表、场景和预制体的加载，在框架中，json数据表为必须加载的项目*/
+        export let list_JsonData: Array<any> = [];
 
         /**进度条总长度,长度为以上三个加载资源类型的数组总长度*/
         export let sumProgress: number = 0;
@@ -5203,6 +5199,8 @@ export module lwg {
         export let loadOrder: Array<any>[];
         /**当前加载到哪个分类数组*/
         export let loadOrderIndex: number;
+
+        export let test 
 
         /**当前进度条进度,起始位0，每加载成功1个资源，则加1,currentProgress.value / sumProgress为进度百分比*/
         export let currentProgress = {
@@ -5261,7 +5259,7 @@ export module lwg {
                 });
             }
             moduleOnEnable(): void {
-                loadOrder = [list_2D, list_3DScene, list_3DPrefab, list_Json];
+                loadOrder = [list_2DPic, list_2DScene, list_2DPrefab, list_3DScene, list_3DPrefab, list_JsonData];
                 for (let index = 0; index < loadOrder.length; index++) {
                     sumProgress += loadOrder[index].length;
                     if (loadOrder[index].length <= 0) {
@@ -5295,17 +5293,42 @@ export module lwg {
                 let index = currentProgress.value - alreadyPro;
 
                 switch (loadOrder[loadOrderIndex]) {
-                    case list_2D:
+                    case list_2DPic:
 
-                        Laya.loader.load(list_2D[index], Laya.Handler.create(this, (any) => {
+                        Laya.loader.load(list_2DPic[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
-                                console.log('XXXXXXXXXXX2D资源' + list_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                console.log('XXXXXXXXXXX2D资源' + list_2DPic[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('2D资源' + list_2D[index] + '加载完成！', '数组下标为：', index);
+                                console.log('2D图片' + list_2DPic[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
                         }));
                         break;
+
+                    case list_2DScene:
+                        Laya.loader.load(list_2DScene[index], Laya.Handler.create(this, (any) => {
+                            if (any == null) {
+                                console.log('XXXXXXXXXXX数据表' + list_2DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                            } else {
+                                console.log('2D场景' + list_2DScene[index] + '加载完成！', '数组下标为：', index);
+                            }
+                            EventAdmin.notify(LodingType.progress);
+
+                        }), null, Laya.Loader.JSON);
+                        break;
+
+                    case list_2DPrefab:
+                        Laya.loader.load(list_2DPrefab[index], Laya.Handler.create(this, (any) => {
+                            if (any == null) {
+                                console.log('XXXXXXXXXXX数据表' + list_2DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                            } else {
+                                console.log('2D预制体' + list_2DPrefab[index] + '加载完成！', '数组下标为：', index);
+                            }
+                            EventAdmin.notify(LodingType.progress);
+
+                        }), null, Laya.Loader.JSON);
+                        break;
+
                     case list_3DScene:
                         Laya.Scene3D.load(list_3DScene[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
@@ -5322,18 +5345,18 @@ export module lwg {
                             if (any == null) {
                                 console.log('XXXXXXXXXXX3D预设体' + list_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('3D场景' + list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                console.log('3D预制体' + list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
 
                         }));
                         break;
-                    case list_Json:
-                        Laya.loader.load(list_Json[index], Laya.Handler.create(this, (any) => {
+                    case list_JsonData:
+                        Laya.loader.load(list_JsonData[index], Laya.Handler.create(this, (any) => {
                             if (any == null) {
-                                console.log('XXXXXXXXXXX数据表' + list_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                console.log('XXXXXXXXXXX数据表' + list_JsonData[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                             } else {
-                                console.log('数据表' + list_Json[index] + '加载完成！', '数组下标为：', index);
+                                console.log('数据表' + list_JsonData[index] + '加载完成！', '数组下标为：', index);
                             }
                             EventAdmin.notify(LodingType.progress);
 

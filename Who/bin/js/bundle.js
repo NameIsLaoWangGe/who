@@ -807,6 +807,27 @@
                     }
                 }
             };
+            function _secneLockClick(scene) {
+                _unlockPreventClick(scene);
+                let __lockClick__ = new Laya.Sprite();
+                scene.addChild(__lockClick__);
+                __lockClick__.zOrder = 1000;
+                __lockClick__.width = Laya.stage.width;
+                __lockClick__.height = Laya.stage.height;
+                __lockClick__.pos(0, 0);
+                Click.on(Click.Type.noEffect, __lockClick__, this, (e) => {
+                    console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
+                    e.stopPropagation();
+                });
+            }
+            Admin._secneLockClick = _secneLockClick;
+            function _unlockPreventClick(scene) {
+                let __lockClick__ = scene.getChildByName('__lockClick__');
+                if (__lockClick__) {
+                    __lockClick__.removeSelf();
+                }
+            }
+            Admin._unlockPreventClick = _unlockPreventClick;
             Admin._sceneControl = {};
             let OpenAniType;
             (function (OpenAniType) {
@@ -850,35 +871,6 @@
                 SceneName["UISmallHint"] = "UISmallHint";
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
-            let GameState;
-            (function (GameState) {
-                GameState["Start"] = "Start";
-                GameState["Play"] = "Play";
-                GameState["Pause"] = "pause";
-                GameState["Victory"] = "victory";
-                GameState["Defeated"] = "defeated";
-            })(GameState = Admin.GameState || (Admin.GameState = {}));
-            function _secneLockClick(scene) {
-                _unlockPreventClick(scene);
-                let __lockClick__ = new Laya.Sprite();
-                scene.addChild(__lockClick__);
-                __lockClick__.zOrder = 1000;
-                __lockClick__.width = Laya.stage.width;
-                __lockClick__.height = Laya.stage.height;
-                __lockClick__.pos(0, 0);
-                Click.on(Click.Type.noEffect, __lockClick__, this, (e) => {
-                    console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
-                    e.stopPropagation();
-                });
-            }
-            Admin._secneLockClick = _secneLockClick;
-            function _unlockPreventClick(scene) {
-                let __lockClick__ = scene.getChildByName('__lockClick__');
-                if (__lockClick__) {
-                    __lockClick__.removeSelf();
-                }
-            }
-            Admin._unlockPreventClick = _unlockPreventClick;
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
                     scene.width = Laya.stage.width;
@@ -958,6 +950,14 @@
                 }
             }
             Admin._closeScene = _closeScene;
+            let GameState;
+            (function (GameState) {
+                GameState["Start"] = "Start";
+                GameState["Play"] = "Play";
+                GameState["Pause"] = "pause";
+                GameState["Victory"] = "victory";
+                GameState["Defeated"] = "defeated";
+            })(GameState = Admin.GameState || (Admin.GameState = {}));
             class Scene extends Laya.Script {
                 constructor() {
                     super();
@@ -1097,32 +1097,28 @@
                     let calssName = this['__proto__']['constructor'].name;
                     this.self[calssName] = this;
                     this.lwgNodeDec();
+                    this.lwgOnAwake();
                 }
-                lwgNodeDec() {
-                }
+                lwgNodeDec() { }
+                lwgOnAwake() { }
                 onEnable() {
-                    this.lwgOnEnable();
                     this.lwgBtnClick();
                     this.lwgEventReg();
+                    this.lwgOnEnable();
                 }
-                lwgOnEnable() {
-                }
-                lwgBtnClick() {
-                }
-                lwgEventReg() {
-                }
+                lwgOnEnable() { }
+                lwgBtnClick() { }
+                lwgEventReg() { }
                 onUpdate() {
                     this.lwgOnUpdate();
                 }
-                lwgOnUpdate() {
-                }
+                lwgOnUpdate() { }
                 onDisable() {
                     this.lwgOnDisable();
                     Laya.timer.clearAll(this);
                     EventAdmin.offCaller(this);
                 }
-                lwgOnDisable() {
-                }
+                lwgOnDisable() { }
             }
             Admin.Object = Object;
         })(Admin = lwg.Admin || (lwg.Admin = {}));
@@ -3802,8 +3798,10 @@
             Loding.list_3DMesh = [];
             Loding.lolist_3DBaseMaterial = [];
             Loding.list_3DTexture2D = [];
-            Loding.list_2D = [];
-            Loding.list_Json = [];
+            Loding.list_2DPic = [];
+            Loding.list_2DScene = [];
+            Loding.list_2DPrefab = [];
+            Loding.list_JsonData = [];
             Loding.sumProgress = 0;
             Loding.currentProgress = {
                 p: 0,
@@ -3855,7 +3853,7 @@
                     });
                 }
                 moduleOnEnable() {
-                    Loding.loadOrder = [Loding.list_2D, Loding.list_3DScene, Loding.list_3DPrefab, Loding.list_Json];
+                    Loding.loadOrder = [Loding.list_2DPic, Loding.list_2DScene, Loding.list_2DPrefab, Loding.list_3DScene, Loding.list_3DPrefab, Loding.list_JsonData];
                     for (let index = 0; index < Loding.loadOrder.length; index++) {
                         Loding.sumProgress += Loding.loadOrder[index].length;
                         if (Loding.loadOrder[index].length <= 0) {
@@ -3883,16 +3881,38 @@
                     }
                     let index = Loding.currentProgress.value - alreadyPro;
                     switch (Loding.loadOrder[Loding.loadOrderIndex]) {
-                        case Loding.list_2D:
-                            Laya.loader.load(Loding.list_2D[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_2DPic:
+                            Laya.loader.load(Loding.list_2DPic[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX2D资源' + Loding.list_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX2D资源' + Loding.list_2DPic[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('2D资源' + Loding.list_2D[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('2D图片' + Loding.list_2DPic[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
+                            break;
+                        case Loding.list_2DScene:
+                            Laya.loader.load(Loding.list_2DScene[index], Laya.Handler.create(this, (any) => {
+                                if (any == null) {
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_2DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                }
+                                else {
+                                    console.log('2D场景' + Loding.list_2DScene[index] + '加载完成！', '数组下标为：', index);
+                                }
+                                EventAdmin.notify(LodingType.progress);
+                            }), null, Laya.Loader.JSON);
+                            break;
+                        case Loding.list_2DPrefab:
+                            Laya.loader.load(Loding.list_2DPrefab[index], Laya.Handler.create(this, (any) => {
+                                if (any == null) {
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_2DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                }
+                                else {
+                                    console.log('2D预制体' + Loding.list_2DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                }
+                                EventAdmin.notify(LodingType.progress);
+                            }), null, Laya.Loader.JSON);
                             break;
                         case Loding.list_3DScene:
                             Laya.Scene3D.load(Loding.list_3DScene[index], Laya.Handler.create(this, (any) => {
@@ -3911,18 +3931,18 @@
                                     console.log('XXXXXXXXXXX3D预设体' + Loding.list_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('3D场景' + Loding.list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('3D预制体' + Loding.list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
                             break;
-                        case Loding.list_Json:
-                            Laya.loader.load(Loding.list_Json[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_JsonData:
+                            Laya.loader.load(Loding.list_JsonData[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX数据表' + Loding.list_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_JsonData[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('数据表' + Loding.list_Json[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('数据表' + Loding.list_JsonData[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }), null, Laya.Loader.JSON);
@@ -4476,14 +4496,15 @@
 
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
-            this.creatQuestion();
+            this.createQuestion();
+            this.createOppositeQuestion();
         }
         lwgNodeDec() {
             this.OptionParent = this.self['OptionParent'];
         }
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
-                this.creatQuestion();
+                this.createQuestion();
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._gameSwitch = false;
@@ -4492,7 +4513,7 @@
         }
         lwgOnEnable() {
         }
-        creatQuestion() {
+        createQuestion() {
             if (this.OptionParent.numChildren > 0) {
                 this.OptionParent.removeChildren(0, this.OptionParent.numChildren - 1);
             }
@@ -4538,6 +4559,10 @@
                 });
             }
             return Option;
+        }
+        createOppositeQuestion() {
+            let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
+            this.self.addChild(GuessCard);
         }
         onStageMouseDown(e) {
             let hitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
@@ -4585,30 +4610,31 @@
 
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
-            Loding.list_2D = [
+            Loding.list_2DPic = [
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
             ];
+            Loding.list_2DScene = [
+                "Scene/LwgInit.json",
+            ];
+            Loding.list_2DPrefab = [];
             Loding.list_3DScene = [
                 "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
             Loding.list_3DPrefab = [];
-            Loding.list_Json = [
+            Loding.list_JsonData = [
                 "GameData/Game/characteristics.json",
                 "GameData/Game/Card.json",
-                "Scene/LwgInit.json",
             ];
         }
-        lwgOnEnable() {
-        }
+        lwgOnEnable() { }
+        lwgOpenAni() { return 0; }
         lodingPhaseComplete() {
             this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;
         }
         lodingComplete() {
             this.self['Progress'].mask.x = 0;
             return 200;
-        }
-        lwgOnUpdate() {
         }
     }
 
@@ -4729,12 +4755,13 @@
         }
     }
 
-    class PreGuessCard extends Laya.Script {
-        onAwake() {
+    class PreGuessCard extends Admin.Object {
+        lwgOnAwake() {
+            console.log(this.self['Question']);
         }
-        onEnable() {
+        lwgOnEnable() {
         }
-        onDisable() {
+        lwgOnDisable() {
         }
     }
 

@@ -1,10 +1,10 @@
-export default class PreGuessCard extends Laya.Script {
-    onAwake(): void {
+import { Admin } from "../Frame/lwg";
 
+export default class PreGuessCard extends Admin.Object {
+    lwgOnAwake(): void {
     }
-    onEnable(): void {
+    lwgOnEnable(): void {
     }
-
-    onDisable(): void {
+    lwgOnDisable(): void {
     }
 }

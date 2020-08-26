@@ -1,13 +1,17 @@
-import { Admin, Dialog, Click, EventAdmin, Tools } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
     public Option: Laya.Prefab;
+    /** @prop {name:GuessCard, tips:"对方提问", type:Prefab}*/
+    public GuessCard: Laya.Prefab;
+
     /**选项卡*/
     OptionParent: Laya.Sprite;
     lwgOnAwake(): void {
-        this.creatQuestion();
+        this.createQuestion();
+        this.createOppositeQuestion();
     }
 
     lwgNodeDec(): void {
@@ -16,7 +20,7 @@ export default class GameScene extends Admin.Scene {
 
     lwgEventReg(): void {
         EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
-            this.creatQuestion();
+            this.createQuestion();
         })
 
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
@@ -24,13 +28,13 @@ export default class GameScene extends Admin.Scene {
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
         })
     }
-    
+
     lwgOnEnable(): void {
 
     }
 
     /**创建问题*/
-    creatQuestion(): void {
+    createQuestion(): void {
         if (this.OptionParent.numChildren > 0) {
             this.OptionParent.removeChildren(0, this.OptionParent.numChildren - 1);
         }
@@ -80,6 +84,13 @@ export default class GameScene extends Admin.Scene {
         }
         return Option;
     }
+
+    /**创建对方提问*/
+    createOppositeQuestion(): void {
+        let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
+        this.self.addChild(GuessCard);
+    }
+
 
     onStageMouseDown(e: Laya.Event): void {
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
