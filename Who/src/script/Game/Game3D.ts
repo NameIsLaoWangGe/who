@@ -76,11 +76,13 @@ export module Game3D {
         /**下一回合*/
         nextRound = 'nextRound',
         /**我方提问*/
-        meQuestion = 'meQuestion',
+        meAnswer = 'meAnswer',
         /**对方提问*/
-        oppositeQuestion = 'oppositeQuestion',
+        oppositeAnswer = 'oppositeAnswer',
         /**判断输赢*/
         winOrLose = 'winOrLose',
+        /**开局*/
+        opening = 'opening'
     }
 
     /**摄像机动画类型*/
@@ -90,7 +92,7 @@ export module Game3D {
     }
 
     /**
-     * 随机取出16张卡牌，放在合适的位置,并且各随机出一张，作为本局双方需要猜的牌
+     * 开局，随机取出16张卡牌，放在合适的位置,并且各随机出一张，作为本局双方需要猜的牌
      * @param type 我方还是对方
      * */
     export function randomlyTakeOut(type): void {
@@ -194,9 +196,9 @@ export module Game3D {
     }
 
     /**
-     * 我方提出的问题规则
+     * 我方回答问题规则
     */
-    export function questionForMe(): Array<string> {
+    export function answerForMe(): Array<string> {
         let contrastArr = randomTaskCard(WhichScard.MyCardParent);
         let residueNum = noFallCardForMe().length;
         let indexArr = [];
@@ -226,11 +228,11 @@ export module Game3D {
     }
 
     /**
-     * 对方提出问题的规则
+     * 对方回答问题
      * 对方提出问题时，我方必然会回答，也就是说，问题和答案我已经知道，而且不可以乱点
      * 所以返回一个数组[question，yesOrNo]问题和答案在一起。
      */
-    export function questionForOpposite(): string {
+    export function answerForOpposite(): Array<any> {
         let arr = [];
         let question;
         let contrastArr = randomTaskCard(WhichScard.MyCardParent);
@@ -240,28 +242,23 @@ export module Game3D {
         if (residueArr.length === 1) {
 
             question = '是' + chNameForName(residueArr[0]) + '吗?';
-             arr = [question, true];
+            arr = [question, true];
         } else if (residueArr.length === 2) {
 
+            let name = chNameForName(residueArr[Tools.randomOneHalf()]);
             question = '是' + chNameForName(residueArr[Tools.randomOneHalf()]) + '吗?';
-            arr = [question, true];
+
+            arr = [question, name === myHandName ? true : false];
         } else {
             for (let i = 0; i < characteristicsData.length; i++) {
                 if (characteristicsData[i][CharacteristicsProperty.index] == medianIndex) {
                     question = characteristicsData[i][CharacteristicsProperty.question];
+                    arr = [question, judgeQuestion(question, OppositeCardParent)];
                     break;
                 }
             }
         }
-
-        if (question) {
-            let characteristics = characteristicsForName();
-            for (let index = 0; index < myHandName.length; index++) {
-                const element = array[index];
-
-            }
-        }
-        return question;
+        return arr;
     }
 
     /**
@@ -317,11 +314,12 @@ export module Game3D {
     }
 
     /**
-    * 通过问题对特征进行判断，判断该卡牌有没有这个特征,并且返回所有有和没有这个特征的两个卡牌数组
+    * 通过问题对特征进行判断，判断所有卡牌有没有这个特征,并且返回所有有和没有这个特征的两个卡牌数组
     * [0]为有这个特征的，[1]为没有这个特征的
     * @param question 问题
+    * @param CardParent 父节点
     */
-    export function checkForQuestion(question): Array<Array<string>> {
+    export function checkForQuestion(question: string, CardParent: Laya.MeshSprite3D): Array<Array<string>> {
         // 在特征表中的索引值
         let ChaIndex;
         for (let i = 0; i < characteristicsData.length; i++) {
@@ -332,14 +330,8 @@ export module Game3D {
         // 查找节点中有这个特征的数组
         let haveCardArr = [];
         let nohaveCardArr = [];
-        let CardArr: Laya.MeshSprite3D;
-        if (whichBout == WhichBoutType.me) {
-            CardArr = MyCardParent;
-        } else if (WhichBoutType.opposite) {
-            CardArr = OppositeCardParent;
-        }
-        for (let i = 0; i < CardArr.numChildren; i++) {
-            let Card = CardArr.getChildAt(i);
+        for (let i = 0; i < CardParent.numChildren; i++) {
+            let Card = CardParent.getChildAt(i);
             let have;
             for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
                 if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
@@ -353,6 +345,24 @@ export module Game3D {
             }
         }
         return [haveCardArr, nohaveCardArr];
+    }
+
+    /**
+     * 通过选择的回答和手上卡牌的特征对比，判断是否正确
+     * @param question 问题
+    */
+    export function judgeQuestion(question: string, CardParent: Laya.MeshSprite3D): boolean {
+        let bool = false;
+        let cardArr = checkForQuestion(question, CardParent);
+        let haveCardArr = cardArr[0];
+        let nohaveCardArr = cardArr[1];
+        // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则也删掉不匹配的牌
+        for (let index = 0; index < haveCardArr.length; index++) {
+            if (haveCardArr[index] == oppositeHandName) {
+                bool = true;
+            }
+        }
+        return bool;
     }
 
     /**角色属性数据初始化*/
@@ -373,48 +383,57 @@ export module Game3D {
         }
 
         lwgEventReg(): void {
-            // 检测猜牌是否正确
-            EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                let cardArr = checkForQuestion(question);
-                let haveCardArr = cardArr[0];
-                let nohaveCardArr = cardArr[1]
-                // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则也删掉不匹配的牌
-                let matching;
-                for (let index = 0; index < haveCardArr.length; index++) {
-                    if (haveCardArr[index] == oppositeHandName) {
-                        matching = true;
-                    }
+
+            //开局
+            EventAdmin.reg(EventType.opening, this, () => {
+                whichBout = WhichBoutType.me;
+                EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
+            })
+
+            //下一回合
+            EventAdmin.reg(EventType.nextRound, this, () => {
+                if (whichBout == WhichBoutType.me) {
+
+                    EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
+                } else if (whichBout == WhichBoutType.opposite) {
+
+                    EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite()]);
                 }
+            })
+
+            // 检测我的回答是否正确
+            EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
+                let matching = judgeQuestion(question, MyCardParent);
                 if (matching) {
                     console.log('特征正确！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(1, 0, 0), 500, this, () => {
-                        this.carFallAni(nohaveCardArr);
+                        let cardArr = checkForQuestion(question, MyCardParent);
+                        this.carFallAni(cardArr[1], MyCardParent);
                     });
                 } else {
                     console.log('特征错误！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 3, 0), 500, this, () => {
-                        this.carFallAni(haveCardArr);
+                        let cardArr = checkForQuestion(question, MyCardParent);
+                        this.carFallAni(cardArr[0], MyCardParent);
                     });
                 }
             })
 
-            // 检测点击是否正确
-            EventAdmin.reg(EventType.judgeClickCard, this, (MeshSprite3D: Laya.MeshSprite3D) => {
-                if (MeshSprite3D[CardProperty.fall]) {
-                    return;
-                }
-                if (whichBout == WhichBoutType.me) {
-                    if (MeshSprite3D.parent === MyCardParent) {
-                        if (MeshSprite3D.name == oppositeHandName) {
-                            console.log('我方赢了！');
-                            this.carFallAni([MeshSprite3D.name], true);
-                            EventAdmin.notify(EventAdmin.EventType.victory);
-                            // whichBout = WhichBoutType.victory;
-                        } else {
-                            console.log('选错了！');
-                            this.carFallAni([MeshSprite3D.name]);
-                        }
-                    }
+            // 检测我的点击是否正确
+            EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
+                let matching = judgeQuestion(question, MyCardParent);
+                if (matching) {
+                    console.log('特征正确！');
+                    Animation3D.rock(MainCamera as any, new Laya.Vector3(1, 0, 0), 500, this, () => {
+                        let cardArr = checkForQuestion(question, MyCardParent);
+                        this.carFallAni(cardArr[1], MyCardParent);
+                    });
+                } else {
+                    console.log('特征错误！');
+                    Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 3, 0), 500, this, () => {
+                        let cardArr = checkForQuestion(question, MyCardParent);
+                        this.carFallAni(cardArr[0], MyCardParent);
+                    });
                 }
             })
 
@@ -422,19 +441,20 @@ export module Game3D {
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
 
             })
+
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
-                this.opening();
+                this.init();
             })
+        }
 
-            //下一回合
-            EventAdmin.reg(EventType.nextRound, this, () => {
-                if (whichBout == WhichBoutType.me) {
-                    randomTaskCard(WhichScard.MyCardParent);
-                } else if (whichBout == WhichBoutType.opposite) {
-                    randomTaskCard(WhichScard.MyCardParent);
-                }
-            })
+        /**回合切换器*/
+        roundChange(): void {
+            if (whichBout === WhichBoutType.me) {
+                whichBout = WhichBoutType.opposite;
+            } else if (whichBout === WhichBoutType.opposite) {
+                whichBout = WhichBoutType.me;
+            }
         }
 
         /**
@@ -442,15 +462,7 @@ export module Game3D {
          * @param arrName 名称数组，那些卡牌需要倒下
          * @param exclude 是否是反向排除这些卡牌，默认是不排除为false
          */
-        carFallAni(arrName: Array<string>, exclude?: boolean): void {
-            let CardParent: Laya.MeshSprite3D;
-            if (whichBout == WhichBoutType.me) {
-                CardParent = MyCardParent;
-            } else if (WhichBoutType.opposite) {
-                CardParent = OppositeCardParent;
-            } else {
-                return;
-            }
+        carFallAni(arrName: Array<string>, CardParent: Laya.MeshSprite3D, exclude?: boolean): void {
             if (exclude) {
                 let nofallArr = [];
                 for (let i = 0; i < CardParent.numChildren; i++) {
@@ -474,23 +486,20 @@ export module Game3D {
                     }
                 }
             }
-            EventAdmin.notify(EventType.nextRound);
+            // EventAdmin.notify(EventType.nextRound);
         }
 
         lwgOnEnable(): void {
-            this.opening();
+            this.init();
         }
 
         /**开局*/
-        opening(): void {
-            whichBout = WhichBoutType.me;
+        init(): void {
             Tools.node_RemoveAllChildren(MyCardParent);
             Tools.node_RemoveAllChildren(OppositeCardParent);
             Tools.node_RemoveAllChildren(OppositeHandDispaly);
             randomlyTakeOut(WhichScard.MyCardParent);
             randomlyTakeOut(WhichScard.OppositeCardParent);
-            randomTaskCard(WhichScard.MyCardParent);
-            randomTaskCard(WhichScard.OppositeCardParent);
         }
     }
 }

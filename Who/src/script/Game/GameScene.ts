@@ -28,19 +28,21 @@ export default class GameScene extends Admin.Scene {
         })
 
         // 对方提问
-        EventAdmin.reg(Game3D.EventType.oppositeQuestion, this, (question, yesOrNo, cardName) => {
+        EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (question, yesOrNo, cardName) => {
             Tools.node_RemoveAllChildren(this.OptionParent);
             this.createOppositeQuestion(question, yesOrNo, cardName);
         })
+
         // 我方提问
-        EventAdmin.reg(Game3D.EventType.meQuestion, this, (questionArr) => {
+        EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
             this.createQuestion(questionArr);
         })
     }
 
     lwgOnEnable(): void {
-
+        EventAdmin.notify(Game3D.EventType.opening);
     }
+
     /**创建问题*/
     createQuestion(questionArr): void {
         if (questionArr.length < 3) {

@@ -806,7 +806,6 @@ export module lwg {
         export function off(type: any, caller: any, listener: Function) {
             this.dispatcher.off(type.toString(), caller, listener);
         }
-
         /**
          * 关闭所有执行域中的事件
          * @param type 事件类型或者名称
@@ -840,6 +839,26 @@ export module lwg {
 
         /**游戏控制开关*/
         export let _gameSwitch: boolean = false;
+
+        /**玩家登陆游戏的次数*/
+        export let _loginNumber = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
+            },
+            set value(val: number) {
+                Laya.LocalStorage.setItem('_loginNumber', val.toString());
+            }
+        }
+
+        /**玩家登陆游戏的天数*/
+        export let _loginDate = {
+            // get value(): Array<any> {
+            //     return Laya.LocalStorage.getItem('_loginDate') ? Number(Laya.LocalStorage.getItem('_loginDate')) : [new Date().getDate()];
+            // },
+            // set value(val) {
+            //     Laya.LocalStorage.setItem('_loginDate', val.toString());
+            // }
+        }
 
         /**等级*/
         export let _gameLevel = {
@@ -3258,7 +3277,7 @@ export module lwg {
         }
 
         /**
-         * 返回0或者1，用随机二分之一概率,返回后0是false，true是1，所以Boolen和number都可以直接判断
+         * 返回0或者1，用随机二分之一概率,返回后0是false，true是1，所以Boolen和number都可以判断
          * */
         export function randomOneHalf(): number {
             let number;
@@ -5243,8 +5262,6 @@ export module lwg {
         /**当前加载到哪个分类数组*/
         export let loadOrderIndex: number;
 
-        export let test
-
         /**当前进度条进度,起始位0，每加载成功1个资源，则加1,currentProgress.value / sumProgress为进度百分比*/
         export let currentProgress = {
             p: 0,
@@ -5283,6 +5300,7 @@ export module lwg {
 
         export class LodingScene extends Admin.Scene {
             moduleOnAwake(): void {
+                Admin._loginNumber.value++;
             }
             moduleEventReg(): void {
                 EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule() });
