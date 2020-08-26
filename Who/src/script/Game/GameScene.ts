@@ -4,14 +4,12 @@ import { Game3D } from "./Game3D";
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
     public Option: Laya.Prefab;
-    /** @prop {name:GuessCard, tips:"对方提问", type:Prefab}*/
+    /** @prop {name:GuessCard, tips:"对方提问预制体", type:Prefab}*/
     public GuessCard: Laya.Prefab;
 
     /**选项卡*/
     OptionParent: Laya.Sprite;
     lwgOnAwake(): void {
-        this.createQuestion();
-        this.createOppositeQuestion();
     }
 
     lwgNodeDec(): void {
@@ -19,30 +17,36 @@ export default class GameScene extends Admin.Scene {
     }
 
     lwgEventReg(): void {
+        // 下一回合
         EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
-            this.createQuestion();
-        })
 
+        })
+        // 胜利
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
             Admin._gameSwitch = false;
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
+        })
+
+        // 对方提问
+        EventAdmin.reg(Game3D.EventType.oppositeQuestion, this, (question, yesOrNo, cardName) => {
+            Tools.node_RemoveAllChildren(this.OptionParent);
+            this.createOppositeQuestion(question, yesOrNo, cardName);
+        })
+        // 我方提问
+        EventAdmin.reg(Game3D.EventType.meQuestion, this, (questionArr) => {
+            this.createQuestion(questionArr);
         })
     }
 
     lwgOnEnable(): void {
 
     }
-
     /**创建问题*/
-    createQuestion(): void {
-        if (this.OptionParent.numChildren > 0) {
-            this.OptionParent.removeChildren(0, this.OptionParent.numChildren - 1);
-        }
-        let arr = [];
-        if (Game3D.questionArr.length < 3) {
-            this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, Game3D.questionArr[0], false);
+    createQuestion(questionArr): void {
+        if (questionArr.length < 3) {
+            this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, questionArr[0], false);
         } else {
-            for (let index = 0; index < Game3D.questionArr.length; index++) {
+            for (let index = 0; index < questionArr.length; index++) {
                 let x, y;
                 switch (index) {
                     case 0:
@@ -64,8 +68,7 @@ export default class GameScene extends Admin.Scene {
                     default:
                         break;
                 }
-
-                this.createOption(this.self['OptionParent'], x, y, Game3D.questionArr[index], true);
+                this.createOption(this.self['OptionParent'], x, y, questionArr[index], true);
             }
         }
     }
@@ -86,11 +89,29 @@ export default class GameScene extends Admin.Scene {
     }
 
     /**创建对方提问*/
-    createOppositeQuestion(): void {
+    createOppositeQuestion(question: string, yesOrNo: boolean, cardName: string): void {
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
-    }
+        GuessCard.pos(360, 576);
 
+        let Question = GuessCard.getChildByName('Question') as Laya.Label;
+        Question.text = question;
+
+        let CardName = GuessCard.getChildByName('CardName') as Laya.Label;
+        CardName.text = cardName;
+
+        let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
+        Click.on(Click.Type.noEffect, BtnYes, this, null, null, () => {
+            if (yesOrNo) {
+                GuessCard.removeSelf();
+            }
+        });
+
+        let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
+        Click.on(Click.Type.noEffect, BtnNo, this, null, null, () => {
+            console.log('不可以乱回答！');
+        });
+    }
 
     onStageMouseDown(e: Laya.Event): void {
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
@@ -100,7 +121,6 @@ export default class GameScene extends Admin.Scene {
             EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
         }
     }
-
 
     lwgBtnClick(): void {
 

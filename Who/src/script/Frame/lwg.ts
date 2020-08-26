@@ -3247,6 +3247,24 @@ export module lwg {
 
     /**工具模块*/
     export module Tools {
+        /**
+         * 移除该节点的所有子节点，没有子节点则无操作
+         * @param node 节点
+         */
+        export function node_RemoveAllChildren(node: Laya.Node): void {
+            if (node.numChildren > 0) {
+                node.removeChildren(0, node.numChildren - 1);
+            }
+        }
+
+        /**
+         * 返回0或者1，用随机二分之一概率,返回后0是false，true是1，所以Boolen和number都可以直接判断
+         * */
+        export function randomOneHalf(): number {
+            let number;
+            number = Math.floor(Math.random() * 2);
+            return number;
+        }
 
         /**
          * 在某个区间内取一个整数
@@ -3302,6 +3320,139 @@ export module lwg {
                 return arr;
             }
         }
+        /**
+          * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
+          * @param r 
+          * @param g
+          * @param b
+          */
+        export function color_toHexString(r, g, b) {
+            return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+        }
+
+        /**
+         * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点
+         * @param x0 原点X
+         * @param y0 原点Y
+         * @param x1 旋转点X
+         * @param y1 旋转点Y
+         * @param angle 角度
+         */
+        export function d2_dotRotateXY(x0, y0, x1, y1, angle): Laya.Point {
+            let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
+            let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
+            return new Laya.Point(x2, y2);
+        }
+
+        /**返回两个二维物体的距离*/
+        export function d2_twoObjectsLen(obj1: Laya.Sprite, obj2: Laya.Sprite): number {
+            let point = new Laya.Point(obj1.x, obj1.y);
+            let len = point.distance(obj2.x, obj2.y);
+            return len;
+        }
+
+        /**
+          * 在Laya2维世界中
+          * 求向量的夹角在坐标系中的角度
+          * @param x 坐标x
+          * @param y 坐标y
+          * */
+        export function d2_Vector_Angle(x, y): number {
+            let radian: number = Math.atan2(x, y) //弧度  0.6435011087932844
+            let angle: number = 90 - radian * (180 / Math.PI); //角度  36.86989764584402;
+            if (angle <= 0) {
+                angle = 270 + (90 + angle);
+            }
+            return angle - 90;
+        };
+
+        /**
+         * 在Laya2维世界中
+         * 通过一个角度，返回一个单位向量
+         * @param x 坐标x
+         * @param y 坐标y
+         * */
+        export function d2_angle_Vector(angle): Laya.Point {
+            angle -= 90;
+            let radian = (90 - angle) / (180 / Math.PI);
+            let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
+            p.normalize();
+            return p;
+        };
+
+
+        /**
+         * 返回两个三维物体的世界空间的距离
+         * @param obj1 物体1
+         * @param obj2 物体2
+         */
+        export function d3_twoObjectsLen(obj1: Laya.MeshSprite3D, obj2: Laya.MeshSprite3D): number {
+            let obj1V3: Laya.Vector3 = obj1.transform.position;
+            let obj2V3: Laya.Vector3 = obj2.transform.position;
+            let p = new Laya.Vector3();
+            // 向量相减后计算长度
+            Laya.Vector3.subtract(obj1V3, obj2V3, p);
+            let lenp = Laya.Vector3.scalarLength(p);
+            return lenp;
+        }
+
+        /**
+         * 返回两个3维向量之间的距离
+        * @param v1 物体1
+        * @param v2 物体2
+        */
+        export function d3_twoPositionLen(v1: Laya.Vector3, v2: Laya.Vector3): number {
+            let p = d3_twoSubV3(v1, v2);
+            let lenp = Laya.Vector3.scalarLength(p);
+            return lenp;
+        }
+
+
+        /**
+          * 返回相同坐标系中两个三维向量的相减向量（obj1-obj2）
+          * @param V3_01 向量1
+          * @param V3_02 向量2
+          * @param normalizing 是否是单位向量,默认为不是
+          */
+        export function d3_twoSubV3(V3_01: Laya.Vector3, V3_02: Laya.Vector3, normalizing?: boolean): Laya.Vector3 {
+            let p = new Laya.Vector3();
+            // 向量相减后计算长度
+            Laya.Vector3.subtract(V3_01, V3_02, p);
+            if (normalizing) {
+                let p1: Laya.Vector3 = new Laya.Vector3();
+                Laya.Vector3.normalize(p, p1);
+                return p1;
+            } else {
+                return p;
+            }
+        }
+
+        /**
+          * 3D世界中，制约一个物体不会超过和另一个点的最长距离,如果超过或者等于则设置这个球面坐标，并且返回这个坐标
+          * @param originV3 原点的位置
+          * @param obj 物体
+          * @param length 长度
+         */
+        export function d3_maximumDistanceLimi(originV3: Laya.Vector3, obj: Laya.Sprite3D, length: number): Laya.Vector3 {
+            // 两个向量相减等于手臂到手的向量
+            let subP = new Laya.Vector3();
+            let objP = obj.transform.position;
+            Laya.Vector3.subtract(objP, originV3, subP);
+            // 向量的长度
+            let lenP = Laya.Vector3.scalarLength(subP);
+            if (lenP >= length) {
+                // 归一化向量
+                let normalizP = new Laya.Vector3();
+                Laya.Vector3.normalize(subP, normalizP);
+                // 坐标
+                let x = originV3.x + normalizP.x * length;
+                let y = originV3.y + normalizP.y * length;
+                let z = originV3.z + normalizP.z * length;
+                let p = new Laya.Vector3(x, y, z);
+                obj.transform.position = p;
+                return p;
+            }
+        }
 
         /**
          * 射线检测，返回射线扫描结果，可以筛选结果
@@ -3337,85 +3488,26 @@ export module lwg {
         }
 
         /**
-         * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点
-         * @param x0 原点X
-         * @param y0 原点Y
-         * @param x1 旋转点X
-         * @param y1 旋转点Y
-         * @param angle 角度
-         */
-        export function d2_dotRotateXY(x0, y0, x1, y1, angle): Laya.Point {
-            let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
-            let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
-            return new Laya.Point(x2, y2);
-        }
-
-        /**
-         * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
-         * */
-        export function color_toHexString(r, g, b) {
-            return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
-        }
-
-        /**
-         * 返回两个三维物体的世界空间的距离
-         * @param obj1 物体1
-         * @param obj2 物体2
-         */
-        export function d3_twoObjectsLen(obj1: Laya.MeshSprite3D, obj2: Laya.MeshSprite3D): number {
-            let obj1V3: Laya.Vector3 = obj1.transform.position;
-            let obj2V3: Laya.Vector3 = obj2.transform.position;
-            let p = new Laya.Vector3();
-            // 向量相减后计算长度
-            Laya.Vector3.subtract(obj1V3, obj2V3, p);
-            let lenp = Laya.Vector3.scalarLength(p);
-            return lenp;
-        }
-
-        /**
-         * 返回两个3维向量之间的距离
-        * @param v1 物体1
-        * @param v2 物体2
+         * 将3D坐标转换成屏幕坐标
+         * @param v3 3D世界的坐标
+         * @param camera 摄像机
         */
-        export function d3_twoPositionLen(v1: Laya.Vector3, v2: Laya.Vector3): number {
-            let p = d3_twoSubV3(v1, v2);
-            let lenp = Laya.Vector3.scalarLength(p);
-            return lenp;
-        }
-
-        /**返回两个二维物体的距离*/
-        export function d2_twoObjectsLen(obj1: Laya.Sprite, obj2: Laya.Sprite): number {
-            let point = new Laya.Point(obj1.x, obj1.y);
-            let len = point.distance(obj2.x, obj2.y);
-            return len;
+        export function d3_TransitionScreenPointfor(v3: Laya.Vector3, camera: Laya.Camera): Laya.Vector2 {
+            let ScreenV3 = new Laya.Vector3();
+            camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
+            let point: Laya.Vector2 = new Laya.Vector2();
+            point.x = ScreenV3.x;
+            point.y = ScreenV3.y;
+            return point;
         }
 
         /**
-          * 返回相同坐标系中两个三维向量的相减向量（obj1-obj2）
-          * @param V3_01 向量1
-          * @param V3_02 向量2
-          * @param normalizing 是否是单位向量,默认为不是
-          */
-        export function d3_twoSubV3(V3_01: Laya.Vector3, V3_02: Laya.Vector3, normalizing?: boolean): Laya.Vector3 {
-            let p = new Laya.Vector3();
-            // 向量相减后计算长度
-            Laya.Vector3.subtract(V3_01, V3_02, p);
-            if (normalizing) {
-                let p1: Laya.Vector3 = new Laya.Vector3();
-                Laya.Vector3.normalize(p, p1);
-                return p1;
-            } else {
-                return p;
-            }
-        }
-
-        /**
-          * 返回一个向量相对于一个点的反向向量，或者反向向量的单位向量，可用于一个物体被另一个物体击退
-          * @param type 二维还是三维
-          * @param Vecoter1 固定点
-          * @param Vecoter2 反弹物体向量
-          * @param normalizing 是否归一成单位向量
-          */
+         * 返回一个向量相对于一个点的反向向量，或者反向向量的单位向量，可用于一个物体被另一个物体击退
+         * @param type 二维还是三维
+         * @param Vecoter1 固定点
+         * @param Vecoter2 反弹物体向量
+         * @param normalizing 是否归一成单位向量
+         */
         export function dAll_reverseVector(type: string, Vecoter1: any, Vecoter2: any, normalizing: boolean): Laya.Vector3 {
             let p;
             if (type === '2d') {
@@ -3434,61 +3526,6 @@ export module lwg {
                 } else {
                     return p;
                 }
-            }
-        }
-        /**
-         * 在Laya2维世界中
-         * 求向量的夹角在坐标系中的角度
-         * @param x 坐标x
-         * @param y 坐标y
-         * */
-        export function d2_Vector_Angle(x, y): number {
-            let radian: number = Math.atan2(x, y) //弧度  0.6435011087932844
-            let angle: number = 90 - radian * (180 / Math.PI); //角度  36.86989764584402;
-            if (angle <= 0) {
-                angle = 270 + (90 + angle);
-            }
-            return angle - 90;
-        };
-
-        /**
-         * 在Laya2维世界中
-         * 通过一个角度，返回一个单位向量
-         * @param x 坐标x
-         * @param y 坐标y
-         * */
-        export function d2_angle_Vector(angle): Laya.Point {
-            angle -= 90;
-            let radian = (90 - angle) / (180 / Math.PI);
-            let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
-            p.normalize();
-            return p;
-        };
-
-        /**
-          * 3D世界中，制约一个物体不会超过和另一个点的最长距离,如果超过或者等于则设置这个球面坐标，并且返回这个坐标
-          * @param originV3 原点的位置
-          * @param obj 物体
-          * @param length 长度
-         */
-        export function d3_maximumDistanceLimi(originV3: Laya.Vector3, obj: Laya.Sprite3D, length: number): Laya.Vector3 {
-            // 两个向量相减等于手臂到手的向量
-            let subP = new Laya.Vector3();
-            let objP = obj.transform.position;
-            Laya.Vector3.subtract(objP, originV3, subP);
-            // 向量的长度
-            let lenP = Laya.Vector3.scalarLength(subP);
-            if (lenP >= length) {
-                // 归一化向量
-                let normalizP = new Laya.Vector3();
-                Laya.Vector3.normalize(subP, normalizP);
-                // 坐标
-                let x = originV3.x + normalizP.x * length;
-                let y = originV3.y + normalizP.y * length;
-                let z = originV3.z + normalizP.z * length;
-                let p = new Laya.Vector3(x, y, z);
-                obj.transform.position = p;
-                return p;
             }
         }
 
@@ -3513,19 +3550,6 @@ export module lwg {
             return drawPie;
         }
 
-        /**
-         * 将3D坐标转换成屏幕坐标
-         * @param v3 3D世界的坐标
-         * @param camera 摄像机
-        */
-        export function d3_TransitionScreenPointfor(v3: Laya.Vector3, camera: Laya.Camera): Laya.Vector2 {
-            let ScreenV3 = new Laya.Vector3();
-            camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
-            let point: Laya.Vector2 = new Laya.Vector2();
-            point.x = ScreenV3.x;
-            point.y = ScreenV3.y;
-            return point;
-        }
 
         /**
          * 对象数组按照对象的某个属性排序
@@ -3553,27 +3577,26 @@ export module lwg {
         }
 
         /**
-         * 对比两个对象数组中的对象属性，返回相对第一个数组中，第二个数组没有这个属性的对象
-         * @param data1 对象数组1
-         * @param data2 对象数组2
+         * 对比两个对象数组中的某个对象属性，返回相对第一个数组中有的这个property属性，第二个数组中没有这个属性的对象数组，例如两张数据表，通过名字查找，objArr2有8个不同的名字，objArr1也有（也可以没有）这个8个名字，并且objArr1还多了其他两个名字，那么返回objArr1中这两个个名字
+         * @param objArr1 对象数组1
+         * @param objArr2 对象数组2
          * @param property 需要对比的属性名称
         */
-        export function objArrCompareDifferent(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
+        export function objArr2DifferentPropertyObjArr1(objArr1: Array<any>, objArr2: Array<any>, property: string): Array<any> {
             var result = [];
-            for (var i = 0; i < data1.length; i++) {
-                var obj1 = data1[i];
+            for (var i = 0; i < objArr1.length; i++) {
+                var obj1 = objArr1[i];
                 var obj1Name = obj1[property];
                 var isExist = false;
 
-                for (var j = 0; j < data2.length; j++) {
-                    var obj2 = data2[j];
+                for (var j = 0; j < objArr2.length; j++) {
+                    var obj2 = objArr2[j];
                     var obj2Name = obj2[property];
                     if (obj2Name == obj1Name) {
                         isExist = true;
                         break;
                     }
                 }
-
                 if (!isExist) {
                     result.push(obj1);
                 }
@@ -3587,7 +3610,7 @@ export module lwg {
          * @param data2 对象数组2
          * @param property 需要对比的属性名称
          */
-        export function objArrComparEidentical(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
+        export function objArr1IdenticalPropertyObjArr2(data1: Array<any>, data2: Array<any>, property: string): Array<any> {
             var result = [];
             for (var i = 0; i < data1.length; i++) {
                 var obj1 = data1[i];
@@ -3643,6 +3666,43 @@ export module lwg {
         }
 
         /**
+      * 对象数组的拷贝
+      * @param ObjArray 需要拷贝的对象数组 
+      */
+        export function objArray_Copy(ObjArray): any {
+            var sourceCopy = ObjArray instanceof Array ? [] : {};
+            for (var item in ObjArray) {
+                sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
+            }
+            return sourceCopy;
+        }
+
+        /**
+         * 对象的拷贝
+         * @param obj 需要拷贝的对象
+         */
+        export function obj_Copy(obj) {
+            var objCopy = {};
+            for (const item in obj) {
+                if (obj.hasOwnProperty(item)) {
+                    const element = obj[item];
+                    if (typeof element === 'object') {
+                        // 其中有一种情况是对某个对象值为数组的拷贝
+                        if (Array.isArray(element)) {
+                            let arr1 = array_Copy(element);
+                            objCopy[item] = arr1;
+                        } else {
+                            obj_Copy(element);
+                        }
+                    } else {
+                        objCopy[item] = element;
+                    }
+                }
+            }
+            return objCopy;
+        }
+
+        /**
          * 往第一个数组中陆续添加第二个数组中的元素
          * @param data1 
          * @param data2 
@@ -3687,43 +3747,6 @@ export module lwg {
         }
 
         /**
-         * 对象数组的拷贝
-         * @param ObjArray 需要拷贝的对象数组 
-         */
-        export function objArray_Copy(ObjArray): any {
-            var sourceCopy = ObjArray instanceof Array ? [] : {};
-            for (var item in ObjArray) {
-                sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
-            }
-            return sourceCopy;
-        }
-
-        /**
-         * 对象的拷贝
-         * @param obj 需要拷贝的对象
-         */
-        export function obj_Copy(obj) {
-            var objCopy = {};
-            for (const item in obj) {
-                if (obj.hasOwnProperty(item)) {
-                    const element = obj[item];
-                    if (typeof element === 'object') {
-                        // 其中有一种情况是对某个对象值为数组的拷贝
-                        if (Array.isArray(element)) {
-                            let arr1 = array_Copy(element);
-                            objCopy[item] = arr1;
-                        } else {
-                            obj_Copy(element);
-                        }
-                    } else {
-                        objCopy[item] = element;
-                    }
-                }
-            }
-            return objCopy;
-        }
-
-        /**
          * 数组去重
          * @param arr 数组
         */
@@ -3757,6 +3780,26 @@ export module lwg {
             return Array.from(new Set(arr));
         }
 
+        /**
+         * 返回从第一个数组中排除第二个数组中的元素，如果第一个数组包含第二个数组，那么刚好等于是第一个数组排除第二个数组的元素
+         * @param arr1 
+         * @param arr2 
+         */
+        export function array1ExcludeArray2(arr1, arr2): Array<any> {
+
+            let arr1Capy = array_Copy(arr1);
+            let arr2Capy = array_Copy(arr2);
+
+            for (let i = 0; i < arr1Capy.length; i++) {
+                for (let j = 0; j < arr2Capy.length; j++) {
+                    if (arr1Capy[i] === arr2Capy[j]) {
+                        arr1Capy.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            return arr1Capy;
+        }
 
         /**
          * 根据不同的角度和速度计算坐标,从而产生位移
@@ -3838,7 +3881,7 @@ export module lwg {
                     let dataArr_0: Array<any> = Laya.loader.getRes(url)['RECORDS'];
                     // 如果本地数据条数大于json条数，说明json减东西了，不会对比，json只能增加不能删减
                     if (dataArr_0.length >= dataArr.length) {
-                        let diffArray = Tools.objArrCompareDifferent(dataArr_0, dataArr, propertyName);
+                        let diffArray = Tools.objArr2DifferentPropertyObjArr1(dataArr_0, dataArr, propertyName);
                         console.log('两个数据的差值为：', diffArray);
                         Tools.arrayAddToarray(dataArr, diffArray);
                     } else {
@@ -5200,7 +5243,7 @@ export module lwg {
         /**当前加载到哪个分类数组*/
         export let loadOrderIndex: number;
 
-        export let test 
+        export let test
 
         /**当前进度条进度,起始位0，每加载成功1个资源，则加1,currentProgress.value / sumProgress为进度百分比*/
         export let currentProgress = {

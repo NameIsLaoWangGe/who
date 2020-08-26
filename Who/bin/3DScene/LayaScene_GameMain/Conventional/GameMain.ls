@@ -3521,14 +3521,73 @@
 				"type":"MeshSprite3D",
 				"instanceID":66,
 				"props":{
-					"name":"OppositeHandParent",
+					"name":"OppositeHandDispaly",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
 						-0.085,
-						-1.022,
+						-0.393,
 						-4.53
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":67,
+				"props":{
+					"name":"MyHandDispaly",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						0.85,
+						-0.393,
+						-6.03
 					],
 					"rotation":[
 						0,

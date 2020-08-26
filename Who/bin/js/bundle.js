@@ -2390,6 +2390,12 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
+            function node_RemoveAllChildren(node) {
+                if (node.numChildren > 0) {
+                    node.removeChildren(0, node.numChildren - 1);
+                }
+            }
+            Tools.node_RemoveAllChildren = node_RemoveAllChildren;
             function randomNumber(section1, section2) {
                 if (section2) {
                     return Math.floor(Math.random() * (section2 - section1)) + section1;
@@ -2437,6 +2443,84 @@
                 }
             }
             Tools.randomCountNumer = randomCountNumer;
+            function color_toHexString(r, g, b) {
+                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+            }
+            Tools.color_toHexString = color_toHexString;
+            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
+                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
+                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
+                return new Laya.Point(x2, y2);
+            }
+            Tools.d2_dotRotateXY = d2_dotRotateXY;
+            function d2_twoObjectsLen(obj1, obj2) {
+                let point = new Laya.Point(obj1.x, obj1.y);
+                let len = point.distance(obj2.x, obj2.y);
+                return len;
+            }
+            Tools.d2_twoObjectsLen = d2_twoObjectsLen;
+            function d2_Vector_Angle(x, y) {
+                let radian = Math.atan2(x, y);
+                let angle = 90 - radian * (180 / Math.PI);
+                if (angle <= 0) {
+                    angle = 270 + (90 + angle);
+                }
+                return angle - 90;
+            }
+            Tools.d2_Vector_Angle = d2_Vector_Angle;
+            function d2_angle_Vector(angle) {
+                angle -= 90;
+                let radian = (90 - angle) / (180 / Math.PI);
+                let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
+                p.normalize();
+                return p;
+            }
+            Tools.d2_angle_Vector = d2_angle_Vector;
+            function d3_twoObjectsLen(obj1, obj2) {
+                let obj1V3 = obj1.transform.position;
+                let obj2V3 = obj2.transform.position;
+                let p = new Laya.Vector3();
+                Laya.Vector3.subtract(obj1V3, obj2V3, p);
+                let lenp = Laya.Vector3.scalarLength(p);
+                return lenp;
+            }
+            Tools.d3_twoObjectsLen = d3_twoObjectsLen;
+            function d3_twoPositionLen(v1, v2) {
+                let p = d3_twoSubV3(v1, v2);
+                let lenp = Laya.Vector3.scalarLength(p);
+                return lenp;
+            }
+            Tools.d3_twoPositionLen = d3_twoPositionLen;
+            function d3_twoSubV3(V3_01, V3_02, normalizing) {
+                let p = new Laya.Vector3();
+                Laya.Vector3.subtract(V3_01, V3_02, p);
+                if (normalizing) {
+                    let p1 = new Laya.Vector3();
+                    Laya.Vector3.normalize(p, p1);
+                    return p1;
+                }
+                else {
+                    return p;
+                }
+            }
+            Tools.d3_twoSubV3 = d3_twoSubV3;
+            function d3_maximumDistanceLimi(originV3, obj, length) {
+                let subP = new Laya.Vector3();
+                let objP = obj.transform.position;
+                Laya.Vector3.subtract(objP, originV3, subP);
+                let lenP = Laya.Vector3.scalarLength(subP);
+                if (lenP >= length) {
+                    let normalizP = new Laya.Vector3();
+                    Laya.Vector3.normalize(subP, normalizP);
+                    let x = originV3.x + normalizP.x * length;
+                    let y = originV3.y + normalizP.y * length;
+                    let z = originV3.z + normalizP.z * length;
+                    let p = new Laya.Vector3(x, y, z);
+                    obj.transform.position = p;
+                    return p;
+                }
+            }
+            Tools.d3_maximumDistanceLimi = d3_maximumDistanceLimi;
             function d3_rayScanning(camera, scene3D, vector2, filtrateName) {
                 let _ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
                 let outs = new Array();
@@ -2457,50 +2541,15 @@
                 }
             }
             Tools.d3_rayScanning = d3_rayScanning;
-            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
-                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
-                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
-                return new Laya.Point(x2, y2);
+            function d3_TransitionScreenPointfor(v3, camera) {
+                let ScreenV3 = new Laya.Vector3();
+                camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
+                let point = new Laya.Vector2();
+                point.x = ScreenV3.x;
+                point.y = ScreenV3.y;
+                return point;
             }
-            Tools.d2_dotRotateXY = d2_dotRotateXY;
-            function color_toHexString(r, g, b) {
-                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
-            }
-            Tools.color_toHexString = color_toHexString;
-            function d3_twoObjectsLen(obj1, obj2) {
-                let obj1V3 = obj1.transform.position;
-                let obj2V3 = obj2.transform.position;
-                let p = new Laya.Vector3();
-                Laya.Vector3.subtract(obj1V3, obj2V3, p);
-                let lenp = Laya.Vector3.scalarLength(p);
-                return lenp;
-            }
-            Tools.d3_twoObjectsLen = d3_twoObjectsLen;
-            function d3_twoPositionLen(v1, v2) {
-                let p = d3_twoSubV3(v1, v2);
-                let lenp = Laya.Vector3.scalarLength(p);
-                return lenp;
-            }
-            Tools.d3_twoPositionLen = d3_twoPositionLen;
-            function d2_twoObjectsLen(obj1, obj2) {
-                let point = new Laya.Point(obj1.x, obj1.y);
-                let len = point.distance(obj2.x, obj2.y);
-                return len;
-            }
-            Tools.d2_twoObjectsLen = d2_twoObjectsLen;
-            function d3_twoSubV3(V3_01, V3_02, normalizing) {
-                let p = new Laya.Vector3();
-                Laya.Vector3.subtract(V3_01, V3_02, p);
-                if (normalizing) {
-                    let p1 = new Laya.Vector3();
-                    Laya.Vector3.normalize(p, p1);
-                    return p1;
-                }
-                else {
-                    return p;
-                }
-            }
-            Tools.d3_twoSubV3 = d3_twoSubV3;
+            Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
             function dAll_reverseVector(type, Vecoter1, Vecoter2, normalizing) {
                 let p;
                 if (type === '2d') {
@@ -2523,40 +2572,6 @@
                 }
             }
             Tools.dAll_reverseVector = dAll_reverseVector;
-            function d2_Vector_Angle(x, y) {
-                let radian = Math.atan2(x, y);
-                let angle = 90 - radian * (180 / Math.PI);
-                if (angle <= 0) {
-                    angle = 270 + (90 + angle);
-                }
-                return angle - 90;
-            }
-            Tools.d2_Vector_Angle = d2_Vector_Angle;
-            function d2_angle_Vector(angle) {
-                angle -= 90;
-                let radian = (90 - angle) / (180 / Math.PI);
-                let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
-                p.normalize();
-                return p;
-            }
-            Tools.d2_angle_Vector = d2_angle_Vector;
-            function d3_maximumDistanceLimi(originV3, obj, length) {
-                let subP = new Laya.Vector3();
-                let objP = obj.transform.position;
-                Laya.Vector3.subtract(objP, originV3, subP);
-                let lenP = Laya.Vector3.scalarLength(subP);
-                if (lenP >= length) {
-                    let normalizP = new Laya.Vector3();
-                    Laya.Vector3.normalize(subP, normalizP);
-                    let x = originV3.x + normalizP.x * length;
-                    let y = originV3.y + normalizP.y * length;
-                    let z = originV3.z + normalizP.z * length;
-                    let p = new Laya.Vector3(x, y, z);
-                    obj.transform.position = p;
-                    return p;
-                }
-            }
-            Tools.d3_maximumDistanceLimi = d3_maximumDistanceLimi;
             function img_drawPieMask(parent, startAngle, endAngle) {
                 parent.cacheAs = "bitmap";
                 let drawPieSpt = new Laya.Sprite();
@@ -2566,15 +2581,6 @@
                 return drawPie;
             }
             Tools.img_drawPieMask = img_drawPieMask;
-            function d3_TransitionScreenPointfor(v3, camera) {
-                let ScreenV3 = new Laya.Vector3();
-                camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
-                let point = new Laya.Vector2();
-                point.x = ScreenV3.x;
-                point.y = ScreenV3.y;
-                return point;
-            }
-            Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
             function objArrPropertySort(array, property) {
                 var compare = function (obj1, obj2) {
                     var val1 = obj1[property];
@@ -2597,14 +2603,14 @@
                 return array;
             }
             Tools.objArrPropertySort = objArrPropertySort;
-            function objArrCompareDifferent(data1, data2, property) {
+            function objArr2DifferentPropertyObjArr1(objArr1, objArr2, property) {
                 var result = [];
-                for (var i = 0; i < data1.length; i++) {
-                    var obj1 = data1[i];
+                for (var i = 0; i < objArr1.length; i++) {
+                    var obj1 = objArr1[i];
                     var obj1Name = obj1[property];
                     var isExist = false;
-                    for (var j = 0; j < data2.length; j++) {
-                        var obj2 = data2[j];
+                    for (var j = 0; j < objArr2.length; j++) {
+                        var obj2 = objArr2[j];
                         var obj2Name = obj2[property];
                         if (obj2Name == obj1Name) {
                             isExist = true;
@@ -2617,8 +2623,8 @@
                 }
                 return result;
             }
-            Tools.objArrCompareDifferent = objArrCompareDifferent;
-            function objArrComparEidentical(data1, data2, property) {
+            Tools.objArr2DifferentPropertyObjArr1 = objArr2DifferentPropertyObjArr1;
+            function objArr1IdenticalPropertyObjArr2(data1, data2, property) {
                 var result = [];
                 for (var i = 0; i < data1.length; i++) {
                     var obj1 = data1[i];
@@ -2638,7 +2644,7 @@
                 }
                 return result;
             }
-            Tools.objArrComparEidentical = objArrComparEidentical;
+            Tools.objArr1IdenticalPropertyObjArr2 = objArr1IdenticalPropertyObjArr2;
             function objArrUnique(arr, property) {
                 for (var i = 0, len = arr.length; i < len; i++) {
                     for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -2662,6 +2668,36 @@
                 return arr;
             }
             Tools.objArrGetValue = objArrGetValue;
+            function objArray_Copy(ObjArray) {
+                var sourceCopy = ObjArray instanceof Array ? [] : {};
+                for (var item in ObjArray) {
+                    sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
+                }
+                return sourceCopy;
+            }
+            Tools.objArray_Copy = objArray_Copy;
+            function obj_Copy(obj) {
+                var objCopy = {};
+                for (const item in obj) {
+                    if (obj.hasOwnProperty(item)) {
+                        const element = obj[item];
+                        if (typeof element === 'object') {
+                            if (Array.isArray(element)) {
+                                let arr1 = array_Copy(element);
+                                objCopy[item] = arr1;
+                            }
+                            else {
+                                obj_Copy(element);
+                            }
+                        }
+                        else {
+                            objCopy[item] = element;
+                        }
+                    }
+                }
+                return objCopy;
+            }
+            Tools.obj_Copy = obj_Copy;
             function arrayAddToarray(data1, data2) {
                 for (let index = 0; index < data2.length; index++) {
                     const element = data2[index];
@@ -2693,36 +2729,6 @@
                 return arr;
             }
             Tools.array_Copy = array_Copy;
-            function objArray_Copy(ObjArray) {
-                var sourceCopy = ObjArray instanceof Array ? [] : {};
-                for (var item in ObjArray) {
-                    sourceCopy[item] = typeof ObjArray[item] === 'object' ? obj_Copy(ObjArray[item]) : ObjArray[item];
-                }
-                return sourceCopy;
-            }
-            Tools.objArray_Copy = objArray_Copy;
-            function obj_Copy(obj) {
-                var objCopy = {};
-                for (const item in obj) {
-                    if (obj.hasOwnProperty(item)) {
-                        const element = obj[item];
-                        if (typeof element === 'object') {
-                            if (Array.isArray(element)) {
-                                let arr1 = array_Copy(element);
-                                objCopy[item] = arr1;
-                            }
-                            else {
-                                obj_Copy(element);
-                            }
-                        }
-                        else {
-                            objCopy[item] = element;
-                        }
-                    }
-                }
-                return objCopy;
-            }
-            Tools.obj_Copy = obj_Copy;
             function arrayUnique_01(arr) {
                 for (var i = 0, len = arr.length; i < len; i++) {
                     for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -2751,6 +2757,20 @@
                 return Array.from(new Set(arr));
             }
             Tools.arrayUnique_03 = arrayUnique_03;
+            function array1ExcludeArray2(arr1, arr2) {
+                let arr1Capy = array_Copy(arr1);
+                let arr2Capy = array_Copy(arr2);
+                for (let i = 0; i < arr1Capy.length; i++) {
+                    for (let j = 0; j < arr2Capy.length; j++) {
+                        if (arr1Capy[i] === arr2Capy[j]) {
+                            arr1Capy.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+                return arr1Capy;
+            }
+            Tools.array1ExcludeArray2 = array1ExcludeArray2;
             function point_speedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
@@ -2800,7 +2820,7 @@
                     try {
                         let dataArr_0 = Laya.loader.getRes(url)['RECORDS'];
                         if (dataArr_0.length >= dataArr.length) {
-                            let diffArray = Tools.objArrCompareDifferent(dataArr_0, dataArr, propertyName);
+                            let diffArray = Tools.objArr2DifferentPropertyObjArr1(dataArr_0, dataArr, propertyName);
                             console.log('两个数据的差值为：', diffArray);
                             Tools.arrayAddToarray(dataArr, diffArray);
                         }
@@ -4222,6 +4242,8 @@
             EventType["judgeQuestion"] = "judgeQuestion";
             EventType["judgeClickCard"] = "judgeClickCard";
             EventType["nextRound"] = "nextRound";
+            EventType["meQuestion"] = "meQuestion";
+            EventType["oppositeQuestion"] = "oppositeQuestion";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let CameraMoveType;
         (function (CameraMoveType) {
@@ -4232,19 +4254,19 @@
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
             if (type === WhichScard.MyCardParent) {
-                Game3D.oppositeHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+                Game3D.oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             else if (type === WhichScard.OppositeCardParent) {
-                Game3D.myHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+                Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             let AllCardParent = Game3D.AllCardTem.clone();
             let startZ = 0.3;
             for (let index = 0; index < cardData16.length; index++) {
                 const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]);
                 if (type === WhichScard.MyCardParent) {
-                    if (Card.name === Game3D.oppositeHandCard[0][CardProperty.name]) {
+                    if (Card.name === Game3D.oppositeHandName) {
                         let HandCard = Card.clone();
-                        Game3D.OppositeHandParent.addChild(HandCard);
+                        Game3D.OppositeHandDispaly.addChild(HandCard);
                         HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
                     }
                     Game3D.MyCardParent.addChild(Card);
@@ -4255,6 +4277,11 @@
                     Card.transform.localRotationEulerX = 10;
                 }
                 else if (type === WhichScard.OppositeCardParent) {
+                    if (Card.name === Game3D.myHandName) {
+                        let HandCard = Card.clone();
+                        Game3D.MyHandDispaly.addChild(HandCard);
+                        HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
+                    }
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
@@ -4337,6 +4364,39 @@
             return arr;
         }
         Game3D.questionForindex = questionForindex;
+        function checkForQuestion(question) {
+            let ChaIndex;
+            for (let i = 0; i < Game3D.characteristicsData.length; i++) {
+                if (question === Game3D.characteristicsData[i][CharacteristicsProperty.question]) {
+                    ChaIndex = Game3D.characteristicsData[i][CharacteristicsProperty.index];
+                }
+            }
+            let haveCardArr = [];
+            let nohaveCardArr = [];
+            let CardArr;
+            if (Game3D.whichBout == WhichBoutType.me) {
+                CardArr = Game3D.MyCardParent;
+            }
+            else if (WhichBoutType.opposite) {
+                CardArr = Game3D.OppositeCardParent;
+            }
+            for (let i = 0; i < CardArr.numChildren; i++) {
+                let Card = CardArr.getChildAt(i);
+                let have;
+                for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
+                    if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
+                        haveCardArr.push(Card.name);
+                        have = true;
+                        break;
+                    }
+                }
+                if (!have) {
+                    nohaveCardArr.push(Card.name);
+                }
+            }
+            return [haveCardArr, nohaveCardArr];
+        }
+        Game3D.checkForQuestion = checkForQuestion;
         function dataInit() {
             Game3D.characteristicsData = Laya.loader.getRes("GameData/Game/characteristics.json")['RECORDS'];
             Game3D.CardData = Laya.loader.getRes("GameData/Game/Card.json")['RECORDS'];
@@ -4348,43 +4408,18 @@
                 Game3D.MainCamera = Game3D.Scene3D.getChildByName('Main Camera');
                 Game3D.MyCardParent = Game3D.Scene3D.getChildByName('MyCardParent');
                 Game3D.OppositeCardParent = Game3D.Scene3D.getChildByName('OppositeCardParent');
-                Game3D.OppositeHandParent = Game3D.Scene3D.getChildByName('OppositeHandParent');
+                Game3D.OppositeHandDispaly = Game3D.Scene3D.getChildByName('OppositeHandDispaly');
+                Game3D.MyHandDispaly = Game3D.Scene3D.getChildByName('MyHandDispaly');
                 Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                    let ChaIndex;
-                    for (let i = 0; i < Game3D.characteristicsData.length; i++) {
-                        if (question === Game3D.characteristicsData[i][CharacteristicsProperty.question]) {
-                            ChaIndex = Game3D.characteristicsData[i][CharacteristicsProperty.index];
-                        }
-                    }
-                    let haveCardArr = [];
-                    let nohaveCardArr = [];
-                    let CardArr;
-                    if (Game3D.whichBout == WhichBoutType.me) {
-                        CardArr = Game3D.MyCardParent;
-                    }
-                    else if (WhichBoutType.opposite) {
-                        CardArr = Game3D.OppositeCardParent;
-                    }
-                    for (let i = 0; i < CardArr.numChildren; i++) {
-                        let Card = CardArr.getChildAt(i);
-                        let have;
-                        for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
-                            if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
-                                haveCardArr.push(Card.name);
-                                have = true;
-                                break;
-                            }
-                        }
-                        if (!have) {
-                            nohaveCardArr.push(Card.name);
-                        }
-                    }
+                    let cardArr = checkForQuestion(question);
+                    let haveCardArr = cardArr[0];
+                    let nohaveCardArr = cardArr[1];
                     let matching;
                     for (let index = 0; index < haveCardArr.length; index++) {
-                        if (haveCardArr[index] == Game3D.oppositeHandCard[0][CardProperty.name]) {
+                        if (haveCardArr[index] == Game3D.oppositeHandName) {
                             matching = true;
                         }
                     }
@@ -4407,7 +4442,7 @@
                     }
                     if (Game3D.whichBout == WhichBoutType.me) {
                         if (MeshSprite3D.parent === Game3D.MyCardParent) {
-                            if (MeshSprite3D.name == Game3D.oppositeHandCard[0][CardProperty.name]) {
+                            if (MeshSprite3D.name == Game3D.oppositeHandName) {
                                 console.log('我方赢了！');
                                 this.carFallAni([MeshSprite3D.name], true);
                                 EventAdmin.notify(EventAdmin.EventType.victory);
@@ -4415,14 +4450,6 @@
                             else {
                                 console.log('选错了！');
                                 this.carFallAni([MeshSprite3D.name]);
-                            }
-                        }
-                    }
-                    else if (Game3D.whichBout == WhichBoutType.opposite) {
-                        if (MeshSprite3D.parent !== Game3D.OppositeCardParent) {
-                            if (MeshSprite3D.name == Game3D.myHandCard[0][CardProperty.name]) {
-                                console.log('对方赢了！');
-                                this.carFallAni([MeshSprite3D.name], true);
                             }
                         }
                     }
@@ -4452,14 +4479,18 @@
                     return;
                 }
                 if (exclude) {
+                    let nofallArr = [];
                     for (let i = 0; i < CardParent.numChildren; i++) {
                         const Card = CardParent.getChildAt(i);
-                        for (let j = 0; j < arrName.length; j++) {
-                            if (Card.name !== arrName[j] && !Card[CardProperty.fall]) {
-                                Card[CardProperty.fall] = true;
-                                Card.transform.localRotationEulerX = -90;
-                            }
+                        if (!Card[CardProperty.fall]) {
+                            nofallArr.push(Card.name);
                         }
+                    }
+                    let arr = Tools.array1ExcludeArray2(nofallArr, arrName);
+                    for (let k = 0; k < arr.length; k++) {
+                        let Card = CardParent.getChildByName(arr[k]);
+                        Card[CardProperty.fall] = true;
+                        Card.transform.localRotationEulerX = -90;
                     }
                 }
                 else {
@@ -4478,17 +4509,13 @@
             }
             opening() {
                 Game3D.whichBout = WhichBoutType.me;
-                if (Game3D.MyCardParent.numChildren > 0) {
-                    Game3D.MyCardParent.removeChildren(0, Game3D.MyCardParent.numChildren - 1);
-                }
-                if (Game3D.OppositeCardParent.numChildren > 0) {
-                    Game3D.OppositeCardParent.removeChildren(0, Game3D.OppositeCardParent.numChildren - 1);
-                }
-                if (Game3D.OppositeHandParent.numChildren > 0) {
-                    Game3D.OppositeHandParent.removeChildren(0, Game3D.OppositeHandParent.numChildren - 1);
-                }
+                Tools.node_RemoveAllChildren(Game3D.MyCardParent);
+                Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
+                Tools.node_RemoveAllChildren(Game3D.OppositeHandDispaly);
                 randomlyTakeOut(WhichScard.MyCardParent);
+                randomlyTakeOut(WhichScard.OppositeCardParent);
                 randomTaskCard(WhichScard.MyCardParent);
+                randomTaskCard(WhichScard.OppositeCardParent);
             }
         }
         Game3D.MainScene = MainScene;
@@ -4497,7 +4524,6 @@
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
             this.createQuestion();
-            this.createOppositeQuestion();
         }
         lwgNodeDec() {
             this.OptionParent = this.self['OptionParent'];
@@ -4509,6 +4535,10 @@
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIVictory, this.self);
+            });
+            EventAdmin.reg(Game3D.EventType.oppositeQuestion, this, () => {
+            });
+            EventAdmin.reg(Game3D.EventType.meQuestion, this, () => {
             });
         }
         lwgOnEnable() {
@@ -4560,9 +4590,20 @@
             }
             return Option;
         }
-        createOppositeQuestion() {
+        createOppositeQuestion(question, cardName) {
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
+            GuessCard.pos(360, 576);
+            let Question = GuessCard.getChildByName('Question');
+            Question.text = question;
+            let CardName = GuessCard.getChildByName('CardName');
+            CardName.text = cardName;
+            let BtnYes = GuessCard.getChildByName('BtnYes');
+            Click.on(Click.Type.noEffect, BtnYes, this, null, null, () => {
+            });
+            let BtnNo = GuessCard.getChildByName('BtnNo');
+            Click.on(Click.Type.noEffect, BtnNo, this, null, null, () => {
+            });
         }
         onStageMouseDown(e) {
             let hitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
@@ -4757,7 +4798,6 @@
 
     class PreGuessCard extends Admin.Object {
         lwgOnAwake() {
-            console.log(this.self['Question']);
         }
         lwgOnEnable() {
         }

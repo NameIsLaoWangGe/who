@@ -9,15 +9,17 @@ export module Game3D {
     export let MyCardParent: Laya.MeshSprite3D;
     /**对方手上所有的牌的父节点*/
     export let OppositeCardParent: Laya.MeshSprite3D;
-    /**对方受伤我的牌的父节点*/
-    export let OppositeHandParent: Laya.MeshSprite3D;
+    /**对方手上我的牌的父节点*/
+    export let OppositeHandDispaly: Laya.MeshSprite3D;
+    /**我手上的对面的卡牌父节点*/
+    export let MyHandDispaly: Laya.MeshSprite3D;
     /**所有牌集合*/
     export let AllCardTem: Laya.MeshSprite3D;
 
     /**本局我方手上对方的卡牌*/
-    export let myHandCard: any;
-    /**本局对方手上我方的卡牌*/
-    export let oppositeHandCard: any;
+    export let myHandName: any;
+    /**本局对方手上我方的卡牌名称*/
+    export let oppositeHandName: string;
     /**本回合需我方需要提问的特征*/
     export let questionArr: Array<string> = [];
     /**当前轮到谁猜了*/
@@ -67,12 +69,18 @@ export module Game3D {
 
     /**事件*/
     export enum EventType {
-        /**检验答题*/
+        /**检验答题是否正确*/
         judgeQuestion = 'judgeQuestion',
-        /**检测卡牌的点击*/
+        /**检测卡牌的点击是否正确*/
         judgeClickCard = 'judgeClickCard',
         /**下一回合*/
         nextRound = 'nextRound',
+        /**我方提问*/
+        meQuestion = 'meQuestion',
+        /**对方提问*/
+        oppositeQuestion = 'oppositeQuestion',
+        /**判断输赢*/
+        winOrLose = 'winOrLose',
     }
 
     /**摄像机动画类型*/
@@ -82,7 +90,7 @@ export module Game3D {
     }
 
     /**
-     * 随机取出16张卡牌，放在合适的位置
+     * 随机取出16张卡牌，放在合适的位置,并且各随机出一张，作为本局双方需要猜的牌
      * @param type 我方还是对方
      * */
     export function randomlyTakeOut(type): void {
@@ -91,10 +99,10 @@ export module Game3D {
         let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
 
         if (type === WhichScard.MyCardParent) {
-            oppositeHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+            oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
         else if (type === WhichScard.OppositeCardParent) {
-            myHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+            myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
 
         let AllCardParent = AllCardTem.clone() as Laya.MeshSprite3D;
@@ -102,9 +110,9 @@ export module Game3D {
         for (let index = 0; index < cardData16.length; index++) {
             const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]) as Laya.MeshSprite3D;
             if (type === WhichScard.MyCardParent) {
-                if (Card.name === oppositeHandCard[0][CardProperty.name]) {
+                if (Card.name === oppositeHandName) {
                     let HandCard = Card.clone() as Laya.MeshSprite3D;
-                    OppositeHandParent.addChild(HandCard);
+                    OppositeHandDispaly.addChild(HandCard);
                     HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
                 }
                 MyCardParent.addChild(Card);
@@ -113,9 +121,15 @@ export module Game3D {
                 }
                 Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
                 Card.transform.localRotationEulerX = 10;
-            } else if (type === WhichScard.OppositeCardParent) {
-                OppositeCardParent.addChild(Card);
 
+            } else if (type === WhichScard.OppositeCardParent) {
+                if (Card.name === myHandName) {
+                    let HandCard = Card.clone() as Laya.MeshSprite3D;
+                    MyHandDispaly.addChild(HandCard);
+                    HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
+                }
+
+                OppositeCardParent.addChild(Card);
                 if (index % 4 == 0) {
                     startZ += 0.5;
                 }
@@ -129,14 +143,14 @@ export module Game3D {
     }
 
     /**
-     * 从剩余卡牌中随机出一张需要猜的牌，规则是:
+     * 从剩余卡牌中随机出一张需要猜的属性，规则是:
      * 1.初始化一个和characteristicsData长度相等的数组arr[{}]，每个元素开始都为{index：index，value：0}，
      * 2.循环出每个角色的属性索引值，匹配arr数组的索引值，如果匹配到，那么在arr中对应索引值的value+1，
      * 3.循环结束后，凡是有的属性，在arr中的对象中的值会递增，
      * 4.排除0的属性，然后排序，那么在中间的位置，则是我们需要找到的属性,然后对此提问
      * @param type 是我的卡牌还是对方的卡牌
      * */
-    export function randomTaskCard(type): void {
+    export function randomTaskCard(type): Array<any> {
         // 空白属性表格
         let contrastArr = [];
         for (let i = 0; i < characteristicsData.length; i++) {
@@ -146,7 +160,6 @@ export module Game3D {
                 value: 0
             });
         }
-
         // 在空白表格上对特征数量进行数量标记
         let whichArr;
         if (type === WhichScard.MyCardParent) {
@@ -154,8 +167,7 @@ export module Game3D {
         } else {
             whichArr = OppositeCardParent;
         }
-
-        // 剩余卡牌数量，已经对剩余卡牌进行数量标记
+        // 剩余可选择的卡牌数量，排除已经倒下的卡牌，已经对剩余卡牌进行数量标记
         let residueNum: number = 0;
         for (let i = 0; i < whichArr.numChildren; i++) {
             let Card = whichArr.getChildAt(i);
@@ -178,31 +190,23 @@ export module Game3D {
         }
         // 对属性进行排序
         Tools.objArrPropertySort(contrastArr, 'value');
-        if (residueNum == 1) {
-            questionArr = ['是谁？'];
-        } else if (residueNum == 2) {
-            questionArr = ['是谁？'];
-        } else if (residueNum == 3) {
-            questionArr = questionForindex(contrastArr);
-        } else if (residueNum >= 4) {
-            questionArr = questionForindex(contrastArr);
-        }
-        // console.log(contrastArr, questionArr);
+        return contrastArr;
     }
 
     /**
-     * 根据所有卡牌属性的总值设置找出需要提问的属性
-     * @param contrastArr 属性计数数组，只有属性序号和属性的数量
+     * 我方提出的问题规则
     */
-    export function questionForindex(contrastArr): Array<any> {
+    export function questionForMe(): Array<string> {
+        let contrastArr = randomTaskCard(WhichScard.MyCardParent);
+        let residueNum = noFallCardForMe().length;
         let indexArr = [];
         let medianIndex = Math.floor(contrastArr.length / 2);
-        let content1 = contrastArr[medianIndex]['index'];
-        let content2 = contrastArr[medianIndex + 1]['index'];
-        let content3 = contrastArr[medianIndex - 1]['index'];
-        let randIndex = Math.floor(Math.random() * 2) === 1 ? -2 : 2;
-        let content4 = contrastArr[medianIndex + randIndex]['index'];
-        indexArr.push(content1, content2, content3, content4);
+        let index1 = contrastArr[medianIndex]['index'];
+        let index2 = contrastArr[medianIndex + 1]['index'];
+        let index3 = contrastArr[medianIndex - 1]['index'];
+        let randIndex = Tools.randomOneHalf() ? -2 : 2;
+        let index4 = contrastArr[medianIndex + randIndex]['index'];
+        indexArr.push(index1, index2, index3, index4);
 
         let arr = [];
         for (let i = 0; i < characteristicsData.length; i++) {
@@ -212,7 +216,143 @@ export module Game3D {
                 }
             }
         }
+        if (residueNum == 1) {
+            return ['是谁？'];
+        } else if (residueNum == 2) {
+            return ['是谁？'];
+        } else {
+            return arr;
+        }
+    }
+
+    /**
+     * 对方提出问题的规则
+     * 对方提出问题时，我方必然会回答，也就是说，问题和答案我已经知道，而且不可以乱点
+     * 所以返回一个数组[question，yesOrNo]问题和答案在一起。
+     */
+    export function questionForOpposite(): string {
+        let arr = [];
+        let question;
+        let contrastArr = randomTaskCard(WhichScard.MyCardParent);
+
+        let residueArr = noFallCardOpposite();
+        let medianIndex = Math.floor(contrastArr.length / 2);
+        if (residueArr.length === 1) {
+
+            question = '是' + chNameForName(residueArr[0]) + '吗?';
+             arr = [question, true];
+        } else if (residueArr.length === 2) {
+
+            question = '是' + chNameForName(residueArr[Tools.randomOneHalf()]) + '吗?';
+            arr = [question, true];
+        } else {
+            for (let i = 0; i < characteristicsData.length; i++) {
+                if (characteristicsData[i][CharacteristicsProperty.index] == medianIndex) {
+                    question = characteristicsData[i][CharacteristicsProperty.question];
+                    break;
+                }
+            }
+        }
+
+        if (question) {
+            let characteristics = characteristicsForName();
+            for (let index = 0; index < myHandName.length; index++) {
+                const element = array[index];
+
+            }
+        }
+        return question;
+    }
+
+    /**
+     * 返回我方没有倒下的卡牌
+     * */
+    export function noFallCardForMe(): Array<string> {
+        let arr = [];
+        for (let i = 0; i < MyCardParent.numChildren; i++) {
+            let Card = MyCardParent.getChildAt(i);
+            if (!Card[CardProperty.fall]) {
+                arr.push(Card.name);
+            }
+        }
         return arr;
+    }
+
+    /**
+     * 返回对方没有倒下的卡牌
+     * */
+    export function noFallCardOpposite(): Array<string> {
+        let arr = [];
+        for (let i = 0; i < OppositeCardParent.numChildren; i++) {
+            let Card = OppositeCardParent.getChildAt(i);
+            if (!Card[CardProperty.fall]) {
+                arr.push(Card.name);
+            }
+        }
+        return arr;
+    }
+
+    /**通过英文名查找中文名*/
+    export function chNameForName(name): string {
+        let chName: string;
+        for (let i = 0; i < CardData.length; i++) {
+            if (name == CardData[i][CardProperty.name]) {
+                chName = CardData[i][CardProperty.ChName];
+                break;
+            }
+        }
+        return chName;
+    }
+
+    /**通过卡牌名称查找特征数组*/
+    export function characteristicsForName(name): Array<string> {
+        let characteristics: Array<string>;
+        for (let i = 0; i < CardData.length; i++) {
+            if (name == CardData[i][CardProperty.name]) {
+                characteristics = CardData[i][CardProperty.ChName];
+                break;
+            }
+        }
+        return characteristics;
+    }
+
+    /**
+    * 通过问题对特征进行判断，判断该卡牌有没有这个特征,并且返回所有有和没有这个特征的两个卡牌数组
+    * [0]为有这个特征的，[1]为没有这个特征的
+    * @param question 问题
+    */
+    export function checkForQuestion(question): Array<Array<string>> {
+        // 在特征表中的索引值
+        let ChaIndex;
+        for (let i = 0; i < characteristicsData.length; i++) {
+            if (question === characteristicsData[i][CharacteristicsProperty.question]) {
+                ChaIndex = characteristicsData[i][CharacteristicsProperty.index];
+            }
+        }
+        // 查找节点中有这个特征的数组
+        let haveCardArr = [];
+        let nohaveCardArr = [];
+        let CardArr: Laya.MeshSprite3D;
+        if (whichBout == WhichBoutType.me) {
+            CardArr = MyCardParent;
+        } else if (WhichBoutType.opposite) {
+            CardArr = OppositeCardParent;
+        }
+        for (let i = 0; i < CardArr.numChildren; i++) {
+            let Card = CardArr.getChildAt(i);
+            let have;
+            for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
+                if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
+                    haveCardArr.push(Card.name);
+                    have = true;
+                    break;
+                }
+            }
+            if (!have) {
+                nohaveCardArr.push(Card.name);
+            }
+        }
+        return [haveCardArr, nohaveCardArr];
     }
 
     /**角色属性数据初始化*/
@@ -227,49 +367,21 @@ export module Game3D {
             MainCamera = Scene3D.getChildByName('Main Camera') as Laya.Camera;
             MyCardParent = Scene3D.getChildByName('MyCardParent') as Laya.MeshSprite3D;
             OppositeCardParent = Scene3D.getChildByName('OppositeCardParent') as Laya.MeshSprite3D;
-            OppositeHandParent = Scene3D.getChildByName('OppositeHandParent') as Laya.MeshSprite3D;
+            OppositeHandDispaly = Scene3D.getChildByName('OppositeHandDispaly') as Laya.MeshSprite3D;
+            MyHandDispaly = Scene3D.getChildByName('MyHandDispaly') as Laya.MeshSprite3D;
             AllCardTem = Scene3D.getChildByName('AllCard') as Laya.MeshSprite3D;
         }
 
         lwgEventReg(): void {
+            // 检测猜牌是否正确
             EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                // 在特征表中的索引值
-                let ChaIndex;
-                for (let i = 0; i < characteristicsData.length; i++) {
-                    if (question === characteristicsData[i][CharacteristicsProperty.question]) {
-                        ChaIndex = characteristicsData[i][CharacteristicsProperty.index];
-                    }
-                }
-                // 查找节点中有这个特征的数组
-                let haveCardArr = [];
-                let nohaveCardArr = [];
-                let CardArr: Laya.MeshSprite3D;
-                if (whichBout == WhichBoutType.me) {
-                    CardArr = MyCardParent;
-                } else if (WhichBoutType.opposite) {
-                    CardArr = OppositeCardParent;
-                }
-                for (let i = 0; i < CardArr.numChildren; i++) {
-                    let Card = CardArr.getChildAt(i);
-                    let have;
-                    for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
-                        if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
-                            haveCardArr.push(Card.name);
-                            have = true;
-                            break;
-                        }
-                    }
-                    if (!have) {
-                        nohaveCardArr.push(Card.name);
-                    }
-                }
-                // console.log(haveCardArr);
-                // console.log(nohaveCardArr);
-                // console.log(oppositeHandCard[0][CardProperty.name]);
+                let cardArr = checkForQuestion(question);
+                let haveCardArr = cardArr[0];
+                let nohaveCardArr = cardArr[1]
                 // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则也删掉不匹配的牌
                 let matching;
                 for (let index = 0; index < haveCardArr.length; index++) {
-                    if (haveCardArr[index] == oppositeHandCard[0][CardProperty.name]) {
+                    if (haveCardArr[index] == oppositeHandName) {
                         matching = true;
                     }
                 }
@@ -277,7 +389,6 @@ export module Game3D {
                     console.log('特征正确！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(1, 0, 0), 500, this, () => {
                         this.carFallAni(nohaveCardArr);
-
                     });
                 } else {
                     console.log('特征错误！');
@@ -287,13 +398,14 @@ export module Game3D {
                 }
             })
 
+            // 检测点击是否正确
             EventAdmin.reg(EventType.judgeClickCard, this, (MeshSprite3D: Laya.MeshSprite3D) => {
                 if (MeshSprite3D[CardProperty.fall]) {
                     return;
                 }
                 if (whichBout == WhichBoutType.me) {
                     if (MeshSprite3D.parent === MyCardParent) {
-                        if (MeshSprite3D.name == oppositeHandCard[0][CardProperty.name]) {
+                        if (MeshSprite3D.name == oppositeHandName) {
                             console.log('我方赢了！');
                             this.carFallAni([MeshSprite3D.name], true);
                             EventAdmin.notify(EventAdmin.EventType.victory);
@@ -301,14 +413,6 @@ export module Game3D {
                         } else {
                             console.log('选错了！');
                             this.carFallAni([MeshSprite3D.name]);
-                        }
-                    }
-                } else if (whichBout == WhichBoutType.opposite) {
-                    if (MeshSprite3D.parent !== OppositeCardParent) {
-                        if (MeshSprite3D.name == myHandCard[0][CardProperty.name]) {
-                            console.log('对方赢了！');
-                            this.carFallAni([MeshSprite3D.name], true);
-                            // whichBout = WhichBoutType.defeated;
                         }
                     }
                 }
@@ -325,11 +429,9 @@ export module Game3D {
 
             //下一回合
             EventAdmin.reg(EventType.nextRound, this, () => {
-                if (whichBout == WhichBoutType.victory) {
-
-                } else if (whichBout == WhichBoutType.defeated) {
-
-                } else {
+                if (whichBout == WhichBoutType.me) {
+                    randomTaskCard(WhichScard.MyCardParent);
+                } else if (whichBout == WhichBoutType.opposite) {
                     randomTaskCard(WhichScard.MyCardParent);
                 }
             })
@@ -350,14 +452,18 @@ export module Game3D {
                 return;
             }
             if (exclude) {
+                let nofallArr = [];
                 for (let i = 0; i < CardParent.numChildren; i++) {
                     const Card = CardParent.getChildAt(i) as Laya.MeshSprite3D;
-                    for (let j = 0; j < arrName.length; j++) {
-                        if (Card.name !== arrName[j] && !Card[CardProperty.fall]) {
-                            Card[CardProperty.fall] = true;
-                            Card.transform.localRotationEulerX = -90;
-                        }
+                    if (!Card[CardProperty.fall]) {
+                        nofallArr.push(Card.name);
                     }
+                }
+                let arr = Tools.array1ExcludeArray2(nofallArr, arrName);
+                for (let k = 0; k < arr.length; k++) {
+                    let Card = CardParent.getChildByName(arr[k]) as Laya.MeshSprite3D;
+                    Card[CardProperty.fall] = true;
+                    Card.transform.localRotationEulerX = -90;
                 }
             } else {
                 for (let i = 0; i < arrName.length; i++) {
@@ -378,23 +484,13 @@ export module Game3D {
         /**开局*/
         opening(): void {
             whichBout = WhichBoutType.me;
-            if (MyCardParent.numChildren > 0) {
-                MyCardParent.removeChildren(0, MyCardParent.numChildren - 1);
-            }
-            if (OppositeCardParent.numChildren > 0) {
-                OppositeCardParent.removeChildren(0, OppositeCardParent.numChildren - 1);
-            }
-            // if (myHandCard.numChildren > 0) {
-            //     myHandCard.removeChildren(0, myHandCard.numChildren - 1);
-            // }
-            if (OppositeHandParent.numChildren > 0) {
-                OppositeHandParent.removeChildren(0, OppositeHandParent.numChildren - 1);
-            }
-          
+            Tools.node_RemoveAllChildren(MyCardParent);
+            Tools.node_RemoveAllChildren(OppositeCardParent);
+            Tools.node_RemoveAllChildren(OppositeHandDispaly);
             randomlyTakeOut(WhichScard.MyCardParent);
-            // randomlyTakeOut(WhichScard.OppositeCardParent);
+            randomlyTakeOut(WhichScard.OppositeCardParent);
             randomTaskCard(WhichScard.MyCardParent);
-            // randomTaskCard(WhichScard.OppositeCardParent);
+            randomTaskCard(WhichScard.OppositeCardParent);
         }
     }
 }
