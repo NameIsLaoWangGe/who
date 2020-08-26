@@ -27,13 +27,14 @@ export default class GameScene extends Admin.Scene {
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
         })
 
-        // 对方提问
-        EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (question, yesOrNo, cardName) => {
+        // 对方答题
+        EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
+            // console.log(questionAndYesOrNo, cardName)
             Tools.node_RemoveAllChildren(this.OptionParent);
-            this.createOppositeQuestion(question, yesOrNo, cardName);
+            this.createOppositeQuestion(questionAndYesOrNo, cardName);
         })
 
-        // 我方提问
+        // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
             this.createQuestion(questionArr);
         })
@@ -84,34 +85,43 @@ export default class GameScene extends Admin.Scene {
         Option.pos(x, y);
         if (click) {
             Click.on(Click.Type.largen, Option, this, null, null, () => {
-                EventAdmin.notify(Game3D.EventType.judgeQuestion, question);
+                EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
             });
         }
         return Option;
     }
 
     /**创建对方提问*/
-    createOppositeQuestion(question: string, yesOrNo: boolean, cardName: string): void {
+    createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
         GuessCard.pos(360, 576);
 
-        let Question = GuessCard.getChildByName('Question') as Laya.Label;
-        Question.text = question;
+        let QuestionBaord = GuessCard.getChildByName('QuestionBaord') as Laya.Label;
+        let Question = QuestionBaord.getChildByName('Question') as Laya.Label;
+        Question.text = questionAndYesOrNo[0];
 
         let CardName = GuessCard.getChildByName('CardName') as Laya.Label;
         CardName.text = cardName;
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
-        Click.on(Click.Type.noEffect, BtnYes, this, null, null, () => {
-            if (yesOrNo) {
+        Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
+            if (questionAndYesOrNo[1]) {
                 GuessCard.removeSelf();
+                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+            } else {
+                console.log('不可胡乱回答！');
             }
         });
 
         let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
-        Click.on(Click.Type.noEffect, BtnNo, this, null, null, () => {
-            console.log('不可以乱回答！');
+        Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
+            if (!questionAndYesOrNo[1]) {
+                GuessCard.removeSelf();
+                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+            } else {
+                console.log('不可胡乱回答！');
+            }
         });
     }
 
@@ -120,7 +130,7 @@ export default class GameScene extends Admin.Scene {
         let sprite3D;
         if (hitResult) {
             sprite3D = hitResult.collider.owner;
-            EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
+            EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
         }
     }
 

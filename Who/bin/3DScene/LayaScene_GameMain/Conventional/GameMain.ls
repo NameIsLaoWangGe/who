@@ -135,7 +135,7 @@
 				"type":"Sprite3D",
 				"instanceID":3,
 				"props":{
-					"name":"body",
+					"name":"OppositeRole",
 					"active":true,
 					"isStatic":false,
 					"layer":0,

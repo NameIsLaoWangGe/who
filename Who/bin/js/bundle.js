@@ -4255,8 +4255,9 @@
         })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
         let EventType;
         (function (EventType) {
-            EventType["judgeQuestion"] = "judgeQuestion";
-            EventType["judgeClickCard"] = "judgeClickCard";
+            EventType["judgeMeAnswer"] = "judgeMeAnswer";
+            EventType["judgeOppositeAnswer"] = "judgeOppositeAnswer";
+            EventType["judgeMeClickCard"] = "judgeMeClickCard";
             EventType["nextRound"] = "nextRound";
             EventType["meAnswer"] = "meAnswer";
             EventType["oppositeAnswer"] = "oppositeAnswer";
@@ -4398,7 +4399,7 @@
                 for (let i = 0; i < Game3D.characteristicsData.length; i++) {
                     if (Game3D.characteristicsData[i][CharacteristicsProperty.index] == medianIndex) {
                         question = Game3D.characteristicsData[i][CharacteristicsProperty.question];
-                        arr = [question, judgeQuestion(question, Game3D.OppositeCardParent)];
+                        arr = [question, judgeMeAnswer(question, Game3D.OppositeCardParent)];
                         break;
                     }
                 }
@@ -4476,7 +4477,7 @@
             return [haveCardArr, nohaveCardArr];
         }
         Game3D.checkForQuestion = checkForQuestion;
-        function judgeQuestion(question, CardParent) {
+        function judgeMeAnswer(question, CardParent) {
             let bool = false;
             let cardArr = checkForQuestion(question, CardParent);
             let haveCardArr = cardArr[0];
@@ -4487,7 +4488,7 @@
             }
             return bool;
         }
-        Game3D.judgeQuestion = judgeQuestion;
+        Game3D.judgeMeAnswer = judgeMeAnswer;
         function dataInit() {
             Game3D.characteristicsData = Laya.loader.getRes("GameData/Game/characteristics.json")['RECORDS'];
             Game3D.CardData = Laya.loader.getRes("GameData/Game/Card.json")['RECORDS'];
@@ -4502,6 +4503,7 @@
                 Game3D.OppositeHandDispaly = Game3D.Scene3D.getChildByName('OppositeHandDispaly');
                 Game3D.MyHandDispaly = Game3D.Scene3D.getChildByName('MyHandDispaly');
                 Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
+                Game3D.OppositeRole = Game3D.Scene3D.getChildByName('OppositeRole');
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
@@ -4513,23 +4515,78 @@
                         EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
                     }
                     else if (Game3D.whichBout == WhichBoutType.opposite) {
-                        EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite()]);
+                        EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), Game3D.myHandName]);
                     }
                 });
-                EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                    let matching = judgeQuestion(question, Game3D.MyCardParent);
+                EventAdmin.reg(EventType.judgeMeAnswer, this, (question) => {
+                    if (Game3D.whichBout !== WhichBoutType.me) {
+                        return;
+                    }
+                    this.roundChange();
+                    let matching = judgeMeAnswer(question, Game3D.MyCardParent);
                     if (matching) {
                         console.log('特征正确！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(1, 0, 0), 500, this, () => {
+                        Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(5, 0, 0), 500, this, () => {
                             let cardArr = checkForQuestion(question, Game3D.MyCardParent);
                             this.carFallAni(cardArr[1], Game3D.MyCardParent);
+                            EventAdmin.notify(EventType.nextRound);
                         });
                     }
                     else {
                         console.log('特征错误！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 3, 0), 500, this, () => {
+                        Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(0, 5, 0), 500, this, () => {
                             let cardArr = checkForQuestion(question, Game3D.MyCardParent);
                             this.carFallAni(cardArr[0], Game3D.MyCardParent);
+                            EventAdmin.notify(EventType.nextRound);
+                        });
+                    }
+                });
+                EventAdmin.reg(EventType.judgeMeClickCard, this, (MeshSprite3D) => {
+                    if (MeshSprite3D[CardProperty.fall]) {
+                        return;
+                    }
+                    if (Game3D.whichBout !== WhichBoutType.me) {
+                        return;
+                    }
+                    this.roundChange();
+                    if (MeshSprite3D.parent == Game3D.MyCardParent) {
+                        if (MeshSprite3D.name == Game3D.oppositeHandName) {
+                            console.log('我方赢了！');
+                            Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(5, 0, 0), 500, this, () => {
+                                this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent, true);
+                                EventAdmin.notify(EventAdmin.EventType.victory);
+                                EventAdmin.notify(EventType.nextRound);
+                            });
+                        }
+                        else {
+                            console.log('选错了！');
+                            Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(0, 5, 0), 500, this, () => {
+                                this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent);
+                                EventAdmin.notify(EventType.nextRound);
+                            });
+                        }
+                    }
+                });
+                EventAdmin.reg(EventType.judgeOppositeAnswer, this, (question) => {
+                    if (Game3D.whichBout !== WhichBoutType.opposite) {
+                        return;
+                    }
+                    this.roundChange();
+                    let matching = judgeMeAnswer(question, Game3D.OppositeCardParent);
+                    if (matching) {
+                        console.log('特征正确！');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(5, 0, 0), 500, this, () => {
+                            let cardArr = checkForQuestion(question, Game3D.OppositeCardParent);
+                            this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
+                            EventAdmin.notify(EventType.nextRound);
+                        });
+                    }
+                    else {
+                        console.log('特征错误！');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 5, 0), 500, this, () => {
+                            let cardArr = checkForQuestion(question, Game3D.OppositeCardParent);
+                            this.carFallAni(cardArr[0], Game3D.OppositeCardParent);
+                            EventAdmin.notify(EventType.nextRound);
                         });
                     }
                 });
@@ -4600,9 +4657,9 @@
                 Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIVictory, this.self);
             });
-            EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (question, yesOrNo, cardName) => {
+            EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
                 Tools.node_RemoveAllChildren(this.OptionParent);
-                this.createOppositeQuestion(question, yesOrNo, cardName);
+                this.createOppositeQuestion(questionAndYesOrNo, cardName);
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
                 this.createQuestion(questionArr);
@@ -4650,28 +4707,39 @@
             Option.pos(x, y);
             if (click) {
                 Click.on(Click.Type.largen, Option, this, null, null, () => {
-                    EventAdmin.notify(Game3D.EventType.judgeQuestion, question);
+                    EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
                 });
             }
             return Option;
         }
-        createOppositeQuestion(question, yesOrNo, cardName) {
+        createOppositeQuestion(questionAndYesOrNo, cardName) {
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
             GuessCard.pos(360, 576);
-            let Question = GuessCard.getChildByName('Question');
-            Question.text = question;
+            let QuestionBaord = GuessCard.getChildByName('QuestionBaord');
+            let Question = QuestionBaord.getChildByName('Question');
+            Question.text = questionAndYesOrNo[0];
             let CardName = GuessCard.getChildByName('CardName');
             CardName.text = cardName;
             let BtnYes = GuessCard.getChildByName('BtnYes');
-            Click.on(Click.Type.noEffect, BtnYes, this, null, null, () => {
-                if (yesOrNo) {
+            Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
+                if (questionAndYesOrNo[1]) {
                     GuessCard.removeSelf();
+                    EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+                }
+                else {
+                    console.log('不可胡乱回答！');
                 }
             });
             let BtnNo = GuessCard.getChildByName('BtnNo');
-            Click.on(Click.Type.noEffect, BtnNo, this, null, null, () => {
-                console.log('不可以乱回答！');
+            Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
+                if (!questionAndYesOrNo[1]) {
+                    GuessCard.removeSelf();
+                    EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+                }
+                else {
+                    console.log('不可胡乱回答！');
+                }
             });
         }
         onStageMouseDown(e) {
@@ -4679,7 +4747,7 @@
             let sprite3D;
             if (hitResult) {
                 sprite3D = hitResult.collider.owner;
-                EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
+                EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
             }
         }
         lwgBtnClick() {

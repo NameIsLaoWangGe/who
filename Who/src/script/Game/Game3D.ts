@@ -16,6 +16,9 @@ export module Game3D {
     /**所有牌集合*/
     export let AllCardTem: Laya.MeshSprite3D;
 
+    /**对面的角色*/
+    export let OppositeRole: Laya.MeshSprite3D;
+
     /**本局我方手上对方的卡牌*/
     export let myHandName: any;
     /**本局对方手上我方的卡牌名称*/
@@ -70,9 +73,11 @@ export module Game3D {
     /**事件*/
     export enum EventType {
         /**检验答题是否正确*/
-        judgeQuestion = 'judgeQuestion',
+        judgeMeAnswer = 'judgeMeAnswer',
+        /**检验答题是否正确*/
+        judgeOppositeAnswer = 'judgeOppositeAnswer',
         /**检测卡牌的点击是否正确*/
-        judgeClickCard = 'judgeClickCard',
+        judgeMeClickCard = 'judgeMeClickCard',
         /**下一回合*/
         nextRound = 'nextRound',
         /**我方提问*/
@@ -253,7 +258,7 @@ export module Game3D {
             for (let i = 0; i < characteristicsData.length; i++) {
                 if (characteristicsData[i][CharacteristicsProperty.index] == medianIndex) {
                     question = characteristicsData[i][CharacteristicsProperty.question];
-                    arr = [question, judgeQuestion(question, OppositeCardParent)];
+                    arr = [question, judgeMeAnswer(question, OppositeCardParent)];
                     break;
                 }
             }
@@ -351,7 +356,7 @@ export module Game3D {
      * 通过选择的回答和手上卡牌的特征对比，判断是否正确
      * @param question 问题
     */
-    export function judgeQuestion(question: string, CardParent: Laya.MeshSprite3D): boolean {
+    export function judgeMeAnswer(question: string, CardParent: Laya.MeshSprite3D): boolean {
         let bool = false;
         let cardArr = checkForQuestion(question, CardParent);
         let haveCardArr = cardArr[0];
@@ -380,6 +385,7 @@ export module Game3D {
             OppositeHandDispaly = Scene3D.getChildByName('OppositeHandDispaly') as Laya.MeshSprite3D;
             MyHandDispaly = Scene3D.getChildByName('MyHandDispaly') as Laya.MeshSprite3D;
             AllCardTem = Scene3D.getChildByName('AllCard') as Laya.MeshSprite3D;
+            OppositeRole = Scene3D.getChildByName('OppositeRole') as Laya.MeshSprite3D;
         }
 
         lwgEventReg(): void {
@@ -393,46 +399,94 @@ export module Game3D {
             //下一回合
             EventAdmin.reg(EventType.nextRound, this, () => {
                 if (whichBout == WhichBoutType.me) {
-
                     EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
                 } else if (whichBout == WhichBoutType.opposite) {
 
-                    EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite()]);
+                    EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), myHandName]);
                 }
             })
 
             // 检测我的回答是否正确
-            EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                let matching = judgeQuestion(question, MyCardParent);
+            EventAdmin.reg(EventType.judgeMeAnswer, this, (question) => {
+                if (whichBout !== WhichBoutType.me) {
+                    return;
+                }
+                this.roundChange();
+                let matching = judgeMeAnswer(question, MyCardParent);
                 if (matching) {
                     console.log('特征正确！');
-                    Animation3D.rock(MainCamera as any, new Laya.Vector3(1, 0, 0), 500, this, () => {
+                    Animation3D.rock(OppositeRole as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, MyCardParent);
                         this.carFallAni(cardArr[1], MyCardParent);
+
+                        EventAdmin.notify(EventType.nextRound);
                     });
                 } else {
                     console.log('特征错误！');
-                    Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 3, 0), 500, this, () => {
+                    Animation3D.rock(OppositeRole as any, new Laya.Vector3(0, 5, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, MyCardParent);
                         this.carFallAni(cardArr[0], MyCardParent);
+
+                        EventAdmin.notify(EventType.nextRound);
+
                     });
                 }
             })
 
-            // 检测我的点击是否正确
-            EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                let matching = judgeQuestion(question, MyCardParent);
+            // 检测我点击是否正确
+            EventAdmin.reg(EventType.judgeMeClickCard, this, (MeshSprite3D: Laya.MeshSprite3D) => {
+                if (MeshSprite3D[CardProperty.fall]) {
+                    return;
+                }
+                if (whichBout !== WhichBoutType.me) {
+                    return;
+                }
+                this.roundChange();
+                if (MeshSprite3D.parent == MyCardParent) {
+                    if (MeshSprite3D.name == oppositeHandName) {
+                        console.log('我方赢了！');
+                        Animation3D.rock(OppositeRole as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
+                            this.carFallAni([MeshSprite3D.name], MyCardParent, true);
+                            EventAdmin.notify(EventAdmin.EventType.victory);
+
+                            EventAdmin.notify(EventType.nextRound);
+
+                        });
+                    } else {
+                        console.log('选错了！');
+                        Animation3D.rock(OppositeRole as any, new Laya.Vector3(0, 5, 0), 500, this, () => {
+                            this.carFallAni([MeshSprite3D.name], MyCardParent);
+
+                            EventAdmin.notify(EventType.nextRound);
+
+                        });
+                    }
+                }
+            })
+
+            //检测对方的回答是否正确 
+            EventAdmin.reg(EventType.judgeOppositeAnswer, this, (question) => {
+                if (whichBout !== WhichBoutType.opposite) {
+                    return;
+                }
+                this.roundChange();
+                let matching = judgeMeAnswer(question, OppositeCardParent);
                 if (matching) {
                     console.log('特征正确！');
-                    Animation3D.rock(MainCamera as any, new Laya.Vector3(1, 0, 0), 500, this, () => {
-                        let cardArr = checkForQuestion(question, MyCardParent);
-                        this.carFallAni(cardArr[1], MyCardParent);
+                    Animation3D.rock(MainCamera as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
+                        let cardArr = checkForQuestion(question, OppositeCardParent);
+                        this.carFallAni(cardArr[1], OppositeCardParent);
+
+                        EventAdmin.notify(EventType.nextRound);
                     });
                 } else {
                     console.log('特征错误！');
-                    Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 3, 0), 500, this, () => {
-                        let cardArr = checkForQuestion(question, MyCardParent);
-                        this.carFallAni(cardArr[0], MyCardParent);
+                    Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 5, 0), 500, this, () => {
+                        let cardArr = checkForQuestion(question, OppositeCardParent);
+                        this.carFallAni(cardArr[0], OppositeCardParent);
+
+                        EventAdmin.notify(EventType.nextRound);
+
                     });
                 }
             })
