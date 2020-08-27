@@ -39,6 +39,7 @@ P 5FD17798 vscroll.png
 P DDDDFB9E vslider$bar.png
 P 01BAE7F5 vslider.png
 D Frame
+D Skeleton
 D UI
 D Frame/Effects
 P 03F236DC cir_black.png
@@ -125,10 +126,62 @@ R 9B501DC8 chijinbi.wav
 R E23D09D2 guoguan.wav
 R 6E72E92F wancheng.wav
 D UI/Common
+P B1A0E4F9 3ci.png
+P 2234FD38 anniu.png
+P 2A39B90F anniu1.png
+P 79B07BD5 congxin.png
+R B4540864 di.png
+P 70FF211F douyao.png
+P C35F448E jinbi.png
+P 289D58A5 kanshipin.png
+P 127255F4 qiandao.png
+P 1618EA35 sanbei.png
+P 5B1DB4EB xiayiguan.png
+P B045BD45 yuan-1.png
+P E7CD30EC yuan-2.png
+P E5BF47BE yuan.png
+P 786974B9 yuan2.png
+P DC54CB42 yuanhaung-1.png
+P 3BC6B658 yuanhaung-2.png
+P C3B380A8 zaikai.png
+D UI/DesignPic
+R 2B172D41 benguanfuli.png
+R 9D1AE922 fuhuo.png
+R 7AA57674 huigu.png
+R 8B4561FE jiesuan1.png
+R D10A0CEA jiesuan2.png
+R 79A24CC5 jingzi.png
+R 92EC7C65 loading.png
+R F9C56D24 paihangbang2.png
+R 076F9B79 qiandao.png
+R E58DC15A tishi.png
+R 2666E7CB xuanliwu.png
+R 70EC95D4 youxi2.png
+R 58ABE2D1 yoxui1.png
+R AA355D9A zhujiemian.png
 D UI/GameScene
+P 94FDDFDD baidi.png
+P 3D068B3B budui.png
+P 22392773 dui.png
+P DBDF552F fanhui.png
+P 309BC52D heidi.png
+P 1EA50B9B hong.png
+P B3BB7FE4 qipao.png
+P D14CCFA9 shanchu.png
+P 852250CF shuxing.png
+P 801B796F wen.png
+R A182C39C wenti.png
+P 0FBAFC11 wode.png
 D UI/UICheckIn
 D UI/UIDefeated
 D UI/UILoding
+R B3AA2A09 bj.png
+R BC36AD45 jiankan.png
+P 0D2954D6 jiazai.png
+P 43CDE070 jindu1.png
+P 57FF38CC jindu2.png
+R 55BAF028 kapai.png
+R C1BD5F29 LOGO.png
 D UI/UIResurgence
 D UI/UISet
 D UI/UIShare
@@ -136,6 +189,33 @@ D UI/UIShop
 D UI/UISkin
 D UI/UISkinLimit
 D UI/UIStart
+R 069A849B bj.png
+P 4B08819D gengduo.png
+P E3CFD01B guang.png
+P 9D786C63 hongdain.png
+R F17B7B39 hutui_di.png
+P 2349C9BB jinbi.png
+P 193533C1 jinbidi.png
+P 6475ECB1 jindu-1.png
+P 3DD115F0 jindu-2.png
+P 1256540C kaishi.png
+P E66F5D5E kapai.png
+P CD21971D katao.png
+P B6AA2556 paihang.png
+P 8BD65952 qiandao.png
+P 53AD6FA0 shezhi.png
+P 30CED7D2 shilian.png
+P 595A54CD zhentan-1.png
+P 03157237 zhentan-2.png
+P 291D7204 zhentan-4.png
+P 57CAB863 zhentan-8.png
+R F6E66481 zhentan-di.png
+P 83C17239 zhentan-huanguang.png
+P 373FE74A zhentan-huanguang2.png
+P 1472E178 zhentan-pai1.png
+P 9FD8FD2D zhentan-pai2.png
+P 064E7DCC zhentan-tiao1.png
+P 5F7BCFD3 zhentan-tiao2.png
 D UI/UITask
 D UI/UIVictory
 D UI/UIVictoryBox

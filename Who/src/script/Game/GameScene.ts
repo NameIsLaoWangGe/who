@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {

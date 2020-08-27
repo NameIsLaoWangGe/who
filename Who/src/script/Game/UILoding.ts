@@ -1,4 +1,4 @@
-import { Loding, Admin, Gold, Setting, PalyAudio } from "../Frame/lwg";
+import { Loding, Admin, Gold, Setting, PalyAudio, DateAdmin } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 export default class UILoding extends Loding.LodingScene {
     lwgOnAwake(): void {
@@ -39,10 +39,18 @@ export default class UILoding extends Loding.LodingScene {
             // "GameData/EasterEgg/EasterEgg.json",
         ];
     }
-    lwgOnEnable(): void { }
+    lwgAdaptive(): void {
+        this.self['Tag'].y = Laya.stage.height - 100;
+        this.self['ProgressBoard'].y = Laya.stage.height * 0.824;
+        this.self['Pic'].y = Laya.stage.height * 0.505;
+        this.self['Logo'].y = Laya.stage.height * 0.191;
+
+    }
+    lwgOnEnable(): void {
+    }
     lwgOpenAni(): number { return 0; }
     lodingPhaseComplete(): void {
-        this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;
+        this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;
     }
     lodingComplete(): number {
         this.self['Progress'].mask.x = 0;

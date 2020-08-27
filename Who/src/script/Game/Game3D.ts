@@ -477,7 +477,8 @@ export module Game3D {
                         let cardArr = checkForQuestion(question, OppositeCardParent);
                         this.carFallAni(cardArr[1], OppositeCardParent);
 
-                        EventAdmin.notify(EventType.nextRound);
+                        
+                        // EventAdmin.notify(EventAdmin.);
                     });
                 } else {
                     console.log('特征错误！');
@@ -502,8 +503,11 @@ export module Game3D {
             })
         }
 
-        /**回合切换器*/
+        /**回合以及状态切换*/
         roundChange(): void {
+
+
+
             if (whichBout === WhichBoutType.me) {
                 whichBout = WhichBoutType.opposite;
             } else if (whichBout === WhichBoutType.opposite) {

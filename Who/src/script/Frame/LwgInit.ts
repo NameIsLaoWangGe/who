@@ -1,4 +1,4 @@
-import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding } from "./lwg";
+import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold } from "./lwg";
 import { Game3D } from "../Game/Game3D";
 export default class LwgInit extends Admin.Scene {
     lwgOnAwake(): void {
@@ -9,6 +9,8 @@ export default class LwgInit extends Admin.Scene {
         this.skin();
         this.task();
         this.easterEgg();
+        Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+        Gold.createGoldNode(629, 174);
     }
 
     /**基础参数初始化*/

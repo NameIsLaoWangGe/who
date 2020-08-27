@@ -485,16 +485,19 @@
         let Gold;
         (function (Gold_1) {
             Gold_1._goldNum = 0;
-            function createGoldNode(parent) {
+            function createGoldNode(x, y, parent) {
+                if (!parent) {
+                    parent = Laya.stage;
+                }
                 if (Gold_1.GoldNode) {
-                    return;
+                    Gold_1.GoldNode.removeSelf();
                 }
                 let sp;
-                Laya.loader.load('Prefab/GoldNode.json', Laya.Handler.create(this, function (prefab) {
+                Laya.loader.load('Prefab/PreGold.json', Laya.Handler.create(this, function (prefab) {
                     let _prefab = new Laya.Prefab();
                     _prefab.json = prefab;
                     sp = Laya.Pool.getItemByCreateFun('gold', _prefab.create, _prefab);
-                    let num = sp.getChildByName('Num');
+                    let Num = sp.getChildByName('Num');
                     let goldNum = Laya.LocalStorage.getItem('_goldNum');
                     if (goldNum) {
                         Gold_1._goldNum = Number(goldNum);
@@ -502,11 +505,11 @@
                     else {
                         Laya.LocalStorage.setItem('_goldNum', '0');
                     }
-                    num.text = Gold_1._goldNum.toString();
+                    Num.text = Gold_1._goldNum.toString();
                     parent.addChild(sp);
                     let Pic = sp.getChildByName('Pic');
-                    sp.pos(234, 100);
-                    sp.zOrder = 50;
+                    sp.pos(x, y);
+                    sp.zOrder = 100;
                     Gold_1.GoldNode = sp;
                 }));
             }
@@ -750,6 +753,66 @@
             }
             EventAdmin.offCaller = offCaller;
         })(EventAdmin = lwg.EventAdmin || (lwg.EventAdmin = {}));
+        let DateAdmin;
+        (function (DateAdmin) {
+            DateAdmin._date = {
+                get getFullYear() {
+                    return (new Date()).getFullYear();
+                },
+                get getMonth() {
+                    return (new Date()).getMonth();
+                },
+                get getDate() {
+                    return (new Date()).getDate();
+                },
+                get getDay() {
+                    return (new Date()).getDay();
+                },
+                get getHours() {
+                    return (new Date()).getHours();
+                },
+                get getMinutes() {
+                    return (new Date()).getMinutes();
+                },
+                get getSeconds() {
+                    return (new Date()).getSeconds();
+                },
+                get getMilliseconds() {
+                    return (new Date()).getMilliseconds();
+                },
+                get toLocaleDateString() {
+                    return (new Date()).toLocaleDateString();
+                },
+                get toLocaleTimeString() {
+                    return (new Date()).toLocaleTimeString();
+                }
+            };
+            DateAdmin._loginDate = {
+                get value() {
+                    let data = Laya.LocalStorage.getJSON('Date_loginDate');
+                    let dataArr = [];
+                    let d = new Date();
+                    let date1 = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getDay()];
+                    if (data) {
+                        dataArr = JSON.parse(data);
+                        let equal = false;
+                        for (let index = 0; index < dataArr.length; index++) {
+                            if (dataArr[index].toString() == date1.toString()) {
+                                equal = true;
+                            }
+                        }
+                        if (!equal) {
+                            dataArr.push(date1);
+                        }
+                    }
+                    if (dataArr.length == 0) {
+                        dataArr.push(date1);
+                    }
+                    Laya.LocalStorage.setJSON('Date_loginDate', JSON.stringify(dataArr));
+                    return dataArr;
+                },
+            };
+        })(DateAdmin = lwg.DateAdmin || (lwg.DateAdmin = {}));
         let Admin;
         (function (Admin) {
             let _platformTpye;
@@ -769,7 +832,6 @@
                     Laya.LocalStorage.setItem('_loginNumber', val.toString());
                 }
             };
-            Admin._loginDate = {};
             Admin._gameLevel = {
                 get value() {
                     return Laya.LocalStorage.getItem('_gameLevel') ? Number(Laya.LocalStorage.getItem('_gameLevel')) : 1;
@@ -4087,6 +4149,7 @@
     })(lwg || (lwg = {}));
     let Admin = lwg.Admin;
     let EventAdmin = lwg.EventAdmin;
+    let DateAdmin = lwg.DateAdmin;
     let Pause = lwg.Pause;
     let Execution = lwg.Execution;
     let Gold = lwg.Gold;
@@ -4762,6 +4825,8 @@
             this.skin();
             this.task();
             this.easterEgg();
+            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+            Gold.createGoldNode(629, 174);
         }
         admin() {
             Admin._commonVanishAni = true;
@@ -4805,10 +4870,17 @@
                 "GameData/Game/Card.json",
             ];
         }
-        lwgOnEnable() { }
+        lwgAdaptive() {
+            this.self['Tag'].y = Laya.stage.height - 100;
+            this.self['ProgressBoard'].y = Laya.stage.height * 0.824;
+            this.self['Pic'].y = Laya.stage.height * 0.505;
+            this.self['Logo'].y = Laya.stage.height * 0.191;
+        }
+        lwgOnEnable() {
+        }
         lwgOpenAni() { return 0; }
         lodingPhaseComplete() {
-            this.self['Progress'].mask.x = -477 + 477 * Loding.currentProgress.value / Loding.sumProgress;
+            this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;
         }
         lodingComplete() {
             this.self['Progress'].mask.x = 0;
@@ -4817,11 +4889,18 @@
     }
 
     class UIStart extends Start.StartScene {
-        lwgOnAwake() { }
+        lwgOnAwake() {
+            Setting.setBtnAppear();
+            Gold.goldAppear();
+        }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
+        }
+        lwgOnDisable() {
+            Setting.setBtnVinish();
+            Gold.goldVinish();
         }
     }
 

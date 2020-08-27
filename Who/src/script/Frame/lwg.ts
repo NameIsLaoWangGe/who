@@ -420,18 +420,23 @@ export module lwg {
         export let GoldNode: Laya.Sprite;
         /**
          * 创建通用剩余金币资源数量prefab
-         * @param parent 父节点
+         * @param x x位置
+         * @param y y位置
+         * @param parent 父节点，不传则是舞台
          */
-        export function createGoldNode(parent): void {
+        export function createGoldNode(x, y, parent?: Laya.Sprite): void {
+            if (!parent) {
+                parent = Laya.stage;
+            }
             if (GoldNode) {
-                return;
+                GoldNode.removeSelf();
             }
             let sp: Laya.Sprite;
-            Laya.loader.load('Prefab/GoldNode.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
+            Laya.loader.load('Prefab/PreGold.json', Laya.Handler.create(this, function (prefab: Laya.Prefab) {
                 let _prefab = new Laya.Prefab();
                 _prefab.json = prefab;
                 sp = Laya.Pool.getItemByCreateFun('gold', _prefab.create, _prefab);
-                let num = sp.getChildByName('Num') as Laya.Label;
+                let Num = sp.getChildByName('Num') as Laya.Label;
 
                 let goldNum = Laya.LocalStorage.getItem('_goldNum');
                 if (goldNum) {
@@ -439,12 +444,12 @@ export module lwg {
                 } else {
                     Laya.LocalStorage.setItem('_goldNum', '0');
                 }
-                num.text = _goldNum.toString();
+                Num.text = _goldNum.toString();
                 parent.addChild(sp);
 
                 let Pic = sp.getChildByName('Pic') as Laya.Image;
-                sp.pos(234, 100);
-                sp.zOrder = 50;
+                sp.pos(x, y);
+                sp.zOrder = 100;
                 GoldNode = sp;
             }));
         }
@@ -505,6 +510,7 @@ export module lwg {
             Laya.LocalStorage.setItem('_goldNum', _goldNum.toString());
         }
 
+        /**框架中的地址*/
         enum SkinUrl {
             "Frame/Effects/icon_gold.png"
         }
@@ -823,6 +829,79 @@ export module lwg {
         }
     }
 
+    /**日期管理*/
+    export module DateAdmin {
+        export let _date = {
+            /**年*/
+            get getFullYear(): number {
+                return (new Date()).getFullYear();
+            },
+            /**月*/
+            get getMonth(): number {
+                return (new Date()).getMonth();
+            },
+            /**日*/
+            get getDate(): number {
+                return (new Date()).getDate();
+            },
+            /**周几*/
+            get getDay(): number {
+                return (new Date()).getDay();
+            },
+            /**小时*/
+            get getHours(): number {
+                return (new Date()).getHours();
+            },
+            /**分钟*/
+            get getMinutes(): number {
+                return (new Date()).getMinutes();
+            },
+            /**秒*/
+            get getSeconds(): number {
+                return (new Date()).getSeconds();
+            },
+            /**毫秒*/
+            get getMilliseconds(): number {
+                return (new Date()).getMilliseconds();
+            },
+            /**全日期*/
+            get toLocaleDateString(): string {
+                return (new Date()).toLocaleDateString();
+            },
+            /**当前时间*/
+            get toLocaleTimeString(): string {
+                return (new Date()).toLocaleTimeString();
+            }
+        }
+
+        /**玩家登陆游戏的天数,包括其中的年月日,星期几*/
+        export let _loginDate = {
+            get value(): Array<any> {
+                let data = Laya.LocalStorage.getJSON('Date_loginDate');
+                let dataArr: Array<Array<number>> = [];
+                let d = new Date();
+                let date1 = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getDay()];
+                if (data) {
+                    dataArr = JSON.parse(data);
+                    // 如果两天一抹一样则不会增加
+                    let equal = false;
+                    for (let index = 0; index < dataArr.length; index++) {
+                        if (dataArr[index].toString() == date1.toString()) {
+                            equal = true;
+                        }
+                    }
+                    if (!equal) {
+                        dataArr.push(date1);
+                    }
+                }
+                if (dataArr.length == 0) {
+                    dataArr.push(date1);
+                }
+                Laya.LocalStorage.setJSON('Date_loginDate', JSON.stringify(dataArr));
+                return dataArr;
+            },
+        }
+    }
 
     /**游戏整体控制*/
     export module Admin {
@@ -848,16 +927,6 @@ export module lwg {
             set value(val: number) {
                 Laya.LocalStorage.setItem('_loginNumber', val.toString());
             }
-        }
-
-        /**玩家登陆游戏的天数*/
-        export let _loginDate = {
-            // get value(): Array<any> {
-            //     return Laya.LocalStorage.getItem('_loginDate') ? Number(Laya.LocalStorage.getItem('_loginDate')) : [new Date().getDate()];
-            // },
-            // set value(val) {
-            //     Laya.LocalStorage.setItem('_loginDate', val.toString());
-            // }
         }
 
         /**等级*/
@@ -5534,6 +5603,7 @@ export default lwg;
 // 全局控制
 export let Admin = lwg.Admin;
 export let EventAdmin = lwg.EventAdmin;
+export let DateAdmin = lwg.DateAdmin;
 export let Pause = lwg.Pause;
 export let Execution = lwg.Execution;
 export let Gold = lwg.Gold;

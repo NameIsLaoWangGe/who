@@ -1,12 +1,20 @@
-import { Start, Click, Admin } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold } from "../Frame/lwg";
 
 export default class UIStart extends Start.StartScene {
 
-    lwgOnAwake(): void { }
+    lwgOnAwake(): void {
+        Setting.setBtnAppear();
+        Gold.goldAppear();
+    }
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.GameScene, this.self);
         });
+    }
+
+    lwgOnDisable(): void {
+        Setting.setBtnVinish();
+        Gold.goldVinish();
     }
 }
