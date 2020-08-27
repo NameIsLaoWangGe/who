@@ -328,10 +328,9 @@ export module lwg {
         /**体力*/
         export let _execution = {
             get value(): number {
-                return this.val = Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
+                return Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
             },
             set value(val) {
-                this.val = val;
                 Laya.LocalStorage.setItem('_execution', val.toString());
             }
         };
@@ -415,7 +414,14 @@ export module lwg {
     /**金币模块*/
     export module Gold {
         /**金币数量*/
-        export let _goldNum: number = 0;
+        export let _num = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_goldNum') ? Number(Laya.LocalStorage.getItem('_goldNum')) : 0;
+            },
+            set value(val: number) {
+                Laya.LocalStorage.setItem('_goldNum', val.toString());
+            }
+        };
         /**指代当前全局的的金币资源节点*/
         export let GoldNode: Laya.Sprite;
         /**
@@ -437,21 +443,29 @@ export module lwg {
                 _prefab.json = prefab;
                 sp = Laya.Pool.getItemByCreateFun('gold', _prefab.create, _prefab);
                 let Num = sp.getChildByName('Num') as Laya.Label;
-
-                let goldNum = Laya.LocalStorage.getItem('_goldNum');
-                if (goldNum) {
-                    _goldNum = Number(goldNum);
-                } else {
-                    Laya.LocalStorage.setItem('_goldNum', '0');
-                }
-                Num.text = _goldNum.toString();
+                Num.text = _num.value.toString();
                 parent.addChild(sp);
-
                 let Pic = sp.getChildByName('Pic') as Laya.Image;
                 sp.pos(x, y);
                 sp.zOrder = 100;
                 GoldNode = sp;
             }));
+        }
+
+        /**增加金币以并且在节点上也表现出来*/
+        export function addGold(number: number) {
+            _num.value += number;
+            let Num = GoldNode.getChildByName('Num') as Laya.Text;
+            Num.text = _num.value.toString();
+        }
+        /**增加金币节点上的表现动画，并不会增加金币*/
+        export function addGoldDisPlay(number) {
+            let Num = GoldNode.getChildByName('Num') as Laya.FontClip;
+            Num.value = (Number(Num.value) + number).toString();
+        }
+        /**增加金币，但是不表现出来*/
+        export function addGoldNoDisPlay(number) {
+            _num.value += number;
         }
 
         /**
@@ -490,24 +504,6 @@ export module lwg {
             } else {
                 GoldNode.visible = false;
             }
-        }
-
-        /**增加金币以并且在节点上也表现出来*/
-        export function addGold(number: number) {
-            _goldNum += number;
-            let Num = GoldNode.getChildByName('Num') as Laya.Text;
-            Num.text = _goldNum.toString();
-            Laya.LocalStorage.setItem('_goldNum', _goldNum.toString());
-        }
-        /**增加金币节点上的表现动画，并不会增加金币*/
-        export function addGoldDisPlay(number) {
-            let Num = GoldNode.getChildByName('Num') as Laya.FontClip;
-            Num.value = (Number(Num.value) + number).toString();
-        }
-        /**增加金币，但是不表现出来*/
-        export function addGoldNoDisPlay(number) {
-            _goldNum += number;
-            Laya.LocalStorage.setItem('_goldNum', _goldNum.toString());
         }
 
         /**框架中的地址*/
@@ -970,6 +966,7 @@ export module lwg {
                 LevelNode = sp;
             }));
         }
+
         /**暂停当前游戏*/
         export let _pause = {
             get switch(): boolean {
@@ -987,8 +984,37 @@ export module lwg {
             }
         }
 
+        /**整个stage内关闭点击事件*/
+        export let _clickLock = {
+            get switch(): boolean {
+                return Laya.stage.getChildByName('__stageClickLock__') ? true : false;
+            },
+            set switch(bool: boolean) {
+                if (bool) {
+                    if (!Laya.stage.getChildByName('__stageClickLock__')) {
+                        let __stageClickLock__ = new Laya.Sprite();
+                        __stageClickLock__.name = '__stageClickLock__';
+                        Laya.stage.addChild(__stageClickLock__);
+                        __stageClickLock__.zOrder = 1000;
+                        __stageClickLock__.width = Laya.stage.width;
+                        __stageClickLock__.height = Laya.stage.height;
+                        __stageClickLock__.pos(0, 0);
+                        Click.on(Click.Type.noEffect, __stageClickLock__, this, null, null, (e: Laya.Event) => {
+                            console.log('舞台点击被锁住了！请用admin._clickLock=false解锁');
+                            e.stopPropagation();
+                        });
+                    }
+                } else {
+                    if (Laya.stage.getChildByName('__stageClickLock__')) {
+                        Laya.stage.getChildByName('__stageClickLock__').removeSelf();
+                        console.log('场景点击解锁！');
+                    }
+                }
+            }
+        }
+
         /**
-        * 设置一个屏蔽场景内点击事件的的节点，用于各种动画执行的时候，反复点击
+        * 设置一个屏蔽场景内点击事件的的节点
         * @param scene 场景
        */
         export function _secneLockClick(scene: Laya.Scene): void {
@@ -996,10 +1022,11 @@ export module lwg {
             let __lockClick__ = new Laya.Sprite();
             scene.addChild(__lockClick__);
             __lockClick__.zOrder = 1000;
+            __lockClick__.name = '__lockClick__';
             __lockClick__.width = Laya.stage.width;
             __lockClick__.height = Laya.stage.height;
             __lockClick__.pos(0, 0);
-            Click.on(Click.Type.noEffect, __lockClick__, this, (e: Laya.Event) => {
+            Click.on(Click.Type.noEffect, __lockClick__, this, null, null, (e: Laya.Event) => {
                 console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
                 e.stopPropagation();
             });
@@ -1127,6 +1154,7 @@ export module lwg {
                 if (func) {
                     func();
                 }
+                _clickLock.switch = false;
                 cloesScene.close();
             }
             // 如果关闭了场景消失动画，则不会执行任何动画
@@ -1140,8 +1168,8 @@ export module lwg {
                 let delay = 0;
                 switch (_commonOpenAni) {
                     case OpenAniType.fadeOut:
-                        time = 200;
-                        delay = 100;
+                        time = 150;
+                        delay = 50;
                         if (cloesScene['Background']) {
                             Animation2D.fadeOut(cloesScene, 1, 0, time / 2);
                         }
@@ -1162,11 +1190,12 @@ export module lwg {
             let cloesSceneScript = cloesScene[cloesScene.name];
             if (cloesSceneScript) {
                 if (cloesSceneScript) {
-                    _secneLockClick(cloesScene);
+                    _clickLock.switch = true;
                     let time0 = cloesSceneScript.lwgVanishAni();
                     if (time0 !== null) {
                         Laya.timer.once(time0, this, () => {
                             closef();
+                            _clickLock.switch = false;
                         })
                     } else {
                         vanishAni();
@@ -1259,8 +1288,8 @@ export module lwg {
                 let delay = 0;
                 switch (_commonOpenAni) {
                     case OpenAniType.fadeOut:
-                        time = 500;
-                        delay = 400;
+                        time = 400;
+                        delay = 300;
                         if (this.self['Background']) {
                             Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
                         }

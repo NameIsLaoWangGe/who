@@ -1,27 +1,13 @@
 import RecordManager from "../TJ/RecordManager";
-import { Admin, Setting, PalyAudio, Click, EventAdmin } from "../Frame/lwg";
+import { Admin, Setting, PalyAudio, Click, EventAdmin, Defeated, Gold } from "../Frame/lwg";
 import ADManager, { TaT } from "../TJ/Admanager";
 
-export default class UIDefeated extends Admin.Scene {
+export default class UIDefeated extends Defeated.DefeatedScene {
 
     lwgOnAwake(): void {
-        Admin._gameSwitch = false;
-    }
-
-    lwgNodeDec(): void {
-        this.self['BtnSelect_WeChat'].visible = true;
-        this.self['BtnAgain_WeChat'].visible = false;
-        this.self['Dot_WeChat'].visible = true;
-    }
-
-    lwgOnEnable(): void {
         ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
-
         ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
         ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
-
-        Setting.setBtnAppear();
-        PalyAudio.playDefeatedSound();
 
         switch (Admin._platform) {
             case Admin._platformTpye.OPPO:
@@ -46,17 +32,24 @@ export default class UIDefeated extends Admin.Scene {
         }
     }
 
+    lwgOnEnable(): void {
+        PalyAudio.playDefeatedSound();
+        Gold.GoldNode = this.self['GoldNode'];
+        let Num2 = this.self['GoldNode'].getChildByName('Num') as Laya.Label;
+        Num2.text = Gold._num.value.toString();
+    }
+
     lwgBtnClick(): void {
-        Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-        Click.on(Click.Type.largen, this.self['BtnNext_WeChat'], this, null, null, this.btnNextUp);
-        Click.on(Click.Type.largen, this.self['BtnSelect_WeChat'], this, null, null, this.btnSelectUp);
+        // Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        // Click.on(Click.Type.largen, this.self['BtnNext_WeChat'], this, null, null, this.btnNextUp);
+        // Click.on(Click.Type.largen, this.self['BtnSelect_WeChat'], this, null, null, this.btnSelectUp);
 
-        Click.on(Click.Type.largen, this.self['BtnAgain_OPPO'], this, null, null, this.btnAgainUp);
-        Click.on(Click.Type.largen, this.self['BtnNext_OPPO'], this, null, null, this.btnNextUp);
+        // Click.on(Click.Type.largen, this.self['BtnAgain_OPPO'], this, null, null, this.btnAgainUp);
+        // Click.on(Click.Type.largen, this.self['BtnNext_OPPO'], this, null, null, this.btnNextUp);
 
-        Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-        Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
-        Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
+        // Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+        // Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
+        // Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
     }
 
     btnSelectUp(): void {

@@ -17,16 +17,6 @@ export default class GameScene extends Admin.Scene {
     }
 
     lwgEventReg(): void {
-        // 下一回合
-        EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
-
-        })
-        // 胜利
-        EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
-            Admin._gameSwitch = false;
-            Admin._openScene(Admin.SceneName.UIVictory, this.self);
-        })
-
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
             // console.log(questionAndYesOrNo, cardName)
@@ -37,6 +27,17 @@ export default class GameScene extends Admin.Scene {
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
             this.createQuestion(questionArr);
+        })
+
+        // 胜利
+        EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
+            Admin._gameSwitch = false;
+            Admin._openScene(Admin.SceneName.UIVictory, this.self);
+        })
+
+        // 失败
+        EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
+            Admin._openScene(Admin.SceneName.UIDefeated, this.self);
         })
     }
 

@@ -4,7 +4,7 @@ export default class UIStart extends Start.StartScene {
 
     lwgOnAwake(): void {
         Setting.setBtnAppear();
-        Gold.goldAppear();
+        Gold.createGoldNode(629, 174);
     }
 
     lwgBtnClick(): void {

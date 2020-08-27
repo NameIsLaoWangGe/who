@@ -1,7 +1,0 @@
-{
-  "code": "import { Loding } from \"../Frame/lwg\";\r\nexport default class UILoding extends Loding.LodingScene {\r\n    lwgOnAwake() {\r\n        Loding.lodingList_2D = [\r\n            \"res/atlas/Frame/Effects.png\",\r\n            \"res/atlas/Frame/UI.png\",\r\n        ];\r\n        Loding.lodingList_3DScene = [];\r\n        Loding.lodingList_3DPrefab = [];\r\n        Loding.lodingList_Json = [];\r\n    }\r\n    lwgOnEnable() {\r\n    }\r\n    lodingPhaseComplete() {\r\n    }\r\n    lodingComplete() {\r\n    }\r\n    lwgOnUpdate() {\r\n    }\r\n}\r\n",
-  "references": [
-    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
-    "D:/Game/project/Who/Project/Who/src/script/Game/GameMain3D.ts"
-  ]
-}

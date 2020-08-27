@@ -10,12 +10,12 @@ export default class LwgInit extends Admin.Scene {
         this.task();
         this.easterEgg();
         Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
-        Gold.createGoldNode(629, 174);
     }
 
     /**基础参数初始化*/
     admin(): void {
         Admin._commonVanishAni = true;
+        Admin._platform = Admin._platformTpye.Bytedance;
     }
 
     /**3D模块初始化*/

@@ -150,14 +150,10 @@ export module Game3D {
     }
 
     /**
-     * 从剩余卡牌中随机出一张需要猜的属性，规则是:
-     * 1.初始化一个和characteristicsData长度相等的数组arr[{}]，每个元素开始都为{index：index，value：0}，
-     * 2.循环出每个角色的属性索引值，匹配arr数组的索引值，如果匹配到，那么在arr中对应索引值的value+1，
-     * 3.循环结束后，凡是有的属性，在arr中的对象中的值会递增，
-     * 4.排除0的属性，然后排序，那么在中间的位置，则是我们需要找到的属性,然后对此提问
-     * @param type 是我的卡牌还是对方的卡牌
+     * 查询所有没有倒下的卡牌的属性数量排序
+     * @param CardParent 是我的卡牌还是对方的卡牌
      * */
-    export function randomTaskCard(type): Array<any> {
+    export function randomTaskCard(CardParent: Laya.MeshSprite3D): Array<any> {
         // 空白属性表格
         let contrastArr = [];
         for (let i = 0; i < characteristicsData.length; i++) {
@@ -167,17 +163,10 @@ export module Game3D {
                 value: 0
             });
         }
-        // 在空白表格上对特征数量进行数量标记
-        let whichArr;
-        if (type === WhichScard.MyCardParent) {
-            whichArr = MyCardParent;
-        } else {
-            whichArr = OppositeCardParent;
-        }
         // 剩余可选择的卡牌数量，排除已经倒下的卡牌，已经对剩余卡牌进行数量标记
         let residueNum: number = 0;
-        for (let i = 0; i < whichArr.numChildren; i++) {
-            let Card = whichArr.getChildAt(i);
+        for (let i = 0; i < CardParent.numChildren; i++) {
+            let Card = CardParent.getChildAt(i);
             if (!Card[CardProperty.fall]) {
                 residueNum++;
                 const characteristicsArr = Card[CardProperty.characteristicsArr];
@@ -204,7 +193,7 @@ export module Game3D {
      * 我方回答问题规则
     */
     export function answerForMe(): Array<string> {
-        let contrastArr = randomTaskCard(WhichScard.MyCardParent);
+        let contrastArr = randomTaskCard(MyCardParent);
         let residueNum = noFallCardForMe().length;
         let indexArr = [];
         let medianIndex = Math.floor(contrastArr.length / 2);
@@ -240,8 +229,7 @@ export module Game3D {
     export function answerForOpposite(): Array<any> {
         let arr = [];
         let question;
-        let contrastArr = randomTaskCard(WhichScard.MyCardParent);
-
+        let contrastArr = randomTaskCard(OppositeCardParent);
         let residueArr = noFallCardOpposite();
         let medianIndex = Math.floor(contrastArr.length / 2);
         if (residueArr.length === 1) {
@@ -263,6 +251,7 @@ export module Game3D {
                 }
             }
         }
+
         return arr;
     }
 
@@ -332,21 +321,24 @@ export module Game3D {
                 ChaIndex = characteristicsData[i][CharacteristicsProperty.index];
             }
         }
+
         // 查找节点中有这个特征的数组
         let haveCardArr = [];
         let nohaveCardArr = [];
         for (let i = 0; i < CardParent.numChildren; i++) {
             let Card = CardParent.getChildAt(i);
             let have;
-            for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
-                if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
-                    haveCardArr.push(Card.name);
-                    have = true;
-                    break;
+            if (!Card[CardProperty.fall]) {
+                for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
+                    if (ChaIndex === Card[CardProperty.characteristicsArr][j]) {
+                        haveCardArr.push(Card.name);
+                        have = true;
+                        break;
+                    }
                 }
-            }
-            if (!have) {
-                nohaveCardArr.push(Card.name);
+                if (!have) {
+                    nohaveCardArr.push(Card.name);
+                }
             }
         }
         return [haveCardArr, nohaveCardArr];
@@ -389,7 +381,6 @@ export module Game3D {
         }
 
         lwgEventReg(): void {
-
             //开局
             EventAdmin.reg(EventType.opening, this, () => {
                 whichBout = WhichBoutType.me;
@@ -402,7 +393,7 @@ export module Game3D {
                     EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
                 } else if (whichBout == WhichBoutType.opposite) {
 
-                    EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), myHandName]);
+                    EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), chNameForName(myHandName)]);
                 }
             })
 
@@ -447,10 +438,8 @@ export module Game3D {
                         console.log('我方赢了！');
                         Animation3D.rock(OppositeRole as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
                             this.carFallAni([MeshSprite3D.name], MyCardParent, true);
+
                             EventAdmin.notify(EventAdmin.EventType.victory);
-
-                            EventAdmin.notify(EventType.nextRound);
-
                         });
                     } else {
                         console.log('选错了！');
@@ -476,14 +465,23 @@ export module Game3D {
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, OppositeCardParent);
                         this.carFallAni(cardArr[1], OppositeCardParent);
+                        console.log(question);
+                        console.log(cardArr);
+                        console.log(OppositeCardParent);
+                        if (noFallCardOpposite().length === 1) {
+                            EventAdmin.notify(EventAdmin.EventType.defeated);
+                        } else {
+                            EventAdmin.notify(EventType.nextRound);
+                        }
 
-                        
-                        // EventAdmin.notify(EventAdmin.);
                     });
                 } else {
                     console.log('特征错误！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 5, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, OppositeCardParent);
+                        console.log(question);
+                        console.log(cardArr);
+                        console.log(OppositeCardParent);
                         this.carFallAni(cardArr[0], OppositeCardParent);
 
                         EventAdmin.notify(EventType.nextRound);

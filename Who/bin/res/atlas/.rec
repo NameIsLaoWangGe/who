@@ -39,8 +39,8 @@ P 5FD17798 vscroll.png
 P DDDDFB9E vslider$bar.png
 P 01BAE7F5 vslider.png
 D Frame
-D Skeleton
-D UI
+D Game
+D TJ
 D Frame/Effects
 P 03F236DC cir_black.png
 P EBB4CAAE cir_blue.png
@@ -125,8 +125,13 @@ R 626CADAF btn.wav
 R 9B501DC8 chijinbi.wav
 R E23D09D2 guoguan.wav
 R 6E72E92F wancheng.wav
-D UI/Common
+D Game/Skeleton
+D Game/UI
+D Game/Voice
+D TJ/Promo
+D Game/UI/Common
 P B1A0E4F9 3ci.png
+P 0B541EBF ads3word.png
 P 2234FD38 anniu.png
 P 2A39B90F anniu1.png
 P 79B07BD5 congxin.png
@@ -144,7 +149,7 @@ P 786974B9 yuan2.png
 P DC54CB42 yuanhaung-1.png
 P 3BC6B658 yuanhaung-2.png
 P C3B380A8 zaikai.png
-D UI/DesignPic
+D Game/UI/DesignPic
 R 2B172D41 benguanfuli.png
 R 9D1AE922 fuhuo.png
 R 7AA57674 huigu.png
@@ -159,7 +164,7 @@ R 2666E7CB xuanliwu.png
 R 70EC95D4 youxi2.png
 R 58ABE2D1 yoxui1.png
 R AA355D9A zhujiemian.png
-D UI/GameScene
+D Game/UI/GameScene
 P 94FDDFDD baidi.png
 P 3D068B3B budui.png
 P 22392773 dui.png
@@ -172,9 +177,10 @@ P 852250CF shuxing.png
 P 801B796F wen.png
 R A182C39C wenti.png
 P 0FBAFC11 wode.png
-D UI/UICheckIn
-D UI/UIDefeated
-D UI/UILoding
+D Game/UI/UICheckIn
+D Game/UI/UIDefeated
+P 02B20F84 shibai.png
+D Game/UI/UILoding
 R B3AA2A09 bj.png
 R BC36AD45 jiankan.png
 P 0D2954D6 jiazai.png
@@ -182,13 +188,13 @@ P 43CDE070 jindu1.png
 P 57FF38CC jindu2.png
 R 55BAF028 kapai.png
 R C1BD5F29 LOGO.png
-D UI/UIResurgence
-D UI/UISet
-D UI/UIShare
-D UI/UIShop
-D UI/UISkin
-D UI/UISkinLimit
-D UI/UIStart
+D Game/UI/UIResurgence
+D Game/UI/UISet
+D Game/UI/UIShare
+D Game/UI/UIShop
+D Game/UI/UISkin
+D Game/UI/UISkinLimit
+D Game/UI/UIStart
 R 069A849B bj.png
 P 4B08819D gengduo.png
 P E3CFD01B guang.png
@@ -216,6 +222,45 @@ P 1472E178 zhentan-pai1.png
 P 9FD8FD2D zhentan-pai2.png
 P 064E7DCC zhentan-tiao1.png
 P 5F7BCFD3 zhentan-tiao2.png
-D UI/UITask
-D UI/UIVictory
-D UI/UIVictoryBox
+D Game/UI/UITask
+D Game/UI/UIVictory
+R 621CCA29 caidai.png
+P 50B436C9 chenggong.png
+P 10574DC6 dajia.png
+P 3184E4AE fa.png
+P 653C967E icon-kuang.png
+P A09FD615 jinbidi.png
+P 46F05727 qipao.png
+R 7BBD2815 shuzi6.png
+D Game/UI/UIVictoryBox
+D TJ/Promo/image
+P A43D9CBA cnxh.png
+P 99431921 di2.png
+P 324E0C01 gdyx.png
+P DD5E998F gdyx2.png
+P 065547DB gdyx3.png
+P E8CF5470 hb2.png
+R A91EA1E1 jx1.png
+P 3EECC3B9 jx10.png
+R 35991AF2 jx11.png
+P C7132F1F jx14.png
+R 626301A7 jx3.png
+R 494CC67B jx6.png
+R 3DD8E94B jx8.png
+P C167ACB2 kk1.png
+P 211D25A9 kk2.png
+P B6E1ED76 kk3.png
+P 5206FB64 new2.png
+P 42063299 remen1.png
+P F56500C5 rm3.png
+P 3BB6C3A1 sw.png
+P 821E80DE swdjl.png
+P B254AEFE tc2.png
+P 45A53A2D tc23.png
+P A01AFDAA tc3.png
+P EA808596 tishi.png
+P 46BBD479 tuijian2.png
+R A24BEE5A white.jpg
+P BCCD0083 y1.png
+P 3ECD784B yjjx14.png
+P BBB689A3 zt_1_10.png
