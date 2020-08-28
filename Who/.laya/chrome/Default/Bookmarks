@@ -1,0 +1,47 @@
+{
+   "checksum": "4618e42dad324290d111a8e00d27b07f",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13243073248513944",
+            "guid": "151d7798-6646-407c-b333-7c904573e435",
+            "id": "5",
+            "name": "次世代3D游戏引擎Layabox官方网站 | 2D\\3D\\AR\\VR | 浏览器\\APP\\小游戏全平台发布|追求极致性能 | LayaAir 2.0 | AS3 JavaScript TypeScript开发语言| LayaAir | 免费引擎",
+            "type": "url",
+            "url": "https://www.layabox.com/"
+         }, {
+            "date_added": "13243073638990324",
+            "guid": "52c37fd1-fc31-4707-88a1-11bbe7660c73",
+            "id": "6",
+            "name": "经验分享：如何控制龙骨动画的播放索引！ - layabox问答社区-HTML5引擎社区-LayaAir开发者社区",
+            "type": "url",
+            "url": "http://ask.layabox.com/question/4390"
+         } ],
+         "date_added": "13243072495909618",
+         "date_modified": "13243073638990324",
+         "guid": "00000000-0000-4000-a000-000000000002",
+         "id": "1",
+         "name": "书签栏",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13243072495909917",
+         "date_modified": "0",
+         "guid": "00000000-0000-4000-a000-000000000003",
+         "id": "2",
+         "name": "其他书签",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13243072495909920",
+         "date_modified": "0",
+         "guid": "00000000-0000-4000-a000-000000000004",
+         "id": "3",
+         "name": "移动设备书签",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}

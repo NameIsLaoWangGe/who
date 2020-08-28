@@ -1,6 +1,6 @@
-import { lwg, Admin, Dialog, VictoryBox, EventAdmin, Animation2D, Effects, Gold, Click, Task, Tools, EasterEgg } from "../Lwg_Template/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
-import { Game } from "../Lwg_Template/Game";
+
+import { VictoryBox, Gold, Tools, Admin, EventAdmin, Dialog, EasterEgg, Effects, Task, Click } from "../Frame/lwg";
+import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     constructor() { super(); }
@@ -14,21 +14,21 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         // ADManager.TAPoint(TaT.BtnShow, 'ADrewardbt_box');
 
         if (VictoryBox._openVictoryBoxNum > 1) {
-            let arr = Tools.randomNumOfArray([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
+            let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
             for (let index = 0; index < arr.length; index++) {
                 const element = arr[index];
-                VictoryBox.setBoxProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
+                VictoryBox.setProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
             }
         }
 
-        switch (Game._platform) {
-            case Game._platformTpye.WeChat:
+        switch (Admin._platform) {
+            case Admin._platformTpye.WeChat:
                 this.self['Bytedance'].visible = false;
                 this.self['WeChat'].visible = true;
                 this.self['BtnAgain_WeChat'].visible = false;
                 this.self['BtnNo_WeChat'].visible = false;
                 break;
-            case Game._platformTpye.Bytedance:
+            case Admin._platformTpye.Bytedance:
                 this.self['Bytedance'].visible = true;
                 this.self['WeChat'].visible = false;
                 this.self['BtnAgain_Bytedance'].visible = false;
@@ -89,12 +89,12 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         let y = VictoryBox._BoxList.y + VictoryBox._BoxList.height / 3 * diffY + 92;
         Effects.createExplosion_Rotate(this.self, 25, x, y, 'star', 10, 15);
 
-        VictoryBox.setBoxProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
+        VictoryBox.setProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
 
         if (!automan) {
             Laya.timer.frameOnce(20, this, f => {
                 Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                    Gold.addGold(VictoryBox.getBoxProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                    Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
                 });
             })
         }
@@ -165,8 +165,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     }
 
     btnNoUp(event): void {
-        lwg.Admin._openScene(lwg.Admin.SceneName.UIVictory, null, null, null);
-        this.self.close();
+        Admin._openScene(Admin.SceneName.UIVictory, this.self);
     }
 
     // /**看广告获取的最大次数为6次*/

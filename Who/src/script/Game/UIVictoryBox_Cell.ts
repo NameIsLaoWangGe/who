@@ -1,5 +1,4 @@
-import ADManager, { TaT } from "../TJ/Admanager";
-import { Admin, lwg, Dialog, Animation2D, Effects, VictoryBox, EventAdmin, Click } from "../Lwg_Template/lwg";
+import { Admin, Click, VictoryBox, Animation2D, Dialog, EventAdmin } from "../Frame/lwg";
 
 export default class UIVictoryBox_Cell extends Admin.Object {
     constructor() { super(); }

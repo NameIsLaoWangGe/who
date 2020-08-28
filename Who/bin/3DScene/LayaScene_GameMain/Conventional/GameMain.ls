@@ -21,55 +21,84 @@
 		},
 		"child":[
 			{
-				"type":"Camera",
+				"type":"Sprite3D",
 				"instanceID":0,
 				"props":{
-					"name":"Main Camera",
+					"name":"MainCamera",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
-						0,
-						1.37,
-						-9.3
+						-0.03,
+						0.48,
+						-8.87
 					],
 					"rotation":[
+						-0.2575919,
 						0,
-						0.9428453,
-						0.3332309,
-						0
+						0,
+						-0.9662538
 					],
 					"scale":[
-						1,
-						1,
-						1
-					],
-					"clearFlag":1,
-					"orthographic":false,
-					"orthographicVerticalSize":10,
-					"fieldOfView":60,
-					"enableHDR":true,
-					"nearPlane":0.3,
-					"farPlane":1000,
-					"viewport":[
-						0,
-						0,
-						1,
-						1
-					],
-					"clearColor":[
-						0.1921569,
-						0.3019608,
-						0.4745098,
-						0
+						0.1,
+						0.1,
+						0.1
 					]
 				},
 				"components":[],
-				"child":[]
+				"child":[
+					{
+						"type":"Camera",
+						"instanceID":1,
+						"props":{
+							"name":"Main Camera",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0,
+								0,
+								0
+							],
+							"rotation":[
+								0,
+								1,
+								0,
+								0
+							],
+							"scale":[
+								1,
+								1,
+								1
+							],
+							"clearFlag":1,
+							"orthographic":false,
+							"orthographicVerticalSize":10,
+							"fieldOfView":60,
+							"enableHDR":true,
+							"nearPlane":0.3,
+							"farPlane":1000,
+							"viewport":[
+								0,
+								0,
+								1,
+								1
+							],
+							"clearColor":[
+								0.1921569,
+								0.3019608,
+								0.4745098,
+								0
+							]
+						},
+						"components":[],
+						"child":[]
+					}
+				]
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":1,
+				"instanceID":2,
 				"props":{
 					"name":"Desk",
 					"active":true,
@@ -78,7 +107,7 @@
 					"position":[
 						-0.03,
 						-2.93,
-						-5.94
+						-5.99
 					],
 					"rotation":[
 						0,
@@ -96,7 +125,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":2,
+						"instanceID":3,
 						"props":{
 							"name":"Table_Square_Brown_0",
 							"active":true,
@@ -133,16 +162,16 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":3,
+				"instanceID":4,
 				"props":{
 					"name":"Chair",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
-						-0.1,
-						-2.87,
-						-2.29
+						-0.02,
+						-3.06,
+						-2.738
 					],
 					"rotation":[
 						0,
@@ -160,7 +189,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":4,
+						"instanceID":5,
 						"props":{
 							"name":"Chair_03_Beige.002_0",
 							"active":true,
@@ -197,7 +226,7 @@
 			},
 			{
 				"type":"DirectionLight",
-				"instanceID":5,
+				"instanceID":6,
 				"props":{
 					"name":"Directional Light",
 					"active":true,
@@ -232,7 +261,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":6,
+				"instanceID":7,
 				"props":{
 					"name":"CardTem",
 					"active":true,
@@ -258,6 +287,7 @@
 					"enableRender":true,
 					"materials":[
 						{
+							"type":"Laya.BlinnPhongMaterial",
 							"path":"Resources/unity_builtin_extra.lmat"
 						}
 					]
@@ -290,7 +320,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":7,
+				"instanceID":8,
 				"props":{
 					"name":"EventSystem",
 					"active":true,
@@ -318,7 +348,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":8,
+				"instanceID":9,
 				"props":{
 					"name":"MyCardParent",
 					"active":true,
@@ -346,7 +376,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":9,
+				"instanceID":10,
 				"props":{
 					"name":"OppositeCardParent",
 					"active":true,
@@ -374,7 +404,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":10,
+				"instanceID":11,
 				"props":{
 					"name":"AllCard",
 					"active":true,
@@ -401,7 +431,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":11,
+						"instanceID":12,
 						"props":{
 							"name":"zds1",
 							"active":true,
@@ -459,7 +489,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":12,
+						"instanceID":13,
 						"props":{
 							"name":"zds2",
 							"active":true,
@@ -517,7 +547,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":13,
+						"instanceID":14,
 						"props":{
 							"name":"zds3",
 							"active":true,
@@ -575,7 +605,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":14,
+						"instanceID":15,
 						"props":{
 							"name":"zds4",
 							"active":true,
@@ -633,7 +663,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":15,
+						"instanceID":16,
 						"props":{
 							"name":"zds5",
 							"active":true,
@@ -691,7 +721,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":16,
+						"instanceID":17,
 						"props":{
 							"name":"lyy1",
 							"active":true,
@@ -749,7 +779,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":17,
+						"instanceID":18,
 						"props":{
 							"name":"lyy2",
 							"active":true,
@@ -807,7 +837,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":18,
+						"instanceID":19,
 						"props":{
 							"name":"lyy3",
 							"active":true,
@@ -865,7 +895,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":19,
+						"instanceID":20,
 						"props":{
 							"name":"lyy4",
 							"active":true,
@@ -923,7 +953,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":20,
+						"instanceID":21,
 						"props":{
 							"name":"lyy5",
 							"active":true,
@@ -981,7 +1011,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":21,
+						"instanceID":22,
 						"props":{
 							"name":"cxk1",
 							"active":true,
@@ -1039,7 +1069,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":22,
+						"instanceID":23,
 						"props":{
 							"name":"cxk2",
 							"active":true,
@@ -1097,7 +1127,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":23,
+						"instanceID":24,
 						"props":{
 							"name":"cxk3",
 							"active":true,
@@ -1155,7 +1185,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":24,
+						"instanceID":25,
 						"props":{
 							"name":"cxk4",
 							"active":true,
@@ -1213,7 +1243,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":25,
+						"instanceID":26,
 						"props":{
 							"name":"cxk5",
 							"active":true,
@@ -1271,7 +1301,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":26,
+						"instanceID":27,
 						"props":{
 							"name":"cxy1",
 							"active":true,
@@ -1329,7 +1359,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":27,
+						"instanceID":28,
 						"props":{
 							"name":"cxy2",
 							"active":true,
@@ -1387,7 +1417,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":28,
+						"instanceID":29,
 						"props":{
 							"name":"cxy3",
 							"active":true,
@@ -1445,7 +1475,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":29,
+						"instanceID":30,
 						"props":{
 							"name":"cxy4",
 							"active":true,
@@ -1503,7 +1533,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":30,
+						"instanceID":31,
 						"props":{
 							"name":"cxy5",
 							"active":true,
@@ -1561,7 +1591,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":31,
+						"instanceID":32,
 						"props":{
 							"name":"xxs1",
 							"active":true,
@@ -1619,7 +1649,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":32,
+						"instanceID":33,
 						"props":{
 							"name":"xxs2",
 							"active":true,
@@ -1677,7 +1707,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":33,
+						"instanceID":34,
 						"props":{
 							"name":"xxs3",
 							"active":true,
@@ -1735,7 +1765,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":34,
+						"instanceID":35,
 						"props":{
 							"name":"xxs4",
 							"active":true,
@@ -1793,7 +1823,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":35,
+						"instanceID":36,
 						"props":{
 							"name":"xxs5",
 							"active":true,
@@ -1851,7 +1881,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":36,
+						"instanceID":37,
 						"props":{
 							"name":"scp1",
 							"active":true,
@@ -1909,7 +1939,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":37,
+						"instanceID":38,
 						"props":{
 							"name":"scp2",
 							"active":true,
@@ -1967,7 +1997,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":38,
+						"instanceID":39,
 						"props":{
 							"name":"scp3",
 							"active":true,
@@ -2025,7 +2055,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":39,
+						"instanceID":40,
 						"props":{
 							"name":"scp4",
 							"active":true,
@@ -2083,7 +2113,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":40,
+						"instanceID":41,
 						"props":{
 							"name":"scp5",
 							"active":true,
@@ -2141,7 +2171,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":41,
+						"instanceID":42,
 						"props":{
 							"name":"fkr1",
 							"active":true,
@@ -2199,7 +2229,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":42,
+						"instanceID":43,
 						"props":{
 							"name":"fkr2",
 							"active":true,
@@ -2257,7 +2287,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":43,
+						"instanceID":44,
 						"props":{
 							"name":"fkr3",
 							"active":true,
@@ -2315,7 +2345,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":44,
+						"instanceID":45,
 						"props":{
 							"name":"fkr4",
 							"active":true,
@@ -2373,7 +2403,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":45,
+						"instanceID":46,
 						"props":{
 							"name":"fkr5",
 							"active":true,
@@ -2431,7 +2461,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":46,
+						"instanceID":47,
 						"props":{
 							"name":"fkr6",
 							"active":true,
@@ -2489,7 +2519,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":47,
+						"instanceID":48,
 						"props":{
 							"name":"fkr7",
 							"active":true,
@@ -2547,7 +2577,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":48,
+						"instanceID":49,
 						"props":{
 							"name":"fkr8",
 							"active":true,
@@ -2605,7 +2635,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":49,
+						"instanceID":50,
 						"props":{
 							"name":"fkr9",
 							"active":true,
@@ -2663,7 +2693,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":50,
+						"instanceID":51,
 						"props":{
 							"name":"atmzw",
 							"active":true,
@@ -2721,7 +2751,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":51,
+						"instanceID":52,
 						"props":{
 							"name":"atm2",
 							"active":true,
@@ -2779,7 +2809,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":52,
+						"instanceID":53,
 						"props":{
 							"name":"atm3",
 							"active":true,
@@ -2837,7 +2867,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":53,
+						"instanceID":54,
 						"props":{
 							"name":"atm4",
 							"active":true,
@@ -2895,7 +2925,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":54,
+						"instanceID":55,
 						"props":{
 							"name":"atm5",
 							"active":true,
@@ -2953,7 +2983,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":55,
+						"instanceID":56,
 						"props":{
 							"name":"atm6",
 							"active":true,
@@ -3011,7 +3041,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":56,
+						"instanceID":57,
 						"props":{
 							"name":"lb",
 							"active":true,
@@ -3069,7 +3099,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":57,
+						"instanceID":58,
 						"props":{
 							"name":"zbj",
 							"active":true,
@@ -3127,7 +3157,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":58,
+						"instanceID":59,
 						"props":{
 							"name":"swk",
 							"active":true,
@@ -3185,7 +3215,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":59,
+						"instanceID":60,
 						"props":{
 							"name":"yj",
 							"active":true,
@@ -3243,7 +3273,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":60,
+						"instanceID":61,
 						"props":{
 							"name":"nz",
 							"active":true,
@@ -3301,7 +3331,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":61,
+						"instanceID":62,
 						"props":{
 							"name":"nm",
 							"active":true,
@@ -3359,7 +3389,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":62,
+						"instanceID":63,
 						"props":{
 							"name":"dj",
 							"active":true,
@@ -3419,7 +3449,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":63,
+				"instanceID":64,
 				"props":{
 					"name":"OppositeHandDispaly",
 					"active":true,
@@ -3445,6 +3475,7 @@
 					"enableRender":false,
 					"materials":[
 						{
+							"type":"Laya.BlinnPhongMaterial",
 							"path":"Resources/unity_builtin_extra.lmat"
 						}
 					]
@@ -3477,7 +3508,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":64,
+				"instanceID":65,
 				"props":{
 					"name":"MyHandDispaly",
 					"active":true,
@@ -3503,6 +3534,7 @@
 					"enableRender":false,
 					"materials":[
 						{
+							"type":"Laya.BlinnPhongMaterial",
 							"path":"Resources/unity_builtin_extra.lmat"
 						}
 					]
@@ -3535,9 +3567,9 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":65,
+				"instanceID":66,
 				"props":{
-					"name":"RoleParent",
+					"name":"OppositeRoleParent",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
@@ -3562,16 +3594,16 @@
 				"child":[
 					{
 						"type":"Sprite3D",
-						"instanceID":66,
+						"instanceID":67,
 						"props":{
 							"name":"Girl",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.5951385,
-								-0.09856224,
-								-3.068533
+								-0.5151386,
+								-0.2885622,
+								-3.663
 							],
 							"rotation":[
 								0,
@@ -3580,9 +3612,9 @@
 								0
 							],
 							"scale":[
-								130,
-								130,
-								130
+								110,
+								110,
+								110
 							]
 						},
 						"components":[
@@ -3596,31 +3628,35 @@
 										"states":[
 											{
 												"name":"daiji",
-												"clipPath":"Assets/Animator/Girl/daiji-daiji.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/daiji-daiji.lani"
 											},
 											{
 												"name":"chaofeng",
-												"clipPath":"Assets/Animator/Girl/chaofeng-chaofeng.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/chaofeng-chaofeng.lani"
 											},
 											{
 												"name":"fouren",
-												"clipPath":"Assets/Animator/Girl/fouren-fouren.lani"
-											},
-											{
-												"name":"qupai",
-												"clipPath":"Assets/Animator/Girl/qupai-qupai.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/fouren-fouren.lani"
 											},
 											{
 												"name":"queding",
-												"clipPath":"Assets/Animator/Girl/queding-queding.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/queding-queding.lani"
+											},
+											{
+												"name":"qupai",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/qupai-qupai.lani"
 											},
 											{
 												"name":"tiwen",
-												"clipPath":"Assets/Animator/Girl/tiwen-tiwen.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/tiwen-tiwen.lani"
 											},
 											{
 												"name":"zhuhe",
-												"clipPath":"Assets/Animator/Girl/zhuhe-zhuhe.lani"
+												"clipPath":"Assets/Animator/Girl/AnimationClip/zhuhe-zhuhe.lani"
+											},
+											{
+												"name":"zhuhetingliu",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/zhuhetingliu-zhuhetingliu.lani"
 											}
 										]
 									}
@@ -3632,7 +3668,7 @@
 						"child":[
 							{
 								"type":"Sprite3D",
-								"instanceID":67,
+								"instanceID":68,
 								"props":{
 									"name":"Bip001",
 									"active":true,
@@ -3659,7 +3695,7 @@
 								"child":[
 									{
 										"type":"Sprite3D",
-										"instanceID":68,
+										"instanceID":69,
 										"props":{
 											"name":"Bip001 Pelvis",
 											"active":true,
@@ -3686,7 +3722,7 @@
 										"child":[
 											{
 												"type":"Sprite3D",
-												"instanceID":69,
+												"instanceID":70,
 												"props":{
 													"name":"Bip001 L Thigh",
 													"active":true,
@@ -3713,7 +3749,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":70,
+														"instanceID":71,
 														"props":{
 															"name":"Bip001 L Calf",
 															"active":true,
@@ -3740,7 +3776,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":71,
+																"instanceID":72,
 																"props":{
 																	"name":"Bip001 L Foot",
 																	"active":true,
@@ -3767,7 +3803,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":72,
+																		"instanceID":73,
 																		"props":{
 																			"name":"Bip001 L Toe0",
 																			"active":true,
@@ -3801,7 +3837,7 @@
 											},
 											{
 												"type":"Sprite3D",
-												"instanceID":73,
+												"instanceID":74,
 												"props":{
 													"name":"Bip001 R Thigh",
 													"active":true,
@@ -3828,7 +3864,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":74,
+														"instanceID":75,
 														"props":{
 															"name":"Bip001 R Calf",
 															"active":true,
@@ -3855,7 +3891,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":75,
+																"instanceID":76,
 																"props":{
 																	"name":"Bip001 R Foot",
 																	"active":true,
@@ -3882,7 +3918,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":76,
+																		"instanceID":77,
 																		"props":{
 																			"name":"Bip001 R Toe0",
 																			"active":true,
@@ -3916,7 +3952,7 @@
 											},
 											{
 												"type":"Sprite3D",
-												"instanceID":77,
+												"instanceID":78,
 												"props":{
 													"name":"Bip001 Spine",
 													"active":true,
@@ -3943,7 +3979,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":78,
+														"instanceID":79,
 														"props":{
 															"name":"Bip001 Spine1",
 															"active":true,
@@ -3970,7 +4006,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":79,
+																"instanceID":80,
 																"props":{
 																	"name":"Bip001 L Clavicle",
 																	"active":true,
@@ -3997,7 +4033,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":80,
+																		"instanceID":81,
 																		"props":{
 																			"name":"Bip001 L UpperArm",
 																			"active":true,
@@ -4024,7 +4060,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":81,
+																				"instanceID":82,
 																				"props":{
 																					"name":"Bip001 L Forearm",
 																					"active":true,
@@ -4051,7 +4087,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":82,
+																						"instanceID":83,
 																						"props":{
 																							"name":"Bip001 L Hand",
 																							"active":true,
@@ -4078,7 +4114,7 @@
 																						"child":[
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":83,
+																								"instanceID":84,
 																								"props":{
 																									"name":"Bip001 L Finger0",
 																									"active":true,
@@ -4105,7 +4141,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":84,
+																										"instanceID":85,
 																										"props":{
 																											"name":"Bip001 L Finger01",
 																											"active":true,
@@ -4135,7 +4171,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":85,
+																								"instanceID":86,
 																								"props":{
 																									"name":"Bip001 L Finger1",
 																									"active":true,
@@ -4161,8 +4197,66 @@
 																								"components":[],
 																								"child":[
 																									{
+																										"type":"MeshSprite3D",
+																										"instanceID":87,
+																										"props":{
+																											"name":"CardMarked",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.00119,
+																												0.00043,
+																												-0.00027
+																											],
+																											"rotation":[
+																												-0.6428029,
+																												0.1137381,
+																												-0.1019309,
+																												-0.7506518
+																											],
+																											"scale":[
+																												0.002307693,
+																												0.002692312,
+																												0.0001538464
+																											],
+																											"meshPath":"Library/unity default resources-Cube.lm",
+																											"enableRender":true,
+																											"materials":[
+																												{
+																													"path":"Assets/Material/Card/atmzw.lmat"
+																												}
+																											]
+																										},
+																										"components":[
+																											{
+																												"type":"PhysicsCollider",
+																												"restitution":0,
+																												"friction":0.5,
+																												"rollingFriction":0,
+																												"shapes":[
+																													{
+																														"type":"BoxColliderShape",
+																														"center":[
+																															0,
+																															0,
+																															0
+																														],
+																														"size":[
+																															1,
+																															1,
+																															1
+																														]
+																													}
+																												],
+																												"isTrigger":false
+																											}
+																										],
+																										"child":[]
+																									},
+																									{
 																										"type":"Sprite3D",
-																										"instanceID":86,
+																										"instanceID":88,
 																										"props":{
 																											"name":"Bip001 L Finger11",
 																											"active":true,
@@ -4192,7 +4286,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":87,
+																								"instanceID":89,
 																								"props":{
 																									"name":"Bip001 L Finger2",
 																									"active":true,
@@ -4219,7 +4313,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":88,
+																										"instanceID":90,
 																										"props":{
 																											"name":"Bip001 L Finger21",
 																											"active":true,
@@ -4249,7 +4343,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":89,
+																								"instanceID":91,
 																								"props":{
 																									"name":"Bip001 L Finger3",
 																									"active":true,
@@ -4276,7 +4370,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":90,
+																										"instanceID":92,
 																										"props":{
 																											"name":"Bip001 L Finger31",
 																											"active":true,
@@ -4305,64 +4399,6 @@
 																								]
 																							}
 																						]
-																					},
-																					{
-																						"type":"MeshSprite3D",
-																						"instanceID":91,
-																						"props":{
-																							"name":"atmzw",
-																							"active":true,
-																							"isStatic":false,
-																							"layer":0,
-																							"position":[
-																								0.005559496,
-																								-0.001615238,
-																								-0.0002204613
-																							],
-																							"rotation":[
-																								0.5475523,
-																								-0.5369846,
-																								-0.0002494976,
-																								-0.6417428
-																							],
-																							"scale":[
-																								0.002307693,
-																								0.002692308,
-																								0.0001538462
-																							],
-																							"meshPath":"Library/unity default resources-Cube.lm",
-																							"enableRender":true,
-																							"materials":[
-																								{
-																									"path":"Assets/Material/Card/atmzw.lmat"
-																								}
-																							]
-																						},
-																						"components":[
-																							{
-																								"type":"PhysicsCollider",
-																								"restitution":0,
-																								"friction":0.5,
-																								"rollingFriction":0,
-																								"shapes":[
-																									{
-																										"type":"BoxColliderShape",
-																										"center":[
-																											0,
-																											0,
-																											0
-																										],
-																										"size":[
-																											1,
-																											1,
-																											1
-																										]
-																									}
-																								],
-																								"isTrigger":false
-																							}
-																						],
-																						"child":[]
 																					}
 																				]
 																			}
@@ -4372,7 +4408,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":92,
+																"instanceID":93,
 																"props":{
 																	"name":"Bip001 Neck",
 																	"active":true,
@@ -4399,7 +4435,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":93,
+																		"instanceID":94,
 																		"props":{
 																			"name":"Bip001 Head",
 																			"active":true,
@@ -4426,7 +4462,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":94,
+																				"instanceID":95,
 																				"props":{
 																					"name":"Bone003",
 																					"active":true,
@@ -4453,7 +4489,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":95,
+																						"instanceID":96,
 																						"props":{
 																							"name":"Bone004",
 																							"active":true,
@@ -4487,7 +4523,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":96,
+																"instanceID":97,
 																"props":{
 																	"name":"Bip001 R Clavicle",
 																	"active":true,
@@ -4514,7 +4550,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":97,
+																		"instanceID":98,
 																		"props":{
 																			"name":"Bip001 R UpperArm",
 																			"active":true,
@@ -4541,7 +4577,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":98,
+																				"instanceID":99,
 																				"props":{
 																					"name":"Bip001 R Forearm",
 																					"active":true,
@@ -4568,7 +4604,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":99,
+																						"instanceID":100,
 																						"props":{
 																							"name":"Bip001 R Hand",
 																							"active":true,
@@ -4595,7 +4631,7 @@
 																						"child":[
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":100,
+																								"instanceID":101,
 																								"props":{
 																									"name":"Bip001 R Finger0",
 																									"active":true,
@@ -4622,7 +4658,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":101,
+																										"instanceID":102,
 																										"props":{
 																											"name":"Bip001 R Finger01",
 																											"active":true,
@@ -4652,7 +4688,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":102,
+																								"instanceID":103,
 																								"props":{
 																									"name":"Bip001 R Finger1",
 																									"active":true,
@@ -4679,7 +4715,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":103,
+																										"instanceID":104,
 																										"props":{
 																											"name":"Bip001 R Finger11",
 																											"active":true,
@@ -4709,7 +4745,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":104,
+																								"instanceID":105,
 																								"props":{
 																									"name":"Bip001 R Finger2",
 																									"active":true,
@@ -4736,7 +4772,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":105,
+																										"instanceID":106,
 																										"props":{
 																											"name":"Bip001 R Finger21",
 																											"active":true,
@@ -4766,7 +4802,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":106,
+																								"instanceID":107,
 																								"props":{
 																									"name":"Bip001 R Finger3",
 																									"active":true,
@@ -4793,7 +4829,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":107,
+																										"instanceID":108,
 																										"props":{
 																											"name":"Bip001 R Finger31",
 																											"active":true,
@@ -4831,7 +4867,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":108,
+																"instanceID":109,
 																"props":{
 																	"name":"Bone001",
 																	"active":true,
@@ -4861,7 +4897,7 @@
 													},
 													{
 														"type":"Sprite3D",
-														"instanceID":109,
+														"instanceID":110,
 														"props":{
 															"name":"Bone002",
 															"active":true,
@@ -4893,7 +4929,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":110,
+										"instanceID":111,
 										"props":{
 											"name":"上衣",
 											"active":true,
@@ -4920,7 +4956,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":111,
+												"instanceID":112,
 												"props":{
 													"name":"D TShirt",
 													"active":true,
@@ -4942,7 +4978,7 @@
 														1,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															0.0004550954,
@@ -4964,17 +5000,17 @@
 														"radius":0.005545914
 													},
 													"bones":[
-														78,
-														77,
-														68,
-														97,
-														96,
 														79,
-														80
+														78,
+														69,
+														98,
+														97,
+														80,
+														81
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/shang yi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-D TShirt.lm"
@@ -4984,7 +5020,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":112,
+												"instanceID":113,
 												"props":{
 													"name":"POLO",
 													"active":true,
@@ -5006,7 +5042,7 @@
 														1,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															0.0004550954,
@@ -5028,17 +5064,17 @@
 														"radius":0.005539732
 													},
 													"bones":[
+														79,
 														78,
-														77,
-														68,
+														69,
+														98,
 														97,
-														96,
-														80,
-														79
+														81,
+														80
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/shang yi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-POLO.lm"
@@ -5048,7 +5084,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":113,
+												"instanceID":114,
 												"props":{
 													"name":"XZ",
 													"active":true,
@@ -5070,7 +5106,7 @@
 														1,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															-0.0003139914,
@@ -5092,26 +5128,27 @@
 														"radius":0.007900102
 													},
 													"bones":[
-														78,
-														77,
-														68,
-														73,
-														97,
-														96,
-														99,
-														98,
-														92,
 														79,
+														78,
 														69,
+														74,
+														98,
+														97,
+														100,
+														99,
+														93,
 														80,
-														82,
-														81
+														70,
+														81,
+														83,
+														82
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/wai tao.lmat"
 														},
 														{
+															"type":"Laya.BlinnPhongMaterial",
 															"path":"Assets/Animator/Girl/girl_Skin.lmat"
 														}
 													],
@@ -5124,7 +5161,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":114,
+										"instanceID":115,
 										"props":{
 											"name":"下装",
 											"active":true,
@@ -5151,7 +5188,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":115,
+												"instanceID":116,
 												"props":{
 													"name":"DK",
 													"active":true,
@@ -5173,7 +5210,7 @@
 														1,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															-0.003217205,
@@ -5195,14 +5232,14 @@
 														"radius":0.003544485
 													},
 													"bones":[
-														73,
-														68,
+														74,
 														69,
-														77
+														70,
+														78
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/kuzi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-DK.lm"
@@ -5212,7 +5249,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":116,
+												"instanceID":117,
 												"props":{
 													"name":"DQ",
 													"active":true,
@@ -5234,7 +5271,7 @@
 														1,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															-0.004311926,
@@ -5256,14 +5293,14 @@
 														"radius":0.004805514
 													},
 													"bones":[
-														73,
-														68,
+														74,
 														69,
-														77
+														70,
+														78
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/wai tao.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-DQ.lm"
@@ -5275,7 +5312,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":117,
+										"instanceID":118,
 										"props":{
 											"name":"发型",
 											"active":true,
@@ -5302,7 +5339,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":118,
+												"instanceID":119,
 												"props":{
 													"name":"CF",
 													"active":true,
@@ -5324,7 +5361,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															-0.00289009,
@@ -5346,13 +5383,13 @@
 														"radius":0.007292289
 													},
 													"bones":[
-														93,
 														94,
-														95
+														95,
+														96
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-CF.lm"
@@ -5362,7 +5399,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":119,
+												"instanceID":120,
 												"props":{
 													"name":"CF001",
 													"active":true,
@@ -5384,7 +5421,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															-0.002703608,
@@ -5406,13 +5443,13 @@
 														"radius":0.007394528
 													},
 													"bones":[
-														93,
 														94,
-														95
+														95,
+														96
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-CF001.lm"
@@ -5422,7 +5459,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":120,
+												"instanceID":121,
 												"props":{
 													"name":"SMW",
 													"active":true,
@@ -5444,7 +5481,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															0.0005111229,
@@ -5466,11 +5503,11 @@
 														"radius":0.006570822
 													},
 													"bones":[
-														93
+														94
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-SMW.lm"
@@ -5480,7 +5517,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":121,
+												"instanceID":122,
 												"props":{
 													"name":"WZT",
 													"active":true,
@@ -5502,7 +5539,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															0.0005785581,
@@ -5524,11 +5561,11 @@
 														"radius":0.005950129
 													},
 													"bones":[
-														93
+														94
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-WZT.lm"
@@ -5538,7 +5575,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":122,
+												"instanceID":123,
 												"props":{
 													"name":"XJJ",
 													"active":true,
@@ -5560,7 +5597,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															-0.001813464,
@@ -5582,13 +5619,13 @@
 														"radius":0.00749743
 													},
 													"bones":[
-														93,
 														94,
-														95
+														95,
+														96
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-XJJ.lm"
@@ -5600,7 +5637,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":123,
+										"instanceID":124,
 										"props":{
 											"name":"裙子",
 											"active":true,
@@ -5627,7 +5664,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":124,
+												"instanceID":125,
 												"props":{
 													"name":"LYQ",
 													"active":true,
@@ -5649,7 +5686,7 @@
 														0.9999999,
 														1
 													],
-													"rootBone":68,
+													"rootBone":69,
 													"boundBox":{
 														"min":[
 															-0.004649735,
@@ -5671,19 +5708,19 @@
 														"radius":0.007325183
 													},
 													"bones":[
+														79,
 														78,
-														77,
-														68,
-														73,
 														69,
+														74,
+														70,
+														98,
 														97,
-														96,
-														80,
-														79
+														81,
+														80
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/qun zi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-LYQ.lm"
@@ -5695,7 +5732,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":125,
+										"instanceID":126,
 										"props":{
 											"name":"配饰",
 											"active":true,
@@ -5722,7 +5759,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":126,
+												"instanceID":127,
 												"props":{
 													"name":"EH",
 													"active":true,
@@ -5744,7 +5781,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															0.001387475,
@@ -5766,11 +5803,11 @@
 														"radius":0.00420201
 													},
 													"bones":[
-														93
+														94
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-EH.lm"
@@ -5780,7 +5817,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":127,
+												"instanceID":128,
 												"props":{
 													"name":"HDJ",
 													"active":true,
@@ -5802,7 +5839,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															0.005008993,
@@ -5824,11 +5861,11 @@
 														"radius":0.004583345
 													},
 													"bones":[
-														93
+														94
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-HDJ.lm"
@@ -5838,7 +5875,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":128,
+												"instanceID":129,
 												"props":{
 													"name":"LD",
 													"active":true,
@@ -5860,7 +5897,7 @@
 														1,
 														1
 													],
-													"rootBone":77,
+													"rootBone":78,
 													"boundBox":{
 														"min":[
 															3.662053E-05,
@@ -5882,14 +5919,14 @@
 														"radius":0.002872078
 													},
 													"bones":[
-														77,
 														78,
 														79,
-														96
+														80,
+														97
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-LD.lm"
@@ -5899,7 +5936,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":129,
+												"instanceID":130,
 												"props":{
 													"name":"LJ",
 													"active":true,
@@ -5921,7 +5958,7 @@
 														1,
 														1
 													],
-													"rootBone":78,
+													"rootBone":79,
 													"boundBox":{
 														"min":[
 															0.002301089,
@@ -5943,13 +5980,13 @@
 														"radius":0.0007696921
 													},
 													"bones":[
-														78,
 														79,
-														96
+														80,
+														97
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-LJ.lm"
@@ -5959,7 +5996,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":130,
+												"instanceID":131,
 												"props":{
 													"name":"XL",
 													"active":true,
@@ -5981,7 +6018,7 @@
 														1,
 														1
 													],
-													"rootBone":78,
+													"rootBone":79,
 													"boundBox":{
 														"min":[
 															0.001985574,
@@ -6003,13 +6040,13 @@
 														"radius":0.00159795
 													},
 													"bones":[
-														78,
 														79,
-														96
+														80,
+														97
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-XL.lm"
@@ -6019,7 +6056,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":131,
+												"instanceID":132,
 												"props":{
 													"name":"YJ",
 													"active":true,
@@ -6041,7 +6078,7 @@
 														1,
 														1
 													],
-													"rootBone":93,
+													"rootBone":94,
 													"boundBox":{
 														"min":[
 															0.001797533,
@@ -6063,11 +6100,11 @@
 														"radius":0.004488255
 													},
 													"bones":[
-														93
+														94
 													],
 													"materials":[
 														{
-															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
 														}
 													],
 													"meshPath":"Assets/Animator/Girl/girl_Skin-YJ.lm"
@@ -6081,7 +6118,7 @@
 							},
 							{
 								"type":"SkinnedMeshSprite3D",
-								"instanceID":132,
+								"instanceID":133,
 								"props":{
 									"name":"girl_body",
 									"active":true,
@@ -6103,7 +6140,7 @@
 										1,
 										1
 									],
-									"rootBone":78,
+									"rootBone":79,
 									"boundBox":{
 										"min":[
 											-0.01426059,
@@ -6125,45 +6162,45 @@
 										"radius":0.01400468
 									},
 									"bones":[
-										89,
-										90,
-										82,
-										87,
-										81,
-										88,
-										93,
+										91,
 										92,
-										78,
-										96,
-										97,
-										79,
-										80,
 										83,
+										89,
+										82,
+										90,
+										94,
+										93,
+										79,
+										97,
+										98,
+										80,
+										81,
 										84,
 										85,
 										86,
-										106,
+										88,
 										107,
-										99,
-										104,
-										98,
-										105,
+										108,
 										100,
+										105,
+										99,
+										106,
 										101,
 										102,
 										103,
-										69,
+										104,
 										70,
 										71,
 										72,
 										73,
 										74,
 										75,
-										76
+										76,
+										77
 									],
 									"materials":[
 										{
-											"path":"Assets/Animator/Girl/girl_Skin.lmat"
+											"path":"Assets/Animator/Girl/Material/ren.lmat"
 										}
 									],
 									"meshPath":"Assets/Animator/Girl/girl_Skin-girl_body.lm"
@@ -6174,6 +6211,124 @@
 						]
 					}
 				]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":134,
+				"props":{
+					"name":"PerspectiveFar",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.03,
+						0.4,
+						-8.353
+					],
+					"rotation":[
+						-0.4166192,
+						0,
+						0,
+						-0.9090811
+					],
+					"scale":[
+						0.1,
+						0.1,
+						0.1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":135,
+				"props":{
+					"name":"PerspectiveAlmost",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.03,
+						0.48,
+						-8.87
+					],
+					"rotation":[
+						-0.2575919,
+						0,
+						0,
+						-0.9662538
+					],
+					"scale":[
+						0.1,
+						0.1,
+						0.1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
 			}
 		]
 	}

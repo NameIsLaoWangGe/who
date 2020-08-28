@@ -7,6 +7,7 @@ import P202 from "./TJ/Promo/script/P202"
 import P204 from "./TJ/Promo/script/P204"
 import P205 from "./TJ/Promo/script/P205"
 import P106 from "./TJ/Promo/script/P106"
+import PreGuessCard from "./script/Game/PreGuessCard"
 import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
 import UIDefeated from "./script/Game/UIDefeated"
@@ -16,7 +17,6 @@ import UIVictory from "./script/Game/UIVictory"
 import UIVictoryBox_Cell from "./script/Game/UIVictoryBox_Cell"
 import UIVictoryBox from "./script/Game/UIVictoryBox"
 import GameUI from "./script/GameUI"
-import PreGuessCard from "./script/Game/PreGuessCard"
 /*
 * 游戏初始化配置;
 */
@@ -44,6 +44,7 @@ export default class GameConfig{
         reg("TJ/Promo/script/P204.ts",P204);
         reg("TJ/Promo/script/P205.ts",P205);
         reg("TJ/Promo/script/P106.ts",P106);
+        reg("script/Game/PreGuessCard.ts",PreGuessCard);
         reg("script/Game/GameScene.ts",GameScene);
         reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UIDefeated.ts",UIDefeated);
@@ -53,7 +54,6 @@ export default class GameConfig{
         reg("script/Game/UIVictoryBox_Cell.ts",UIVictoryBox_Cell);
         reg("script/Game/UIVictoryBox.ts",UIVictoryBox);
         reg("script/GameUI.ts",GameUI);
-        reg("script/Game/PreGuessCard.ts",PreGuessCard);
     }
 }
 GameConfig.init();

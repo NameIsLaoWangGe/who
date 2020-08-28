@@ -1,6 +1,5 @@
-import RecordManager from "../TJ/RecordManager";
 import { Admin, Setting, PalyAudio, Click, EventAdmin, Defeated, Gold } from "../Frame/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
+import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UIDefeated extends Defeated.DefeatedScene {
 

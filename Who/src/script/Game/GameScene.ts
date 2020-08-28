@@ -100,6 +100,11 @@ export default class GameScene extends Admin.Scene {
         return Option;
     }
 
+    lwgBtnClick(): void {
+        // Click.on(Click.Type.largen, this.self['BtnYse'], this, null, null, () => { });
+        // Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => { });
+    }
+
     /**创建对方提问*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
@@ -137,7 +142,8 @@ export default class GameScene extends Admin.Scene {
     }
 
     onStageMouseDown(e: Laya.Event): void {
-        let hitResult: Laya.HitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
+        let MainCamera = Game3D.MainCamera.getChildAt(0) as Laya.Camera;
+        let hitResult: Laya.HitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
         let sprite3D;
         if (hitResult) {
             sprite3D = hitResult.collider.owner;
@@ -145,8 +151,6 @@ export default class GameScene extends Admin.Scene {
         }
     }
 
-    lwgBtnClick(): void {
 
-    }
 }
 

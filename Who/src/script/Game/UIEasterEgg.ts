@@ -1,5 +1,5 @@
-import ADManager, { TaT } from "../TJ/Admanager";
 import { EasterEgg, Setting, Gold, Click, Admin, EventAdmin } from "../Frame/lwg";
+import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UIEasterEgg extends EasterEgg.EasterEggScene {
 

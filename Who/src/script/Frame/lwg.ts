@@ -1,4 +1,5 @@
-import ADManager, { TaT } from "../TJ/Admanager";
+import ADManager, { TaT } from "../../TJ/Admanager";
+
 /**综合模板*/
 export module lwg {
     /**暂停模块，控制游戏的暂停和开启*/
@@ -2158,7 +2159,6 @@ export module lwg {
             tweenMap[target.id].push(tween)
         }
 
-
         /**
         * 缩放物体
         * @param target 目标物体
@@ -2247,6 +2247,25 @@ export module lwg {
                     });
                 });
             }, delayed);
+        }
+
+       /**
+          * 旋转并移动物体到另一个物体的角度和位置
+          * @param Sp3d 要移动的物体
+          * @param Target 目标物体
+          * @param duration 间隔
+          * @param caller 回调执行领域
+          * @param ease 缓动函数
+          * @param complete 播放完成回调 
+          * @param delay 延迟
+          * @param coverBefore 是否覆盖上一个缓动
+          * @param update 更新函数
+          * @param frame 帧数间隔
+          */
+        export function moveRotateTo(Sp3d: Laya.MeshSprite3D, Target: Laya.MeshSprite3D, duration: number, caller: any
+            , ease?: Function, complete?: Function, delay?: number, coverBefore?: boolean, update?: Function, frame?: number): void {
+            moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame)
+            rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, null, delay, coverBefore, null, frame);
         }
     }
 
@@ -3379,6 +3398,40 @@ export module lwg {
             }
         }
 
+        /**3D递归向下查找子节点*/
+        export function node_3dFindChild(parent: any, name: string): Laya.MeshSprite3D {
+            var item: Laya.MeshSprite3D = null;
+            //寻找自身一级目录下的子物体有没有该名字的子物体
+            item = parent.getChildByName(name) as Laya.MeshSprite3D;
+            //如果有，返回他
+            if (item != null) return item;
+            var go: Laya.MeshSprite3D = null;
+            //如果没有，就吧该父物体所有一级子物体下所有的二级子物体找一遍(以此类推)
+            for (var i = 0; i < parent.numChildren; i++) {
+                go = node_3dFindChild(parent.getChildAt(i) as Laya.MeshSprite3D, name);
+                if (go != null)
+                    return go;
+            }
+            return null;
+        }
+
+        /**2D递归向下查找子节点*/
+        export function node_2dFindChild(parent: any, name: string): Laya.Sprite {
+            var item: Laya.Sprite = null;
+            //寻找自身一级目录下的子物体有没有该名字的子物体
+            item = parent.getChildByName(name) as Laya.Sprite;
+            //如果有，返回他
+            if (item != null) return item;
+            var go: Laya.Sprite = null;
+            //如果没有，就吧该父物体所有一级子物体下所有的二级子物体找一遍(以此类推)
+            for (var i = 0; i < parent.numChildren; i++) {
+                go = node_2dFindChild(parent.getChildAt(i) as Laya.Sprite, name);
+                if (go != null)
+                    return go;
+            }
+            return null;
+        }
+
         /**
          * 返回0或者1，用随机二分之一概率,返回后0是false，true是1，所以Boolen和number都可以判断
          * */
@@ -3442,6 +3495,7 @@ export module lwg {
                 return arr;
             }
         }
+
         /**
           * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
           * @param r 
@@ -3502,7 +3556,6 @@ export module lwg {
             return p;
         };
 
-
         /**
          * 返回两个三维物体的世界空间的距离
          * @param obj1 物体1
@@ -3528,7 +3581,6 @@ export module lwg {
             let lenp = Laya.Vector3.scalarLength(p);
             return lenp;
         }
-
 
         /**
           * 返回相同坐标系中两个三维向量的相减向量（obj1-obj2）
@@ -3624,6 +3676,26 @@ export module lwg {
         }
 
         /**
+          * 播放动画。
+          * @param Sp3D 节点名称
+          * @param name 如果为null则播放默认动画，否则按名字播放动画片段。
+          * @param normalizedTime 归一化的播放起始时间。
+          * @param layerIndex 层索引。
+          */
+        export function d3_animatorPlay(Sp3D: Laya.Sprite3D, aniName?: string, normalizedTime?: number, layerIndex?: number): Laya.Animator {
+            let sp3DAni = Sp3D.getComponent(Laya.Animator) as Laya.Animator;
+            if (!sp3DAni) {
+                console.log(Sp3D.name, '没有动画组件');
+                return;
+            }
+            if (!layerIndex) {
+                layerIndex = 0;
+            }
+            sp3DAni.play(aniName, layerIndex, normalizedTime);
+            return sp3DAni;
+        }
+
+        /**
          * 返回一个向量相对于一个点的反向向量，或者反向向量的单位向量，可用于一个物体被另一个物体击退
          * @param type 二维还是三维
          * @param Vecoter1 固定点
@@ -3649,6 +3721,11 @@ export module lwg {
                     return p;
                 }
             }
+        }
+
+        export function sk_indexControl(sk: Laya.Skeleton, name: string): void {
+            sk.play(name, true);//从初始位置开始继续播放
+            sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
         }
 
         /**

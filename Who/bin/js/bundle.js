@@ -1966,6 +1966,45 @@
                 GameState["Victory"] = "victory";
                 GameState["Defeated"] = "defeated";
             })(GameState = Admin.GameState || (Admin.GameState = {}));
+            function gameState(calssName) {
+                switch (calssName) {
+                    case SceneName.UIStart:
+                        Admin._gameState = GameState.Start;
+                        break;
+                    case SceneName.GameScene:
+                        Admin._gameState = GameState.Play;
+                        break;
+                    case SceneName.UIDefeated:
+                        Admin._gameState = GameState.Defeated;
+                        break;
+                    case SceneName.UIVictory:
+                        Admin._gameState = GameState.Victory;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Admin.gameState = gameState;
+            function commonOpenAni(scene) {
+                let time = 0;
+                let delay = 0;
+                switch (Admin._commonOpenAni) {
+                    case OpenAniType.fadeOut:
+                        time = 400;
+                        delay = 300;
+                        if (scene['Background']) {
+                            Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
+                        }
+                        Animation2D.fadeOut(scene, 0, 1, time);
+                        break;
+                    case OpenAniType.leftMove:
+                        break;
+                    default:
+                        break;
+                }
+                return time;
+            }
+            Admin.commonOpenAni = commonOpenAni;
             class Scene extends Laya.Script {
                 constructor() {
                     super();
@@ -1976,7 +2015,7 @@
                     this.self = this.owner;
                     this.calssName = this['__proto__']['constructor'].name;
                     this.self[this.calssName] = this;
-                    this.gameState(this.calssName);
+                    gameState(this.calssName);
                     this.lwgNodeDec();
                     this.moduleOnAwake();
                     this.lwgOnAwake();
@@ -2000,48 +2039,11 @@
                 ;
                 moduleEventReg() { }
                 ;
-                gameState(calssName) {
-                    switch (calssName) {
-                        case SceneName.UIStart:
-                            Admin._gameState = GameState.Start;
-                            break;
-                        case SceneName.GameScene:
-                            Admin._gameState = GameState.Play;
-                            break;
-                        case SceneName.UIDefeated:
-                            Admin._gameState = GameState.Defeated;
-                            break;
-                        case SceneName.UIVictory:
-                            Admin._gameState = GameState.Victory;
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 lwgOnEnable() { }
-                commonOpenAni() {
-                    let time = 0;
-                    let delay = 0;
-                    switch (Admin._commonOpenAni) {
-                        case OpenAniType.fadeOut:
-                            time = 400;
-                            delay = 300;
-                            if (this.self['Background']) {
-                                Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
-                            }
-                            Animation2D.fadeOut(this.self, 0, 1, time);
-                            break;
-                        case OpenAniType.leftMove:
-                            break;
-                        default:
-                            break;
-                    }
-                    return time;
-                }
                 btnAndlwgOpenAni() {
                     let time = this.lwgOpenAni();
                     if (time == null) {
-                        time = this.commonOpenAni();
+                        time = commonOpenAni(this.self);
                         if (time == null) {
                             time = 0;
                         }
@@ -2719,6 +2721,11 @@
                 }, delayed);
             }
             Animation3D.rock = rock;
+            function moveRotateTo(Sp3d, Target, duration, caller, ease, complete, delay, coverBefore, update, frame) {
+                moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame);
+                rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, null, delay, coverBefore, null, frame);
+            }
+            Animation3D.moveRotateTo = moveRotateTo;
         })(Animation3D = lwg.Animation3D || (lwg.Animation3D = {}));
         let Animation2D;
         (function (Animation2D) {
@@ -3404,6 +3411,34 @@
                 }
             }
             Tools.node_RemoveAllChildren = node_RemoveAllChildren;
+            function node_3dFindChild(parent, name) {
+                var item = null;
+                item = parent.getChildByName(name);
+                if (item != null)
+                    return item;
+                var go = null;
+                for (var i = 0; i < parent.numChildren; i++) {
+                    go = node_3dFindChild(parent.getChildAt(i), name);
+                    if (go != null)
+                        return go;
+                }
+                return null;
+            }
+            Tools.node_3dFindChild = node_3dFindChild;
+            function node_2dFindChild(parent, name) {
+                var item = null;
+                item = parent.getChildByName(name);
+                if (item != null)
+                    return item;
+                var go = null;
+                for (var i = 0; i < parent.numChildren; i++) {
+                    go = node_2dFindChild(parent.getChildAt(i), name);
+                    if (go != null)
+                        return go;
+                }
+                return null;
+            }
+            Tools.node_2dFindChild = node_2dFindChild;
             function randomOneHalf() {
                 let number;
                 number = Math.floor(Math.random() * 2);
@@ -3564,6 +3599,19 @@
                 return point;
             }
             Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
+            function d3_animatorPlay(Sp3D, aniName, normalizedTime, layerIndex) {
+                let sp3DAni = Sp3D.getComponent(Laya.Animator);
+                if (!sp3DAni) {
+                    console.log(Sp3D.name, '没有动画组件');
+                    return;
+                }
+                if (!layerIndex) {
+                    layerIndex = 0;
+                }
+                sp3DAni.play(aniName, layerIndex, normalizedTime);
+                return sp3DAni;
+            }
+            Tools.d3_animatorPlay = d3_animatorPlay;
             function dAll_reverseVector(type, Vecoter1, Vecoter2, normalizing) {
                 let p;
                 if (type === '2d') {
@@ -3586,6 +3634,11 @@
                 }
             }
             Tools.dAll_reverseVector = dAll_reverseVector;
+            function sk_indexControl(sk, name) {
+                sk.play(name, true);
+                sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
+            }
+            Tools.sk_indexControl = sk_indexControl;
             function img_drawPieMask(parent, startAngle, endAngle) {
                 parent.cacheAs = "bitmap";
                 let drawPieSpt = new Laya.Sprite();
@@ -5123,6 +5176,15 @@
     let DefeatedScene = lwg.Defeated.DefeatedScene;
     let Tomato = lwg.Tomato;
 
+    class PreGuessCard extends Admin.Object {
+        lwgOnAwake() {
+        }
+        lwgOnEnable() {
+        }
+        lwgOnDisable() {
+        }
+    }
+
     var lwg3D;
     (function (lwg3D) {
         class Scene3D extends Laya.Script3D {
@@ -5250,9 +5312,6 @@
         (function (WhichBoutType) {
             WhichBoutType["me"] = "me";
             WhichBoutType["opposite"] = "opposite";
-            WhichBoutType["stop"] = "stop";
-            WhichBoutType["victory"] = "victory";
-            WhichBoutType["defeated"] = "defeted";
         })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
         let EventType;
         (function (EventType) {
@@ -5265,11 +5324,21 @@
             EventType["winOrLose"] = "winOrLose";
             EventType["opening"] = "opening";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
-        let CameraMoveType;
-        (function (CameraMoveType) {
-            CameraMoveType["nod"] = "nod";
-            CameraMoveType["shake"] = "shake";
-        })(CameraMoveType = Game3D.CameraMoveType || (Game3D.CameraMoveType = {}));
+        let RoleName;
+        (function (RoleName) {
+            RoleName["Girl"] = "Girl";
+        })(RoleName = Game3D.RoleName || (Game3D.RoleName = {}));
+        let RoleAniName;
+        (function (RoleAniName) {
+            RoleAniName["chaofeng"] = "chaofeng";
+            RoleAniName["daiji"] = "daiji";
+            RoleAniName["fouren"] = "fouren";
+            RoleAniName["qupai"] = "qupai";
+            RoleAniName["tiwen"] = "tiwen";
+            RoleAniName["zhuhe"] = "zhuhe";
+            RoleAniName["queding"] = "queding";
+            RoleAniName["zhuhetingliu"] = "zhuhetingliu";
+        })(RoleAniName = Game3D.RoleAniName || (Game3D.RoleAniName = {}));
         function randomlyTakeOut(type) {
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
@@ -5284,11 +5353,6 @@
             for (let index = 0; index < cardData16.length; index++) {
                 const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]);
                 if (type === WhichScard.MyCardParent) {
-                    if (Card.name === Game3D.oppositeHandName) {
-                        let HandCard = Card.clone();
-                        Game3D.OppositeHandDispaly.addChild(HandCard);
-                        HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
-                    }
                     Game3D.MyCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ -= 0.5;
@@ -5297,11 +5361,6 @@
                     Card.transform.localRotationEulerX = 10;
                 }
                 else if (type === WhichScard.OppositeCardParent) {
-                    if (Card.name === Game3D.myHandName) {
-                        let HandCard = Card.clone();
-                        Game3D.MyHandDispaly.addChild(HandCard);
-                        HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
-                    }
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
@@ -5502,25 +5561,32 @@
         class MainScene extends lwg3D.Scene3D {
             lwgOnAwake() {
                 Game3D.Scene3D = this.self;
-                Game3D.MainCamera = Game3D.Scene3D.getChildByName('Main Camera');
-                Game3D.MyCardParent = Game3D.Scene3D.getChildByName('MyCardParent');
-                Game3D.OppositeCardParent = Game3D.Scene3D.getChildByName('OppositeCardParent');
-                Game3D.OppositeHandDispaly = Game3D.Scene3D.getChildByName('OppositeHandDispaly');
-                Game3D.MyHandDispaly = Game3D.Scene3D.getChildByName('MyHandDispaly');
-                Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
-                Game3D.OppositeRole = Game3D.Scene3D.getChildByName('OppositeRole');
+                Game3D.MainCamera = this.self.getChildByName('MainCamera');
+                Game3D.OppositeRoleParent = this.self.getChildByName('OppositeRoleParent');
+                Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
+                Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
+                Game3D.OppositeHandDispaly = this.self.getChildByName('OppositeHandDispaly');
+                Game3D.MyHandDispaly = this.self.getChildByName('MyHandDispaly');
+                Game3D.AllCardTem = this.self.getChildByName('AllCard');
+                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveFar');
+                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost');
             }
             lwgEventReg() {
+                let time = 500;
                 EventAdmin.reg(EventType.opening, this, () => {
-                    Game3D.whichBout = WhichBoutType.me;
-                    EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
+                    this.roundChange();
+                    EventAdmin.notify(EventType.nextRound);
                 });
                 EventAdmin.reg(EventType.nextRound, this, () => {
                     if (Game3D.whichBout == WhichBoutType.me) {
-                        EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
+                        Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                            EventAdmin.notify(EventType.meAnswer, [answerForMe()]);
+                        });
                     }
                     else if (Game3D.whichBout == WhichBoutType.opposite) {
-                        EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), chNameForName(Game3D.myHandName)]);
+                        Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                            EventAdmin.notify(EventType.oppositeAnswer, [answerForOpposite(), chNameForName(Game3D.myHandName)]);
+                        });
                     }
                 });
                 EventAdmin.reg(EventType.judgeMeAnswer, this, (question) => {
@@ -5529,22 +5595,37 @@
                     }
                     this.roundChange();
                     let matching = judgeAnswer(question, Game3D.MyCardParent);
-                    if (matching) {
-                        console.log('特征正确！');
-                        Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(5, 0, 0), 500, this, () => {
-                            let cardArr = checkForQuestion(question, Game3D.MyCardParent);
-                            this.carFallAni(cardArr[1], Game3D.MyCardParent);
-                            EventAdmin.notify(EventType.nextRound);
-                        });
-                    }
-                    else {
-                        console.log('特征错误！');
-                        Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(0, 5, 0), 500, this, () => {
-                            let cardArr = checkForQuestion(question, Game3D.MyCardParent);
-                            this.carFallAni(cardArr[0], Game3D.MyCardParent);
-                            EventAdmin.notify(EventType.nextRound);
-                        });
-                    }
+                    let cardArr = checkForQuestion(question, Game3D.MyCardParent);
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                        if (matching) {
+                            console.log('我回答正确');
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.queding);
+                            Laya.timer.once(time * 4, this, () => {
+                                Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni(cardArr[1], Game3D.MyCardParent);
+                                    });
+                                    Laya.timer.once(time * 4, this, () => {
+                                        EventAdmin.notify(EventType.nextRound);
+                                    });
+                                });
+                            });
+                        }
+                        else {
+                            console.log('我回答错误');
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
+                            Laya.timer.once(time * 4, this, () => {
+                                Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni(cardArr[0], Game3D.MyCardParent);
+                                    });
+                                    Laya.timer.once(time * 4, this, () => {
+                                        EventAdmin.notify(EventType.nextRound);
+                                    });
+                                });
+                            });
+                        }
+                    });
                 });
                 EventAdmin.reg(EventType.judgeMeClickCard, this, (MeshSprite3D) => {
                     if (MeshSprite3D[CardProperty.fall]) {
@@ -5556,17 +5637,27 @@
                     this.roundChange();
                     if (MeshSprite3D.parent == Game3D.MyCardParent) {
                         if (MeshSprite3D.name == Game3D.oppositeHandName) {
-                            console.log('我方赢了！');
-                            Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(5, 0, 0), 500, this, () => {
-                                this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent, true);
-                                EventAdmin.notify(EventAdmin.EventType.victory);
+                            Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                                console.log('我方赢了！');
+                                let ani = Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.zhuhetingliu);
+                                Laya.timer.once(time * 4, this, () => {
+                                    EventAdmin.notify(EventAdmin.EventType.victory);
+                                });
                             });
                         }
                         else {
-                            console.log('选错了！');
-                            Animation3D.rock(Game3D.OppositeRole, new Laya.Vector3(0, 5, 0), 500, this, () => {
-                                this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent);
-                                EventAdmin.notify(EventType.nextRound);
+                            Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                                console.log('我选错了！');
+                                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
+                                Laya.timer.once(time * 4, this, () => {
+                                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                        Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
+                                        this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                });
                             });
                         }
                     }
@@ -5576,25 +5667,41 @@
                         return;
                     }
                     this.roundChange();
+                    let cardArr = checkForQuestion(question, Game3D.OppositeCardParent);
                     if (bool) {
-                        console.log('特征正确！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(5, 0, 0), 500, this, () => {
-                            let cardArr = checkForQuestion(question, Game3D.OppositeCardParent);
-                            this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
-                            if (noFallCardOpposite().length <= 1) {
-                                EventAdmin.notify(EventAdmin.EventType.defeated);
-                            }
-                            else {
-                                EventAdmin.notify(EventType.nextRound);
-                            }
+                        console.log('对方回答正确');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(5, 0, 0), time, this, () => {
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
+                            console.log('对方回答正确，倒下的牌将会是：', cardArr[0]);
+                            Laya.timer.once(time * 3, this, () => {
+                                this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
+                                Laya.timer.once(time * 2, this, () => {
+                                    if (noFallCardOpposite().length < 1) {
+                                        EventAdmin.notify(EventAdmin.EventType.defeated);
+                                    }
+                                    else {
+                                        EventAdmin.notify(EventType.nextRound);
+                                    }
+                                });
+                            });
                         });
                     }
                     else {
-                        console.log('特征错误！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 5, 0), 500, this, () => {
-                            let cardArr = checkForQuestion(question, Game3D.OppositeCardParent);
-                            this.carFallAni(cardArr[0], Game3D.OppositeCardParent);
-                            EventAdmin.notify(EventType.nextRound);
+                        console.log('对方回答错误');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 5, 0), time, this, () => {
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
+                            Laya.timer.once(time * 3, this, () => {
+                                console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
+                                if ((cardArr[0].length + cardArr[0].length) === 2) {
+                                    this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
+                                }
+                                else {
+                                    this.carFallAni(cardArr[0], Game3D.OppositeCardParent);
+                                }
+                                Laya.timer.once(time * 2, this, () => {
+                                    EventAdmin.notify(EventType.nextRound);
+                                });
+                            });
                         });
                     }
                 });
@@ -5607,7 +5714,13 @@
                     this.init();
                 });
             }
+            cameraMovement() {
+            }
             roundChange() {
+                if (!Game3D.whichBout) {
+                    Game3D.whichBout = WhichBoutType.me;
+                    return;
+                }
                 if (Game3D.whichBout === WhichBoutType.me) {
                     Game3D.whichBout = WhichBoutType.opposite;
                 }
@@ -5645,11 +5758,21 @@
                 this.init();
             }
             init() {
+                Game3D.whichBout = null;
                 Tools.node_RemoveAllChildren(Game3D.MyCardParent);
                 Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
                 Tools.node_RemoveAllChildren(Game3D.OppositeHandDispaly);
                 randomlyTakeOut(WhichScard.MyCardParent);
                 randomlyTakeOut(WhichScard.OppositeCardParent);
+                this.changeOpppsiteRole();
+                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
+            }
+            changeOpppsiteRole() {
+                Game3D.OppositeRole = Game3D.OppositeRoleParent.getChildByName('Girl');
+                let CardMarked = Tools.node_3dFindChild(Game3D.OppositeRole, 'CardMarked');
+                let Card = Game3D.MyCardParent.getChildByName(Game3D.oppositeHandName);
+                let mt = Card.meshRenderer.material;
+                CardMarked.meshRenderer.material = mt;
             }
         }
         Game3D.MainScene = MainScene;
@@ -5733,6 +5856,8 @@
             }
             return Option;
         }
+        lwgBtnClick() {
+        }
         createOppositeQuestion(questionAndYesOrNo, cardName) {
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
@@ -5764,14 +5889,13 @@
             });
         }
         onStageMouseDown(e) {
-            let hitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
+            let MainCamera = Game3D.MainCamera.getChildAt(0);
+            let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
             let sprite3D;
             if (hitResult) {
                 sprite3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
             }
-        }
-        lwgBtnClick() {
         }
     }
 
@@ -6132,6 +6256,212 @@
         }
     }
 
+    class UIVictoryBox_Cell extends Admin.Object {
+        constructor() { super(); }
+        lwgBtnClick() {
+            Click.on(Click.Type.noEffect, this.self, this, null, null, this.up, null);
+        }
+        btnoff() {
+            Click.off(Click.Type.noEffect, this.self, this, null, null, this.up, null);
+        }
+        up(e) {
+            if (this.self['_dataSource'][VictoryBox.BoxProperty.openState]) {
+                return;
+            }
+            else {
+                if (VictoryBox._defaultOpenNum > 0) {
+                    let Pic_Box = this.self.getChildByName('Pic_Box');
+                    if (!this.self['_dataSource'][VictoryBox.BoxProperty.ads]) {
+                        Pic_Box.skin = 'UI/VictoryBox/baoxian3.png';
+                    }
+                    this.btnoff();
+                    Animation2D.shookHead_Simple(Pic_Box, 10, 100, 0, f => {
+                        EventAdmin.notify(VictoryBox.EventType.openBox, [this.self['_dataSource']]);
+                        this.lwgBtnClick();
+                    });
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["观看广告可以获得三次开宝箱次数！"]);
+                }
+            }
+        }
+        lwgDisable() {
+        }
+    }
+
+    class UIVictoryBox extends VictoryBox.VictoryBoxScene {
+        constructor() { super(); }
+        victoryBoxOnAwake() {
+            ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
+            ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
+            Gold.goldAppear();
+            if (VictoryBox._openVictoryBoxNum > 1) {
+                let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
+                for (let index = 0; index < arr.length; index++) {
+                    const element = arr[index];
+                    VictoryBox.setProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
+                }
+            }
+            switch (Admin._platform) {
+                case Admin._platformTpye.WeChat:
+                    this.self['Bytedance'].visible = false;
+                    this.self['WeChat'].visible = true;
+                    this.self['BtnAgain_WeChat'].visible = false;
+                    this.self['BtnNo_WeChat'].visible = false;
+                    break;
+                case Admin._platformTpye.Bytedance:
+                    this.self['Bytedance'].visible = true;
+                    this.self['WeChat'].visible = false;
+                    this.self['BtnAgain_Bytedance'].visible = false;
+                    this.self['BtnNo_Bytedance'].visible = false;
+                    this.self['Select_Bytedance'].visible = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        victoryBoxEventReg() {
+            EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
+                console.log(dataSource, VictoryBox._defaultOpenNum);
+                if (VictoryBox._defaultOpenNum > 0) {
+                    if (dataSource[VictoryBox.BoxProperty.ads]) {
+                        ADManager.ShowReward(() => {
+                            ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
+                            this.getRewardFunc(dataSource);
+                        });
+                    }
+                    else {
+                        this.getRewardFunc(dataSource);
+                    }
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["观看广告可以获得三次开宝箱次数！"]);
+                }
+            });
+        }
+        getRewardFunc(dataSource) {
+            VictoryBox._alreadyOpenNum++;
+            let automan = false;
+            if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
+                EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
+                let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
+                let Automan = cell.getChildByName('Automan');
+                Automan.visible = true;
+                automan = true;
+            }
+            VictoryBox._defaultOpenNum--;
+            if (VictoryBox._defaultOpenNum == 0) {
+                this.self['BtnAgain_Bytedance'].visible = true;
+                this.self['BtnNo_Bytedance'].visible = true;
+                this.self['Select_Bytedance'].visible = true;
+            }
+            VictoryBox._selectBox = dataSource[VictoryBox.BoxProperty.name];
+            let diffX = dataSource.arrange % 3;
+            if (diffX == 0) {
+                diffX = 3;
+            }
+            let diffY = Math.floor(dataSource.arrange / 3 + 0.5);
+            let x = VictoryBox._BoxList.x + VictoryBox._BoxList.width / 3 * diffX - 45;
+            let y = VictoryBox._BoxList.y + VictoryBox._BoxList.height / 3 * diffY + 92;
+            Effects.createExplosion_Rotate(this.self, 25, x, y, 'star', 10, 15);
+            VictoryBox.setProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
+            if (!automan) {
+                Laya.timer.frameOnce(20, this, f => {
+                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                        Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                    });
+                });
+            }
+            EventAdmin.notify(Task.EventType.victoryBox);
+        }
+        boxList_Update(cell, index) {
+            let dataSource = cell.dataSource;
+            let Select = cell.getChildByName('Select');
+            if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
+                Select.visible = true;
+            }
+            else {
+                Select.visible = false;
+            }
+            let Num = cell.getChildByName('Num');
+            let Pic_Gold = cell.getChildByName('Pic_Gold');
+            let Pic_Box = cell.getChildByName('Pic_Box');
+            let BordPic = cell.getChildByName('BordPic');
+            if (!dataSource[VictoryBox.BoxProperty.openState]) {
+                if (dataSource[VictoryBox.BoxProperty.ads]) {
+                    Pic_Box.skin = 'UI/VictoryBox/baoxian_adv.png';
+                }
+                else {
+                    Pic_Box.skin = 'UI/VictoryBox/baoxian2.png';
+                }
+                Pic_Box.visible = true;
+                Pic_Gold.visible = false;
+                Num.visible = false;
+                BordPic.skin = 'UI/Common/kuang2.png';
+            }
+            else {
+                Pic_Box.visible = false;
+                Pic_Gold.visible = true;
+                Num.visible = true;
+                Num.text = dataSource[VictoryBox.BoxProperty.rewardNum];
+                BordPic.skin = 'UI/Common/kuang1.png';
+            }
+        }
+        victoryBoxBtnClick() {
+            Click.on('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.on('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+            Click.on('largen', this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
+            Click.on('largen', this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+            Click.on('largen', this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
+        }
+        btnOffClick() {
+            Click.off('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.off('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        }
+        btnSelect_BytedanceUp() {
+            if (this.self['Dot_Bytedance'].visible) {
+                this.self['Dot_Bytedance'].visible = false;
+                this.self['BtnNo_Bytedance'].visible = true;
+                this.self['BtnAgain_Bytedance'].visible = false;
+            }
+            else {
+                this.self['Dot_Bytedance'].visible = true;
+                this.self['BtnNo_Bytedance'].visible = false;
+                this.self['BtnAgain_Bytedance'].visible = true;
+            }
+        }
+        btnNoUp(event) {
+            Admin._openScene(Admin.SceneName.UIVictory, this.self);
+        }
+        btnAgainUp(event) {
+            ADManager.TAPoint(TaT.BtnClick, 'ADrewardbt_box');
+            ADManager.TAPoint(TaT.BtnClick, 'Adboxagain');
+            if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
+                ADManager.ShowReward(() => {
+                    Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
+                    VictoryBox._defaultOpenNum += 3;
+                    VictoryBox._adsMaxOpenNum -= 3;
+                    this.self['BtnAgain_Bytedance'].visible = false;
+                    this.self['BtnNo_Bytedance'].visible = false;
+                    this.self['Select_Bytedance'].visible = false;
+                });
+            }
+            else {
+                Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
+            }
+        }
+        victoryOnUpdate() {
+            if (VictoryBox._defaultOpenNum > 0) {
+                this.self['BtnAgain_WeChat'].visible = false;
+                this.self['BtnNo_WeChat'].visible = false;
+            }
+            else {
+                this.self['BtnAgain_WeChat'].visible = true;
+                this.self['BtnNo_WeChat'].visible = true;
+            }
+        }
+    }
+
     var REG = Laya.ClassUtils.regClass;
     var ui;
     (function (ui) {
@@ -6198,15 +6528,6 @@
         }
     }
 
-    class PreGuessCard extends Admin.Object {
-        lwgOnAwake() {
-        }
-        lwgOnEnable() {
-        }
-        lwgOnDisable() {
-        }
-    }
-
     class GameConfig {
         constructor() { }
         static init() {
@@ -6219,14 +6540,16 @@
             reg("TJ/Promo/script/P204.ts", P204);
             reg("TJ/Promo/script/P205.ts", P205);
             reg("TJ/Promo/script/P106.ts", P106);
+            reg("script/Game/PreGuessCard.ts", PreGuessCard);
             reg("script/Game/GameScene.ts", GameScene);
             reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UILoding.ts", UILoding);
             reg("script/Game/UIStart.ts", UIStart);
             reg("script/Game/UIVictory.ts", UIVictory);
+            reg("script/Game/UIVictoryBox_Cell.ts", UIVictoryBox_Cell);
+            reg("script/Game/UIVictoryBox.ts", UIVictoryBox);
             reg("script/GameUI.ts", GameUI);
-            reg("script/Game/PreGuessCard.ts", PreGuessCard);
         }
     }
     GameConfig.width = 720;

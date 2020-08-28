@@ -1,6 +1,6 @@
 import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click, Dialog } from "../Frame/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
-import RecordManager from "../TJ/RecordManager";
+import ADManager, { TaT } from "../../TJ/Admanager";
+import RecordManager from "../../TJ/RecordManager";
 
 export default class UIVictory extends VictoryScene {
 
