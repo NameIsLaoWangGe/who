@@ -47,9 +47,9 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         // Click.on(Click.Type.largen, this.self['BtnAgain_OPPO'], this, null, null, this.btnAgainUp);
         // Click.on(Click.Type.largen, this.self['BtnNext_OPPO'], this, null, null, this.btnNextUp);
 
-        // Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-        // Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
-        // Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
+        Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+        Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
+        Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
     }
 
     btnSelectUp(): void {
@@ -87,8 +87,8 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
 
         console.log('重新开始！');
-        EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
         Admin._openScene(Admin.SceneName.UIStart, this.self);
+        EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
     }
 
     btnNextUp(): void {
@@ -97,8 +97,8 @@ export default class UIDefeated extends Defeated.DefeatedScene {
             ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
 
             Admin._gameLevel.value += 1;
-            EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
             Admin._openScene(Admin.SceneName.UIStart, this.self);
+            EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
         })
     }
 

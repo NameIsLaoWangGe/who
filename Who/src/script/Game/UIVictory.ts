@@ -44,6 +44,16 @@ export default class UIVictory extends VictoryScene {
         Gold.GoldNode = this.self['GoldNode'];
         let Num2 = this.self['GoldNode'].getChildByName('Num') as Laya.Label;
         Num2.text = Gold._num.value.toString();
+
+        let time = 0;
+        Laya.timer.frameLoop(8, this, () => {
+            time++;
+            if (time % 2 == 0) {
+                this.self['Tag'].skin = 'Game/UI/UIVictory/dajia.png';
+            }else{
+                this.self['Tag'].skin = 'Game/UI/UIVictory/qipao.png';
+            }
+        })
     }
 
     lwgBtnClick(): void {

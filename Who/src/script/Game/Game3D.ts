@@ -237,21 +237,20 @@ export module Game3D {
             question = '是' + chNameForName(residueArr[0]) + '吗?';
             arr = [question, true];
         } else if (residueArr.length === 2) {
-
-            let name = chNameForName(residueArr[Tools.randomOneHalf()]);
-            question = '是' + chNameForName(residueArr[Tools.randomOneHalf()]) + '吗?';
-
-            arr = [question, name === myHandName ? true : false];
+            let redio = Tools.randomOneHalf();
+            let name = chNameForName(residueArr[redio]);
+            question = '是' + name + '吗?';
+            arr = [question, residueArr[redio] == myHandName ? true : false];
         } else {
             for (let i = 0; i < characteristicsData.length; i++) {
-                if (characteristicsData[i][CharacteristicsProperty.index] == medianIndex) {
+                if (characteristicsData[i][CharacteristicsProperty.index] == contrastArr[medianIndex]['index']) {
                     question = characteristicsData[i][CharacteristicsProperty.question];
-                    arr = [question, judgeMeAnswer(question, OppositeCardParent)];
+                    arr = [question, judgeAnswer(question, OppositeCardParent)];
                     break;
                 }
             }
         }
-
+        console.log(medianIndex, residueArr, contrastArr, myHandName, arr);
         return arr;
     }
 
@@ -321,7 +320,6 @@ export module Game3D {
                 ChaIndex = characteristicsData[i][CharacteristicsProperty.index];
             }
         }
-
         // 查找节点中有这个特征的数组
         let haveCardArr = [];
         let nohaveCardArr = [];
@@ -347,15 +345,21 @@ export module Game3D {
     /**
      * 通过选择的回答和手上卡牌的特征对比，判断是否正确
      * @param question 问题
+     * @param CardParent 谁的回答
     */
-    export function judgeMeAnswer(question: string, CardParent: Laya.MeshSprite3D): boolean {
+    export function judgeAnswer(question: string, CardParent: Laya.MeshSprite3D): boolean {
         let bool = false;
         let cardArr = checkForQuestion(question, CardParent);
         let haveCardArr = cardArr[0];
-        let nohaveCardArr = cardArr[1];
+        let handName;
+        if (CardParent === MyCardParent) {
+            handName = oppositeHandName;
+        } else if (CardParent === OppositeCardParent) {
+            handName = myHandName;
+        }
         // 对比对方手上的牌，如果特征匹配，则删掉不匹配的牌，如果特征不匹配，则也删掉不匹配的牌
         for (let index = 0; index < haveCardArr.length; index++) {
-            if (haveCardArr[index] == oppositeHandName) {
+            if (haveCardArr[index] == handName) {
                 bool = true;
             }
         }
@@ -403,7 +407,7 @@ export module Game3D {
                     return;
                 }
                 this.roundChange();
-                let matching = judgeMeAnswer(question, MyCardParent);
+                let matching = judgeAnswer(question, MyCardParent);
                 if (matching) {
                     console.log('特征正确！');
                     Animation3D.rock(OppositeRole as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
@@ -454,38 +458,28 @@ export module Game3D {
             })
 
             //检测对方的回答是否正确 
-            EventAdmin.reg(EventType.judgeOppositeAnswer, this, (question) => {
+            EventAdmin.reg(EventType.judgeOppositeAnswer, this, (question, bool) => {
                 if (whichBout !== WhichBoutType.opposite) {
                     return;
                 }
                 this.roundChange();
-                let matching = judgeMeAnswer(question, OppositeCardParent);
-                if (matching) {
+                if (bool) {
                     console.log('特征正确！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(5, 0, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, OppositeCardParent);
                         this.carFallAni(cardArr[1], OppositeCardParent);
-                        console.log(question);
-                        console.log(cardArr);
-                        console.log(OppositeCardParent);
-                        if (noFallCardOpposite().length === 1) {
+                        if (noFallCardOpposite().length <= 1) {
                             EventAdmin.notify(EventAdmin.EventType.defeated);
                         } else {
                             EventAdmin.notify(EventType.nextRound);
                         }
-
                     });
                 } else {
                     console.log('特征错误！');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 5, 0), 500, this, () => {
                         let cardArr = checkForQuestion(question, OppositeCardParent);
-                        console.log(question);
-                        console.log(cardArr);
-                        console.log(OppositeCardParent);
                         this.carFallAni(cardArr[0], OppositeCardParent);
-
                         EventAdmin.notify(EventType.nextRound);
-
                     });
                 }
             })
@@ -499,13 +493,14 @@ export module Game3D {
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                 this.init();
             })
+            // 刷新
+            EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
+                this.init();
+            })
         }
 
         /**回合以及状态切换*/
         roundChange(): void {
-
-
-
             if (whichBout === WhichBoutType.me) {
                 whichBout = WhichBoutType.opposite;
             } else if (whichBout === WhichBoutType.opposite) {

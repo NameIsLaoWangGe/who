@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
@@ -10,6 +10,7 @@ export default class GameScene extends Admin.Scene {
     /**选项卡*/
     OptionParent: Laya.Sprite;
     lwgOnAwake(): void {
+        Gold.goldAppear();
     }
 
     lwgNodeDec(): void {
@@ -19,14 +20,21 @@ export default class GameScene extends Admin.Scene {
     lwgEventReg(): void {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-            // console.log(questionAndYesOrNo, cardName)
-            Tools.node_RemoveAllChildren(this.OptionParent);
-            this.createOppositeQuestion(questionAndYesOrNo, cardName);
+            Admin._clickLock.switch = true;
+            Animation2D.fadeOut(this.OptionParent, 1, 0, 300, 0, () => {
+                Tools.node_RemoveAllChildren(this.OptionParent);
+                this.createOppositeQuestion(questionAndYesOrNo, cardName);
+                Admin._clickLock.switch = false;
+            });
         })
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+            Admin._clickLock.switch = true;
             this.createQuestion(questionArr);
+            Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
+                Admin._clickLock.switch = false;
+            });
         })
 
         // 胜利
@@ -106,10 +114,12 @@ export default class GameScene extends Admin.Scene {
         CardName.text = cardName;
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
+
+        // console.log('问题的答案为：', questionAndYesOrNo[1]);
         Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
             if (questionAndYesOrNo[1]) {
                 GuessCard.removeSelf();
-                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
                 console.log('不可胡乱回答！');
             }
@@ -119,7 +129,7 @@ export default class GameScene extends Admin.Scene {
         Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
             if (!questionAndYesOrNo[1]) {
                 GuessCard.removeSelf();
-                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0]]);
+                EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
                 console.log('不可胡乱回答！');
             }
