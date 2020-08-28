@@ -1,7 +1,7 @@
 {
 	"version":"LAYAMATERIAL:02",
 	"props":{
-		"type":"Laya.PBRSpecularMaterial",
+		"type":"Laya.BlinnPhongMaterial",
 		"name":"cxk5",
 		"renderStates":[
 			{
@@ -13,17 +13,13 @@
 				"depthTest":515
 			}
 		],
+		"enableVertexColor":false,
 		"alphaTest":false,
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
-		"smoothness":0.5,
-		"smoothnessTextureScale":1,
-		"smoothnessSource":0,
-		"normalTextureScale":1,
-		"parallaxTextureScale":0.02,
-		"occlusionTextureStrength":1,
-		"enableReflection":false,
-		"enableEmission":false,
+		"albedoIntensity":1,
+		"enableLighting":true,
+		"shininess":0.01,
 		"textures":[],
 		"vectors":[
 			{
@@ -50,15 +46,6 @@
 					1,
 					0.6844343,
 					0.240566,
-					1
-				]
-			},
-			{
-				"name":"emissionColor",
-				"value":[
-					0,
-					0,
-					0,
 					1
 				]
 			}

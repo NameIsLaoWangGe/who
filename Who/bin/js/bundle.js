@@ -1662,28 +1662,28 @@
         let DateAdmin;
         (function (DateAdmin) {
             DateAdmin._date = {
-                get getFullYear() {
+                get Year() {
                     return (new Date()).getFullYear();
                 },
-                get getMonth() {
+                get Month() {
                     return (new Date()).getMonth();
                 },
-                get getDate() {
+                get Date() {
                     return (new Date()).getDate();
                 },
-                get getDay() {
+                get Day() {
                     return (new Date()).getDay();
                 },
-                get getHours() {
+                get Hours() {
                     return (new Date()).getHours();
                 },
-                get getMinutes() {
+                get Minutes() {
                     return (new Date()).getMinutes();
                 },
-                get getSeconds() {
+                get Seconds() {
                     return (new Date()).getSeconds();
                 },
-                get getMilliseconds() {
+                get Milliseconds() {
                     return (new Date()).getMilliseconds();
                 },
                 get toLocaleDateString() {
@@ -1718,6 +1718,14 @@
                     return dataArr;
                 },
             };
+            DateAdmin._loginNumber = {
+                get value() {
+                    return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
+                },
+                set value(val) {
+                    Laya.LocalStorage.setItem('_loginNumber', val.toString());
+                }
+            };
         })(DateAdmin = lwg.DateAdmin || (lwg.DateAdmin = {}));
         let Admin;
         (function (Admin) {
@@ -1730,14 +1738,6 @@
             })(_platformTpye = Admin._platformTpye || (Admin._platformTpye = {}));
             Admin._platform = _platformTpye.Bytedance;
             Admin._gameSwitch = false;
-            Admin._loginNumber = {
-                get value() {
-                    return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
-                },
-                set value(val) {
-                    Laya.LocalStorage.setItem('_loginNumber', val.toString());
-                }
-            };
             Admin._gameLevel = {
                 get value() {
                     return Laya.LocalStorage.getItem('_gameLevel') ? Number(Laya.LocalStorage.getItem('_gameLevel')) : 1;
@@ -4870,7 +4870,8 @@
             })(LodingType = Loding.LodingType || (Loding.LodingType = {}));
             class LodingScene extends Admin.Scene {
                 moduleOnAwake() {
-                    Admin._loginNumber.value++;
+                    DateAdmin._loginNumber.value++;
+                    console.log('玩家登陆的天数为：', DateAdmin._loginDate.value.length, '天');
                 }
                 moduleEventReg() {
                     EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule(); });

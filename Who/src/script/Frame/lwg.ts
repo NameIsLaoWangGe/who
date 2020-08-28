@@ -829,35 +829,35 @@ export module lwg {
     export module DateAdmin {
         export let _date = {
             /**年*/
-            get getFullYear(): number {
+            get Year(): number {
                 return (new Date()).getFullYear();
             },
             /**月*/
-            get getMonth(): number {
+            get Month(): number {
                 return (new Date()).getMonth();
             },
             /**日*/
-            get getDate(): number {
+            get Date(): number {
                 return (new Date()).getDate();
             },
             /**周几*/
-            get getDay(): number {
+            get Day(): number {
                 return (new Date()).getDay();
             },
             /**小时*/
-            get getHours(): number {
+            get Hours(): number {
                 return (new Date()).getHours();
             },
             /**分钟*/
-            get getMinutes(): number {
+            get Minutes(): number {
                 return (new Date()).getMinutes();
             },
             /**秒*/
-            get getSeconds(): number {
+            get Seconds(): number {
                 return (new Date()).getSeconds();
             },
             /**毫秒*/
-            get getMilliseconds(): number {
+            get Milliseconds(): number {
                 return (new Date()).getMilliseconds();
             },
             /**全日期*/
@@ -897,6 +897,17 @@ export module lwg {
                 return dataArr;
             },
         }
+
+        /**玩家玩游戏的次数*/
+        export let _loginNumber = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
+            },
+            set value(val: number) {
+                Laya.LocalStorage.setItem('_loginNumber', val.toString());
+            }
+        }
+
     }
 
     /**游戏整体控制*/
@@ -915,15 +926,6 @@ export module lwg {
         /**游戏控制开关*/
         export let _gameSwitch: boolean = false;
 
-        /**玩家登陆游戏的次数*/
-        export let _loginNumber = {
-            get value(): number {
-                return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
-            },
-            set value(val: number) {
-                Laya.LocalStorage.setItem('_loginNumber', val.toString());
-            }
-        }
 
         /**等级*/
         export let _gameLevel = {
@@ -1059,8 +1061,7 @@ export module lwg {
         /**场景控制,访问特定场景用_sceneControl[name]访问*/
         export let _sceneControl: any = {};
 
-        /**游戏当前处于什么状态中，并非是当前打开的场景*/
-        export let _gameState: string;
+
 
         /**场景动效类型*/
         export enum OpenAniType {
@@ -1206,6 +1207,8 @@ export module lwg {
             }
         }
 
+        /**游戏当前处于什么状态中，并非是当前打开的场景*/
+        export let _gameState: string;
         /**游戏当前的状态*/
         export enum GameState {
             /**开始界面*/
@@ -1218,6 +1221,47 @@ export module lwg {
             Victory = 'victory',
             /**失败*/
             Defeated = 'defeated',
+        }
+        /**游戏当前的状态,有些页面没有状态*/
+        export function gameState(calssName): void {
+            switch (calssName) {
+                case SceneName.UIStart:
+                    _gameState = GameState.Start;
+                    break;
+                case SceneName.GameScene:
+                    _gameState = GameState.Play;
+                    break;
+                case SceneName.UIDefeated:
+                    _gameState = GameState.Defeated;
+                    break;
+                case SceneName.UIVictory:
+                    _gameState = GameState.Victory;
+                    break;
+                default:
+                    break;
+            }
+        }
+        /**通用场景进场动画*/
+        export function commonOpenAni(scene: Laya.Scene): number {
+            let time = 0;
+            let delay = 0;
+            switch (_commonOpenAni) {
+                case OpenAniType.fadeOut:
+                    time = 400;
+                    delay = 300;
+                    if (scene['Background']) {
+                        Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
+                    }
+                    Animation2D.fadeOut(scene, 0, 1, time);
+                    break;
+                case OpenAniType.leftMove:
+
+                    break;
+
+                default:
+                    break;
+            }
+            return time;
         }
 
         /**2D场景通用父类*/
@@ -1235,7 +1279,7 @@ export module lwg {
                 this.calssName = this['__proto__']['constructor'].name;
                 // 组件变为的self属性
                 this.self[this.calssName] = this;
-                this.gameState(this.calssName);
+                gameState(this.calssName);
                 this.lwgNodeDec();
                 this.moduleOnAwake();
                 this.lwgOnAwake();
@@ -1261,54 +1305,15 @@ export module lwg {
             lwgEventReg(): void { };
             /**模块中的事件*/
             moduleEventReg(): void { };
-            /**游戏当前的状态,有些页面没有状态*/
-            private gameState(calssName): void {
-                switch (calssName) {
-                    case SceneName.UIStart:
-                        _gameState = GameState.Start;
-                        break;
-                    case SceneName.GameScene:
-                        _gameState = GameState.Play;
-                        break;
-                    case SceneName.UIDefeated:
-                        _gameState = GameState.Defeated;
-                        break;
-                    case SceneName.UIVictory:
-                        _gameState = GameState.Victory;
-                        break;
-                    default:
-                        break;
-                }
-            }
+
             /**初始化，在onEnable中执行，重写即可覆盖*/
             lwgOnEnable(): void { }
-            /**通用场景进场动画*/
-            private commonOpenAni(): number {
-                let time = 0;
-                let delay = 0;
-                switch (_commonOpenAni) {
-                    case OpenAniType.fadeOut:
-                        time = 400;
-                        delay = 300;
-                        if (this.self['Background']) {
-                            Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
-                        }
-                        Animation2D.fadeOut(this.self, 0, 1, time);
-                        break;
-                    case OpenAniType.leftMove:
 
-                        break;
-
-                    default:
-                        break;
-                }
-                return time;
-            }
             /**通过openni返回的时间来延时开启点击事件*/
             private btnAndlwgOpenAni(): void {
                 let time = this.lwgOpenAni();
                 if (time == null) {
-                    time = this.commonOpenAni();
+                    time = commonOpenAni(this.self);
                     if (time == null) {
                         time = 0;
                     }
@@ -5398,7 +5403,8 @@ export module lwg {
 
         export class LodingScene extends Admin.Scene {
             moduleOnAwake(): void {
-                Admin._loginNumber.value++;
+                DateAdmin._loginNumber.value++;
+                console.log('玩家登陆的天数为：', DateAdmin._loginDate.value.length, '天');
             }
             moduleEventReg(): void {
                 EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule() });

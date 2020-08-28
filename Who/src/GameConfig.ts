@@ -13,6 +13,8 @@ import UIDefeated from "./script/Game/UIDefeated"
 import UILoding from "./script/Game/UILoding"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
+import UIVictoryBox_Cell from "./script/Game/UIVictoryBox_Cell"
+import UIVictoryBox from "./script/Game/UIVictoryBox"
 import GameUI from "./script/GameUI"
 import PreGuessCard from "./script/Game/PreGuessCard"
 /*
@@ -48,6 +50,8 @@ export default class GameConfig{
         reg("script/Game/UILoding.ts",UILoding);
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);
+        reg("script/Game/UIVictoryBox_Cell.ts",UIVictoryBox_Cell);
+        reg("script/Game/UIVictoryBox.ts",UIVictoryBox);
         reg("script/GameUI.ts",GameUI);
         reg("script/Game/PreGuessCard.ts",PreGuessCard);
     }

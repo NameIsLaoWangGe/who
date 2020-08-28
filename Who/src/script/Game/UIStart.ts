@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin } from "../Frame/lwg";
 
 export default class UIStart extends Start.StartScene {
 

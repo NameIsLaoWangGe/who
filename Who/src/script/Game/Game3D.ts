@@ -553,6 +553,10 @@ export module Game3D {
             randomlyTakeOut(WhichScard.OppositeCardParent);
         }
     }
+
+    export class Role extends lwg3D.Object3D {
+
+    }
 }
 export default Game3D;
 

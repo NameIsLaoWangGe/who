@@ -1,3 +1,6 @@
-2020/08/27-19:01:16.945 1d40 Reusing MANIFEST D:\Game\project\Who\Project\Who\.laya\chrome\Default\Local Storage\leveldb/MANIFEST-000001
-2020/08/27-19:01:16.946 1d40 Recovering log #7
-2020/08/27-19:01:16.946 1d40 Reusing old log D:\Game\project\Who\Project\Who\.laya\chrome\Default\Local Storage\leveldb/000007.log 
+2020/08/28-10:03:12.698 1014 Reusing MANIFEST D:\Game\project\Who\Project\Who\.laya\chrome\Default\Local Storage\leveldb/MANIFEST-000001
+2020/08/28-10:03:12.699 1014 Recovering log #7
+2020/08/28-10:03:12.699 1014 Reusing old log D:\Game\project\Who\Project\Who\.laya\chrome\Default\Local Storage\leveldb/000007.log 
+2020/08/28-11:51:45.180 17f4 Level-0 table #10: started
+2020/08/28-11:51:45.221 17f4 Level-0 table #10: 14962 bytes OK
+2020/08/28-11:51:45.254 17f4 Delete type=0 #7
