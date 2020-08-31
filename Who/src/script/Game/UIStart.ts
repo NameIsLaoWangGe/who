@@ -7,6 +7,10 @@ export default class UIStart extends Start.StartScene {
         Gold.createGoldNode(629, 174);
     }
 
+    lwgAdaptive(): void {
+        this.self['BtnStart'].y = Laya.stage.height * 0.779;
+    }
+
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.GameScene, this.self);

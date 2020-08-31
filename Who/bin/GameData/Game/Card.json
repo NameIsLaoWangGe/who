@@ -4,7 +4,7 @@
   {
     "name": "zds1",
     "ChName": "张东升1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       9,
@@ -18,7 +18,7 @@
   {
     "name": "zds2",
     "ChName": "张东升2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       15,
@@ -31,7 +31,7 @@
   {
     "name": "zds3",
     "ChName": "张东升3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       9,
@@ -45,7 +45,7 @@
   {
     "name": "zds4",
     "ChName": "张东升4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       15,
@@ -57,7 +57,7 @@
   {
     "name": "zds5",
     "ChName": "张东升5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       9,
@@ -71,7 +71,7 @@
   {
     "name": "lyy1",
     "ChName": "林有有1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       14,
@@ -82,7 +82,7 @@
   {
     "name": "lyy2",
     "ChName": "林有有2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       9,
@@ -96,7 +96,7 @@
   {
     "name": "lyy3",
     "ChName": "林有有3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       14,
@@ -107,7 +107,7 @@
   {
     "name": "lyy4",
     "ChName": "林有有4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       9,
@@ -121,7 +121,7 @@
   {
     "name": "lyy5",
     "ChName": "林有有5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       14,
@@ -131,7 +131,7 @@
   {
     "name": "cxk1",
     "ChName": "蔡徐坤1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       9,
@@ -145,7 +145,7 @@
   {
     "name": "cxk2",
     "ChName": "蔡徐坤2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       15,
@@ -157,7 +157,7 @@
   {
     "name": "cxk3",
     "ChName": "蔡徐坤3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       9,
@@ -172,7 +172,7 @@
   {
     "name": "cxk4",
     "ChName": "蔡徐坤4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       17,
@@ -184,7 +184,7 @@
   {
     "name": "cxk5",
     "ChName": "蔡徐坤5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       9,
@@ -198,7 +198,7 @@
   {
     "name": "cxy1",
     "ChName": "程序员1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       9,
@@ -209,7 +209,7 @@
   {
     "name": "cxy2",
     "ChName": "程序员2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       11,
@@ -224,7 +224,7 @@
   {
     "name": "cxy3",
     "ChName": "程序员3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       9,
@@ -236,7 +236,7 @@
   {
     "name": "cxy4",
     "ChName": "程序员4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       11,
@@ -251,7 +251,7 @@
   {
     "name": "cxy5",
     "ChName": "程序员5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       9,
@@ -262,7 +262,7 @@
   {
     "name": "xxs1",
     "ChName": "小学生1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       9,
@@ -276,7 +276,7 @@
   {
     "name": "xxs2",
     "ChName": "小学生2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       17,
@@ -286,7 +286,7 @@
   {
     "name": "xxs3",
     "ChName": "小学生3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       9,
@@ -300,7 +300,7 @@
   {
     "name": "xxs4",
     "ChName": "小学生4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       17,
@@ -310,7 +310,7 @@
   {
     "name": "xxs5",
     "ChName": "小学生5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       9,
@@ -324,7 +324,7 @@
   {
     "name": "scp1",
     "ChName": "scp1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       13,
@@ -336,7 +336,7 @@
   {
     "name": "scp2",
     "ChName": "scp2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       9,
@@ -350,7 +350,7 @@
   {
     "name": "scp3",
     "ChName": "scp3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       13,
@@ -362,7 +362,7 @@
   {
     "name": "scp4",
     "ChName": "scp4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       9,
@@ -376,7 +376,7 @@
   {
     "name": "lb",
     "ChName": "鲁班",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       4,
       10,
@@ -391,7 +391,7 @@
   {
     "name": "dj",
     "ChName": "妲己",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       9,
@@ -406,7 +406,7 @@
   {
     "name": "zbj",
     "ChName": "猪八戒",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       7,
       10,
@@ -420,7 +420,7 @@
   {
     "name": "swk",
     "ChName": "孙悟空",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       8,
       9,
@@ -436,7 +436,7 @@
   {
     "name": "nm",
     "ChName": "牛魔",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       10,
@@ -450,7 +450,7 @@
   {
     "name": "yj",
     "ChName": "杨戬",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       7,
       9,
@@ -465,7 +465,7 @@
   {
     "name": "nz",
     "ChName": "哪吒",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       5,
       10,
@@ -479,7 +479,7 @@
   {
     "name": "fkr1",
     "ChName": "方块人1",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       9,
@@ -494,7 +494,7 @@
   {
     "name": "fkr2",
     "ChName": "方块人2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       12,
@@ -507,7 +507,7 @@
   {
     "name": "fkr3",
     "ChName": "方块人3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       9,
@@ -522,7 +522,7 @@
   {
     "name": "fkr4",
     "ChName": "方块人4",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       7,
       12,
@@ -535,7 +535,7 @@
   {
     "name": "fkr5",
     "ChName": "方块人5",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       8,
       11,
@@ -549,7 +549,7 @@
   {
     "name": "fkr6",
     "ChName": "方块人6",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       7,
       9,
@@ -563,7 +563,7 @@
   {
     "name": "fkr7",
     "ChName": "方块人7",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       6,
       11,
@@ -577,7 +577,7 @@
   {
     "name": "fkr8",
     "ChName": "方块人8",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       9,
@@ -591,7 +591,7 @@
   {
     "name": "fkr9",
     "ChName": "方块人8",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       4,
       11,
@@ -605,7 +605,7 @@
   {
     "name": "atmzw",
     "ChName": "奥特曼之王",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       4,
       14,
@@ -619,7 +619,7 @@
   {
     "name": "atm2",
     "ChName": "奥特曼2",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       5,
       9,
@@ -633,7 +633,7 @@
   {
     "name": "atm3",
     "ChName": "奥特曼3",
-    "characteristicsArr": [
+    "featureArr": [
       3,
       6,
       16,
@@ -646,7 +646,7 @@
   {
     "name": "atm4",
     "ChName": "奥特曼4",
-    "characteristicsArr": [
+    "featureArr": [
       2,
       7,
       9,
@@ -660,7 +660,7 @@
   {
     "name": "atm5",
     "ChName": "奥特曼5",
-    "characteristicsArr": [
+    "featureArr": [
       1,
       8,
       19,

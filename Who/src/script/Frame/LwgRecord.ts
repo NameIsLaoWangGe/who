@@ -162,4 +162,9 @@ export module record {
     export enum ObjArray {
         "一般会从json文件中取出对象数组" = '若想使用这个数组，必须每次深度拷贝，否则会修改json文件',
     }
+
+    export enum WritingRule {
+        '节点名称' = "节点名称用首字母大写",
+        '方法名称' = "方法名称首字母小写，如果涉及到了一些查找和设置的，全部用set和get开头",
+    }
 }
