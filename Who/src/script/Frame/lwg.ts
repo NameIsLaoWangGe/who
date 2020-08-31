@@ -2249,19 +2249,19 @@ export module lwg {
             }, delayed);
         }
 
-       /**
-          * 旋转并移动物体到另一个物体的角度和位置
-          * @param Sp3d 要移动的物体
-          * @param Target 目标物体
-          * @param duration 间隔
-          * @param caller 回调执行领域
-          * @param ease 缓动函数
-          * @param complete 播放完成回调 
-          * @param delay 延迟
-          * @param coverBefore 是否覆盖上一个缓动
-          * @param update 更新函数
-          * @param frame 帧数间隔
-          */
+        /**
+           * 旋转并移动物体到另一个物体的角度和位置
+           * @param Sp3d 要移动的物体
+           * @param Target 目标物体
+           * @param duration 间隔
+           * @param caller 回调执行领域
+           * @param ease 缓动函数
+           * @param complete 播放完成回调 
+           * @param delay 延迟
+           * @param coverBefore 是否覆盖上一个缓动
+           * @param update 更新函数
+           * @param frame 帧数间隔
+           */
         export function moveRotateTo(Sp3d: Laya.MeshSprite3D, Target: Laya.MeshSprite3D, duration: number, caller: any
             , ease?: Function, complete?: Function, delay?: number, coverBefore?: boolean, update?: Function, frame?: number): void {
             moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame)
@@ -2627,40 +2627,25 @@ export module lwg {
          * 用于卡牌X轴方向的横向旋转
          * 两个面不一样的卡牌旋转动画，卡牌正面有内容，卡牌背面没有内容，这个内容是一个子节点
          * @param node 节点
-         * @param arr 子节点名称数组
-         * @param func1 中间回调，是否需要变化卡牌内容,也就是子节点内容
          * @param time 每次旋转1/2次花费时间
+         * @param func1 中间回调，是否需要变化卡牌内容,也就是子节点内容
          * @param delayed 延时时间
          * @param func2 结束时回调函数
          */
-        export function cardRotateX_TowFace(node: Laya.Sprite, arr: string[], func1: Function, time: number, delayed: number, func2: Function): void {
+        export function cardRotateX_TowFace(node: Laya.Sprite, time: number, func1?: Function, delayed?: number, func2?: Function): void {
             Laya.Tween.to(node, { scaleX: 0 }, time, null, Laya.Handler.create(this, function () {
                 // 所有子节点消失
-                if (arr) {
-                    for (let i = 0; i < arr.length; i++) {
-                        let child = node.getChildByName(arr[i]);
-                        if (child !== null) {
-                            child['alpha'] = 0;
-                        }
-                    }
-                }
-
-                if (func1 !== null) {
+                Tools.node_ChildrenVisible(node, false);
+                if (func1) {
                     func1();
                 }
                 Laya.Tween.to(node, { scaleX: 1 }, time * 0.9, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleX: 0 }, time * 0.8, null, Laya.Handler.create(this, function () {
-                        if (arr) {
-                            for (let i = 0; i < arr.length; i++) {
-                                let child = node.getChildByName(arr[i]);
-                                if (child !== null) {
-                                    child['alpha'] = 1;
-                                }
-                            }
-                        }
+
+                        Tools.node_ChildrenVisible(node, true);
 
                         Laya.Tween.to(node, { scaleX: 1 }, time * 0.7, null, Laya.Handler.create(this, function () {
-                            if (func2 !== null) {
+                            if (func2) {
                                 func2();
                             }
                         }), 0);
@@ -2695,42 +2680,23 @@ export module lwg {
         * 用于卡牌Y轴方向的纵向旋转
         * 两个面不一样的卡牌旋转动画，卡牌正面有内容，卡牌背面没有内容，这个内容是一个子节点
         * @param node 节点
-        * @param arr 子节点名称数组
-        * @param func1 中间回调，是否需要变化卡牌内容,也就是子节点内容
         * @param time 每次旋转1/2次花费时间
+        * @param func1 中间回调，是否需要变化卡牌内容,也就是子节点内容
         * @param delayed 延时时间
         * @param func2 结束时回调函数
         */
-        export function cardRotateY_TowFace(node: Laya.Sprite, arr: string[], func1: Function, time: number, delayed: number, func2: Function): void {
+        export function cardRotateY_TowFace(node: Laya.Sprite, time: number, func1?: Function, delayed?: number, func2?: Function): void {
             Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                 // 所有子节点消失
-                if (arr) {
-                    for (let i = 0; i < arr.length; i++) {
-                        let child = node.getChildByName(arr[i]);
-                        if (child !== null) {
-                            child['alpha'] = 0;
-                        }
-                    }
-                }
-
-                if (func1 !== null) {
+                Tools.node_ChildrenVisible(node, false);
+                if (func1) {
                     func1();
                 }
                 Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleY: 1 }, time * 1 / 2, null, Laya.Handler.create(this, function () {
-                            if (arr) {
-
-                                for (let i = 0; i < arr.length; i++) {
-                                    let child = node.getChildByName(arr[i]);
-                                    if (child !== null) {
-                                        child['alpha'] = 1;
-                                    }
-                                }
-                            }
-
-
-                            if (func2 !== null) {
+                            Tools.node_ChildrenVisible(node, true);
+                            if (func2) {
                                 func2();
                             }
                         }), 0);
@@ -2880,7 +2846,7 @@ export module lwg {
          * 简单移动,初始位置可以为null
          * @param node 节点
          * @param fX 初始x位置
-         * @param fY 初始x位置
+         * @param fY 初始y位置
          * @param targetX 目标x位置
          * @param targetY 目标y位置
          * @param time 花费时间
@@ -3014,11 +2980,15 @@ export module lwg {
           * @param delayed 延迟时间
           * @param func 完成后的回调
           */
-        export function blink_FadeOut(target, minAlpha, maXalpha, time, delayed, func): void {
+        export function blink_FadeOut(target, minAlpha, maXalpha, time, delayed?: number, func?: Function): void {
+            target.alpha = minAlpha;
+            if (!delayed) {
+                delayed = 0;
+            }
             Laya.Tween.to(target, { alpha: minAlpha }, time, null, Laya.Handler.create(this, function () {
                 // 原始状态
                 Laya.Tween.to(target, { alpha: maXalpha }, time, null, Laya.Handler.create(this, function () {
-                    if (func !== null) {
+                    if (func) {
                         func()
                     }
                 }), 0);
@@ -3398,6 +3368,22 @@ export module lwg {
             }
         }
 
+        /**
+        * 隐藏或者打开所有子节点
+        * @param node 节点
+        * @param bool visible控制
+       */
+        export function node_ChildrenVisible(node: Laya.Node, bool: boolean): void {
+            for (let index = 0; index < node.numChildren; index++) {
+                const element = node.getChildAt(index) as Laya.Node;
+                if (bool) {
+                    element.active = false;
+                } else {
+                    element.active = true;
+                }
+            }
+        }
+
         /**3D递归向下查找子节点*/
         export function node_3dFindChild(parent: any, name: string): Laya.MeshSprite3D {
             var item: Laya.MeshSprite3D = null;
@@ -3414,6 +3400,8 @@ export module lwg {
             }
             return null;
         }
+
+
 
         /**2D递归向下查找子节点*/
         export function node_2dFindChild(parent: any, name: string): Laya.Sprite {
@@ -3903,22 +3891,26 @@ export module lwg {
 
         /**
          * 往第一个数组中陆续添加第二个数组中的元素
-         * @param data1 
-         * @param data2 
+         * @param array1 
+         * @param array2
          */
-        export function arrayAddToarray(data1, data2): void {
-            for (let index = 0; index < data2.length; index++) {
-                const element = data2[index];
-                data1.push(element);
+        export function arrayAddToarray(array1, array2): Array<any> {
+            for (let index = 0; index < array2.length; index++) {
+                const element = array2[index];
+                array1.push(element);
             }
+            return array1;
         }
 
         /**
          * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序
          * @param arr 数组
-         * @param num 取出几个元素
+         * @param num 取出几个元素默认为1个
          */
         export function arrayRandomGetOut(arr: Array<any>, num: number): any {
+            if (!num) {
+                num = 1;
+            }
             let arr0 = [];
             if (num > arr.length) {
                 return '数组长度小于取出的数！';
@@ -3980,7 +3972,7 @@ export module lwg {
         }
 
         /**
-         * 返回从第一个数组中排除第二个数组中的元素，如果第一个数组包含第二个数组，那么刚好等于是第一个数组排除第二个数组的元素
+         * 返回从第一个数组中排除第二个数组中的元素，也就是第二个数组中没有第一个数组中的这些元素，如果第一个数组包含第二个数组，那么刚好等于是第一个数组排除第二个数组的元素
          * @param arr1 
          * @param arr2 
          */
@@ -4035,7 +4027,7 @@ export module lwg {
          * @param degree 角度
          * 根据角度计算弧度
          */
-        export function Angle_GetRad(degree) {
+        export function angle_GetRad(degree) {
             return degree / 180 * Math.PI;
         }
 

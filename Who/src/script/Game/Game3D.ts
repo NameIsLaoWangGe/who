@@ -92,7 +92,9 @@ export module Game3D {
         /**判断输赢*/
         winOrLose = 'winOrLose',
         /**开局*/
-        opening = 'opening'
+        opening = 'opening',
+        /**隐藏选项卡*/
+        hideOption = 'hideOption',
     }
 
     /**角色名称*/
@@ -116,7 +118,7 @@ export module Game3D {
      * 开局，随机取出16张卡牌，放在合适的位置,并且各随机出一张，作为本局双方需要猜的牌
      * @param type 我方还是对方
      * */
-    export function randomlyTakeOut(type): void {
+    export function set16InitialCards(type): void {
         /**复制对象数组，否则会修改原数组*/
         let CardData1 = Tools.objArray_Copy(CardData);
         let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
@@ -156,10 +158,10 @@ export module Game3D {
     }
 
     /**
-     * 对所有没有倒下的卡牌的属性数量排序
+     * 获取剩余属性的权重值,对所有没有倒下的卡牌的属性数量排序
      * @param CardParent 是我的卡牌还是对方的卡牌
      * */
-    export function weightSorting(CardParent: Laya.MeshSprite3D): Array<any> {
+    export function getFeatureWeights(CardParent: Laya.MeshSprite3D): Array<any> {
         // 空白属性表格
         let weightArr = [];
         for (let i = 0; i < featureData.length; i++) {
@@ -199,8 +201,8 @@ export module Game3D {
      * 设置我方回答问题
     */
     export function setAnswerForMe(): Array<string> {
-        let weightArr = weightSorting(MyCardParent);
-        let residueNum = getNotFallCardForMe().length;
+        let weightArr = getFeatureWeights(MyCardParent);
+        let residueNum = getNotFallCardNameForMe().length;
         let indexArr = [];
         let medianIndex = Math.floor(weightArr.length / 2);
         let index1 = weightArr[medianIndex]['index'];
@@ -235,9 +237,10 @@ export module Game3D {
     export function setAnswerForOpposite(): Array<any> {
         let arr = [];
         let question;
-        let weightArr = weightSorting(OppositeCardParent);
-        let residueArr = getNotFallCardOpposite();
+        let weightArr = getFeatureWeights(OppositeCardParent);
+        let residueArr = getNotFallCardNameOpposite();
         let medianIndex = Math.floor(weightArr.length / 2);
+
         if (residueArr.length == 1) {
             question = '是' + getChNameByName(residueArr[0]) + '吗?';
             arr = [question, true];
@@ -247,12 +250,25 @@ export module Game3D {
             question = '是' + name + '吗?';
             arr = [question, residueArr[redio] == myHandName ? true : false];
         } else {
+            let featureIndex0: number;
+            // 如果这个属性问题其余的卡牌全都有，则重新随机问题
             for (let i = 0; i < featureData.length; i++) {
                 if (featureData[i][featureProperty.index] == weightArr[medianIndex]['index']) {
                     question = featureData[i][featureProperty.question];
-                    arr = [question, judgeAnswer(question, OppositeCardParent)];
+                    featureIndex0 = i;
+                    arr = [question, checkAnswerForHand(question, OppositeCardParent)];
                     break;
                 }
+            }
+            // 如果这个属性所有卡牌都有，则随机抽出两张卡牌，找出一个他们不同的属性，这样无论如何都会消除卡牌，不会陷入僵局
+            let cardArr0 = getCardHaveFeature(OppositeCardParent, featureIndex0, true);
+            console.log('所有卡牌数量和有这个属性卡牌的比例：', residueArr.length, cardArr0.length);
+            if (residueArr.length == cardArr0.length + 1) {
+                let indexArr = getTowCardNotFeatureArr(cardArr0[0], cardArr0[1]);
+                let index0 = Tools.arrayRandomGetOut(indexArr, 1)[0];
+                let question0 = getQuestionByIndex(index0);
+
+                console.log('随机到了所有卡牌都有的属性！从', cardArr0[0].name, cardArr0[1].name, '中随机获取一条不同属性', question0);
             }
         }
         console.log(medianIndex, residueArr, weightArr, myHandName, arr);
@@ -260,9 +276,35 @@ export module Game3D {
     }
 
     /**
-     * 返回我方没有倒下的卡牌
+     * 对比两张卡牌， 获取两个卡牌中相互没有的属性索引值
+     * 例如[1,3,5],[2,3,5],返回[1,2]
      * */
-    export function getNotFallCardForMe(): Array<string> {
+    export function getTowCardNotFeatureArr(Card1: Laya.MeshSprite3D, Card2: Laya.MeshSprite3D): Array<number> {
+        let arr1 = Tools.array1ExcludeArray2(Card1[CardProperty.featureArr], Card2[CardProperty.featureArr]);
+        let arr2 = Tools.array1ExcludeArray2(Card2[CardProperty.featureArr], Card1[CardProperty.featureArr]);
+        let featureArr: Array<number> = Tools.arrayAddToarray(arr1, arr2);
+        return featureArr;
+    }
+
+    /**
+     * 获取当前没有倒下的卡牌节点
+     * @param CardParent 卡牌父节点
+     */
+    export function getNotFallCard(CardParent: Laya.MeshSprite3D): Array<Laya.MeshSprite3D> {
+        let CardArr: Array<Laya.MeshSprite3D> = [];
+        for (let index = 0; index < CardParent.numChildren; index++) {
+            let Card = MyCardParent.getChildAt(index) as Laya.MeshSprite3D;
+            if (!Card[CardProperty.fall]) {
+                CardArr.push(Card);
+            }
+        }
+        return CardArr;
+    }
+
+    /**
+     * 返回我方没有倒下的卡牌名称
+     * */
+    export function getNotFallCardNameForMe(): Array<string> {
         let arr = [];
         for (let i = 0; i < MyCardParent.numChildren; i++) {
             let Card = MyCardParent.getChildAt(i);
@@ -274,9 +316,9 @@ export module Game3D {
     }
 
     /**
-     * 返回对方没有倒下的卡牌
+     * 返回对方没有倒下的卡牌名称
      * */
-    export function getNotFallCardOpposite(): Array<string> {
+    export function getNotFallCardNameOpposite(): Array<string> {
         let arr = [];
         for (let i = 0; i < OppositeCardParent.numChildren; i++) {
             let Card = OppositeCardParent.getChildAt(i);
@@ -287,7 +329,7 @@ export module Game3D {
         return arr;
     }
 
-    /**通过英文名查找中文名*/
+    /**通过卡牌英文名查找卡牌中文名*/
     export function getChNameByName(name): string {
         let chName: string;
         for (let i = 0; i < CardData.length; i++) {
@@ -299,8 +341,7 @@ export module Game3D {
         return chName;
     }
 
-
-    /**通过英文名查找中文名*/
+    /**通过卡牌英文名查找卡牌中文名*/
     export function getNameByChName(ChName): string {
         let name: string;
         for (let i = 0; i < CardData.length; i++) {
@@ -346,8 +387,8 @@ export module Game3D {
         return nameArr;
     }
 
-    /**通过属性查找所有有这个属性的卡牌的数组*/
-    export function getNameArrByFeature(feature): Array<string> {
+    /**通过属性名查找所有有这个属性的卡牌的数组*/
+    export function getNameArrByFeature(feature: string): Array<string> {
         let fIndex;
         for (let index = 0; index < featureData.length; index++) {
             if (feature = featureData[index]) {
@@ -369,7 +410,94 @@ export module Game3D {
     }
 
     /**
-    * 通过问题对特征进行判断，判断所有卡牌有没有这个特征,并且返回所有有和没有这个特征的两个卡牌数组
+     * 通过属性名获取属性在表中的索引值
+     * @param feature
+     * */
+    export function getIndexByFeature(feature: string): number {
+        let index0: number;
+        for (let index = 0; index < featureData.length; index++) {
+            if (feature === featureData[index][featureProperty.describe]) {
+                index0 = index;
+                return index0;
+            }
+        }
+    }
+
+    /**通过属性索引值查找问题*/
+    export function getQuestionByIndex(featureIndex: number): string {
+        let question0: string;
+        for (let index = 0; index < featureData.length; index++) {
+            if (featureIndex === featureData[index][featureProperty.index]) {
+                question0 = featureData[index][featureProperty.question];
+                return question0;
+            }
+        }
+    }
+
+    /**
+     * 获取没有倒下卡牌中有这个属性属性索引值的所有卡牌
+     * @param CardParent 卡牌父节点
+     * @param feature 属性
+     * @param excludeHandName 是否排除相互手上的答案
+     */
+    export function getCardHaveFeature(CardParent: Laya.MeshSprite3D, featureIndex: number, excludeHandName?: boolean): Array<Laya.MeshSprite3D> {
+        let notfallArr: Array<Laya.MeshSprite3D>;
+        notfallArr = getNotFallCard(CardParent);
+
+        let haveArr = [];
+        for (let i = 0; i < notfallArr.length; i++) {
+            const Card = notfallArr[i];
+            for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                if (excludeHandName) {
+                    if (Card.name == myHandName || Card.name == oppositeHandName) {
+                        console.log('排除手上的答案');
+                        break;
+                    } else {
+                        if (featureIndex == Card[CardProperty.featureArr][j]) {
+                            haveArr.push(notfallArr[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return haveArr;
+    }
+
+    /**
+     * 获取没有倒下卡牌中,没有这个属性索引值的所有卡牌接节点
+     * @param CardParent 卡牌父节点
+     * @param feature 属性
+     * @param excludeHandName 是否排除相互手上的正确答案
+     */
+    export function getCardNotHaveFeature(CardParent: Laya.MeshSprite3D, featureIndex: number, excludeHandName?: boolean): Array<Laya.MeshSprite3D> {
+        let notfallArr: Array<Laya.MeshSprite3D>;
+        notfallArr = getNotFallCard(CardParent);
+        let haveArr: Array<Laya.MeshSprite3D> = [];
+        for (let i = 0; i < notfallArr.length; i++) {
+            const Card = notfallArr[i];
+            let bool;
+            for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                if (excludeHandName) {
+                    if (Card.name == myHandName || Card.name == oppositeHandName) {
+                        // console.log('排除手上的答案');
+                        break;
+                    } else {
+                        if (featureIndex == Card[CardProperty.featureArr][j]) {
+                            bool = true;
+                        }
+                    }
+                }
+            }
+            if (bool) {
+                haveArr.push(notfallArr[i]);
+            }
+        }
+        return haveArr;
+    }
+
+    /**
+    * 通过问题对特征进行判断，判断所有还没有倒下的中有没有这个特征,并且返回所有有和没有这个特征的两个卡牌数组
     * [0]为有这个特征的，[1]为没有这个特征的
     * @param question 问题
     * @param CardParent 父节点
@@ -409,7 +537,7 @@ export module Game3D {
      * @param question 问题
      * @param CardParent 谁的回答
     */
-    export function judgeAnswer(question: string, CardParent: Laya.MeshSprite3D): boolean {
+    export function checkAnswerForHand(question: string, CardParent: Laya.MeshSprite3D): boolean {
         let bool = false;
         let cardArr = checkQuestion(question, CardParent);
         let haveCardArr = cardArr[0];
@@ -446,6 +574,7 @@ export module Game3D {
             AllCardTem = this.self.getChildByName('AllCard') as Laya.MeshSprite3D;
             PerspectiveMe = this.self.getChildByName('PerspectiveFar') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost') as Laya.MeshSprite3D;
+
         }
 
 
@@ -476,7 +605,7 @@ export module Game3D {
                     return;
                 }
                 this.roundChange();
-                let matching = judgeAnswer(question, MyCardParent);
+                let matching = checkAnswerForHand(question, MyCardParent);
                 let cardArr = checkQuestion(question, MyCardParent);
 
                 Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time, this, null, () => {
@@ -486,7 +615,7 @@ export module Game3D {
                         Laya.timer.once(time * 4, this, () => {
                             Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
 
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni(cardArr[1], MyCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -500,7 +629,7 @@ export module Game3D {
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.fouren);
                         Laya.timer.once(time * 4, this, () => {
                             Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni(cardArr[0], MyCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -557,21 +686,21 @@ export module Game3D {
                 }
                 this.roundChange();
                 let cardArr = checkQuestion(question, OppositeCardParent);
-                let notFallLen = getNotFallCardOpposite().length;
+                let notFallLen = getNotFallCardNameOpposite().length;
                 if (bool) {
                     console.log('对方回答正确');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(5, 0, 0), time, this, () => {
                         Laya.timer.once(time * 2, this, () => {
                             // 只剩两张牌的时候，问题是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {
-                                console.log('对方只剩下2张牌了~！');
-                                Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
+                                console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
+                                Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
                                 let name = getNameByChName(question.substring(1, question.length - 2));
                                 console.log('即将倒下的牌是排除', name);
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 2, this, () => {
                                     this.carFallAni([name], OppositeCardParent, true);
                                     Laya.timer.once(time * 3, this, () => {
-                                        EventAdmin.notify(EventType.nextRound);
+                                        EventAdmin.notify(EventAdmin.EventType.defeated);
                                     })
                                 })
                             } else if (notFallLen == 1) {
@@ -582,7 +711,7 @@ export module Game3D {
                                 })
                             } else {
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni(cardArr[1], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -601,18 +730,18 @@ export module Game3D {
                             console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                             // 只剩两张牌的时候，是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {
-                                console.log('对方只剩下2张牌了~！');
+                                console.log('对方只剩下2张牌了，但是回答错了，我们还有一次机会~！');
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
                                 let name = getNameByChName(question.substring(1, question.length - 2));
                                 console.log('即将倒下的牌是', name);
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni([name], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
                                     })
                                 })
                             } else {
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni(cardArr[0], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -651,6 +780,7 @@ export module Game3D {
                 return;
             }
             if (whichBout == WhichBoutType.me) {
+                EventAdmin.notify(Game3D.EventType.hideOption);
                 whichBout = WhichBoutType.opposite;
             } else if (whichBout == WhichBoutType.opposite) {
                 whichBout = WhichBoutType.me;
@@ -698,8 +828,8 @@ export module Game3D {
             Tools.node_RemoveAllChildren(MyCardParent);
             Tools.node_RemoveAllChildren(OppositeCardParent);
             Tools.node_RemoveAllChildren(OppositeHandDispaly);
-            randomlyTakeOut(WhichScard.MyCardParent);
-            randomlyTakeOut(WhichScard.OppositeCardParent);
+            set16InitialCards(WhichScard.MyCardParent);
+            set16InitialCards(WhichScard.OppositeCardParent);
             this.changeOpppsiteRole();
             Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
         }

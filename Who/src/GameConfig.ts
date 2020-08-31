@@ -7,7 +7,6 @@ import P202 from "./TJ/Promo/script/P202"
 import P204 from "./TJ/Promo/script/P204"
 import P205 from "./TJ/Promo/script/P205"
 import P106 from "./TJ/Promo/script/P106"
-import PreGuessCard from "./script/Game/PreGuessCard"
 import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
 import UIDefeated from "./script/Game/UIDefeated"
@@ -44,7 +43,6 @@ export default class GameConfig{
         reg("TJ/Promo/script/P204.ts",P204);
         reg("TJ/Promo/script/P205.ts",P205);
         reg("TJ/Promo/script/P106.ts",P106);
-        reg("script/Game/PreGuessCard.ts",PreGuessCard);
         reg("script/Game/GameScene.ts",GameScene);
         reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UIDefeated.ts",UIDefeated);

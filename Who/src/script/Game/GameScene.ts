@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
@@ -21,7 +21,7 @@ export default class GameScene extends Admin.Scene {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
             Admin._clickLock.switch = true;
-            Animation2D.fadeOut(this.OptionParent, 1, 0, 300, 0, () => {
+            Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
                 Tools.node_RemoveAllChildren(this.OptionParent);
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
                 Admin._clickLock.switch = false;
@@ -47,6 +47,15 @@ export default class GameScene extends Admin.Scene {
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
             Admin._openScene(Admin.SceneName.UIDefeated, this.self);
         })
+
+        //隐藏选项卡
+        EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
+            Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { })
+        })
+    }
+
+    lwgAdaptive(): void {
+        this.self['SceneContent'].y = Laya.stage.height * 0.792;
     }
 
     lwgOnEnable(): void {
@@ -92,6 +101,15 @@ export default class GameScene extends Admin.Scene {
         Content.text = question;
         parent.addChild(Option);
         Option.pos(x, y);
+        if (Content.text.length >= 10) {
+            Content.fontSize = 22;
+        } else if (Content.text.length >= 8 && Content.text.length < 10) {
+            Content.fontSize = 25;
+        } else if (Content.text.length >= 6 && Content.text.length < 8) {
+            Content.fontSize = 28;
+        } else if (Content.text.length < 6) {
+            Content.fontSize = 30;
+        }
         if (click) {
             Click.on(Click.Type.largen, Option, this, null, null, () => {
                 EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
@@ -105,21 +123,26 @@ export default class GameScene extends Admin.Scene {
         // Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => { });
     }
 
-    /**创建对方提问*/
+    /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
-        GuessCard.pos(360, 576);
+        GuessCard.pos(0, 0);
 
         let QuestionBaord = GuessCard.getChildByName('QuestionBaord') as Laya.Label;
         let Question = QuestionBaord.getChildByName('Question') as Laya.Label;
         Question.text = questionAndYesOrNo[0];
+        Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 100, 50, 600);
 
-        let CardName = GuessCard.getChildByName('CardName') as Laya.Label;
+        let Card = GuessCard.getChildByName('Card') as Laya.Sprite;
+        let CardName = Card.getChildByName('CardName') as Laya.Label;
         CardName.text = cardName;
+        Card.y = Laya.stage.height * 0.483;
+        Animation2D.cardRotateX_TowFace(Card, 500,()=>{
+        });
+        Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 800);
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
-
         // console.log('问题的答案为：', questionAndYesOrNo[1]);
         Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
             if (questionAndYesOrNo[1]) {
@@ -139,6 +162,12 @@ export default class GameScene extends Admin.Scene {
                 console.log('不可胡乱回答！');
             }
         });
+
+        BtnYes.y = Laya.stage.height * 0.874;
+        BtnNo.y = Laya.stage.height * 0.874;
+
+        Animation2D.blink_FadeOut(BtnNo, 0, 1, 100, 600);
+        Animation2D.blink_FadeOut(BtnYes, 0, 1, 100, 600);
     }
 
     onStageMouseDown(e: Laya.Event): void {
