@@ -1,7 +1,7 @@
 {
 	"version":"LAYAMATERIAL:02",
 	"props":{
-		"type":"Laya.PBRSpecularMaterial",
+		"type":"Laya.UnlitMaterial",
 		"name":"cxk5",
 		"renderStates":[
 			{
@@ -13,18 +13,29 @@
 				"depthTest":515
 			}
 		],
+		"enableVertexColor":false,
 		"alphaTest":false,
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
-		"smoothness":0.5,
-		"smoothnessTextureScale":1,
-		"smoothnessSource":0,
-		"normalTextureScale":1,
-		"parallaxTextureScale":0.02,
-		"occlusionTextureStrength":1,
-		"enableReflection":false,
-		"enableEmission":false,
-		"textures":[],
+		"albedoIntensity":1,
+		"textures":[
+			{
+				"name":"albedoTexture",
+				"path":"cxk5.jpg",
+				"constructParams":[
+					256,
+					512,
+					0,
+					true
+				],
+				"propertyParams":{
+					"filterMode":1,
+					"wrapModeU":0,
+					"wrapModeV":0,
+					"anisoLevel":1
+				}
+			}
+		],
 		"vectors":[
 			{
 				"name":"tilingOffset",
@@ -36,29 +47,11 @@
 				]
 			},
 			{
-				"name":"specularColor",
-				"value":[
-					0.5,
-					0.5,
-					0.5,
-					1
-				]
-			},
-			{
 				"name":"albedoColor",
 				"value":[
 					1,
-					0.6844343,
-					0.240566,
-					1
-				]
-			},
-			{
-				"name":"emissionColor",
-				"value":[
-					0,
-					0,
-					0,
+					1,
+					1,
 					1
 				]
 			}

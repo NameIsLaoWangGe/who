@@ -18,7 +18,24 @@
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
 		"albedoIntensity":1,
-		"textures":[],
+		"textures":[
+			{
+				"name":"albedoTexture",
+				"path":"cxy4.jpg",
+				"constructParams":[
+					256,
+					512,
+					0,
+					true
+				],
+				"propertyParams":{
+					"filterMode":1,
+					"wrapModeU":0,
+					"wrapModeV":0,
+					"anisoLevel":1
+				}
+			}
+		],
 		"vectors":[
 			{
 				"name":"tilingOffset",
@@ -32,9 +49,9 @@
 			{
 				"name":"albedoColor",
 				"value":[
-					0.1301998,
-					0.3773585,
-					0,
+					1,
+					1,
+					1,
 					1
 				]
 			}

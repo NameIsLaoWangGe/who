@@ -1,7 +1,7 @@
 {
 	"version":"LAYAMATERIAL:02",
 	"props":{
-		"type":"Laya.BlinnPhongMaterial",
+		"type":"Laya.UnlitMaterial",
 		"name":"zds5",
 		"renderStates":[
 			{
@@ -18,9 +18,24 @@
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
 		"albedoIntensity":1,
-		"enableLighting":true,
-		"shininess":0.01,
-		"textures":[],
+		"textures":[
+			{
+				"name":"albedoTexture",
+				"path":"../../Card/zds5.jpg",
+				"constructParams":[
+					256,
+					512,
+					0,
+					true
+				],
+				"propertyParams":{
+					"filterMode":1,
+					"wrapModeU":0,
+					"wrapModeV":0,
+					"anisoLevel":1
+				}
+			}
+		],
 		"vectors":[
 			{
 				"name":"tilingOffset",
@@ -32,20 +47,11 @@
 				]
 			},
 			{
-				"name":"specularColor",
-				"value":[
-					0.5,
-					0.5,
-					0.5,
-					1
-				]
-			},
-			{
 				"name":"albedoColor",
 				"value":[
-					0.1289309,
-					0,
-					0.3867925,
+					1,
+					1,
+					1,
 					1
 				]
 			}

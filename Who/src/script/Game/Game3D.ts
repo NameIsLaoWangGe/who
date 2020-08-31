@@ -95,6 +95,8 @@ export module Game3D {
         opening = 'opening',
         /**隐藏选项卡*/
         hideOption = 'hideOption',
+        /**隐藏选项卡*/
+        hideGuessCard = 'hideGuessCard',
     }
 
     /**角色名称*/
@@ -122,7 +124,6 @@ export module Game3D {
         /**复制对象数组，否则会修改原数组*/
         let CardData1 = Tools.objArray_Copy(CardData);
         let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
-
         if (type == WhichScard.MyCardParent) {
             oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
@@ -139,7 +140,7 @@ export module Game3D {
                 if (index % 4 == 0) {
                     startZ -= 0.5;
                 }
-                Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
                 Card.transform.localRotationEulerX = 10;
 
             } else if (type == WhichScard.OppositeCardParent) {
@@ -148,12 +149,13 @@ export module Game3D {
                 if (index % 4 == 0) {
                     startZ += 0.5;
                 }
-                Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
                 Card.transform.localRotationEulerX = -10;
             }
             /**给每个卡牌赋值属性*/
             Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
             Card[CardProperty.fall] = false;
+            Card.transform.localRotationEulerZ = 180;
         }
     }
 
@@ -574,9 +576,7 @@ export module Game3D {
             AllCardTem = this.self.getChildByName('AllCard') as Laya.MeshSprite3D;
             PerspectiveMe = this.self.getChildByName('PerspectiveFar') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost') as Laya.MeshSprite3D;
-
         }
-
 
         lwgEventReg(): void {
             let time = 500;
@@ -629,7 +629,7 @@ export module Game3D {
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.fouren);
                         Laya.timer.once(time * 4, this, () => {
                             Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
-                                Laya.timer.once(time * 1, this, () => {
+                                Laya.timer.once(time * 2, this, () => {
                                     this.carFallAni(cardArr[0], MyCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -668,9 +668,11 @@ export module Game3D {
 
                                 Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
                                     Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
-                                    this.carFallAni([MeshSprite3D.name], MyCardParent);
-                                    Laya.timer.once(time * 3, this, () => {
-                                        EventAdmin.notify(EventType.nextRound);
+                                    Laya.timer.once(time * 2, this, () => {
+                                        this.carFallAni([MeshSprite3D.name], MyCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        })
                                     })
                                 })
                             })
@@ -690,7 +692,8 @@ export module Game3D {
                 if (bool) {
                     console.log('对方回答正确');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(5, 0, 0), time, this, () => {
-                        Laya.timer.once(time * 2, this, () => {
+                        EventAdmin.notify(Game3D.EventType.hideGuessCard);
+                        Laya.timer.once(time * 4, this, () => {
                             // 只剩两张牌的时候，问题是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {
                                 console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
@@ -723,10 +726,11 @@ export module Game3D {
                 } else {
                     console.log('对方回答错误');
                     Animation3D.rock(MainCamera as any, new Laya.Vector3(0, 5, 0), time, this, () => {
+                        EventAdmin.notify(Game3D.EventType.hideGuessCard, [() => {
+                            Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai)
+                        }]);
 
-                        Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
-
-                        Laya.timer.once(time * 3, this, () => {
+                        Laya.timer.once(time * 4, this, () => {
                             console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                             // 只剩两张牌的时候，是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {

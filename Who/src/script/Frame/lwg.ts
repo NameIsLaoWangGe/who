@@ -137,10 +137,10 @@ export module lwg {
 
             // 动画
             Dec.alpha = 0;
-            Animation2D.scale_Alpha(Hint_M, 0, 1, 0, 1, 1, 1, 200, null, 0, f => {
+            Animation2D.scale_Alpha(Hint_M, 0, 1, 0, 1, 1, 1, 200, 0, f => {
                 Animation2D.fadeOut(Dec, 0, 1, 150, 0, f => {
                     Animation2D.fadeOut(Dec, 1, 0, 200, 800, f => {
-                        Animation2D.scale_Alpha(Hint_M, 1, 1, 1, 1, 0, 0, 200, null, 0, f => {
+                        Animation2D.scale_Alpha(Hint_M, 1, 1, 1, 1, 0, 0, 200, 0, f => {
                             Hint_M.removeSelf();
                         });
                     });
@@ -281,7 +281,7 @@ export module lwg {
                     if (delayed == undefined) {
                         delayed = 1000;
                     }
-                    Animation2D.scale_Alpha(Pre_Dialogue, 0, 0, 0, 1, 1, 1, 150, null, 1000, () => {
+                    Animation2D.scale_Alpha(Pre_Dialogue, 0, 0, 0, 1, 1, 1, 150, 1000, () => {
                         for (let index = 0; index < contentArr.length; index++) {
 
                             Laya.timer.once(index * delayed, this, () => {
@@ -289,7 +289,7 @@ export module lwg {
 
                                 if (index == contentArr.length - 1) {
                                     Laya.timer.once(delayed, this, () => {
-                                        Animation2D.scale_Alpha(Pre_Dialogue, 1, 1, 1, 0, 0, 0, 150, null, 1000, () => {
+                                        Animation2D.scale_Alpha(Pre_Dialogue, 1, 1, 1, 0, 0, 0, 150, 1000, () => {
                                             Pre_Dialogue.removeSelf();
                                         })
                                     })
@@ -477,7 +477,7 @@ export module lwg {
         */
         export function goldAppear(delayed?: number, x?: number, y?: number): void {
             if (delayed) {
-                Animation2D.scale_Alpha(GoldNode, 0, 1, 1, 1, 1, 1, delayed, null, 0, f => {
+                Animation2D.scale_Alpha(GoldNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                     GoldNode.visible = true;
                 });
             } else {
@@ -499,7 +499,7 @@ export module lwg {
         */
         export function goldVinish(delayed?: number): void {
             if (delayed) {
-                Animation2D.scale_Alpha(GoldNode, 1, 1, 1, 1, 1, 0, delayed, null, 0, f => {
+                Animation2D.scale_Alpha(GoldNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                     GoldNode.visible = false;
                 });
             } else {
@@ -2802,11 +2802,11 @@ export module lwg {
          * @param delayed 延时时间
          * @param func 完成后的回调
          */
-        export function bombs_Vanish(node, scale, alpha, rotation, time, delayed, func): void {
+        export function bombs_Vanish(node, scale, alpha, rotation, time, delayed, func?: Function): void {
 
             Laya.Tween.to(node, { scaleX: scale, scaleY: scale, alpha: alpha, rotation: rotation }, time, Laya.Ease.cubicOut, Laya.Handler.create(this, function () {
                 // PalyAudio.playSound(Enum.AudioName.commonVanish, 1);
-                if (func !== null) {
+                if (func) {
                     func()
                 }
             }), delayed);
@@ -2854,7 +2854,7 @@ export module lwg {
          * @param ease 动画类型
          * @param func 完成后的回调
          */
-        export function move_Simple(node, fX, fY, targetX, targetY, time, delayed?: number, ease?: Function, func?: Function): void {
+        export function move_Simple(node, fX, fY, targetX, targetY, time, delayed?: number, func?: Function, ease?: Function, ): void {
             node.x = fX;
             node.y = fY;
             if (!delayed) {
@@ -3053,11 +3053,11 @@ export module lwg {
         * @param endScaleY 最终Y大小
         * @param eAlpha 最终透明度
         * @param time 花费时间
-        * @param ease 效果
         * @param delayed 延迟时间
         * @param func 结束回调
+        * @param ease 效果
         */
-        export function scale_Alpha(target, fAlpha, fScaleX, fScaleY, eScaleX, eScaleY, eAlpha, time, ease?: Function, delayed?: number, func?: Function): void {
+        export function scale_Alpha(target, fAlpha, fScaleX, fScaleY, eScaleX, eScaleY, eAlpha, time, delayed?: number, func?: Function, ease?: Function): void {
             if (!delayed) {
                 delayed = 0;
             }
@@ -3224,7 +3224,7 @@ export module lwg {
         */
         export function setBtnAppear(delayed?: number, x?: number, y?: number): void {
             if (delayed) {
-                Animation2D.scale_Alpha(BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, null, 0, f => {
+                Animation2D.scale_Alpha(BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                     BtnSetNode.visible = true;
                 });
             } else {
@@ -3244,7 +3244,7 @@ export module lwg {
         */
         export function setBtnVinish(delayed?: number): void {
             if (delayed) {
-                Animation2D.scale_Alpha(BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, null, 0, f => {
+                Animation2D.scale_Alpha(BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                     BtnSetNode.visible = false;
                 });
             } else {

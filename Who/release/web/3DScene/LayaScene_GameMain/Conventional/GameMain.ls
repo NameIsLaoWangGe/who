@@ -21,55 +21,84 @@
 		},
 		"child":[
 			{
-				"type":"Camera",
+				"type":"Sprite3D",
 				"instanceID":0,
 				"props":{
-					"name":"Main Camera",
+					"name":"MainCamera",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
-						0,
-						1.37,
-						-9.3
+						-0.03,
+						0.48,
+						-8.87
 					],
 					"rotation":[
+						-0.2575919,
 						0,
-						0.9428453,
-						0.3332309,
-						0
+						0,
+						-0.9662538
 					],
 					"scale":[
-						1,
-						1,
-						1
-					],
-					"clearFlag":1,
-					"orthographic":false,
-					"orthographicVerticalSize":10,
-					"fieldOfView":60,
-					"enableHDR":true,
-					"nearPlane":0.3,
-					"farPlane":1000,
-					"viewport":[
-						0,
-						0,
-						1,
-						1
-					],
-					"clearColor":[
-						0.1921569,
-						0.3019608,
-						0.4745098,
-						0
+						0.1,
+						0.1,
+						0.1
 					]
 				},
 				"components":[],
-				"child":[]
+				"child":[
+					{
+						"type":"Camera",
+						"instanceID":1,
+						"props":{
+							"name":"Main Camera",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								0,
+								0,
+								0
+							],
+							"rotation":[
+								0,
+								1,
+								0,
+								0
+							],
+							"scale":[
+								1,
+								1,
+								1
+							],
+							"clearFlag":1,
+							"orthographic":false,
+							"orthographicVerticalSize":10,
+							"fieldOfView":60,
+							"enableHDR":true,
+							"nearPlane":0.3,
+							"farPlane":1000,
+							"viewport":[
+								0,
+								0,
+								1,
+								1
+							],
+							"clearColor":[
+								0.1921569,
+								0.3019608,
+								0.4745098,
+								0
+							]
+						},
+						"components":[],
+						"child":[]
+					}
+				]
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":1,
+				"instanceID":2,
 				"props":{
 					"name":"Desk",
 					"active":true,
@@ -78,7 +107,7 @@
 					"position":[
 						-0.03,
 						-2.93,
-						-5.94
+						-5.99
 					],
 					"rotation":[
 						0,
@@ -96,7 +125,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":2,
+						"instanceID":3,
 						"props":{
 							"name":"Table_Square_Brown_0",
 							"active":true,
@@ -133,115 +162,16 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":3,
-				"props":{
-					"name":"body",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						-0.11,
-						-2.95,
-						-3.357
-					],
-					"rotation":[
-						0,
-						-0.7071068,
-						-0.7071068,
-						0
-					],
-					"scale":[
-						110,
-						110,
-						110
-					]
-				},
-				"components":[],
-				"child":[
-					{
-						"type":"MeshSprite3D",
-						"instanceID":4,
-						"props":{
-							"name":"body_0",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0,
-								0,
-								0
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								1,
-								1,
-								1
-							],
-							"meshPath":"Assets/Mesh/Temporary/body-body_0.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxk3.lmat"
-								}
-							]
-						},
-						"components":[],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":5,
-						"props":{
-							"name":"body_1",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0,
-								0,
-								0
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								1,
-								1,
-								1
-							],
-							"meshPath":"Assets/Mesh/Temporary/body-body_1.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/cxk1.lmat"
-								}
-							]
-						},
-						"components":[],
-						"child":[]
-					}
-				]
-			},
-			{
-				"type":"Sprite3D",
-				"instanceID":6,
+				"instanceID":4,
 				"props":{
 					"name":"Chair",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
-						-0.1,
-						-2.87,
-						-2.29
+						-0.02,
+						-3.06,
+						-2.738
 					],
 					"rotation":[
 						0,
@@ -259,7 +189,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":7,
+						"instanceID":5,
 						"props":{
 							"name":"Chair_03_Beige.002_0",
 							"active":true,
@@ -296,7 +226,7 @@
 			},
 			{
 				"type":"DirectionLight",
-				"instanceID":8,
+				"instanceID":6,
 				"props":{
 					"name":"Directional Light",
 					"active":true,
@@ -331,7 +261,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":9,
+				"instanceID":7,
 				"props":{
 					"name":"CardTem",
 					"active":true,
@@ -390,7 +320,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":10,
+				"instanceID":8,
 				"props":{
 					"name":"EventSystem",
 					"active":true,
@@ -418,7 +348,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":11,
+				"instanceID":9,
 				"props":{
 					"name":"MyCardParent",
 					"active":true,
@@ -446,7 +376,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":12,
+				"instanceID":10,
 				"props":{
 					"name":"OppositeCardParent",
 					"active":true,
@@ -474,7 +404,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":13,
+				"instanceID":11,
 				"props":{
 					"name":"AllCard",
 					"active":true,
@@ -501,7 +431,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":14,
+						"instanceID":12,
 						"props":{
 							"name":"zds1",
 							"active":true,
@@ -515,13 +445,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -559,7 +489,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":15,
+						"instanceID":13,
 						"props":{
 							"name":"zds2",
 							"active":true,
@@ -573,13 +503,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -617,7 +547,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":16,
+						"instanceID":14,
 						"props":{
 							"name":"zds3",
 							"active":true,
@@ -631,13 +561,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -675,7 +605,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":17,
+						"instanceID":15,
 						"props":{
 							"name":"zds4",
 							"active":true,
@@ -689,13 +619,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -733,7 +663,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":18,
+						"instanceID":16,
 						"props":{
 							"name":"zds5",
 							"active":true,
@@ -747,13 +677,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -791,7 +721,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":19,
+						"instanceID":17,
 						"props":{
 							"name":"lyy1",
 							"active":true,
@@ -805,13 +735,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -849,7 +779,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":20,
+						"instanceID":18,
 						"props":{
 							"name":"lyy2",
 							"active":true,
@@ -863,13 +793,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -907,7 +837,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":21,
+						"instanceID":19,
 						"props":{
 							"name":"lyy3",
 							"active":true,
@@ -921,13 +851,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -965,7 +895,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":22,
+						"instanceID":20,
 						"props":{
 							"name":"lyy4",
 							"active":true,
@@ -979,13 +909,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1023,7 +953,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":23,
+						"instanceID":21,
 						"props":{
 							"name":"lyy5",
 							"active":true,
@@ -1037,13 +967,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1081,7 +1011,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":24,
+						"instanceID":22,
 						"props":{
 							"name":"cxk1",
 							"active":true,
@@ -1095,13 +1025,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1139,7 +1069,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":25,
+						"instanceID":23,
 						"props":{
 							"name":"cxk2",
 							"active":true,
@@ -1153,13 +1083,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1197,7 +1127,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":26,
+						"instanceID":24,
 						"props":{
 							"name":"cxk3",
 							"active":true,
@@ -1211,13 +1141,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1255,7 +1185,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":27,
+						"instanceID":25,
 						"props":{
 							"name":"cxk4",
 							"active":true,
@@ -1269,13 +1199,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1313,7 +1243,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":28,
+						"instanceID":26,
 						"props":{
 							"name":"cxk5",
 							"active":true,
@@ -1327,13 +1257,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1371,7 +1301,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":29,
+						"instanceID":27,
 						"props":{
 							"name":"cxy1",
 							"active":true,
@@ -1385,13 +1315,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1429,7 +1359,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":30,
+						"instanceID":28,
 						"props":{
 							"name":"cxy2",
 							"active":true,
@@ -1443,13 +1373,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1487,7 +1417,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":31,
+						"instanceID":29,
 						"props":{
 							"name":"cxy3",
 							"active":true,
@@ -1501,13 +1431,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1545,7 +1475,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":32,
+						"instanceID":30,
 						"props":{
 							"name":"cxy4",
 							"active":true,
@@ -1559,13 +1489,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1603,7 +1533,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":33,
+						"instanceID":31,
 						"props":{
 							"name":"cxy5",
 							"active":true,
@@ -1617,13 +1547,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1661,7 +1591,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":34,
+						"instanceID":32,
 						"props":{
 							"name":"xxs1",
 							"active":true,
@@ -1675,13 +1605,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1719,7 +1649,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":35,
+						"instanceID":33,
 						"props":{
 							"name":"xxs2",
 							"active":true,
@@ -1733,13 +1663,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1777,7 +1707,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":36,
+						"instanceID":34,
 						"props":{
 							"name":"xxs3",
 							"active":true,
@@ -1791,13 +1721,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1835,7 +1765,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":37,
+						"instanceID":35,
 						"props":{
 							"name":"xxs4",
 							"active":true,
@@ -1849,13 +1779,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1893,7 +1823,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":38,
+						"instanceID":36,
 						"props":{
 							"name":"xxs5",
 							"active":true,
@@ -1907,13 +1837,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -1951,7 +1881,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":39,
+						"instanceID":37,
 						"props":{
 							"name":"scp1",
 							"active":true,
@@ -1965,13 +1895,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2009,7 +1939,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":40,
+						"instanceID":38,
 						"props":{
 							"name":"scp2",
 							"active":true,
@@ -2023,13 +1953,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2067,7 +1997,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":41,
+						"instanceID":39,
 						"props":{
 							"name":"scp3",
 							"active":true,
@@ -2081,13 +2011,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2125,7 +2055,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":42,
+						"instanceID":40,
 						"props":{
 							"name":"scp4",
 							"active":true,
@@ -2139,13 +2069,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2183,7 +2113,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":43,
+						"instanceID":41,
 						"props":{
 							"name":"scp5",
 							"active":true,
@@ -2197,13 +2127,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2241,7 +2171,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":44,
+						"instanceID":42,
 						"props":{
 							"name":"fkr1",
 							"active":true,
@@ -2255,13 +2185,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2299,7 +2229,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":45,
+						"instanceID":43,
 						"props":{
 							"name":"fkr2",
 							"active":true,
@@ -2313,13 +2243,129 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr2.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":44,
+						"props":{
+							"name":"fkr3",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								-1.8
+							],
+							"rotation":[
+								0,
+								0,
+								1,
+								0
+							],
+							"scale":[
+								0.25,
+								0.3,
+								0.015
+							],
+							"meshPath":"Library/unity default resources-Cube.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Material/Card/fkr3.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0,
+											0
+										],
+										"size":[
+											1,
+											1,
+											1
+										]
+									}
+								],
+								"isTrigger":false
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":45,
+						"props":{
+							"name":"fkr4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								1,
+								0,
+								1.8
+							],
+							"rotation":[
+								0,
+								0,
+								1,
+								0
+							],
+							"scale":[
+								0.25,
+								0.3,
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2359,122 +2405,6 @@
 						"type":"MeshSprite3D",
 						"instanceID":46,
 						"props":{
-							"name":"fkr3",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								1,
-								0,
-								-1.8
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/fkr3.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":47,
-						"props":{
-							"name":"fkr4",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								1,
-								0,
-								1.8
-							],
-							"rotation":[
-								0,
-								0,
-								0,
-								-1
-							],
-							"scale":[
-								0.3,
-								0.35,
-								0.02
-							],
-							"meshPath":"Library/unity default resources-Cube.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Material/Card/fkr2.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0,
-											0
-										],
-										"size":[
-											1,
-											1,
-											1
-										]
-									}
-								],
-								"isTrigger":false
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":48,
-						"props":{
 							"name":"fkr5",
 							"active":true,
 							"isStatic":false,
@@ -2487,13 +2417,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2531,7 +2461,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":49,
+						"instanceID":47,
 						"props":{
 							"name":"fkr6",
 							"active":true,
@@ -2545,13 +2475,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2589,7 +2519,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":50,
+						"instanceID":48,
 						"props":{
 							"name":"fkr7",
 							"active":true,
@@ -2603,13 +2533,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2647,7 +2577,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":51,
+						"instanceID":49,
 						"props":{
 							"name":"fkr8",
 							"active":true,
@@ -2661,13 +2591,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2705,7 +2635,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":52,
+						"instanceID":50,
 						"props":{
 							"name":"fkr9",
 							"active":true,
@@ -2719,13 +2649,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2763,7 +2693,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":53,
+						"instanceID":51,
 						"props":{
 							"name":"atmzw",
 							"active":true,
@@ -2777,13 +2707,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2821,7 +2751,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":54,
+						"instanceID":52,
 						"props":{
 							"name":"atm2",
 							"active":true,
@@ -2835,13 +2765,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2879,7 +2809,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":55,
+						"instanceID":53,
 						"props":{
 							"name":"atm3",
 							"active":true,
@@ -2893,13 +2823,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2937,7 +2867,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":56,
+						"instanceID":54,
 						"props":{
 							"name":"atm4",
 							"active":true,
@@ -2951,13 +2881,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -2995,7 +2925,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":57,
+						"instanceID":55,
 						"props":{
 							"name":"atm5",
 							"active":true,
@@ -3009,13 +2939,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3053,7 +2983,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":58,
+						"instanceID":56,
 						"props":{
 							"name":"atm6",
 							"active":true,
@@ -3067,13 +2997,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3111,7 +3041,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":59,
+						"instanceID":57,
 						"props":{
 							"name":"lb",
 							"active":true,
@@ -3125,13 +3055,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3169,7 +3099,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":60,
+						"instanceID":58,
 						"props":{
 							"name":"zbj",
 							"active":true,
@@ -3183,13 +3113,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3227,7 +3157,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":61,
+						"instanceID":59,
 						"props":{
 							"name":"swk",
 							"active":true,
@@ -3241,13 +3171,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3285,7 +3215,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":62,
+						"instanceID":60,
 						"props":{
 							"name":"yj",
 							"active":true,
@@ -3299,13 +3229,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3343,7 +3273,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":63,
+						"instanceID":61,
 						"props":{
 							"name":"nz",
 							"active":true,
@@ -3357,13 +3287,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3401,7 +3331,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":64,
+						"instanceID":62,
 						"props":{
 							"name":"nm",
 							"active":true,
@@ -3415,13 +3345,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3459,7 +3389,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":65,
+						"instanceID":63,
 						"props":{
 							"name":"dj",
 							"active":true,
@@ -3473,13 +3403,13 @@
 							"rotation":[
 								0,
 								0,
-								0,
-								-1
+								1,
+								0
 							],
 							"scale":[
+								0.25,
 								0.3,
-								0.35,
-								0.02
+								0.015
 							],
 							"meshPath":"Library/unity default resources-Cube.lm",
 							"enableRender":true,
@@ -3519,15 +3449,15 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":66,
+				"instanceID":64,
 				"props":{
-					"name":"OppositeHandParent",
+					"name":"OppositeHandDispaly",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
 					"position":[
 						-0.085,
-						-1.022,
+						-0.393,
 						-4.53
 					],
 					"rotation":[
@@ -3540,6 +3470,2830 @@
 						1,
 						1,
 						1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":65,
+				"props":{
+					"name":"MyHandDispaly",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						0.85,
+						-0.393,
+						-6.03
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
+			},
+			{
+				"type":"Sprite3D",
+				"instanceID":66,
+				"props":{
+					"name":"OppositeRoleParent",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						0.4851386,
+						-2.271438,
+						-0.05146643
+					],
+					"rotation":[
+						0,
+						0,
+						0,
+						-1
+					],
+					"scale":[
+						1,
+						1,
+						1
+					]
+				},
+				"components":[],
+				"child":[
+					{
+						"type":"Sprite3D",
+						"instanceID":67,
+						"props":{
+							"name":"Girl",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-0.5151386,
+								-0.2885622,
+								-3.663
+							],
+							"rotation":[
+								0,
+								-1,
+								0,
+								0
+							],
+							"scale":[
+								110,
+								110,
+								110
+							]
+						},
+						"components":[
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"daiji",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/daiji-daiji.lani"
+											},
+											{
+												"name":"chaofeng",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/chaofeng-chaofeng.lani"
+											},
+											{
+												"name":"fouren",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/fouren-fouren.lani"
+											},
+											{
+												"name":"queding",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/queding-queding.lani"
+											},
+											{
+												"name":"qupai",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/qupai-qupai.lani"
+											},
+											{
+												"name":"tiwen",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/tiwen-tiwen.lani"
+											},
+											{
+												"name":"zhuhe",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/zhuhe-zhuhe.lani"
+											},
+											{
+												"name":"zhuhetingliu",
+												"clipPath":"Assets/Animator/Girl/AnimationClip/zhuhetingliu-zhuhetingliu.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
+						"child":[
+							{
+								"type":"Sprite3D",
+								"instanceID":68,
+								"props":{
+									"name":"Bip001",
+									"active":true,
+									"isStatic":false,
+									"layer":0,
+									"position":[
+										-4.611969E-07,
+										0.01043334,
+										-0.0005970708
+									],
+									"rotation":[
+										0.5000004,
+										0.4999996,
+										0.4999996,
+										-0.5000004
+									],
+									"scale":[
+										0.9999999,
+										0.9999999,
+										1
+									]
+								},
+								"components":[],
+								"child":[
+									{
+										"type":"Sprite3D",
+										"instanceID":69,
+										"props":{
+											"name":"Bip001 Pelvis",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0,
+												0,
+												0
+											],
+											"rotation":[
+												0.5,
+												0.5,
+												0.4999993,
+												-0.5000007
+											],
+											"scale":[
+												1,
+												0.9999999,
+												0.9999999
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"Sprite3D",
+												"instanceID":70,
+												"props":{
+													"name":"Bip001 L Thigh",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-1.192093E-09,
+														2.086163E-09,
+														0.001192862
+													],
+													"rotation":[
+														0.06412473,
+														0.9965098,
+														0.002515223,
+														-0.053385
+													],
+													"scale":[
+														0.9999999,
+														0.9999999,
+														0.9999999
+													]
+												},
+												"components":[],
+												"child":[
+													{
+														"type":"Sprite3D",
+														"instanceID":71,
+														"props":{
+															"name":"Bip001 L Calf",
+															"active":true,
+															"isStatic":false,
+															"layer":0,
+															"position":[
+																0.004902969,
+																1.490116E-10,
+																-1.490116E-10
+															],
+															"rotation":[
+																1.856294E-09,
+																7.275486E-09,
+																0.12513,
+																-0.9921404
+															],
+															"scale":[
+																0.9999999,
+																1,
+																1
+															]
+														},
+														"components":[],
+														"child":[
+															{
+																"type":"Sprite3D",
+																"instanceID":72,
+																"props":{
+																	"name":"Bip001 L Foot",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.004224758,
+																		7.45058E-11,
+																		0
+																	],
+																	"rotation":[
+																		0.03809214,
+																		0.05548783,
+																		-0.05850733,
+																		-0.9960156
+																	],
+																	"scale":[
+																		1,
+																		1,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[
+																	{
+																		"type":"Sprite3D",
+																		"instanceID":73,
+																		"props":{
+																			"name":"Bip001 L Toe0",
+																			"active":true,
+																			"isStatic":false,
+																			"layer":0,
+																			"position":[
+																				0.001423877,
+																				0.001931569,
+																				-1.490116E-10
+																			],
+																			"rotation":[
+																				1.545431E-08,
+																				1.545431E-08,
+																				-0.7071068,
+																				-0.7071068
+																			],
+																			"scale":[
+																				1,
+																				1,
+																				1
+																			]
+																		},
+																		"components":[],
+																		"child":[]
+																	}
+																]
+															}
+														]
+													}
+												]
+											},
+											{
+												"type":"Sprite3D",
+												"instanceID":74,
+												"props":{
+													"name":"Bip001 R Thigh",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														1.192093E-09,
+														-1.192093E-09,
+														-0.001192862
+													],
+													"rotation":[
+														0.06412467,
+														0.9965097,
+														-0.00251651,
+														0.05338656
+													],
+													"scale":[
+														1,
+														0.9999999,
+														0.9999999
+													]
+												},
+												"components":[],
+												"child":[
+													{
+														"type":"Sprite3D",
+														"instanceID":75,
+														"props":{
+															"name":"Bip001 R Calf",
+															"active":true,
+															"isStatic":false,
+															"layer":0,
+															"position":[
+																0.004902969,
+																7.45058E-11,
+																0
+															],
+															"rotation":[
+																-9.364353E-10,
+																-1.11463E-08,
+																0.12513,
+																-0.9921404
+															],
+															"scale":[
+																0.9999999,
+																1,
+																1
+															]
+														},
+														"components":[],
+														"child":[
+															{
+																"type":"Sprite3D",
+																"instanceID":76,
+																"props":{
+																	"name":"Bip001 R Foot",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.004224758,
+																		0,
+																		0
+																	],
+																	"rotation":[
+																		-0.03809214,
+																		-0.05548792,
+																		-0.05850732,
+																		-0.9960155
+																	],
+																	"scale":[
+																		1,
+																		0.9999999,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[
+																	{
+																		"type":"Sprite3D",
+																		"instanceID":77,
+																		"props":{
+																			"name":"Bip001 R Toe0",
+																			"active":true,
+																			"isStatic":false,
+																			"layer":0,
+																			"position":[
+																				0.001423876,
+																				0.001931569,
+																				1.490116E-10
+																			],
+																			"rotation":[
+																				-1.545431E-08,
+																				-1.545431E-08,
+																				-0.7071068,
+																				-0.7071068
+																			],
+																			"scale":[
+																				0.9999999,
+																				0.9999999,
+																				0.9999999
+																			]
+																		},
+																		"components":[],
+																		"child":[]
+																	}
+																]
+															}
+														]
+													}
+												]
+											},
+											{
+												"type":"Sprite3D",
+												"instanceID":78,
+												"props":{
+													"name":"Bip001 Spine",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														0.001127683,
+														-2.141893E-06,
+														1.566805E-09
+													],
+													"rotation":[
+														2.080476E-06,
+														6.93676E-07,
+														-0.000398159,
+														-0.9999999
+													],
+													"scale":[
+														1,
+														0.9999999,
+														0.9999999
+													]
+												},
+												"components":[],
+												"child":[
+													{
+														"type":"Sprite3D",
+														"instanceID":79,
+														"props":{
+															"name":"Bip001 Spine1",
+															"active":true,
+															"isStatic":false,
+															"layer":0,
+															"position":[
+																0.002690533,
+																-2.142414E-06,
+																-5.929905E-12
+															],
+															"rotation":[
+																3.011767E-14,
+																0,
+																0,
+																-1
+															],
+															"scale":[
+																1,
+																1,
+																1
+															]
+														},
+														"components":[],
+														"child":[
+															{
+																"type":"Sprite3D",
+																"instanceID":80,
+																"props":{
+																	"name":"Bip001 L Clavicle",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.002690535,
+																		-1.005828E-09,
+																		0.0003660081
+																	],
+																	"rotation":[
+																		0.6305639,
+																		-0.06738331,
+																		0.771278,
+																		-0.05458123
+																	],
+																	"scale":[
+																		1,
+																		1,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[
+																	{
+																		"type":"Sprite3D",
+																		"instanceID":81,
+																		"props":{
+																			"name":"Bip001 L UpperArm",
+																			"active":true,
+																			"isStatic":false,
+																			"layer":0,
+																			"position":[
+																				0.001580097,
+																				-7.45058E-11,
+																				-1.192093E-09
+																			],
+																			"rotation":[
+																				-0.2738384,
+																				-0.3073874,
+																				0.1017355,
+																				-0.9056354
+																			],
+																			"scale":[
+																				1,
+																				1,
+																				1
+																			]
+																		},
+																		"components":[],
+																		"child":[
+																			{
+																				"type":"Sprite3D",
+																				"instanceID":82,
+																				"props":{
+																					"name":"Bip001 L Forearm",
+																					"active":true,
+																					"isStatic":false,
+																					"layer":0,
+																					"position":[
+																						0.003125167,
+																						0,
+																						0
+																					],
+																					"rotation":[
+																						-3.837295E-08,
+																						2.249375E-08,
+																						0.1874702,
+																						-0.9822703
+																					],
+																					"scale":[
+																						1,
+																						1,
+																						1
+																					]
+																				},
+																				"components":[],
+																				"child":[
+																					{
+																						"type":"Sprite3D",
+																						"instanceID":83,
+																						"props":{
+																							"name":"Bip001 L Hand",
+																							"active":true,
+																							"isStatic":false,
+																							"layer":0,
+																							"position":[
+																								0.003429725,
+																								-2.980232E-10,
+																								0
+																							],
+																							"rotation":[
+																								0.7220069,
+																								-0.07346499,
+																								-0.02040294,
+																								-0.687672
+																							],
+																							"scale":[
+																								0.9999999,
+																								1,
+																								1
+																							]
+																						},
+																						"components":[],
+																						"child":[
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":84,
+																								"props":{
+																									"name":"Bip001 L Finger0",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.0007699287,
+																										0.0003195387,
+																										-0.0006243658
+																									],
+																									"rotation":[
+																										-0.4877524,
+																										-0.3154629,
+																										0.07365386,
+																										-0.8106515
+																									],
+																									"scale":[
+																										1,
+																										1,
+																										1
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":85,
+																										"props":{
+																											"name":"Bip001 L Finger01",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004285568,
+																												-5.960464E-10,
+																												5.960464E-10
+																											],
+																											"rotation":[
+																												-9.467374E-09,
+																												7.579349E-10,
+																												-0.1172381,
+																												-0.9931039
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":86,
+																								"props":{
+																									"name":"Bip001 L Finger1",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.001411457,
+																										-9.540975E-05,
+																										-9.772867E-05
+																									],
+																									"rotation":[
+																										0.1456727,
+																										-0.07918511,
+																										-0.1292053,
+																										-0.977658
+																									],
+																									"scale":[
+																										0.9999999,
+																										0.9999999,
+																										0.9999999
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"MeshSprite3D",
+																										"instanceID":87,
+																										"props":{
+																											"name":"CardMarked",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.00119,
+																												0.00043,
+																												-0.00027
+																											],
+																											"rotation":[
+																												-0.6428029,
+																												0.1137381,
+																												-0.1019309,
+																												-0.7506518
+																											],
+																											"scale":[
+																												0.002307693,
+																												0.002692312,
+																												0.0001538464
+																											],
+																											"meshPath":"Library/unity default resources-Cube.lm",
+																											"enableRender":true,
+																											"materials":[
+																												{
+																													"path":"Assets/Material/Card/atmzw.lmat"
+																												}
+																											]
+																										},
+																										"components":[
+																											{
+																												"type":"PhysicsCollider",
+																												"restitution":0,
+																												"friction":0.5,
+																												"rollingFriction":0,
+																												"shapes":[
+																													{
+																														"type":"BoxColliderShape",
+																														"center":[
+																															0,
+																															0,
+																															0
+																														],
+																														"size":[
+																															1,
+																															1,
+																															1
+																														]
+																													}
+																												],
+																												"isTrigger":false
+																											}
+																										],
+																										"child":[]
+																									},
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":88,
+																										"props":{
+																											"name":"Bip001 L Finger11",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004955441,
+																												5.960464E-10,
+																												0
+																											],
+																											"rotation":[
+																												5.560943E-09,
+																												5.485764E-10,
+																												-0.09817157,
+																												-0.9951695
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":89,
+																								"props":{
+																									"name":"Bip001 L Finger2",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.001370131,
+																										3.760814E-05,
+																										0.0003698957
+																									],
+																									"rotation":[
+																										0.2185452,
+																										0.05592357,
+																										-0.1755069,
+																										-0.9582838
+																									],
+																									"scale":[
+																										1,
+																										1,
+																										1
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":90,
+																										"props":{
+																											"name":"Bip001 L Finger21",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0005738115,
+																												1.192093E-09,
+																												-1.117587E-10
+																											],
+																											"rotation":[
+																												-2.731468E-09,
+																												-1.531707E-10,
+																												-0.05598837,
+																												-0.9984314
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":91,
+																								"props":{
+																									"name":"Bip001 L Finger3",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.001177241,
+																										0.0003754204,
+																										0.000753476
+																									],
+																									"rotation":[
+																										0.2543613,
+																										0.1777657,
+																										-0.1325129,
+																										-0.9413502
+																									],
+																									"scale":[
+																										1,
+																										1,
+																										1
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":92,
+																										"props":{
+																											"name":"Bip001 L Finger31",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004482662,
+																												0,
+																												1.490116E-10
+																											],
+																											"rotation":[
+																												1.157185E-10,
+																												1.271861E-11,
+																												-0.109252,
+																												-0.9940141
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							}
+																						]
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"type":"Sprite3D",
+																"instanceID":93,
+																"props":{
+																	"name":"Bip001 Neck",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.003048202,
+																		-0.0002781532,
+																		4.627509E-11
+																	],
+																	"rotation":[
+																		4.891111E-14,
+																		4.77459E-07,
+																		-0.1721441,
+																		-0.9850718
+																	],
+																	"scale":[
+																		1,
+																		1,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[
+																	{
+																		"type":"Sprite3D",
+																		"instanceID":94,
+																		"props":{
+																			"name":"Bip001 Head",
+																			"active":true,
+																			"isStatic":false,
+																			"layer":0,
+																			"position":[
+																				0.001056855,
+																				5.960464E-10,
+																				-3.637979E-14
+																			],
+																			"rotation":[
+																				3.991196E-13,
+																				-4.785468E-07,
+																				0.172537,
+																				-0.9850031
+																			],
+																			"scale":[
+																				0.9999999,
+																				0.9999999,
+																				0.9999999
+																			]
+																		},
+																		"components":[],
+																		"child":[
+																			{
+																				"type":"Sprite3D",
+																				"instanceID":95,
+																				"props":{
+																					"name":"Bone003",
+																					"active":true,
+																					"isStatic":false,
+																					"layer":0,
+																					"position":[
+																						0.001498706,
+																						-0.002163594,
+																						4.577636E-07
+																					],
+																					"rotation":[
+																						-0.09357823,
+																						0.995612,
+																						6.81208E-07,
+																						7.132365E-08
+																					],
+																					"scale":[
+																						1,
+																						1,
+																						1
+																					]
+																				},
+																				"components":[],
+																				"child":[
+																					{
+																						"type":"Sprite3D",
+																						"instanceID":96,
+																						"props":{
+																							"name":"Bone004",
+																							"active":true,
+																							"isStatic":false,
+																							"layer":0,
+																							"position":[
+																								0.001741711,
+																								0,
+																								-2.837213E-11
+																							],
+																							"rotation":[
+																								-3.753444E-08,
+																								-5.027682E-09,
+																								-0.08351745,
+																								-0.9965063
+																							],
+																							"scale":[
+																								1,
+																								1,
+																								1
+																							]
+																						},
+																						"components":[],
+																						"child":[]
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"type":"Sprite3D",
+																"instanceID":97,
+																"props":{
+																	"name":"Bip001 R Clavicle",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.002690535,
+																		1.005828E-09,
+																		-0.0003660081
+																	],
+																	"rotation":[
+																		-0.630564,
+																		0.06738117,
+																		0.7712781,
+																		-0.05457947
+																	],
+																	"scale":[
+																		1,
+																		1,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[
+																	{
+																		"type":"Sprite3D",
+																		"instanceID":98,
+																		"props":{
+																			"name":"Bip001 R UpperArm",
+																			"active":true,
+																			"isStatic":false,
+																			"layer":0,
+																			"position":[
+																				0.001580096,
+																				0,
+																				1.192093E-09
+																			],
+																			"rotation":[
+																				0.2738384,
+																				0.3073874,
+																				0.1017355,
+																				-0.9056354
+																			],
+																			"scale":[
+																				0.9999999,
+																				1,
+																				1
+																			]
+																		},
+																		"components":[],
+																		"child":[
+																			{
+																				"type":"Sprite3D",
+																				"instanceID":99,
+																				"props":{
+																					"name":"Bip001 R Forearm",
+																					"active":true,
+																					"isStatic":false,
+																					"layer":0,
+																					"position":[
+																						0.003125168,
+																						5.960464E-10,
+																						0
+																					],
+																					"rotation":[
+																						3.37498E-08,
+																						-3.678153E-08,
+																						0.1874702,
+																						-0.9822703
+																					],
+																					"scale":[
+																						1,
+																						1,
+																						1
+																					]
+																				},
+																				"components":[],
+																				"child":[
+																					{
+																						"type":"Sprite3D",
+																						"instanceID":100,
+																						"props":{
+																							"name":"Bip001 R Hand",
+																							"active":true,
+																							"isStatic":false,
+																							"layer":0,
+																							"position":[
+																								0.003429723,
+																								2.980232E-10,
+																								0
+																							],
+																							"rotation":[
+																								-0.7220068,
+																								0.07346497,
+																								-0.02040292,
+																								-0.687672
+																							],
+																							"scale":[
+																								0.9999999,
+																								0.9999999,
+																								1
+																							]
+																						},
+																						"components":[],
+																						"child":[
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":101,
+																								"props":{
+																									"name":"Bip001 R Finger0",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.0007699275,
+																										0.0003195393,
+																										0.0006243659
+																									],
+																									"rotation":[
+																										0.4877524,
+																										0.3154629,
+																										0.07365387,
+																										-0.8106515
+																									],
+																									"scale":[
+																										0.9999999,
+																										1,
+																										1
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":102,
+																										"props":{
+																											"name":"Bip001 R Finger01",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004285568,
+																												-5.960464E-10,
+																												0
+																											],
+																											"rotation":[
+																												-4.894281E-09,
+																												-6.204518E-09,
+																												-0.1172381,
+																												-0.9931039
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":103,
+																								"props":{
+																									"name":"Bip001 R Finger1",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.001411456,
+																										-9.541035E-05,
+																										9.772807E-05
+																									],
+																									"rotation":[
+																										-0.1456727,
+																										0.07918511,
+																										-0.1292053,
+																										-0.977658
+																									],
+																									"scale":[
+																										0.9999999,
+																										0.9999998,
+																										0.9999998
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":104,
+																										"props":{
+																											"name":"Bip001 R Finger11",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004955441,
+																												0,
+																												0
+																											],
+																											"rotation":[
+																												9.268239E-09,
+																												9.142939E-10,
+																												-0.09817156,
+																												-0.9951695
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":105,
+																								"props":{
+																									"name":"Bip001 R Finger2",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.00137013,
+																										3.760874E-05,
+																										-0.0003698957
+																									],
+																									"rotation":[
+																										-0.2185452,
+																										-0.05592358,
+																										-0.1755069,
+																										-0.9582838
+																									],
+																									"scale":[
+																										0.9999999,
+																										1,
+																										1
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":106,
+																										"props":{
+																											"name":"Bip001 R Finger21",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0005738115,
+																												5.960464E-10,
+																												-3.72529E-11
+																											],
+																											"rotation":[
+																												-1.569142E-09,
+																												-8.79917E-11,
+																												-0.05598837,
+																												-0.9984314
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							},
+																							{
+																								"type":"Sprite3D",
+																								"instanceID":107,
+																								"props":{
+																									"name":"Bip001 R Finger3",
+																									"active":true,
+																									"isStatic":false,
+																									"layer":0,
+																									"position":[
+																										0.001177239,
+																										0.000375421,
+																										-0.0007534763
+																									],
+																									"rotation":[
+																										-0.2543613,
+																										-0.1777657,
+																										-0.1325129,
+																										-0.9413502
+																									],
+																									"scale":[
+																										1,
+																										0.9999999,
+																										0.9999999
+																									]
+																								},
+																								"components":[],
+																								"child":[
+																									{
+																										"type":"Sprite3D",
+																										"instanceID":108,
+																										"props":{
+																											"name":"Bip001 R Finger31",
+																											"active":true,
+																											"isStatic":false,
+																											"layer":0,
+																											"position":[
+																												0.0004482662,
+																												0,
+																												0
+																											],
+																											"rotation":[
+																												3.471554E-09,
+																												3.815584E-10,
+																												-0.1092521,
+																												-0.9940141
+																											],
+																											"scale":[
+																												1,
+																												1,
+																												1
+																											]
+																										},
+																										"components":[],
+																										"child":[]
+																									}
+																								]
+																							}
+																						]
+																					}
+																				]
+																			}
+																		]
+																	}
+																]
+															},
+															{
+																"type":"Sprite3D",
+																"instanceID":109,
+																"props":{
+																	"name":"Bone001",
+																	"active":true,
+																	"isStatic":false,
+																	"layer":0,
+																	"position":[
+																		0.0006752777,
+																		0.001490279,
+																		4.637241E-07
+																	],
+																	"rotation":[
+																		-0.9956719,
+																		0.09293838,
+																		1.068199E-07,
+																		6.086082E-07
+																	],
+																	"scale":[
+																		1,
+																		1,
+																		1
+																	]
+																},
+																"components":[],
+																"child":[]
+															}
+														]
+													},
+													{
+														"type":"Sprite3D",
+														"instanceID":110,
+														"props":{
+															"name":"Bone002",
+															"active":true,
+															"isStatic":false,
+															"layer":0,
+															"position":[
+																0.0002729773,
+																0.002151454,
+																4.649163E-07
+															],
+															"rotation":[
+																-0.7073882,
+																-0.7068253,
+																-3.90807E-07,
+																6.208089E-07
+															],
+															"scale":[
+																1,
+																1,
+																1
+															]
+														},
+														"components":[],
+														"child":[]
+													}
+												]
+											}
+										]
+									},
+									{
+										"type":"Sprite3D",
+										"instanceID":111,
+										"props":{
+											"name":"上衣",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.00456,
+												0,
+												-0.01043334
+											],
+											"rotation":[
+												-0.7071068,
+												5.057622E-07,
+												5.057622E-07,
+												-0.7071067
+											],
+											"scale":[
+												1,
+												1,
+												1
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":112,
+												"props":{
+													"name":"D TShirt",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														0.00192,
+														0,
+														-0.00367
+													],
+													"rotation":[
+														0.5000001,
+														-0.5,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															0.0004550954,
+															-0.002071703,
+															-0.003875145
+														],
+														"max":[
+															0.007564256,
+															0.001450633,
+															0.003876089
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.004009676,
+															-0.0003105351,
+															4.721805E-07
+														],
+														"radius":0.005545914
+													},
+													"bones":[
+														79,
+														78,
+														69,
+														98,
+														97,
+														80,
+														81
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/shang yi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-D TShirt.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":113,
+												"props":{
+													"name":"POLO",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-2.688337E-25,
+														4.819789E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.5,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															0.0004550954,
+															-0.002071703,
+															-0.003875143
+														],
+														"max":[
+															0.0075449,
+															0.001450745,
+															0.003876087
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.003999998,
+															-0.000310479,
+															4.719477E-07
+														],
+														"radius":0.005539732
+													},
+													"bones":[
+														79,
+														78,
+														69,
+														98,
+														97,
+														81,
+														80
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/shang yi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-POLO.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":114,
+												"props":{
+													"name":"XZ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														0,
+														0,
+														0.03545
+													],
+													"rotation":[
+														0.5000001,
+														-0.5,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															-0.0003139914,
+															-0.002275186,
+															-0.006531814
+														],
+														"max":[
+															0.007658984,
+															0.001648523,
+															0.006532741
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.003672496,
+															-0.0003133314,
+															4.63333E-07
+														],
+														"radius":0.007900102
+													},
+													"bones":[
+														79,
+														78,
+														69,
+														74,
+														98,
+														97,
+														100,
+														99,
+														93,
+														80,
+														70,
+														81,
+														83,
+														82
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/wai tao.lmat"
+														},
+														{
+															"type":"Laya.BlinnPhongMaterial",
+															"path":"Assets/Animator/Girl/girl_Skin.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-XZ.lm"
+												},
+												"components":[],
+												"child":[]
+											}
+										]
+									},
+									{
+										"type":"Sprite3D",
+										"instanceID":115,
+										"props":{
+											"name":"下装",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.0005970707,
+												4.603783E-07,
+												-0.01043334
+											],
+											"rotation":[
+												-0.7071069,
+												5.057623E-07,
+												5.057621E-07,
+												-0.7071066
+											],
+											"scale":[
+												0.9999999,
+												1,
+												0.9999999
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":116,
+												"props":{
+													"name":"DK",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5,
+														-0.5,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															-0.003217205,
+															-0.001875791,
+															-0.00231444
+														],
+														"max":[
+															0.001148577,
+															0.001248056,
+															0.002315358
+														]
+													},
+													"boundSphere":{
+														"center":[
+															-0.001034314,
+															-0.0003138675,
+															4.590256E-07
+														],
+														"radius":0.003544485
+													},
+													"bones":[
+														74,
+														69,
+														70,
+														78
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/kuzi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-DK.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":117,
+												"props":{
+													"name":"DQ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															-0.004311926,
+															-0.002957119,
+															-0.003037812
+														],
+														"max":[
+															0.001146729,
+															0.002107519,
+															0.003038732
+														]
+													},
+													"boundSphere":{
+														"center":[
+															-0.001582598,
+															-0.0004248001,
+															4.598405E-07
+														],
+														"radius":0.004805514
+													},
+													"bones":[
+														74,
+														69,
+														70,
+														78
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/wai tao.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-DQ.lm"
+												},
+												"components":[],
+												"child":[]
+											}
+										]
+									},
+									{
+										"type":"Sprite3D",
+										"instanceID":118,
+										"props":{
+											"name":"发型",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.0005970707,
+												4.603783E-07,
+												-0.01043334
+											],
+											"rotation":[
+												-0.7071069,
+												5.057623E-07,
+												5.057621E-07,
+												-0.7071066
+											],
+											"scale":[
+												0.9999999,
+												1,
+												0.9999999
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":119,
+												"props":{
+													"name":"CF",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															-0.00289009,
+															-0.004254486,
+															-0.003677147
+														],
+														"max":[
+															0.006918591,
+															0.003351944,
+															0.003980652
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002014251,
+															-0.0004512708,
+															0.0001517525
+														],
+														"radius":0.007292289
+													},
+													"bones":[
+														94,
+														95,
+														96
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-CF.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":120,
+												"props":{
+													"name":"CF001",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															-0.002703608,
+															-0.004316511,
+															-0.0036661
+														],
+														"max":[
+															0.00718361,
+															0.003517665,
+															0.004053017
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002240001,
+															-0.0003994226,
+															0.0001934585
+														],
+														"radius":0.007394528
+													},
+													"bones":[
+														94,
+														95,
+														96
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-CF001.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":121,
+												"props":{
+													"name":"SMW",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															0.0005111229,
+															-0.002955058,
+															-0.004970754
+														],
+														"max":[
+															0.006337832,
+															0.003087522,
+															0.005140601
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.003424477,
+															6.623217E-05,
+															8.492311E-05
+														],
+														"radius":0.006570822
+													},
+													"bones":[
+														94
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-SMW.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":122,
+												"props":{
+													"name":"WZT",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															0.0005785581,
+															-0.002885414,
+															-0.003643928
+														],
+														"max":[
+															0.007513364,
+															0.003033675,
+															0.004003882
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.004045961,
+															7.413048E-05,
+															0.0001799773
+														],
+														"radius":0.005950129
+													},
+													"bones":[
+														94
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-WZT.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":123,
+												"props":{
+													"name":"XJJ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															-0.001813464,
+															-0.004112469,
+															-0.003830725
+														],
+														"max":[
+															0.008463989,
+															0.003627825,
+															0.003870419
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.003325263,
+															-0.0002423216,
+															1.984718E-05
+														],
+														"radius":0.00749743
+													},
+													"bones":[
+														94,
+														95,
+														96
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/tou fa.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-XJJ.lm"
+												},
+												"components":[],
+												"child":[]
+											}
+										]
+									},
+									{
+										"type":"Sprite3D",
+										"instanceID":124,
+										"props":{
+											"name":"裙子",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.0005970708,
+												4.603783E-07,
+												-0.01043334
+											],
+											"rotation":[
+												-0.7071068,
+												5.057622E-07,
+												5.057622E-07,
+												-0.7071067
+											],
+											"scale":[
+												1,
+												1,
+												1
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":125,
+												"props":{
+													"name":"LYQ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-2.688337E-25,
+														4.819789E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.5,
+														-0.5000001
+													],
+													"scale":[
+														0.9999999,
+														0.9999999,
+														1
+													],
+													"rootBone":69,
+													"boundBox":{
+														"min":[
+															-0.004649735,
+															-0.003331469,
+															-0.003523371
+														],
+														"max":[
+															0.007027544,
+															0.001996958,
+															0.003539365
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.001188905,
+															-0.0006672555,
+															7.997267E-06
+														],
+														"radius":0.007325183
+													},
+													"bones":[
+														79,
+														78,
+														69,
+														74,
+														70,
+														98,
+														97,
+														81,
+														80
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/qun zi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-LYQ.lm"
+												},
+												"components":[],
+												"child":[]
+											}
+										]
+									},
+									{
+										"type":"Sprite3D",
+										"instanceID":126,
+										"props":{
+											"name":"配饰",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.0005970707,
+												4.603783E-07,
+												-0.01043334
+											],
+											"rotation":[
+												-0.7071069,
+												5.057623E-07,
+												5.057621E-07,
+												-0.7071066
+											],
+											"scale":[
+												0.9999999,
+												1,
+												0.9999999
+											]
+										},
+										"components":[],
+										"child":[
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":127,
+												"props":{
+													"name":"EH",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															0.001387475,
+															7.34369E-05,
+															-0.004188365
+														],
+														"max":[
+															0.001857888,
+															0.0005438498,
+															0.004189282
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.001622682,
+															0.0003086433,
+															4.586764E-07
+														],
+														"radius":0.00420201
+													},
+													"bones":[
+														94
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-EH.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":128,
+												"props":{
+													"name":"HDJ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															0.005008993,
+															-0.0001010307,
+															-0.004218828
+														],
+														"max":[
+															0.008244396,
+															0.001432298,
+															0.00421973
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.006626694,
+															0.0006656339,
+															4.512258E-07
+														],
+														"radius":0.004583345
+													},
+													"bones":[
+														94
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-HDJ.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":129,
+												"props":{
+													"name":"LD",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":78,
+													"boundBox":{
+														"min":[
+															3.662053E-05,
+															0.0003941199,
+															-0.0004601722
+														],
+														"max":[
+															0.005558848,
+															0.001679257,
+															0.0004610978
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002797734,
+															0.001036688,
+															4.6278E-07
+														],
+														"radius":0.002872078
+													},
+													"bones":[
+														78,
+														79,
+														80,
+														97
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-LD.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":130,
+												"props":{
+													"name":"LJ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":79,
+													"boundBox":{
+														"min":[
+															0.002301089,
+															0.000544028,
+															-0.0006884424
+														],
+														"max":[
+															0.002821866,
+															0.0009913945,
+															0.0006893668
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002561478,
+															0.0007677113,
+															4.62227E-07
+														],
+														"radius":0.0007696921
+													},
+													"bones":[
+														79,
+														80,
+														97
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-LJ.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":131,
+												"props":{
+													"name":"XL",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":79,
+													"boundBox":{
+														"min":[
+															0.001985574,
+															-0.0009926059,
+															-0.0009610943
+														],
+														"max":[
+															0.003407035,
+															0.001128678,
+															0.0009607222
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002696305,
+															6.803585E-05,
+															-1.860026E-07
+														],
+														"radius":0.00159795
+													},
+													"bones":[
+														79,
+														80,
+														97
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-XL.lm"
+												},
+												"components":[],
+												"child":[]
+											},
+											{
+												"type":"SkinnedMeshSprite3D",
+												"instanceID":132,
+												"props":{
+													"name":"YJ",
+													"active":true,
+													"isStatic":false,
+													"layer":0,
+													"position":[
+														-0.0002958365,
+														-1.689516E-24,
+														4.819788E-11
+													],
+													"rotation":[
+														0.5000001,
+														-0.4999999,
+														-0.4999999,
+														-0.5000001
+													],
+													"scale":[
+														1,
+														1,
+														1
+													],
+													"rootBone":94,
+													"boundBox":{
+														"min":[
+															0.001797533,
+															-0.0008658601,
+															-0.003749638
+														],
+														"max":[
+															0.00374787,
+															0.003664163,
+															0.003750548
+														]
+													},
+													"boundSphere":{
+														"center":[
+															0.002772701,
+															0.001399152,
+															4.549511E-07
+														],
+														"radius":0.004488255
+													},
+													"bones":[
+														94
+													],
+													"materials":[
+														{
+															"path":"Assets/Animator/Girl/Material/pei shi.lmat"
+														}
+													],
+													"meshPath":"Assets/Animator/Girl/girl_Skin-YJ.lm"
+												},
+												"components":[],
+												"child":[]
+											}
+										]
+									}
+								]
+							},
+							{
+								"type":"SkinnedMeshSprite3D",
+								"instanceID":133,
+								"props":{
+									"name":"girl_body",
+									"active":true,
+									"isStatic":false,
+									"layer":0,
+									"position":[
+										0.0293,
+										0,
+										-0.0002958365
+									],
+									"rotation":[
+										0.7071068,
+										0,
+										0,
+										-0.7071068
+									],
+									"scale":[
+										1,
+										1,
+										1
+									],
+									"rootBone":79,
+									"boundBox":{
+										"min":[
+											-0.01426059,
+											-0.002360973,
+											-0.006892989
+										],
+										"max":[
+											0.009476215,
+											0.003207172,
+											0.0068941
+										]
+									},
+									"boundSphere":{
+										"center":[
+											-0.002392189,
+											0.0004230996,
+											5.550683E-07
+										],
+										"radius":0.01400468
+									},
+									"bones":[
+										91,
+										92,
+										83,
+										89,
+										82,
+										90,
+										94,
+										93,
+										79,
+										97,
+										98,
+										80,
+										81,
+										84,
+										85,
+										86,
+										88,
+										107,
+										108,
+										100,
+										105,
+										99,
+										106,
+										101,
+										102,
+										103,
+										104,
+										70,
+										71,
+										72,
+										73,
+										74,
+										75,
+										76,
+										77
+									],
+									"materials":[
+										{
+											"path":"Assets/Animator/Girl/Material/ren.lmat"
+										}
+									],
+									"meshPath":"Assets/Animator/Girl/girl_Skin-girl_body.lm"
+								},
+								"components":[],
+								"child":[]
+							}
+						]
+					}
+				]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":134,
+				"props":{
+					"name":"PerspectiveFar",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.03,
+						0.4,
+						-8.283
+					],
+					"rotation":[
+						-0.4166192,
+						0,
+						0,
+						-0.9090811
+					],
+					"scale":[
+						0.1,
+						0.1,
+						0.1
+					],
+					"meshPath":"Library/unity default resources-Cube.lm",
+					"enableRender":false,
+					"materials":[
+						{
+							"type":"Laya.BlinnPhongMaterial",
+							"path":"Resources/unity_builtin_extra.lmat"
+						}
+					]
+				},
+				"components":[
+					{
+						"type":"PhysicsCollider",
+						"restitution":0,
+						"friction":0.5,
+						"rollingFriction":0,
+						"shapes":[
+							{
+								"type":"BoxColliderShape",
+								"center":[
+									0,
+									0,
+									0
+								],
+								"size":[
+									1,
+									1,
+									1
+								]
+							}
+						],
+						"isTrigger":false
+					}
+				],
+				"child":[]
+			},
+			{
+				"type":"MeshSprite3D",
+				"instanceID":135,
+				"props":{
+					"name":"PerspectiveAlmost",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						-0.03,
+						0.48,
+						-8.87
+					],
+					"rotation":[
+						-0.2575919,
+						0,
+						0,
+						-0.9662538
+					],
+					"scale":[
+						0.1,
+						0.1,
+						0.1
 					],
 					"meshPath":"Library/unity default resources-Cube.lm",
 					"enableRender":false,

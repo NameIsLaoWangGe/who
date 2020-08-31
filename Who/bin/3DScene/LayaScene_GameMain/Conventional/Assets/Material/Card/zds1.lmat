@@ -18,7 +18,24 @@
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
 		"albedoIntensity":1,
-		"textures":[],
+		"textures":[
+			{
+				"name":"albedoTexture",
+				"path":"../../Card/zds1.jpg",
+				"constructParams":[
+					256,
+					512,
+					0,
+					true
+				],
+				"propertyParams":{
+					"filterMode":1,
+					"wrapModeU":0,
+					"wrapModeV":0,
+					"anisoLevel":1
+				}
+			}
+		],
 		"vectors":[
 			{
 				"name":"tilingOffset",
@@ -32,8 +49,8 @@
 			{
 				"name":"albedoColor",
 				"value":[
-					0.8333334,
-					0.75,
+					1,
+					1,
 					1,
 					1
 				]

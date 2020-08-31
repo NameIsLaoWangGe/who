@@ -1,7 +1,7 @@
 {
 	"version":"LAYAMATERIAL:02",
 	"props":{
-		"type":"Laya.BlinnPhongMaterial",
+		"type":"Laya.UnlitMaterial",
 		"name":"cxk2",
 		"renderStates":[
 			{
@@ -18,9 +18,24 @@
 		"alphaTestValue":0.5,
 		"renderQueue":2000,
 		"albedoIntensity":1,
-		"enableLighting":true,
-		"shininess":0.01,
-		"textures":[],
+		"textures":[
+			{
+				"name":"albedoTexture",
+				"path":"cxk2.jpg",
+				"constructParams":[
+					256,
+					512,
+					0,
+					true
+				],
+				"propertyParams":{
+					"filterMode":1,
+					"wrapModeU":0,
+					"wrapModeV":0,
+					"anisoLevel":1
+				}
+			}
+		],
 		"vectors":[
 			{
 				"name":"tilingOffset",
@@ -32,20 +47,11 @@
 				]
 			},
 			{
-				"name":"specularColor",
-				"value":[
-					0.5,
-					0.5,
-					0.5,
-					1
-				]
-			},
-			{
 				"name":"albedoColor",
 				"value":[
 					1,
-					0.6688679,
-					0.2028302,
+					1,
+					1,
 					1
 				]
 			}

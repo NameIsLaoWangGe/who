@@ -1,6 +1,915 @@
 (function () {
     'use strict';
 
+    class PromoOpen extends Laya.Script {
+        constructor() {
+            super(...arguments);
+            this.target = null;
+        }
+        onClick() {
+            this.target.active = this.target.visible = true;
+        }
+    }
+
+    class ButtonScale extends Laya.Script {
+        constructor() {
+            super(...arguments);
+            this.time = .1;
+            this.ratio = 1.04;
+            this.startScaleX = 1;
+            this.startScaleY = 1;
+            this.scaled = false;
+        }
+        onAwake() {
+            this.owner.on(Laya.Event.MOUSE_DOWN, null, () => { this.ScaleBig(); });
+            this.owner.on(Laya.Event.MOUSE_UP, null, () => { this.ScaleSmall(); });
+            this.owner.on(Laya.Event.MOUSE_OUT, null, () => { this.ScaleSmall(); });
+        }
+        ScaleBig() {
+            if (this.scaled)
+                return;
+            this.scaled = true;
+            Laya.Tween.to(this.owner, { scaleX: this.startScaleX * this.ratio, scaleY: this.startScaleY * this.ratio }, this.time * 1000);
+        }
+        ScaleSmall() {
+            if (!this.scaled)
+                return;
+            this.scaled = false;
+            Laya.Tween.to(this.owner, { scaleX: this.startScaleX, scaleY: this.startScaleY }, this.time * 1000);
+        }
+    }
+
+    class PromoItem extends Laya.Script {
+        constructor() {
+            super(...arguments);
+            this.bgImage = null;
+            this.iconImage = null;
+            this.nameText = null;
+            this.infoText = null;
+            this.flag1 = null;
+            this.flag2 = null;
+            this.flag3 = null;
+        }
+        onAwake() {
+            this.bgImage = this.owner.getChildByName("bg");
+            this.iconImage = this.owner.getChildByName("icon");
+            if (this.iconImage != null) {
+                this.flag1 = this.iconImage.getChildByName("flag1");
+                this.flag2 = this.iconImage.getChildByName("flag2");
+                this.flag3 = this.iconImage.getChildByName("flag3");
+            }
+            this.nameText = this.owner.getChildByName("name");
+            this.infoText = this.owner.getChildByName("info");
+        }
+        DoLoad() {
+            if (this.data == null)
+                return;
+            if (this.iconImage != null)
+                this.iconImage.skin = this.data.icon;
+            if (this.nameText != null)
+                this.nameText.text = this.data.title;
+            this.SetFlag();
+        }
+        SetFlag() {
+            if (this.flag1 != null)
+                this.flag1.active = this.flag1.visible = false;
+            if (this.flag2 != null)
+                this.flag2.active = this.flag2.visible = false;
+            if (this.flag3 != null)
+                this.flag3.active = this.flag3.visible = false;
+            switch (this.data.tag) {
+                case 1:
+                    if (this.flag1 != null)
+                        this.flag1.active = this.flag1.visible = true;
+                    break;
+                case 2:
+                    if (this.flag2 != null)
+                        this.flag2.active = this.flag2.visible = true;
+                    break;
+                case 3:
+                    if (this.flag3 != null)
+                        this.flag3.active = this.flag3.visible = true;
+                    break;
+            }
+        }
+        OnShow() {
+            this.data.ReportShow();
+        }
+        OnClick() {
+            this.data.Click();
+            if (this.onClick_ != null) {
+                this.onClick_(this);
+            }
+        }
+        onClick() {
+            this.OnClick();
+        }
+    }
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    class Behaviour extends Laya.Script {
+        constructor() {
+            super(...arguments);
+            this.isAwake = false;
+            this.isStart = false;
+            this.isEnable = false;
+            this.isDestroy = false;
+        }
+        OnAwake() { }
+        OnStart() { }
+        OnUpdate() { }
+        OnEnable() { }
+        OnDisable() { }
+        OnDestroy() { }
+        DoAwake() {
+            if (!this.active)
+                return;
+            if (!this.isAwake) {
+                this.isAwake = true;
+                this.OnAwake();
+            }
+        }
+        DoStart() {
+            if (!this.active)
+                return;
+            if (!this.isStart) {
+                this.isStart = true;
+                this.OnStart();
+            }
+        }
+        DoUpdate() {
+            if (!this.active)
+                return;
+            if (this.isStart) {
+                this.OnUpdate();
+            }
+        }
+        DoEnable() {
+            if (!this.active)
+                return;
+            if (!this.isEnable) {
+                this.isEnable = true;
+                this.OnEnable();
+            }
+        }
+        DoDisable() {
+            if (this.isEnable) {
+                this.isEnable = false;
+                this.OnDisable();
+            }
+        }
+        DoDestroy() {
+            if (!this.isDestroy) {
+                this.isDestroy = true;
+                this.OnDestroy();
+            }
+        }
+        onAwake() {
+            this.DoAwake();
+        }
+        onStart() {
+            this.DoAwake();
+            this.DoStart();
+        }
+        onUpdate() {
+            this.DoAwake();
+            this.DoEnable();
+            this.DoStart();
+            this.DoUpdate();
+        }
+        onEnable() {
+            this.DoAwake();
+            this.DoEnable();
+            this.DoStart();
+        }
+        onDisable() {
+            this.DoDisable();
+        }
+        onDestroy() {
+            this.DoDestroy();
+        }
+        static SetActive(node, value) {
+            if (node == null)
+                return;
+            node.active = value;
+            if (node instanceof Laya.Box) {
+                node.visible = value;
+            }
+        }
+        static GetActive(node) {
+            if (node == null)
+                return false;
+            if (!node.active)
+                return false;
+            if (node instanceof Laya.Box) {
+                if (!node.visible)
+                    return false;
+            }
+            return true;
+        }
+        get active() {
+            return Behaviour.GetActive(this.owner);
+        }
+        set active(value) {
+            Behaviour.SetActive(this.owner, value);
+            if (value) {
+                this.DoEnable();
+            }
+            else {
+                this.DoDisable();
+            }
+        }
+    }
+
+    class P201 extends Behaviour {
+        constructor() {
+            super(...arguments);
+            this.promoItem = null;
+            this.shake = false;
+            this.animTime = 0;
+            this.refrTime = 0;
+        }
+        OnAwake() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.promoItem = this.owner.getComponent(PromoItem);
+                TJ.Develop.Yun.Promo.Data.ReportAwake(P201.style);
+                this.promoItem.style = P201.style;
+                this.active = false;
+                if (Laya.Browser.onIOS && TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                    return;
+                }
+                if (P201.promoList == null) {
+                    let list = yield TJ.Develop.Yun.Promo.List.Get(P201.style);
+                    if (P201.promoList == null)
+                        P201.promoList = list;
+                }
+                if (P201.promoList.count > 0) {
+                    TJ.Develop.Yun.Promo.Data.ReportStart(P201.style);
+                    this.active = true;
+                }
+                else {
+                    this.owner.destroy();
+                }
+            });
+        }
+        OnEnable() {
+            this.LoadAndShowIcon();
+        }
+        OnDisable() {
+            if (P201.promoList != null) {
+                P201.promoList.Unload(this.promoItem.data);
+            }
+        }
+        OnUpdate() {
+            let deltaTime = Laya.timer.delta / 1000;
+            this.refrTime += deltaTime;
+            if (this.refrTime > 5) {
+                this.refrTime -= 5;
+                this.LoadAndShowIcon();
+            }
+            if (!this.shake)
+                return;
+            this.animTime += deltaTime;
+            this.animTime %= 2.5;
+            if (this.animTime <= .75) {
+                this.promoItem.owner.rotation = Math.sin(this.animTime * 6 * Math.PI) * 25 * (1 - this.animTime / .75);
+            }
+            else {
+                this.promoItem.owner.rotation = 0;
+            }
+        }
+        LoadIcon() {
+            let data = P201.promoList.Load();
+            if (data != null) {
+                P201.promoList.Unload(this.promoItem.data);
+                this.promoItem.data = data;
+                this.promoItem.onClick_ = () => { this.LoadAndShowIcon(); };
+                this.promoItem.DoLoad();
+            }
+            return data;
+        }
+        LoadAndShowIcon() {
+            if (this.LoadIcon() != null) {
+                this.promoItem.OnShow();
+            }
+            else {
+                if (this.promoItem.data == null) {
+                    this.owner.destroy();
+                }
+            }
+        }
+    }
+    P201.style = "P201";
+    P201.promoList = null;
+
+    class P202 extends Behaviour {
+        constructor() {
+            super(...arguments);
+            this.promoList = null;
+            this.itemList = [];
+            this.scroll = null;
+            this.layout = null;
+            this.prefab = null;
+            this.paddingTop = 10;
+            this.paddingBottom = 10;
+            this.line = 0;
+            this.column = 0;
+            this.toTop = false;
+            this.showing = [];
+        }
+        OnAwake() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.scroll = this.owner.getChildByName("scroll");
+                this.layout = this.scroll.getChildByName("layout");
+                this.prefab = this.layout.getCell(0);
+                let w = this.owner.width - this.paddingTop - this.paddingBottom;
+                while (w >= this.prefab.width) {
+                    w = w - this.prefab.width - this.layout.spaceX;
+                    this.column++;
+                }
+                TJ.Develop.Yun.Promo.Data.ReportAwake(P202.style);
+                this.active = false;
+                if (Laya.Browser.onIOS && TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                    return;
+                }
+                this.promoList = yield TJ.Develop.Yun.Promo.List.Get(P202.style);
+                if (this.promoList.count > 0) {
+                    TJ.Develop.Yun.Promo.Data.ReportStart(P202.style);
+                    this.line = Math.ceil(this.promoList.count / this.column);
+                    this.layout.repeatX = this.column;
+                    this.layout.repeatY = this.line;
+                    for (let i = 0; i < this.layout.cells.length; i++) {
+                        let node = this.layout.getCell(i);
+                        if (i < this.promoList.count) {
+                            let item = node.getComponent(PromoItem);
+                            if (item != null) {
+                                this.itemList.push(item);
+                                item.style = P202.style;
+                            }
+                            Behaviour.SetActive(node, true);
+                        }
+                        else {
+                            Behaviour.SetActive(node, false);
+                        }
+                    }
+                    this.line = Math.ceil(this.itemList.length / this.column);
+                    let h = this.paddingTop + this.paddingBottom;
+                    h += this.prefab.height * this.line + this.layout.spaceY * (this.line - 1);
+                    this.layout.height = h;
+                    if (this.scroll.height < this.layout.height) {
+                        this.scroll.vScrollBarSkin = "";
+                        this.scroll.vScrollBar.rollRatio = 0;
+                    }
+                    for (let item of this.itemList) {
+                        this.LoadIcon(item);
+                    }
+                    this.active = true;
+                }
+                else {
+                    this.owner.destroy();
+                }
+            });
+        }
+        OnDisable() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.promoList = yield TJ.Develop.Yun.Promo.List.Get(P202.style);
+                for (let item of this.itemList) {
+                    this.LoadIcon(item);
+                }
+            });
+        }
+        get maxTop() {
+            return 0;
+        }
+        get maxBottom() {
+            let y = this.paddingTop + this.paddingBottom;
+            y += this.prefab.height * this.line + this.layout.spaceY * (this.line - 1) - this.scroll.height;
+            return y;
+        }
+        get scrollValue() {
+            if (this.scroll.vScrollBar != null) {
+                return this.scroll.vScrollBar.value;
+            }
+            return 0;
+        }
+        set scrollValue(v) {
+            if (this.scroll.vScrollBar != null) {
+                this.scroll.vScrollBar.value = v;
+            }
+        }
+        OnUpdate() {
+            let deltaTime = Laya.timer.delta / 1000;
+            if (this.scroll.height < this.layout.height) {
+                if (this.scrollValue <= this.maxTop) {
+                    this.toTop = false;
+                }
+                else if (this.scrollValue >= this.maxBottom) {
+                    this.toTop = true;
+                }
+                if (this.toTop) {
+                    this.scrollValue -= 50 * deltaTime;
+                }
+                else {
+                    this.scrollValue += 50 * deltaTime;
+                }
+            }
+            else {
+                this.scrollValue = this.maxTop;
+            }
+            this.CheckShow();
+        }
+        LoadIcon(promoItem) {
+            let data = this.promoList.Load();
+            if (data != null) {
+                this.promoList.Unload(promoItem.data);
+                promoItem.data = data;
+                promoItem.onClick_ = (item) => { this.LoadAndShowIcon(item); };
+                promoItem.DoLoad();
+                promoItem.infoText.text = 1 + Math.floor(Math.random() * 40) / 10 + "w人在玩";
+            }
+            return data;
+        }
+        LoadAndShowIcon(promoItem) {
+            if (this.LoadIcon(promoItem) != null) {
+                promoItem.OnShow();
+            }
+        }
+        CheckShow() {
+            for (let item of this.itemList) {
+                let i = this.showing.indexOf(item);
+                let node = item.owner;
+                let d = Math.abs(-node.y - this.paddingTop - this.prefab.height / 2 + this.scrollValue + this.scroll.height / 2);
+                if (d < this.scroll.height / 2) {
+                    if (i < 0) {
+                        this.showing.push(item);
+                        item.OnShow();
+                    }
+                }
+                else {
+                    if (i >= 0) {
+                        this.showing.splice(i, 1);
+                    }
+                }
+            }
+        }
+    }
+    P202.style = "P202";
+
+    class P204 extends Behaviour {
+        constructor() {
+            super(...arguments);
+            this.promoList = null;
+            this.itemList = [];
+            this.scroll = null;
+            this.layout = null;
+            this.prefab = null;
+            this.paddingLeft = 20;
+            this.paddingRight = 20;
+            this.toLeft = false;
+            this.showing = [];
+        }
+        OnAwake() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.scroll = this.owner.getChildByName("scroll");
+                this.layout = this.scroll.getChildByName("layout");
+                this.prefab = this.layout.getCell(0);
+                TJ.Develop.Yun.Promo.Data.ReportAwake(P204.style);
+                this.active = false;
+                if (Laya.Browser.onIOS && TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                    return;
+                }
+                let list = yield TJ.Develop.Yun.Promo.List.Get(P204.style);
+                if (this.promoList == null)
+                    this.promoList = list;
+                if (this.promoList.count > 0) {
+                    TJ.Develop.Yun.Promo.Data.ReportStart(P204.style);
+                    this.layout.repeatX = this.promoList.count;
+                    for (let i = 0; i < this.layout.cells.length; i++) {
+                        let node = this.layout.getCell(i);
+                        if (i < this.promoList.count) {
+                            let item = node.getComponent(PromoItem);
+                            if (item != null) {
+                                this.itemList.push(item);
+                                item.style = P204.style;
+                            }
+                            node.active = node.visible = true;
+                        }
+                        else {
+                            node.active = node.visible = false;
+                        }
+                    }
+                    let w = this.paddingLeft + this.paddingRight;
+                    w += this.prefab.width * this.itemList.length + this.layout.spaceX * (this.itemList.length - 1);
+                    this.layout.width = w;
+                    if (this.scroll.width < this.layout.width) {
+                        this.scroll.hScrollBarSkin = "";
+                        this.scroll.hScrollBar.rollRatio = 0;
+                    }
+                    this.layout.width = w;
+                    for (let item of this.itemList) {
+                        this.LoadIcon(item);
+                    }
+                    this.active = true;
+                }
+                else {
+                    this.owner.destroy();
+                }
+            });
+        }
+        get maxLeft() {
+            let x = 0;
+            return x;
+        }
+        get maxRight() {
+            let x = this.scroll.hScrollBar.max;
+            return x;
+        }
+        get scrollValue() {
+            if (this.scroll.hScrollBar != null) {
+                return this.scroll.hScrollBar.value;
+            }
+            return 0;
+        }
+        set scrollValue(v) {
+            if (this.scroll.hScrollBar != null) {
+                this.scroll.hScrollBar.value = v;
+            }
+        }
+        OnUpdate() {
+            let deltaTime = Laya.timer.delta / 1000;
+            if (this.scroll.width < this.layout.width) {
+                if (this.scrollValue >= this.maxRight) {
+                    this.toLeft = true;
+                }
+                else if (this.scrollValue <= this.maxLeft) {
+                    this.toLeft = false;
+                }
+                if (this.toLeft) {
+                    this.scrollValue -= 50 * deltaTime;
+                }
+                else {
+                    this.scrollValue += 50 * deltaTime;
+                }
+            }
+            else {
+                this.layout.x = this.maxLeft;
+            }
+            this.CheckShow();
+        }
+        LoadIcon(promoItem) {
+            let data = this.promoList.Load();
+            if (data != null) {
+                this.promoList.Unload(promoItem.data);
+                promoItem.data = data;
+                promoItem.onClick_ = (item) => { this.LoadIcon(item); };
+                promoItem.DoLoad();
+                let i = this.showing.indexOf(promoItem);
+                if (i >= 0) {
+                    this.showing.splice(i, 1);
+                }
+            }
+            return data;
+        }
+        CheckShow() {
+            for (let item of this.itemList) {
+                let node = item.owner;
+                let d = Math.abs(node.x - this.scrollValue - this.scroll.width / 2 + node.width / 2 + this.layout.spaceX);
+                let i = this.showing.indexOf(item);
+                if (d < this.scroll.width / 2) {
+                    if (i < 0) {
+                        this.showing.push(item);
+                        item.OnShow();
+                    }
+                }
+                else {
+                    if (i >= 0) {
+                        this.showing.splice(i, 1);
+                    }
+                }
+            }
+        }
+    }
+    P204.style = "P204";
+
+    class P205 extends Behaviour {
+        constructor() {
+            super(...arguments);
+            this.promoList = null;
+            this.itemList = [];
+            this.scroll = null;
+            this.layout = null;
+            this.prefab = null;
+            this.paddingTop = 10;
+            this.paddingBottom = 10;
+            this.move = null;
+            this.show = null;
+            this.hide = null;
+            this.maxX = 620;
+            this.line = 0;
+            this.column = 0;
+            this.targetX = 0;
+            this.showing = [];
+        }
+        OnAwake() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.move = this.owner.getChildByName("move");
+                let button = this.move.getChildByName("button");
+                this.show = button.getChildByName("show");
+                this.hide = button.getChildByName("hide");
+                let board = this.move.getChildByName("board");
+                this.scroll = board.getChildByName("scroll");
+                this.layout = this.scroll.getChildByName("layout");
+                this.prefab = this.layout.getCell(0);
+                this.show.clickHandler = new Laya.Handler(null, () => { this.Show(); });
+                this.hide.clickHandler = new Laya.Handler(null, () => { this.Hide(); });
+                let w = this.scroll.width - this.paddingTop - this.paddingBottom;
+                while (w >= this.prefab.width) {
+                    w = w - this.prefab.width - this.layout.spaceX;
+                    this.column++;
+                }
+                TJ.Develop.Yun.Promo.Data.ReportAwake(P205.style);
+                if (this.show.parent.scaleX < 0)
+                    this.maxX = -this.maxX;
+                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                    if (Laya.Browser.onIOS && TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                        this.active = false;
+                        return;
+                    }
+                    return;
+                }
+                this.promoList = yield TJ.Develop.Yun.Promo.List.Get(P205.style);
+                if (this.promoList.count > 0) {
+                    TJ.Develop.Yun.Promo.Data.ReportStart(P205.style);
+                    this.line = Math.ceil(this.promoList.count / this.column);
+                    this.layout.repeatX = this.column;
+                    this.layout.repeatY = this.line;
+                    for (let i = 0; i < this.layout.cells.length; i++) {
+                        let node = this.layout.getCell(i);
+                        if (i < this.promoList.count) {
+                            let item = node.getComponent(PromoItem);
+                            if (item != null) {
+                                this.itemList.push(item);
+                                item.style = P205.style;
+                            }
+                            node.active = node.visible = true;
+                        }
+                        else {
+                            node.active = node.visible = false;
+                        }
+                    }
+                    this.line = Math.ceil(this.itemList.length / this.column);
+                    let h = this.paddingTop + this.paddingBottom;
+                    h += this.prefab.height * this.line + this.layout.spaceY * (this.line - 1);
+                    this.layout.height = h;
+                    if (this.scroll.height < this.layout.height) {
+                        this.scroll.vScrollBarSkin = "";
+                        this.scroll.vScrollBar.rollRatio = 0;
+                    }
+                    for (let item of this.itemList) {
+                        this.LoadIcon(item);
+                    }
+                    this.active = true;
+                }
+                else {
+                    this.owner.destroy();
+                }
+            });
+        }
+        get scrollValue() {
+            if (this.scroll.vScrollBar != null) {
+                return this.scroll.vScrollBar.value;
+            }
+            return 0;
+        }
+        set scrollValue(v) {
+            if (this.scroll.vScrollBar != null) {
+                this.scroll.vScrollBar.value = v;
+            }
+        }
+        LoadIcon(promoItem) {
+            let data = this.promoList.Load();
+            if (data != null) {
+                this.promoList.Unload(promoItem.data);
+                promoItem.data = data;
+                promoItem.onClick_ = (item) => { this.LoadAndShowIcon(item); };
+                promoItem.DoLoad();
+            }
+            return data;
+        }
+        LoadAndShowIcon(promoItem) {
+            if (this.LoadIcon(promoItem) != null) {
+                promoItem.OnShow();
+            }
+        }
+        Show() {
+            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                let param = new TJ.API.Promo.Param();
+                param.extraData = { "TJ_App": TJ.API.AppInfo.AppGuid() };
+                TJ.API.Promo.Pop(param);
+                return;
+            }
+            this.targetX = this.maxX;
+            this.show.active = this.show.visible = false;
+            this.hide.active = this.hide.visible = true;
+            this.scrollValue = 0;
+        }
+        Hide() {
+            this.targetX = 0;
+            this.showing = [];
+        }
+        OnUpdate() {
+            let deltaTime = Laya.timer.delta / 1000;
+            if (this.move.centerX != this.targetX) {
+                let d = this.targetX - this.move.centerX;
+                let s = 3000 * deltaTime;
+                if (d > 0) {
+                    d = Math.min(this.move.centerX + s, this.targetX);
+                }
+                else {
+                    d = Math.max(this.move.centerX - s, this.targetX);
+                }
+                this.move.centerX = d;
+                if (this.move.centerX == 0) {
+                    this.show.active = this.show.visible = true;
+                    this.hide.active = this.hide.visible = false;
+                    window.setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        this.promoList = yield TJ.Develop.Yun.Promo.List.Get(P205.style);
+                        for (let item of this.itemList) {
+                            this.LoadIcon(item);
+                        }
+                    }), 0);
+                }
+            }
+            else {
+                if (this.move.centerX == this.maxX) {
+                    this.CheckShow();
+                }
+            }
+        }
+        CheckShow() {
+            for (let item of this.itemList) {
+                let i = this.showing.indexOf(item);
+                let node = item.owner;
+                let d = Math.abs(-node.y - this.paddingTop - this.prefab.height / 2 + this.scrollValue + this.scroll.height / 2);
+                if (d < this.scroll.height / 2) {
+                    if (i < 0) {
+                        this.showing.push(item);
+                        item.OnShow();
+                    }
+                }
+                else {
+                    if (i >= 0) {
+                        this.showing.splice(i, 1);
+                    }
+                }
+            }
+        }
+    }
+    P205.style = "P205";
+
+    class P106 extends Behaviour {
+        constructor() {
+            super(...arguments);
+            this.promoList = null;
+            this.itemList = [];
+            this.layout = null;
+            this.showing = [];
+        }
+        OnAwake() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.scrollView = this.owner.getChildByName("scroll");
+                this.layout = this.scrollView.getChildByName("layout");
+                this.scrollView.vScrollBarSkin = "";
+                let close = this.owner.getChildByName("close");
+                close.clickHandler = new Laya.Handler(null, () => { this.OnClose(); });
+                TJ.Develop.Yun.Promo.Data.ReportAwake(P106.style);
+                this.active = false;
+                if (Laya.Browser.onIOS && TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                    return;
+                }
+                let list = yield TJ.Develop.Yun.Promo.List.Get(P106.style);
+                if (this.promoList == null)
+                    this.promoList = list;
+                if (this.promoList.count > 0) {
+                    TJ.Develop.Yun.Promo.Data.ReportStart(P106.style);
+                    this.layout.repeatY = this.promoList.count;
+                    let h = 0;
+                    for (let i = 0; i < this.layout.cells.length; i++) {
+                        let node = this.layout.getCell(i);
+                        if (i < this.promoList.count) {
+                            let item = node.getComponent(PromoItem);
+                            if (item != null) {
+                                this.itemList.push(item);
+                                item.style = P106.style;
+                            }
+                            Behaviour.SetActive(node, true);
+                        }
+                        else {
+                            Behaviour.SetActive(node, false);
+                        }
+                        if (i > 0) {
+                            h += this.layout.spaceY;
+                        }
+                        h += node.height;
+                    }
+                    this.layout.height = h;
+                    for (let item of this.itemList) {
+                        this.LoadIcon(item);
+                    }
+                    this.active = true;
+                }
+                else {
+                    this.owner.destroy();
+                }
+            });
+        }
+        OnEnable() {
+            this.scrollValue = 0;
+        }
+        OnDisable() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.promoList = yield TJ.Develop.Yun.Promo.List.Get(P106.style);
+                for (let item of this.itemList) {
+                    this.LoadIcon(item);
+                }
+            });
+        }
+        OnUpdate() {
+            this.CheckShow();
+        }
+        LoadIcon(promoItem) {
+            let data = this.promoList.Load();
+            if (data != null) {
+                this.promoList.Unload(promoItem.data);
+                promoItem.data = data;
+                promoItem.onClick_ = (item) => { this.LoadIcon(item); };
+                promoItem.DoLoad();
+                let i = this.showing.indexOf(promoItem);
+                if (i >= 0) {
+                    this.showing.splice(i, 1);
+                }
+            }
+            return data;
+        }
+        get scrollValue() {
+            if (this.scrollView.vScrollBar != null) {
+                return this.scrollView.vScrollBar.value;
+            }
+            return 0;
+        }
+        set scrollValue(v) {
+            if (this.scrollView.vScrollBar != null) {
+                this.scrollView.vScrollBar.value = v;
+            }
+        }
+        CheckShow() {
+            for (let item of this.itemList) {
+                let node = item.owner;
+                let d = Math.abs(node.y - this.scrollValue - this.scrollView.height / 2 + node.height / 2 + this.layout.spaceY);
+                let i = this.showing.indexOf(item);
+                if (d < this.scrollView.height / 2) {
+                    if (i < 0) {
+                        this.showing.push(item);
+                        item.OnShow();
+                    }
+                }
+                else {
+                    if (i >= 0) {
+                        this.showing.splice(i, 1);
+                    }
+                }
+            }
+        }
+        OnClose() {
+            let node = this.owner;
+            node.active = node.visible = false;
+        }
+    }
+    P106.style = "P106";
+
     class ADManager {
         static ShowBanner() {
             let p = new TJ.ADS.Param();
@@ -268,10 +1177,10 @@
                 Dec.align = 'center';
                 Dec.valign = 'middle';
                 Dec.alpha = 0;
-                Animation2D.scale_Alpha(Hint_M, 0, 1, 0, 1, 1, 1, 200, null, 0, f => {
+                Animation2D.scale_Alpha(Hint_M, 0, 1, 0, 1, 1, 1, 200, 0, f => {
                     Animation2D.fadeOut(Dec, 0, 1, 150, 0, f => {
                         Animation2D.fadeOut(Dec, 1, 0, 200, 800, f => {
-                            Animation2D.scale_Alpha(Hint_M, 1, 1, 1, 1, 0, 0, 200, null, 0, f => {
+                            Animation2D.scale_Alpha(Hint_M, 1, 1, 1, 1, 0, 0, 200, 0, f => {
                                 Hint_M.removeSelf();
                             });
                         });
@@ -381,13 +1290,13 @@
                         if (delayed == undefined) {
                             delayed = 1000;
                         }
-                        Animation2D.scale_Alpha(Pre_Dialogue, 0, 0, 0, 1, 1, 1, 150, null, 1000, () => {
+                        Animation2D.scale_Alpha(Pre_Dialogue, 0, 0, 0, 1, 1, 1, 150, 1000, () => {
                             for (let index = 0; index < contentArr.length; index++) {
                                 Laya.timer.once(index * delayed, this, () => {
                                     ContentLabel.text = contentArr[index];
                                     if (index == contentArr.length - 1) {
                                         Laya.timer.once(delayed, this, () => {
-                                            Animation2D.scale_Alpha(Pre_Dialogue, 1, 1, 1, 0, 0, 0, 150, null, 1000, () => {
+                                            Animation2D.scale_Alpha(Pre_Dialogue, 1, 1, 1, 0, 0, 0, 150, 1000, () => {
                                                 Pre_Dialogue.removeSelf();
                                             });
                                         });
@@ -418,10 +1327,9 @@
         (function (Execution) {
             Execution._execution = {
                 get value() {
-                    return this.val = Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
+                    return Laya.LocalStorage.getItem('_execution') ? Number(Laya.LocalStorage.getItem('_execution')) : 15;
                 },
                 set value(val) {
-                    this.val = val;
                     Laya.LocalStorage.setItem('_execution', val.toString());
                 }
             };
@@ -484,36 +1392,54 @@
         })(Execution = lwg.Execution || (lwg.Execution = {}));
         let Gold;
         (function (Gold_1) {
-            Gold_1._goldNum = 0;
-            function createGoldNode(parent) {
+            Gold_1._num = {
+                get value() {
+                    return Laya.LocalStorage.getItem('_goldNum') ? Number(Laya.LocalStorage.getItem('_goldNum')) : 0;
+                },
+                set value(val) {
+                    Laya.LocalStorage.setItem('_goldNum', val.toString());
+                }
+            };
+            function createGoldNode(x, y, parent) {
+                if (!parent) {
+                    parent = Laya.stage;
+                }
                 if (Gold_1.GoldNode) {
-                    return;
+                    Gold_1.GoldNode.removeSelf();
                 }
                 let sp;
-                Laya.loader.load('Prefab/GoldNode.json', Laya.Handler.create(this, function (prefab) {
+                Laya.loader.load('Prefab/PreGold.json', Laya.Handler.create(this, function (prefab) {
                     let _prefab = new Laya.Prefab();
                     _prefab.json = prefab;
                     sp = Laya.Pool.getItemByCreateFun('gold', _prefab.create, _prefab);
-                    let num = sp.getChildByName('Num');
-                    let goldNum = Laya.LocalStorage.getItem('_goldNum');
-                    if (goldNum) {
-                        Gold_1._goldNum = Number(goldNum);
-                    }
-                    else {
-                        Laya.LocalStorage.setItem('_goldNum', '0');
-                    }
-                    num.text = Gold_1._goldNum.toString();
+                    let Num = sp.getChildByName('Num');
+                    Num.text = Gold_1._num.value.toString();
                     parent.addChild(sp);
                     let Pic = sp.getChildByName('Pic');
-                    sp.pos(234, 100);
-                    sp.zOrder = 50;
+                    sp.pos(x, y);
+                    sp.zOrder = 100;
                     Gold_1.GoldNode = sp;
                 }));
             }
             Gold_1.createGoldNode = createGoldNode;
+            function addGold(number) {
+                Gold_1._num.value += number;
+                let Num = Gold_1.GoldNode.getChildByName('Num');
+                Num.text = Gold_1._num.value.toString();
+            }
+            Gold_1.addGold = addGold;
+            function addGoldDisPlay(number) {
+                let Num = Gold_1.GoldNode.getChildByName('Num');
+                Num.value = (Number(Num.value) + number).toString();
+            }
+            Gold_1.addGoldDisPlay = addGoldDisPlay;
+            function addGoldNoDisPlay(number) {
+                Gold_1._num.value += number;
+            }
+            Gold_1.addGoldNoDisPlay = addGoldNoDisPlay;
             function goldAppear(delayed, x, y) {
                 if (delayed) {
-                    Animation2D.scale_Alpha(Gold_1.GoldNode, 0, 1, 1, 1, 1, 1, delayed, null, 0, f => {
+                    Animation2D.scale_Alpha(Gold_1.GoldNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                         Gold_1.GoldNode.visible = true;
                     });
                 }
@@ -530,7 +1456,7 @@
             Gold_1.goldAppear = goldAppear;
             function goldVinish(delayed) {
                 if (delayed) {
-                    Animation2D.scale_Alpha(Gold_1.GoldNode, 1, 1, 1, 1, 1, 0, delayed, null, 0, f => {
+                    Animation2D.scale_Alpha(Gold_1.GoldNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                         Gold_1.GoldNode.visible = false;
                     });
                 }
@@ -539,23 +1465,6 @@
                 }
             }
             Gold_1.goldVinish = goldVinish;
-            function addGold(number) {
-                Gold_1._goldNum += number;
-                let Num = Gold_1.GoldNode.getChildByName('Num');
-                Num.text = Gold_1._goldNum.toString();
-                Laya.LocalStorage.setItem('_goldNum', Gold_1._goldNum.toString());
-            }
-            Gold_1.addGold = addGold;
-            function addGoldDisPlay(number) {
-                let Num = Gold_1.GoldNode.getChildByName('Num');
-                Num.value = (Number(Num.value) + number).toString();
-            }
-            Gold_1.addGoldDisPlay = addGoldDisPlay;
-            function addGoldNoDisPlay(number) {
-                Gold_1._goldNum += number;
-                Laya.LocalStorage.setItem('_goldNum', Gold_1._goldNum.toString());
-            }
-            Gold_1.addGoldNoDisPlay = addGoldNoDisPlay;
             let SkinUrl;
             (function (SkinUrl) {
                 SkinUrl[SkinUrl["Frame/Effects/icon_gold.png"] = 0] = "Frame/Effects/icon_gold.png";
@@ -750,6 +1659,74 @@
             }
             EventAdmin.offCaller = offCaller;
         })(EventAdmin = lwg.EventAdmin || (lwg.EventAdmin = {}));
+        let DateAdmin;
+        (function (DateAdmin) {
+            DateAdmin._date = {
+                get Year() {
+                    return (new Date()).getFullYear();
+                },
+                get Month() {
+                    return (new Date()).getMonth();
+                },
+                get Date() {
+                    return (new Date()).getDate();
+                },
+                get Day() {
+                    return (new Date()).getDay();
+                },
+                get Hours() {
+                    return (new Date()).getHours();
+                },
+                get Minutes() {
+                    return (new Date()).getMinutes();
+                },
+                get Seconds() {
+                    return (new Date()).getSeconds();
+                },
+                get Milliseconds() {
+                    return (new Date()).getMilliseconds();
+                },
+                get toLocaleDateString() {
+                    return (new Date()).toLocaleDateString();
+                },
+                get toLocaleTimeString() {
+                    return (new Date()).toLocaleTimeString();
+                }
+            };
+            DateAdmin._loginDate = {
+                get value() {
+                    let data = Laya.LocalStorage.getJSON('Date_loginDate');
+                    let dataArr = [];
+                    let d = new Date();
+                    let date1 = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getDay()];
+                    if (data) {
+                        dataArr = JSON.parse(data);
+                        let equal = false;
+                        for (let index = 0; index < dataArr.length; index++) {
+                            if (dataArr[index].toString() == date1.toString()) {
+                                equal = true;
+                            }
+                        }
+                        if (!equal) {
+                            dataArr.push(date1);
+                        }
+                    }
+                    if (dataArr.length == 0) {
+                        dataArr.push(date1);
+                    }
+                    Laya.LocalStorage.setJSON('Date_loginDate', JSON.stringify(dataArr));
+                    return dataArr;
+                },
+            };
+            DateAdmin._loginNumber = {
+                get value() {
+                    return Laya.LocalStorage.getItem('_loginNumber') ? Number(Laya.LocalStorage.getItem('_loginNumber')) : 1;
+                },
+                set value(val) {
+                    Laya.LocalStorage.setItem('_loginNumber', val.toString());
+                }
+            };
+        })(DateAdmin = lwg.DateAdmin || (lwg.DateAdmin = {}));
         let Admin;
         (function (Admin) {
             let _platformTpye;
@@ -807,6 +1784,56 @@
                     }
                 }
             };
+            Admin._clickLock = {
+                get switch() {
+                    return Laya.stage.getChildByName('__stageClickLock__') ? true : false;
+                },
+                set switch(bool) {
+                    if (bool) {
+                        if (!Laya.stage.getChildByName('__stageClickLock__')) {
+                            let __stageClickLock__ = new Laya.Sprite();
+                            __stageClickLock__.name = '__stageClickLock__';
+                            Laya.stage.addChild(__stageClickLock__);
+                            __stageClickLock__.zOrder = 1000;
+                            __stageClickLock__.width = Laya.stage.width;
+                            __stageClickLock__.height = Laya.stage.height;
+                            __stageClickLock__.pos(0, 0);
+                            Click.on(Click.Type.noEffect, __stageClickLock__, this, null, null, (e) => {
+                                console.log('舞台点击被锁住了！请用admin._clickLock=false解锁');
+                                e.stopPropagation();
+                            });
+                        }
+                    }
+                    else {
+                        if (Laya.stage.getChildByName('__stageClickLock__')) {
+                            Laya.stage.getChildByName('__stageClickLock__').removeSelf();
+                            console.log('场景点击解锁！');
+                        }
+                    }
+                }
+            };
+            function _secneLockClick(scene) {
+                _unlockPreventClick(scene);
+                let __lockClick__ = new Laya.Sprite();
+                scene.addChild(__lockClick__);
+                __lockClick__.zOrder = 1000;
+                __lockClick__.name = '__lockClick__';
+                __lockClick__.width = Laya.stage.width;
+                __lockClick__.height = Laya.stage.height;
+                __lockClick__.pos(0, 0);
+                Click.on(Click.Type.noEffect, __lockClick__, this, null, null, (e) => {
+                    console.log('场景点击被锁住了！请用admin._unlockPreventClick（）解锁');
+                    e.stopPropagation();
+                });
+            }
+            Admin._secneLockClick = _secneLockClick;
+            function _unlockPreventClick(scene) {
+                let __lockClick__ = scene.getChildByName('__lockClick__');
+                if (__lockClick__) {
+                    __lockClick__.removeSelf();
+                }
+            }
+            Admin._unlockPreventClick = _unlockPreventClick;
             Admin._sceneControl = {};
             let OpenAniType;
             (function (OpenAniType) {
@@ -821,17 +1848,17 @@
             (function (SceneName) {
                 SceneName["UILoding"] = "UILoding";
                 SceneName["UIStart"] = "UIStart";
-                SceneName["UIMain"] = "UIMain";
-                SceneName["GameMain3D"] = "GameMain3D";
-                SceneName["UIVictory"] = "UIVictory";
-                SceneName["UIDefeated"] = "UIDefeated";
-                SceneName["UIExecutionHint"] = "UIExecutionHint";
-                SceneName["UIPassHint"] = "UIPassHint";
+                SceneName["UISkin"] = "UISkin";
+                SceneName["UIShop"] = "UIShop";
+                SceneName["UITask"] = "UITask";
                 SceneName["UISet"] = "UISet";
                 SceneName["UIPifu"] = "UIPifu";
                 SceneName["UIPuase"] = "UIPuase";
                 SceneName["UIShare"] = "UIShare";
-                SceneName["UISmallHint"] = "UISmallHint";
+                SceneName["GameMain3D"] = "GameMain3D";
+                SceneName["UIVictory"] = "UIVictory";
+                SceneName["UIDefeated"] = "UIDefeated";
+                SceneName["UIPassHint"] = "UIPassHint";
                 SceneName["UISkinXD"] = "UISkinXD";
                 SceneName["UISkinTry"] = "UISkinTry";
                 SceneName["UIRedeem"] = "UIRedeem";
@@ -840,25 +1867,16 @@
                 SceneName["UICaiDanQiang"] = "UICaiDanQiang";
                 SceneName["UICaidanPifu"] = "UICaidanPifu";
                 SceneName["UIOperation"] = "UIOperation";
-                SceneName["UIShop"] = "UIShop";
-                SceneName["UITask"] = "UITask";
                 SceneName["UIVictoryBox"] = "UIVictoryBox";
                 SceneName["UICheckIn"] = "UICheckIn";
                 SceneName["UIResurgence"] = "UIResurgence";
-                SceneName["UISkin"] = "UISkin";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
                 SceneName["UIADSHint"] = "UIADSHint";
                 SceneName["LwgInit"] = "LwgInit";
                 SceneName["GameScene"] = "GameScene";
+                SceneName["UISmallHint"] = "UISmallHint";
+                SceneName["UIExecutionHint"] = "UIExecutionHint";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
-            let GameState;
-            (function (GameState) {
-                GameState["Start"] = "Start";
-                GameState["Play"] = "Play";
-                GameState["Pause"] = "pause";
-                GameState["Victory"] = "victory";
-                GameState["Defeated"] = "defeated";
-            })(GameState = Admin.GameState || (Admin.GameState = {}));
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
                     scene.width = Laya.stage.width;
@@ -888,36 +1906,105 @@
             }
             Admin._openScene = _openScene;
             function _closeScene(cloesScene, func) {
-                let time = 0;
-                let delay = 0;
                 var closef = () => {
                     if (func) {
                         func();
                     }
+                    Admin._clickLock.switch = false;
                     cloesScene.close();
                 };
                 if (!Admin._commonVanishAni) {
                     closef();
                     return;
                 }
+                var vanishAni = () => {
+                    let time = 0;
+                    let delay = 0;
+                    switch (Admin._commonOpenAni) {
+                        case OpenAniType.fadeOut:
+                            time = 150;
+                            delay = 50;
+                            if (cloesScene['Background']) {
+                                Animation2D.fadeOut(cloesScene, 1, 0, time / 2);
+                            }
+                            Animation2D.fadeOut(cloesScene, 1, 0, time, delay, () => {
+                                closef();
+                            });
+                            break;
+                        case OpenAniType.leftMove:
+                            break;
+                        default:
+                            break;
+                    }
+                };
+                let cloesSceneScript = cloesScene[cloesScene.name];
+                if (cloesSceneScript) {
+                    if (cloesSceneScript) {
+                        Admin._clickLock.switch = true;
+                        let time0 = cloesSceneScript.lwgVanishAni();
+                        if (time0 !== null) {
+                            Laya.timer.once(time0, this, () => {
+                                closef();
+                                Admin._clickLock.switch = false;
+                            });
+                        }
+                        else {
+                            vanishAni();
+                        }
+                    }
+                }
+                else {
+                    console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
+                }
+            }
+            Admin._closeScene = _closeScene;
+            let GameState;
+            (function (GameState) {
+                GameState["Start"] = "Start";
+                GameState["Play"] = "Play";
+                GameState["Pause"] = "pause";
+                GameState["Victory"] = "victory";
+                GameState["Defeated"] = "defeated";
+            })(GameState = Admin.GameState || (Admin.GameState = {}));
+            function gameState(calssName) {
+                switch (calssName) {
+                    case SceneName.UIStart:
+                        Admin._gameState = GameState.Start;
+                        break;
+                    case SceneName.GameScene:
+                        Admin._gameState = GameState.Play;
+                        break;
+                    case SceneName.UIDefeated:
+                        Admin._gameState = GameState.Defeated;
+                        break;
+                    case SceneName.UIVictory:
+                        Admin._gameState = GameState.Victory;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Admin.gameState = gameState;
+            function commonOpenAni(scene) {
+                let time = 0;
+                let delay = 0;
                 switch (Admin._commonOpenAni) {
                     case OpenAniType.fadeOut:
-                        time = 250;
-                        delay = 200;
-                        if (cloesScene['Background']) {
-                            Animation2D.fadeOut(cloesScene, 1, 0, time / 2);
+                        time = 400;
+                        delay = 300;
+                        if (scene['Background']) {
+                            Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
                         }
-                        Animation2D.fadeOut(cloesScene, 1, 0, time, delay, () => {
-                            closef();
-                        });
+                        Animation2D.fadeOut(scene, 0, 1, time);
                         break;
                     case OpenAniType.leftMove:
                         break;
                     default:
                         break;
                 }
+                return time;
             }
-            Admin._closeScene = _closeScene;
+            Admin.commonOpenAni = commonOpenAni;
             class Scene extends Laya.Script {
                 constructor() {
                     super();
@@ -928,7 +2015,7 @@
                     this.self = this.owner;
                     this.calssName = this['__proto__']['constructor'].name;
                     this.self[this.calssName] = this;
-                    this.gameState(this.calssName);
+                    gameState(this.calssName);
                     this.lwgNodeDec();
                     this.moduleOnAwake();
                     this.lwgOnAwake();
@@ -952,48 +2039,11 @@
                 ;
                 moduleEventReg() { }
                 ;
-                gameState(calssName) {
-                    switch (calssName) {
-                        case SceneName.UIStart:
-                            Admin._gameState = GameState.Start;
-                            break;
-                        case SceneName.UIMain:
-                            Admin._gameState = GameState.Play;
-                            break;
-                        case SceneName.UIDefeated:
-                            Admin._gameState = GameState.Defeated;
-                            break;
-                        case SceneName.UIVictory:
-                            Admin._gameState = GameState.Victory;
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 lwgOnEnable() { }
-                commonOpenAni() {
-                    let time = 0;
-                    let delay = 0;
-                    switch (Admin._commonOpenAni) {
-                        case OpenAniType.fadeOut:
-                            time = 500;
-                            delay = 400;
-                            if (this.self['Background']) {
-                                Animation2D.fadeOut(this.self, 0, 1, time / 2, delay);
-                            }
-                            Animation2D.fadeOut(this.self, 0, 1, time);
-                            break;
-                        case OpenAniType.leftMove:
-                            break;
-                        default:
-                            break;
-                    }
-                    return time;
-                }
                 btnAndlwgOpenAni() {
                     let time = this.lwgOpenAni();
                     if (time == null) {
-                        time = this.commonOpenAni();
+                        time = commonOpenAni(this.self);
                         if (time == null) {
                             time = 0;
                         }
@@ -1012,9 +2062,7 @@
                 ;
                 lwgOnUpdate() { }
                 ;
-                lwgVanishAni() {
-                    return 0;
-                }
+                lwgVanishAni() { return null; }
                 ;
                 onDisable() {
                     Animation2D.fadeOut(this.self, 1, 0, 2000, 1);
@@ -1059,32 +2107,28 @@
                     let calssName = this['__proto__']['constructor'].name;
                     this.self[calssName] = this;
                     this.lwgNodeDec();
+                    this.lwgOnAwake();
                 }
-                lwgNodeDec() {
-                }
+                lwgNodeDec() { }
+                lwgOnAwake() { }
                 onEnable() {
-                    this.lwgOnEnable();
                     this.lwgBtnClick();
                     this.lwgEventReg();
+                    this.lwgOnEnable();
                 }
-                lwgOnEnable() {
-                }
-                lwgBtnClick() {
-                }
-                lwgEventReg() {
-                }
+                lwgOnEnable() { }
+                lwgBtnClick() { }
+                lwgEventReg() { }
                 onUpdate() {
                     this.lwgOnUpdate();
                 }
-                lwgOnUpdate() {
-                }
+                lwgOnUpdate() { }
                 onDisable() {
                     this.lwgOnDisable();
                     Laya.timer.clearAll(this);
                     EventAdmin.offCaller(this);
                 }
-                lwgOnDisable() {
-                }
+                lwgOnDisable() { }
             }
             Admin.Object = Object;
         })(Admin = lwg.Admin || (lwg.Admin = {}));
@@ -1677,6 +2721,11 @@
                 }, delayed);
             }
             Animation3D.rock = rock;
+            function moveRotateTo(Sp3d, Target, duration, caller, ease, complete, delay, coverBefore, update, frame) {
+                moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame);
+                rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, null, delay, coverBefore, null, frame);
+            }
+            Animation3D.moveRotateTo = moveRotateTo;
         })(Animation3D = lwg.Animation3D || (lwg.Animation3D = {}));
         let Animation2D;
         (function (Animation2D) {
@@ -1870,31 +2919,17 @@
                 }), delayed);
             }
             Animation2D.goUp_Simple = goUp_Simple;
-            function cardRotateX_TowFace(node, arr, func1, time, delayed, func2) {
+            function cardRotateX_TowFace(node, time, func1, delayed, func2) {
                 Laya.Tween.to(node, { scaleX: 0 }, time, null, Laya.Handler.create(this, function () {
-                    if (arr) {
-                        for (let i = 0; i < arr.length; i++) {
-                            let child = node.getChildByName(arr[i]);
-                            if (child !== null) {
-                                child['alpha'] = 0;
-                            }
-                        }
-                    }
-                    if (func1 !== null) {
+                    Tools.node_ChildrenVisible(node, false);
+                    if (func1) {
                         func1();
                     }
                     Laya.Tween.to(node, { scaleX: 1 }, time * 0.9, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleX: 0 }, time * 0.8, null, Laya.Handler.create(this, function () {
-                            if (arr) {
-                                for (let i = 0; i < arr.length; i++) {
-                                    let child = node.getChildByName(arr[i]);
-                                    if (child !== null) {
-                                        child['alpha'] = 1;
-                                    }
-                                }
-                            }
+                            Tools.node_ChildrenVisible(node, true);
                             Laya.Tween.to(node, { scaleX: 1 }, time * 0.7, null, Laya.Handler.create(this, function () {
-                                if (func2 !== null) {
+                                if (func2) {
                                     func2();
                                 }
                             }), 0);
@@ -1916,31 +2951,17 @@
                 }), delayed);
             }
             Animation2D.cardRotateX_OneFace = cardRotateX_OneFace;
-            function cardRotateY_TowFace(node, arr, func1, time, delayed, func2) {
+            function cardRotateY_TowFace(node, time, func1, delayed, func2) {
                 Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
-                    if (arr) {
-                        for (let i = 0; i < arr.length; i++) {
-                            let child = node.getChildByName(arr[i]);
-                            if (child !== null) {
-                                child['alpha'] = 0;
-                            }
-                        }
-                    }
-                    if (func1 !== null) {
+                    Tools.node_ChildrenVisible(node, false);
+                    if (func1) {
                         func1();
                     }
                     Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                             Laya.Tween.to(node, { scaleY: 1 }, time * 1 / 2, null, Laya.Handler.create(this, function () {
-                                if (arr) {
-                                    for (let i = 0; i < arr.length; i++) {
-                                        let child = node.getChildByName(arr[i]);
-                                        if (child !== null) {
-                                            child['alpha'] = 1;
-                                        }
-                                    }
-                                }
-                                if (func2 !== null) {
+                                Tools.node_ChildrenVisible(node, true);
+                                if (func2) {
                                     func2();
                                 }
                             }), 0);
@@ -1992,7 +3013,7 @@
             Animation2D.bombs_Appear = bombs_Appear;
             function bombs_Vanish(node, scale, alpha, rotation, time, delayed, func) {
                 Laya.Tween.to(node, { scaleX: scale, scaleY: scale, alpha: alpha, rotation: rotation }, time, Laya.Ease.cubicOut, Laya.Handler.create(this, function () {
-                    if (func !== null) {
+                    if (func) {
                         func();
                     }
                 }), delayed);
@@ -2015,7 +3036,7 @@
                 }), delayed);
             }
             Animation2D.swell_shrink = swell_shrink;
-            function move_Simple(node, fX, fY, targetX, targetY, time, delayed, ease, func) {
+            function move_Simple(node, fX, fY, targetX, targetY, time, delayed, func, ease) {
                 node.x = fX;
                 node.y = fY;
                 if (!delayed) {
@@ -2084,9 +3105,13 @@
             }
             Animation2D.blink_FadeOut_v = blink_FadeOut_v;
             function blink_FadeOut(target, minAlpha, maXalpha, time, delayed, func) {
+                target.alpha = minAlpha;
+                if (!delayed) {
+                    delayed = 0;
+                }
                 Laya.Tween.to(target, { alpha: minAlpha }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(target, { alpha: maXalpha }, time, null, Laya.Handler.create(this, function () {
-                        if (func !== null) {
+                        if (func) {
                             func();
                         }
                     }), 0);
@@ -2121,7 +3146,7 @@
                 }), 0);
             }
             Animation2D.HintAni_01 = HintAni_01;
-            function scale_Alpha(target, fAlpha, fScaleX, fScaleY, eScaleX, eScaleY, eAlpha, time, ease, delayed, func) {
+            function scale_Alpha(target, fAlpha, fScaleX, fScaleY, eScaleX, eScaleY, eAlpha, time, delayed, func, ease) {
                 if (!delayed) {
                     delayed = 0;
                 }
@@ -2250,7 +3275,7 @@
             Setting.createSetBtn = createSetBtn;
             function setBtnAppear(delayed, x, y) {
                 if (delayed) {
-                    Animation2D.scale_Alpha(Setting.BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, null, 0, f => {
+                    Animation2D.scale_Alpha(Setting.BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                         Setting.BtnSetNode.visible = true;
                     });
                 }
@@ -2267,7 +3292,7 @@
             Setting.setBtnAppear = setBtnAppear;
             function setBtnVinish(delayed) {
                 if (delayed) {
-                    Animation2D.scale_Alpha(Setting.BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, null, 0, f => {
+                    Animation2D.scale_Alpha(Setting.BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                         Setting.BtnSetNode.visible = false;
                     });
                 }
@@ -2356,6 +3381,58 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
+            function node_RemoveAllChildren(node) {
+                if (node.numChildren > 0) {
+                    node.removeChildren(0, node.numChildren - 1);
+                }
+            }
+            Tools.node_RemoveAllChildren = node_RemoveAllChildren;
+            function node_ChildrenVisible(node, bool) {
+                for (let index = 0; index < node.numChildren; index++) {
+                    const element = node.getChildAt(index);
+                    if (bool) {
+                        element.active = false;
+                    }
+                    else {
+                        element.active = true;
+                    }
+                }
+            }
+            Tools.node_ChildrenVisible = node_ChildrenVisible;
+            function node_3dFindChild(parent, name) {
+                var item = null;
+                item = parent.getChildByName(name);
+                if (item != null)
+                    return item;
+                var go = null;
+                for (var i = 0; i < parent.numChildren; i++) {
+                    go = node_3dFindChild(parent.getChildAt(i), name);
+                    if (go != null)
+                        return go;
+                }
+                return null;
+            }
+            Tools.node_3dFindChild = node_3dFindChild;
+            function node_2dFindChild(parent, name) {
+                var item = null;
+                item = parent.getChildByName(name);
+                if (item != null)
+                    return item;
+                var go = null;
+                for (var i = 0; i < parent.numChildren; i++) {
+                    go = node_2dFindChild(parent.getChildAt(i), name);
+                    if (go != null)
+                        return go;
+                }
+                return null;
+            }
+            Tools.node_2dFindChild = node_2dFindChild;
+            function randomOneHalf() {
+                let number;
+                number = Math.floor(Math.random() * 2);
+                return number;
+            }
+            Tools.randomOneHalf = randomOneHalf;
             function randomNumber(section1, section2) {
                 if (section2) {
                     return Math.floor(Math.random() * (section2 - section1)) + section1;
@@ -2403,6 +3480,84 @@
                 }
             }
             Tools.randomCountNumer = randomCountNumer;
+            function color_toHexString(r, g, b) {
+                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+            }
+            Tools.color_toHexString = color_toHexString;
+            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
+                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
+                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
+                return new Laya.Point(x2, y2);
+            }
+            Tools.d2_dotRotateXY = d2_dotRotateXY;
+            function d2_twoObjectsLen(obj1, obj2) {
+                let point = new Laya.Point(obj1.x, obj1.y);
+                let len = point.distance(obj2.x, obj2.y);
+                return len;
+            }
+            Tools.d2_twoObjectsLen = d2_twoObjectsLen;
+            function d2_Vector_Angle(x, y) {
+                let radian = Math.atan2(x, y);
+                let angle = 90 - radian * (180 / Math.PI);
+                if (angle <= 0) {
+                    angle = 270 + (90 + angle);
+                }
+                return angle - 90;
+            }
+            Tools.d2_Vector_Angle = d2_Vector_Angle;
+            function d2_angle_Vector(angle) {
+                angle -= 90;
+                let radian = (90 - angle) / (180 / Math.PI);
+                let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
+                p.normalize();
+                return p;
+            }
+            Tools.d2_angle_Vector = d2_angle_Vector;
+            function d3_twoObjectsLen(obj1, obj2) {
+                let obj1V3 = obj1.transform.position;
+                let obj2V3 = obj2.transform.position;
+                let p = new Laya.Vector3();
+                Laya.Vector3.subtract(obj1V3, obj2V3, p);
+                let lenp = Laya.Vector3.scalarLength(p);
+                return lenp;
+            }
+            Tools.d3_twoObjectsLen = d3_twoObjectsLen;
+            function d3_twoPositionLen(v1, v2) {
+                let p = d3_twoSubV3(v1, v2);
+                let lenp = Laya.Vector3.scalarLength(p);
+                return lenp;
+            }
+            Tools.d3_twoPositionLen = d3_twoPositionLen;
+            function d3_twoSubV3(V3_01, V3_02, normalizing) {
+                let p = new Laya.Vector3();
+                Laya.Vector3.subtract(V3_01, V3_02, p);
+                if (normalizing) {
+                    let p1 = new Laya.Vector3();
+                    Laya.Vector3.normalize(p, p1);
+                    return p1;
+                }
+                else {
+                    return p;
+                }
+            }
+            Tools.d3_twoSubV3 = d3_twoSubV3;
+            function d3_maximumDistanceLimi(originV3, obj, length) {
+                let subP = new Laya.Vector3();
+                let objP = obj.transform.position;
+                Laya.Vector3.subtract(objP, originV3, subP);
+                let lenP = Laya.Vector3.scalarLength(subP);
+                if (lenP >= length) {
+                    let normalizP = new Laya.Vector3();
+                    Laya.Vector3.normalize(subP, normalizP);
+                    let x = originV3.x + normalizP.x * length;
+                    let y = originV3.y + normalizP.y * length;
+                    let z = originV3.z + normalizP.z * length;
+                    let p = new Laya.Vector3(x, y, z);
+                    obj.transform.position = p;
+                    return p;
+                }
+            }
+            Tools.d3_maximumDistanceLimi = d3_maximumDistanceLimi;
             function d3_rayScanning(camera, scene3D, vector2, filtrateName) {
                 let _ray = new Laya.Ray(new Laya.Vector3(0, 0, 0), new Laya.Vector3(0, 0, 0));
                 let outs = new Array();
@@ -2423,50 +3578,28 @@
                 }
             }
             Tools.d3_rayScanning = d3_rayScanning;
-            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
-                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
-                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
-                return new Laya.Point(x2, y2);
+            function d3_TransitionScreenPointfor(v3, camera) {
+                let ScreenV3 = new Laya.Vector3();
+                camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
+                let point = new Laya.Vector2();
+                point.x = ScreenV3.x;
+                point.y = ScreenV3.y;
+                return point;
             }
-            Tools.d2_dotRotateXY = d2_dotRotateXY;
-            function color_toHexString(r, g, b) {
-                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
-            }
-            Tools.color_toHexString = color_toHexString;
-            function d3_twoObjectsLen(obj1, obj2) {
-                let obj1V3 = obj1.transform.position;
-                let obj2V3 = obj2.transform.position;
-                let p = new Laya.Vector3();
-                Laya.Vector3.subtract(obj1V3, obj2V3, p);
-                let lenp = Laya.Vector3.scalarLength(p);
-                return lenp;
-            }
-            Tools.d3_twoObjectsLen = d3_twoObjectsLen;
-            function d3_twoPositionLen(v1, v2) {
-                let p = d3_twoSubV3(v1, v2);
-                let lenp = Laya.Vector3.scalarLength(p);
-                return lenp;
-            }
-            Tools.d3_twoPositionLen = d3_twoPositionLen;
-            function d2_twoObjectsLen(obj1, obj2) {
-                let point = new Laya.Point(obj1.x, obj1.y);
-                let len = point.distance(obj2.x, obj2.y);
-                return len;
-            }
-            Tools.d2_twoObjectsLen = d2_twoObjectsLen;
-            function d3_twoSubV3(V3_01, V3_02, normalizing) {
-                let p = new Laya.Vector3();
-                Laya.Vector3.subtract(V3_01, V3_02, p);
-                if (normalizing) {
-                    let p1 = new Laya.Vector3();
-                    Laya.Vector3.normalize(p, p1);
-                    return p1;
+            Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
+            function d3_animatorPlay(Sp3D, aniName, normalizedTime, layerIndex) {
+                let sp3DAni = Sp3D.getComponent(Laya.Animator);
+                if (!sp3DAni) {
+                    console.log(Sp3D.name, '没有动画组件');
+                    return;
                 }
-                else {
-                    return p;
+                if (!layerIndex) {
+                    layerIndex = 0;
                 }
+                sp3DAni.play(aniName, layerIndex, normalizedTime);
+                return sp3DAni;
             }
-            Tools.d3_twoSubV3 = d3_twoSubV3;
+            Tools.d3_animatorPlay = d3_animatorPlay;
             function dAll_reverseVector(type, Vecoter1, Vecoter2, normalizing) {
                 let p;
                 if (type === '2d') {
@@ -2489,40 +3622,11 @@
                 }
             }
             Tools.dAll_reverseVector = dAll_reverseVector;
-            function d2_Vector_Angle(x, y) {
-                let radian = Math.atan2(x, y);
-                let angle = 90 - radian * (180 / Math.PI);
-                if (angle <= 0) {
-                    angle = 270 + (90 + angle);
-                }
-                return angle - 90;
+            function sk_indexControl(sk, name) {
+                sk.play(name, true);
+                sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
             }
-            Tools.d2_Vector_Angle = d2_Vector_Angle;
-            function d2_angle_Vector(angle) {
-                angle -= 90;
-                let radian = (90 - angle) / (180 / Math.PI);
-                let p = new Laya.Point(Math.sin(radian), Math.cos(radian));
-                p.normalize();
-                return p;
-            }
-            Tools.d2_angle_Vector = d2_angle_Vector;
-            function d3_maximumDistanceLimi(originV3, obj, length) {
-                let subP = new Laya.Vector3();
-                let objP = obj.transform.position;
-                Laya.Vector3.subtract(objP, originV3, subP);
-                let lenP = Laya.Vector3.scalarLength(subP);
-                if (lenP >= length) {
-                    let normalizP = new Laya.Vector3();
-                    Laya.Vector3.normalize(subP, normalizP);
-                    let x = originV3.x + normalizP.x * length;
-                    let y = originV3.y + normalizP.y * length;
-                    let z = originV3.z + normalizP.z * length;
-                    let p = new Laya.Vector3(x, y, z);
-                    obj.transform.position = p;
-                    return p;
-                }
-            }
-            Tools.d3_maximumDistanceLimi = d3_maximumDistanceLimi;
+            Tools.sk_indexControl = sk_indexControl;
             function img_drawPieMask(parent, startAngle, endAngle) {
                 parent.cacheAs = "bitmap";
                 let drawPieSpt = new Laya.Sprite();
@@ -2532,15 +3636,6 @@
                 return drawPie;
             }
             Tools.img_drawPieMask = img_drawPieMask;
-            function d3_TransitionScreenPointfor(v3, camera) {
-                let ScreenV3 = new Laya.Vector3();
-                camera.viewport.project(v3, camera.projectionViewMatrix, ScreenV3);
-                let point = new Laya.Vector2();
-                point.x = ScreenV3.x;
-                point.y = ScreenV3.y;
-                return point;
-            }
-            Tools.d3_TransitionScreenPointfor = d3_TransitionScreenPointfor;
             function objArrPropertySort(array, property) {
                 var compare = function (obj1, obj2) {
                     var val1 = obj1[property];
@@ -2563,14 +3658,14 @@
                 return array;
             }
             Tools.objArrPropertySort = objArrPropertySort;
-            function objArrCompareDifferent(data1, data2, property) {
+            function objArr2DifferentPropertyObjArr1(objArr1, objArr2, property) {
                 var result = [];
-                for (var i = 0; i < data1.length; i++) {
-                    var obj1 = data1[i];
+                for (var i = 0; i < objArr1.length; i++) {
+                    var obj1 = objArr1[i];
                     var obj1Name = obj1[property];
                     var isExist = false;
-                    for (var j = 0; j < data2.length; j++) {
-                        var obj2 = data2[j];
+                    for (var j = 0; j < objArr2.length; j++) {
+                        var obj2 = objArr2[j];
                         var obj2Name = obj2[property];
                         if (obj2Name == obj1Name) {
                             isExist = true;
@@ -2583,8 +3678,8 @@
                 }
                 return result;
             }
-            Tools.objArrCompareDifferent = objArrCompareDifferent;
-            function objArrComparEidentical(data1, data2, property) {
+            Tools.objArr2DifferentPropertyObjArr1 = objArr2DifferentPropertyObjArr1;
+            function objArr1IdenticalPropertyObjArr2(data1, data2, property) {
                 var result = [];
                 for (var i = 0; i < data1.length; i++) {
                     var obj1 = data1[i];
@@ -2604,7 +3699,7 @@
                 }
                 return result;
             }
-            Tools.objArrComparEidentical = objArrComparEidentical;
+            Tools.objArr1IdenticalPropertyObjArr2 = objArr1IdenticalPropertyObjArr2;
             function objArrUnique(arr, property) {
                 for (var i = 0, len = arr.length; i < len; i++) {
                     for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -2628,37 +3723,6 @@
                 return arr;
             }
             Tools.objArrGetValue = objArrGetValue;
-            function arrayAddToarray(data1, data2) {
-                for (let index = 0; index < data2.length; index++) {
-                    const element = data2[index];
-                    data1.push(element);
-                }
-            }
-            Tools.arrayAddToarray = arrayAddToarray;
-            function arrayRandomGetOut(arr, num) {
-                let arr0 = [];
-                if (num > arr.length) {
-                    return '数组长度小于取出的数！';
-                }
-                else {
-                    for (let index = 0; index < num; index++) {
-                        let ran = Math.floor(Math.random() * (arr.length - 1));
-                        let a1 = arr[ran];
-                        arr.splice(ran, 1);
-                        arr0.push(a1);
-                    }
-                    return arr0;
-                }
-            }
-            Tools.arrayRandomGetOut = arrayRandomGetOut;
-            function array_Copy(arr1) {
-                var arr = [];
-                for (var i = 0; i < arr1.length; i++) {
-                    arr.push(arr1[i]);
-                }
-                return arr;
-            }
-            Tools.array_Copy = array_Copy;
             function objArray_Copy(ObjArray) {
                 var sourceCopy = ObjArray instanceof Array ? [] : {};
                 for (var item in ObjArray) {
@@ -2689,6 +3753,41 @@
                 return objCopy;
             }
             Tools.obj_Copy = obj_Copy;
+            function arrayAddToarray(array1, array2) {
+                for (let index = 0; index < array2.length; index++) {
+                    const element = array2[index];
+                    array1.push(element);
+                }
+                return array1;
+            }
+            Tools.arrayAddToarray = arrayAddToarray;
+            function arrayRandomGetOut(arr, num) {
+                if (!num) {
+                    num = 1;
+                }
+                let arr0 = [];
+                if (num > arr.length) {
+                    return '数组长度小于取出的数！';
+                }
+                else {
+                    for (let index = 0; index < num; index++) {
+                        let ran = Math.floor(Math.random() * (arr.length - 1));
+                        let a1 = arr[ran];
+                        arr.splice(ran, 1);
+                        arr0.push(a1);
+                    }
+                    return arr0;
+                }
+            }
+            Tools.arrayRandomGetOut = arrayRandomGetOut;
+            function array_Copy(arr1) {
+                var arr = [];
+                for (var i = 0; i < arr1.length; i++) {
+                    arr.push(arr1[i]);
+                }
+                return arr;
+            }
+            Tools.array_Copy = array_Copy;
             function arrayUnique_01(arr) {
                 for (var i = 0, len = arr.length; i < len; i++) {
                     for (var j = i + 1, len = arr.length; j < len; j++) {
@@ -2717,6 +3816,20 @@
                 return Array.from(new Set(arr));
             }
             Tools.arrayUnique_03 = arrayUnique_03;
+            function array1ExcludeArray2(arr1, arr2) {
+                let arr1Capy = array_Copy(arr1);
+                let arr2Capy = array_Copy(arr2);
+                for (let i = 0; i < arr1Capy.length; i++) {
+                    for (let j = 0; j < arr2Capy.length; j++) {
+                        if (arr1Capy[i] === arr2Capy[j]) {
+                            arr1Capy.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+                return arr1Capy;
+            }
+            Tools.array1ExcludeArray2 = array1ExcludeArray2;
             function point_speedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
@@ -2733,10 +3846,10 @@
                 return new Laya.Point(X, Y);
             }
             Tools.point_GetRoundPos = point_GetRoundPos;
-            function Angle_GetRad(degree) {
+            function angle_GetRad(degree) {
                 return degree / 180 * Math.PI;
             }
-            Tools.Angle_GetRad = Angle_GetRad;
+            Tools.angle_GetRad = angle_GetRad;
             function numberConverte(number) {
                 if (typeof (number) !== "number") {
                     console.warn("要转化的数字并不为number");
@@ -2766,7 +3879,7 @@
                     try {
                         let dataArr_0 = Laya.loader.getRes(url)['RECORDS'];
                         if (dataArr_0.length >= dataArr.length) {
-                            let diffArray = Tools.objArrCompareDifferent(dataArr_0, dataArr, propertyName);
+                            let diffArray = Tools.objArr2DifferentPropertyObjArr1(dataArr_0, dataArr, propertyName);
                             console.log('两个数据的差值为：', diffArray);
                             Tools.arrayAddToarray(dataArr, diffArray);
                         }
@@ -3764,17 +4877,19 @@
             Loding.list_3DMesh = [];
             Loding.lolist_3DBaseMaterial = [];
             Loding.list_3DTexture2D = [];
-            Loding.list_2D = [];
-            Loding.list_Json = [];
+            Loding.list_2DPic = [];
+            Loding.list_2DScene = [];
+            Loding.list_2DPrefab = [];
+            Loding.list_JsonData = [];
             Loding.sumProgress = 0;
             Loding.currentProgress = {
-                val: 0,
+                p: 0,
                 get value() {
-                    return this.val;
+                    return this.p;
                 },
                 set value(v) {
-                    this.val = v;
-                    if (this.val >= Loding.sumProgress) {
+                    this.p = v;
+                    if (this.p >= Loding.sumProgress) {
                         console.log('当前进度条进度为:', Loding.currentProgress.value / Loding.sumProgress);
                         console.log('进度条停止！');
                         console.log('所有资源加载完成！此时所有资源可通过例如 Laya.loader.getRes("Data/levelsData.json")获取');
@@ -3785,7 +4900,7 @@
                         for (let index = 0; index <= Loding.loadOrderIndex; index++) {
                             number += Loding.loadOrder[index].length;
                         }
-                        if (this.val === number) {
+                        if (this.p === number) {
                             Loding.loadOrderIndex++;
                         }
                         EventAdmin.notify(Loding.LodingType.loding);
@@ -3800,10 +4915,16 @@
             })(LodingType = Loding.LodingType || (Loding.LodingType = {}));
             class LodingScene extends Admin.Scene {
                 moduleOnAwake() {
+                    DateAdmin._loginNumber.value++;
+                    console.log('玩家登陆的天数为：', DateAdmin._loginDate.value.length, '天');
                 }
                 moduleEventReg() {
                     EventAdmin.reg(LodingType.loding, this, () => { this.lodingRule(); });
-                    EventAdmin.reg(LodingType.complete, this, () => { this.lodingComplete(); PalyAudio.playMusic(); Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                    EventAdmin.reg(LodingType.complete, this, () => {
+                        let time = this.lodingComplete();
+                        PalyAudio.playMusic();
+                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                    });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
                         if (Loding.currentProgress.value < Loding.sumProgress) {
@@ -3813,7 +4934,7 @@
                     });
                 }
                 moduleOnEnable() {
-                    Loding.loadOrder = [Loding.list_2D, Loding.list_3DScene, Loding.list_3DPrefab, Loding.list_Json];
+                    Loding.loadOrder = [Loding.list_2DPic, Loding.list_2DScene, Loding.list_2DPrefab, Loding.list_3DScene, Loding.list_3DPrefab, Loding.list_JsonData];
                     for (let index = 0; index < Loding.loadOrder.length; index++) {
                         Loding.sumProgress += Loding.loadOrder[index].length;
                         if (Loding.loadOrder[index].length <= 0) {
@@ -3822,7 +4943,13 @@
                         }
                     }
                     Loding.loadOrderIndex = 0;
-                    EventAdmin.notify(Loding.LodingType.loding);
+                    let time = this.lwgOpenAni();
+                    if (time == null) {
+                        time = 0;
+                    }
+                    Laya.timer.once(time, this, () => {
+                        EventAdmin.notify(Loding.LodingType.loding);
+                    });
                 }
                 lodingRule() {
                     if (Loding.loadOrder.length <= 0) {
@@ -3835,16 +4962,38 @@
                     }
                     let index = Loding.currentProgress.value - alreadyPro;
                     switch (Loding.loadOrder[Loding.loadOrderIndex]) {
-                        case Loding.list_2D:
-                            Laya.loader.load(Loding.list_2D[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_2DPic:
+                            Laya.loader.load(Loding.list_2DPic[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX2D资源' + Loding.list_2D[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX2D资源' + Loding.list_2DPic[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('2D资源' + Loding.list_2D[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('2D图片' + Loding.list_2DPic[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
+                            break;
+                        case Loding.list_2DScene:
+                            Laya.loader.load(Loding.list_2DScene[index], Laya.Handler.create(this, (any) => {
+                                if (any == null) {
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_2DScene[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                }
+                                else {
+                                    console.log('2D场景' + Loding.list_2DScene[index] + '加载完成！', '数组下标为：', index);
+                                }
+                                EventAdmin.notify(LodingType.progress);
+                            }), null, Laya.Loader.JSON);
+                            break;
+                        case Loding.list_2DPrefab:
+                            Laya.loader.load(Loding.list_2DPrefab[index], Laya.Handler.create(this, (any) => {
+                                if (any == null) {
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_2DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                }
+                                else {
+                                    console.log('2D预制体' + Loding.list_2DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                }
+                                EventAdmin.notify(LodingType.progress);
+                            }), null, Laya.Loader.JSON);
                             break;
                         case Loding.list_3DScene:
                             Laya.Scene3D.load(Loding.list_3DScene[index], Laya.Handler.create(this, (any) => {
@@ -3863,18 +5012,18 @@
                                     console.log('XXXXXXXXXXX3D预设体' + Loding.list_3DPrefab[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('3D场景' + Loding.list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('3D预制体' + Loding.list_3DPrefab[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }));
                             break;
-                        case Loding.list_Json:
-                            Laya.loader.load(Loding.list_Json[index], Laya.Handler.create(this, (any) => {
+                        case Loding.list_JsonData:
+                            Laya.loader.load(Loding.list_JsonData[index], Laya.Handler.create(this, (any) => {
                                 if (any == null) {
-                                    console.log('XXXXXXXXXXX数据表' + Loding.list_Json[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
+                                    console.log('XXXXXXXXXXX数据表' + Loding.list_JsonData[index] + '加载失败！不会停止加载进程！', '数组下标为：', index, 'XXXXXXXXXXX');
                                 }
                                 else {
-                                    console.log('数据表' + Loding.list_Json[index] + '加载完成！', '数组下标为：', index);
+                                    console.log('数据表' + Loding.list_JsonData[index] + '加载完成！', '数组下标为：', index);
                                 }
                                 EventAdmin.notify(LodingType.progress);
                             }), null, Laya.Loader.JSON);
@@ -3884,7 +5033,8 @@
                     }
                 }
                 lodingPhaseComplete() { }
-                lodingComplete() { }
+                lodingComplete() { return 0; }
+                ;
             }
             Loding.LodingScene = LodingScene;
         })(Loding = lwg.Loding || (lwg.Loding = {}));
@@ -3982,6 +5132,7 @@
     })(lwg || (lwg = {}));
     let Admin = lwg.Admin;
     let EventAdmin = lwg.EventAdmin;
+    let DateAdmin = lwg.DateAdmin;
     let Pause = lwg.Pause;
     let Execution = lwg.Execution;
     let Gold = lwg.Gold;
@@ -4120,22 +5271,22 @@
     var Game3D;
     (function (Game3D) {
         Game3D.questionArr = [];
-        Game3D.characteristicsData = [];
+        Game3D.featureData = [];
         Game3D.CardData = [];
         let WhichScard;
         (function (WhichScard) {
             WhichScard["OppositeCardParent"] = "OppositeCardParent";
             WhichScard["MyCardParent"] = "MyCardParent";
         })(WhichScard = Game3D.WhichScard || (Game3D.WhichScard = {}));
-        let CharacteristicsProperty;
-        (function (CharacteristicsProperty) {
-            CharacteristicsProperty["index"] = "index";
-            CharacteristicsProperty["describe"] = "describe";
-            CharacteristicsProperty["question"] = "question";
-        })(CharacteristicsProperty = Game3D.CharacteristicsProperty || (Game3D.CharacteristicsProperty = {}));
+        let featureProperty;
+        (function (featureProperty) {
+            featureProperty["index"] = "index";
+            featureProperty["describe"] = "describe";
+            featureProperty["question"] = "question";
+        })(featureProperty = Game3D.featureProperty || (Game3D.featureProperty = {}));
         let CardProperty;
         (function (CardProperty) {
-            CardProperty["characteristicsArr"] = "characteristicsArr";
+            CardProperty["featureArr"] = "featureArr";
             CardProperty["ChName"] = "ChName";
             CardProperty["name"] = "name";
             CardProperty["fall"] = "fall";
@@ -4144,253 +5295,624 @@
         (function (WhichBoutType) {
             WhichBoutType["me"] = "me";
             WhichBoutType["opposite"] = "opposite";
-            WhichBoutType["stop"] = "stop";
-            WhichBoutType["victory"] = "victory";
-            WhichBoutType["defeated"] = "defeted";
         })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
         let EventType;
         (function (EventType) {
-            EventType["judgeQuestion"] = "judgeQuestion";
-            EventType["judgeClickCard"] = "judgeClickCard";
+            EventType["judgeMeAnswer"] = "judgeMeAnswer";
+            EventType["judgeOppositeAnswer"] = "judgeOppositeAnswer";
+            EventType["judgeMeClickCard"] = "judgeMeClickCard";
             EventType["nextRound"] = "nextRound";
+            EventType["meAnswer"] = "meAnswer";
+            EventType["oppositeAnswer"] = "oppositeAnswer";
+            EventType["winOrLose"] = "winOrLose";
+            EventType["opening"] = "opening";
+            EventType["hideOption"] = "hideOption";
+            EventType["hideGuessCard"] = "hideGuessCard";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
-        let CameraMoveType;
-        (function (CameraMoveType) {
-            CameraMoveType["nod"] = "nod";
-            CameraMoveType["shake"] = "shake";
-        })(CameraMoveType = Game3D.CameraMoveType || (Game3D.CameraMoveType = {}));
-        function randomlyTakeOut(type) {
+        let RoleName;
+        (function (RoleName) {
+            RoleName["Girl"] = "Girl";
+        })(RoleName = Game3D.RoleName || (Game3D.RoleName = {}));
+        let RoleAniName;
+        (function (RoleAniName) {
+            RoleAniName["chaofeng"] = "chaofeng";
+            RoleAniName["daiji"] = "daiji";
+            RoleAniName["fouren"] = "fouren";
+            RoleAniName["qupai"] = "qupai";
+            RoleAniName["tiwen"] = "tiwen";
+            RoleAniName["zhuhe"] = "zhuhe";
+            RoleAniName["queding"] = "queding";
+            RoleAniName["zhuhetingliu"] = "zhuhetingliu";
+        })(RoleAniName = Game3D.RoleAniName || (Game3D.RoleAniName = {}));
+        function set16InitialCards(type) {
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
-            if (type === WhichScard.MyCardParent) {
-                Game3D.oppositeHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+            if (type == WhichScard.MyCardParent) {
+                Game3D.oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
-            else if (type === WhichScard.OppositeCardParent) {
-                Game3D.myHandCard = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1);
+            else if (type == WhichScard.OppositeCardParent) {
+                Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             let AllCardParent = Game3D.AllCardTem.clone();
             let startZ = 0.3;
             for (let index = 0; index < cardData16.length; index++) {
                 const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]);
-                if (type === WhichScard.MyCardParent) {
-                    if (Card.name === Game3D.oppositeHandCard[0][CardProperty.name]) {
-                        let HandCard = Card.clone();
-                        Game3D.OppositeHandParent.addChild(HandCard);
-                        HandCard.transform.localPosition = new Laya.Vector3(0, 0, 0);
-                    }
+                if (type == WhichScard.MyCardParent) {
                     Game3D.MyCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ -= 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
                     Card.transform.localRotationEulerX = 10;
                 }
-                else if (type === WhichScard.OppositeCardParent) {
+                else if (type == WhichScard.OppositeCardParent) {
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.5 * (index % 4) - 0.5, 0, startZ);
+                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
                     Card.transform.localRotationEulerX = -10;
                 }
-                Card[CardProperty.characteristicsArr] = cardData16[index][CardProperty.characteristicsArr];
+                Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
                 Card[CardProperty.fall] = false;
+                Card.transform.localRotationEulerZ = 180;
             }
         }
-        Game3D.randomlyTakeOut = randomlyTakeOut;
-        function randomTaskCard(type) {
-            let contrastArr = [];
-            for (let i = 0; i < Game3D.characteristicsData.length; i++) {
-                let index = Game3D.characteristicsData[i][CharacteristicsProperty.index];
-                contrastArr.push({
+        Game3D.set16InitialCards = set16InitialCards;
+        function getFeatureWeights(CardParent) {
+            let weightArr = [];
+            for (let i = 0; i < Game3D.featureData.length; i++) {
+                let index = Game3D.featureData[i][featureProperty.index];
+                weightArr.push({
                     index: index,
                     value: 0
                 });
             }
-            let whichArr;
-            if (type === WhichScard.MyCardParent) {
-                whichArr = Game3D.MyCardParent;
-            }
-            else {
-                whichArr = Game3D.OppositeCardParent;
-            }
-            let residueNum = 0;
-            for (let i = 0; i < whichArr.numChildren; i++) {
-                let Card = whichArr.getChildAt(i);
+            for (let i = 0; i < CardParent.numChildren; i++) {
+                let Card = CardParent.getChildAt(i);
                 if (!Card[CardProperty.fall]) {
-                    residueNum++;
-                    const characteristicsArr = Card[CardProperty.characteristicsArr];
-                    for (let j = 0; j < characteristicsArr.length; j++) {
-                        const characteristicsIndex = characteristicsArr[j];
-                        contrastArr[characteristicsIndex - 1]['value']++;
+                    const featureArr = Card[CardProperty.featureArr];
+                    for (let j = 0; j < featureArr.length; j++) {
+                        const featureIndex = featureArr[j];
+                        weightArr[featureIndex - 1]['value']++;
                     }
                 }
             }
-            for (let i = 0; i < contrastArr.length; i++) {
-                const element = contrastArr[i];
-                if (element['value'] === 0) {
-                    contrastArr.splice(i, 1);
+            for (let i = 0; i < weightArr.length; i++) {
+                const element = weightArr[i];
+                if (element['value'] == 0) {
+                    weightArr.splice(i, 1);
                     i--;
                 }
             }
-            Tools.objArrPropertySort(contrastArr, 'value');
+            Tools.objArrPropertySort(weightArr, 'value');
+            return weightArr;
+        }
+        Game3D.getFeatureWeights = getFeatureWeights;
+        function setAnswerForMe() {
+            let weightArr = getFeatureWeights(Game3D.MyCardParent);
+            let residueNum = getNotFallCardNameForMe().length;
+            let indexArr = [];
+            let medianIndex = Math.floor(weightArr.length / 2);
+            let index1 = weightArr[medianIndex]['index'];
+            let index2 = weightArr[medianIndex + 1]['index'];
+            let index3 = weightArr[medianIndex - 1]['index'];
+            let randIndex = Tools.randomOneHalf() ? -2 : 2;
+            let index4 = weightArr[medianIndex + randIndex]['index'];
+            indexArr.push(index1, index2, index3, index4);
+            let arr = [];
+            for (let i = 0; i < Game3D.featureData.length; i++) {
+                for (let j = 0; j < indexArr.length; j++) {
+                    if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
+                        arr.push(Game3D.featureData[i][featureProperty.question]);
+                    }
+                }
+            }
             if (residueNum == 1) {
-                Game3D.questionArr = ['是谁？'];
+                return ['是谁？'];
             }
             else if (residueNum == 2) {
-                Game3D.questionArr = ['是谁？'];
+                return ['是谁？'];
             }
-            else if (residueNum == 3) {
-                Game3D.questionArr = questionForindex(contrastArr);
-            }
-            else if (residueNum >= 4) {
-                Game3D.questionArr = questionForindex(contrastArr);
+            else {
+                return arr;
             }
         }
-        Game3D.randomTaskCard = randomTaskCard;
-        function questionForindex(contrastArr) {
-            let indexArr = [];
-            let medianIndex = Math.floor(contrastArr.length / 2);
-            let content1 = contrastArr[medianIndex]['index'];
-            let content2 = contrastArr[medianIndex + 1]['index'];
-            let content3 = contrastArr[medianIndex - 1]['index'];
-            let randIndex = Math.floor(Math.random() * 2) === 1 ? -2 : 2;
-            let content4 = contrastArr[medianIndex + randIndex]['index'];
-            indexArr.push(content1, content2, content3, content4);
+        Game3D.setAnswerForMe = setAnswerForMe;
+        function setAnswerForOpposite() {
             let arr = [];
-            for (let i = 0; i < Game3D.characteristicsData.length; i++) {
-                for (let j = 0; j < indexArr.length; j++) {
-                    if (Game3D.characteristicsData[i][CharacteristicsProperty.index] == indexArr[j]) {
-                        arr.push(Game3D.characteristicsData[i][CharacteristicsProperty.question]);
+            let question;
+            let weightArr = getFeatureWeights(Game3D.OppositeCardParent);
+            let residueArr = getNotFallCardNameOpposite();
+            let medianIndex = Math.floor(weightArr.length / 2);
+            if (residueArr.length == 1) {
+                question = '是' + getChNameByName(residueArr[0]) + '吗?';
+                arr = [question, true];
+            }
+            else if (residueArr.length == 2) {
+                let redio = Tools.randomOneHalf();
+                let name = getChNameByName(residueArr[redio]);
+                question = '是' + name + '吗?';
+                arr = [question, residueArr[redio] == Game3D.myHandName ? true : false];
+            }
+            else {
+                let featureIndex0;
+                for (let i = 0; i < Game3D.featureData.length; i++) {
+                    if (Game3D.featureData[i][featureProperty.index] == weightArr[medianIndex]['index']) {
+                        question = Game3D.featureData[i][featureProperty.question];
+                        featureIndex0 = i;
+                        arr = [question, checkAnswerForHand(question, Game3D.OppositeCardParent)];
+                        break;
                     }
+                }
+                let cardArr0 = getCardHaveFeature(Game3D.OppositeCardParent, featureIndex0, true);
+                console.log('所有卡牌数量和有这个属性卡牌的比例：', residueArr.length, cardArr0.length);
+                if (residueArr.length == cardArr0.length + 1) {
+                    let indexArr = getTowCardNotFeatureArr(cardArr0[0], cardArr0[1]);
+                    let index0 = Tools.arrayRandomGetOut(indexArr, 1)[0];
+                    let question0 = getQuestionByIndex(index0);
+                    console.log('随机到了所有卡牌都有的属性！从', cardArr0[0].name, cardArr0[1].name, '中随机获取一条不同属性', question0);
+                }
+            }
+            console.log(medianIndex, residueArr, weightArr, Game3D.myHandName, arr);
+            return arr;
+        }
+        Game3D.setAnswerForOpposite = setAnswerForOpposite;
+        function getTowCardNotFeatureArr(Card1, Card2) {
+            let arr1 = Tools.array1ExcludeArray2(Card1[CardProperty.featureArr], Card2[CardProperty.featureArr]);
+            let arr2 = Tools.array1ExcludeArray2(Card2[CardProperty.featureArr], Card1[CardProperty.featureArr]);
+            let featureArr = Tools.arrayAddToarray(arr1, arr2);
+            return featureArr;
+        }
+        Game3D.getTowCardNotFeatureArr = getTowCardNotFeatureArr;
+        function getNotFallCard(CardParent) {
+            let CardArr = [];
+            for (let index = 0; index < CardParent.numChildren; index++) {
+                let Card = Game3D.MyCardParent.getChildAt(index);
+                if (!Card[CardProperty.fall]) {
+                    CardArr.push(Card);
+                }
+            }
+            return CardArr;
+        }
+        Game3D.getNotFallCard = getNotFallCard;
+        function getNotFallCardNameForMe() {
+            let arr = [];
+            for (let i = 0; i < Game3D.MyCardParent.numChildren; i++) {
+                let Card = Game3D.MyCardParent.getChildAt(i);
+                if (!Card[CardProperty.fall]) {
+                    arr.push(Card.name);
                 }
             }
             return arr;
         }
-        Game3D.questionForindex = questionForindex;
+        Game3D.getNotFallCardNameForMe = getNotFallCardNameForMe;
+        function getNotFallCardNameOpposite() {
+            let arr = [];
+            for (let i = 0; i < Game3D.OppositeCardParent.numChildren; i++) {
+                let Card = Game3D.OppositeCardParent.getChildAt(i);
+                if (!Card[CardProperty.fall]) {
+                    arr.push(Card.name);
+                }
+            }
+            return arr;
+        }
+        Game3D.getNotFallCardNameOpposite = getNotFallCardNameOpposite;
+        function getChNameByName(name) {
+            let chName;
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                if (name == Game3D.CardData[i][CardProperty.name]) {
+                    chName = Game3D.CardData[i][CardProperty.ChName];
+                    break;
+                }
+            }
+            return chName;
+        }
+        Game3D.getChNameByName = getChNameByName;
+        function getNameByChName(ChName) {
+            let name;
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                if (ChName == Game3D.CardData[i][CardProperty.ChName]) {
+                    name = Game3D.CardData[i][CardProperty.name];
+                    break;
+                }
+            }
+            return name;
+        }
+        Game3D.getNameByChName = getNameByChName;
+        function getFeatureArrByName(name) {
+            let featureArr;
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                if (name == Game3D.CardData[i][CardProperty.name]) {
+                    featureArr = Game3D.CardData[i][CardProperty.ChName];
+                    break;
+                }
+            }
+            return featureArr;
+        }
+        Game3D.getFeatureArrByName = getFeatureArrByName;
+        function getNameArrByQuestion(question) {
+            let fIndex;
+            for (let i = 0; i < Game3D.featureData.length; i++) {
+                if (question == Game3D.featureData[i][featureProperty.question]) {
+                    fIndex = Game3D.featureData[i][featureProperty.index];
+                    break;
+                }
+            }
+            let nameArr = [];
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                const Card = Game3D.CardData[i];
+                for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                    if (fIndex == Card[CardProperty.featureArr][j]) {
+                        nameArr.push(Card[CardProperty.name]);
+                        break;
+                    }
+                }
+            }
+            return nameArr;
+        }
+        Game3D.getNameArrByQuestion = getNameArrByQuestion;
+        function getNameArrByFeature(feature) {
+            let fIndex;
+            for (let index = 0; index < Game3D.featureData.length; index++) {
+                if (feature = Game3D.featureData[index]) {
+                    fIndex = Game3D.featureData[index][featureProperty.index];
+                    break;
+                }
+            }
+            let nameArr = [];
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                const Card = Game3D.CardData[i];
+                for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                    if (fIndex == Card[CardProperty.featureArr][j]) {
+                        nameArr.push(Card[CardProperty.name]);
+                        break;
+                    }
+                }
+            }
+            return nameArr;
+        }
+        Game3D.getNameArrByFeature = getNameArrByFeature;
+        function getIndexByFeature(feature) {
+            let index0;
+            for (let index = 0; index < Game3D.featureData.length; index++) {
+                if (feature === Game3D.featureData[index][featureProperty.describe]) {
+                    index0 = index;
+                    return index0;
+                }
+            }
+        }
+        Game3D.getIndexByFeature = getIndexByFeature;
+        function getQuestionByIndex(featureIndex) {
+            let question0;
+            for (let index = 0; index < Game3D.featureData.length; index++) {
+                if (featureIndex === Game3D.featureData[index][featureProperty.index]) {
+                    question0 = Game3D.featureData[index][featureProperty.question];
+                    return question0;
+                }
+            }
+        }
+        Game3D.getQuestionByIndex = getQuestionByIndex;
+        function getCardHaveFeature(CardParent, featureIndex, excludeHandName) {
+            let notfallArr;
+            notfallArr = getNotFallCard(CardParent);
+            let haveArr = [];
+            for (let i = 0; i < notfallArr.length; i++) {
+                const Card = notfallArr[i];
+                for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                    if (excludeHandName) {
+                        if (Card.name == Game3D.myHandName || Card.name == Game3D.oppositeHandName) {
+                            console.log('排除手上的答案');
+                            break;
+                        }
+                        else {
+                            if (featureIndex == Card[CardProperty.featureArr][j]) {
+                                haveArr.push(notfallArr[i]);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return haveArr;
+        }
+        Game3D.getCardHaveFeature = getCardHaveFeature;
+        function getCardNotHaveFeature(CardParent, featureIndex, excludeHandName) {
+            let notfallArr;
+            notfallArr = getNotFallCard(CardParent);
+            let haveArr = [];
+            for (let i = 0; i < notfallArr.length; i++) {
+                const Card = notfallArr[i];
+                let bool;
+                for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                    if (excludeHandName) {
+                        if (Card.name == Game3D.myHandName || Card.name == Game3D.oppositeHandName) {
+                            break;
+                        }
+                        else {
+                            if (featureIndex == Card[CardProperty.featureArr][j]) {
+                                bool = true;
+                            }
+                        }
+                    }
+                }
+                if (bool) {
+                    haveArr.push(notfallArr[i]);
+                }
+            }
+            return haveArr;
+        }
+        Game3D.getCardNotHaveFeature = getCardNotHaveFeature;
+        function checkQuestion(question, CardParent) {
+            let ChaIndex;
+            for (let i = 0; i < Game3D.featureData.length; i++) {
+                if (question == Game3D.featureData[i][featureProperty.question]) {
+                    ChaIndex = Game3D.featureData[i][featureProperty.index];
+                }
+            }
+            let haveCardArr = [];
+            let nohaveCardArr = [];
+            for (let i = 0; i < CardParent.numChildren; i++) {
+                let Card = CardParent.getChildAt(i);
+                let have;
+                if (!Card[CardProperty.fall]) {
+                    for (let j = 0; j < Card[CardProperty.featureArr].length; j++) {
+                        if (ChaIndex == Card[CardProperty.featureArr][j]) {
+                            haveCardArr.push(Card.name);
+                            have = true;
+                            break;
+                        }
+                    }
+                    if (!have) {
+                        nohaveCardArr.push(Card.name);
+                    }
+                }
+            }
+            return [haveCardArr, nohaveCardArr];
+        }
+        Game3D.checkQuestion = checkQuestion;
+        function checkAnswerForHand(question, CardParent) {
+            let bool = false;
+            let cardArr = checkQuestion(question, CardParent);
+            let haveCardArr = cardArr[0];
+            let handName;
+            if (CardParent == Game3D.MyCardParent) {
+                handName = Game3D.oppositeHandName;
+            }
+            else if (CardParent == Game3D.OppositeCardParent) {
+                handName = Game3D.myHandName;
+            }
+            for (let index = 0; index < haveCardArr.length; index++) {
+                if (haveCardArr[index] == handName) {
+                    bool = true;
+                }
+            }
+            return bool;
+        }
+        Game3D.checkAnswerForHand = checkAnswerForHand;
         function dataInit() {
-            Game3D.characteristicsData = Laya.loader.getRes("GameData/Game/characteristics.json")['RECORDS'];
+            Game3D.featureData = Laya.loader.getRes("GameData/Game/Feature.json")['RECORDS'];
             Game3D.CardData = Laya.loader.getRes("GameData/Game/Card.json")['RECORDS'];
         }
         Game3D.dataInit = dataInit;
         class MainScene extends lwg3D.Scene3D {
             lwgOnAwake() {
                 Game3D.Scene3D = this.self;
-                Game3D.MainCamera = Game3D.Scene3D.getChildByName('Main Camera');
-                Game3D.MyCardParent = Game3D.Scene3D.getChildByName('MyCardParent');
-                Game3D.OppositeCardParent = Game3D.Scene3D.getChildByName('OppositeCardParent');
-                Game3D.OppositeHandParent = Game3D.Scene3D.getChildByName('OppositeHandParent');
-                Game3D.AllCardTem = Game3D.Scene3D.getChildByName('AllCard');
+                Game3D.MainCamera = this.self.getChildByName('MainCamera');
+                Game3D.OppositeRoleParent = this.self.getChildByName('OppositeRoleParent');
+                Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
+                Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
+                Game3D.OppositeHandDispaly = this.self.getChildByName('OppositeHandDispaly');
+                Game3D.MyHandDispaly = this.self.getChildByName('MyHandDispaly');
+                Game3D.AllCardTem = this.self.getChildByName('AllCard');
+                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveFar');
+                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost');
             }
             lwgEventReg() {
-                EventAdmin.reg(EventType.judgeQuestion, this, (question) => {
-                    let ChaIndex;
-                    for (let i = 0; i < Game3D.characteristicsData.length; i++) {
-                        if (question === Game3D.characteristicsData[i][CharacteristicsProperty.question]) {
-                            ChaIndex = Game3D.characteristicsData[i][CharacteristicsProperty.index];
-                        }
-                    }
-                    let haveCardArr = [];
-                    let nohaveCardArr = [];
-                    let CardArr;
+                let time = 500;
+                EventAdmin.reg(EventType.opening, this, () => {
+                    this.roundChange();
+                    EventAdmin.notify(EventType.nextRound);
+                });
+                EventAdmin.reg(EventType.nextRound, this, () => {
                     if (Game3D.whichBout == WhichBoutType.me) {
-                        CardArr = Game3D.MyCardParent;
-                    }
-                    else if (WhichBoutType.opposite) {
-                        CardArr = Game3D.OppositeCardParent;
-                    }
-                    for (let i = 0; i < CardArr.numChildren; i++) {
-                        let Card = CardArr.getChildAt(i);
-                        let have;
-                        for (let j = 0; j < Card[CardProperty.characteristicsArr].length; j++) {
-                            if (ChaIndex === Card[CardProperty.characteristicsArr][j] && !Card[CardProperty.fall]) {
-                                haveCardArr.push(Card.name);
-                                have = true;
-                                break;
-                            }
-                        }
-                        if (!have) {
-                            nohaveCardArr.push(Card.name);
-                        }
-                    }
-                    let matching;
-                    for (let index = 0; index < haveCardArr.length; index++) {
-                        if (haveCardArr[index] == Game3D.oppositeHandCard[0][CardProperty.name]) {
-                            matching = true;
-                        }
-                    }
-                    if (matching) {
-                        console.log('特征正确！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(1, 0, 0), 500, this, () => {
-                            this.carFallAni(nohaveCardArr);
+                        Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                            EventAdmin.notify(EventType.meAnswer, [setAnswerForMe()]);
                         });
                     }
-                    else {
-                        console.log('特征错误！');
-                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 3, 0), 500, this, () => {
-                            this.carFallAni(haveCardArr);
+                    else if (Game3D.whichBout == WhichBoutType.opposite) {
+                        Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                            EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), getChNameByName(Game3D.myHandName)]);
                         });
                     }
                 });
-                EventAdmin.reg(EventType.judgeClickCard, this, (MeshSprite3D) => {
+                EventAdmin.reg(EventType.judgeMeAnswer, this, (question) => {
+                    if (Game3D.whichBout !== WhichBoutType.me) {
+                        return;
+                    }
+                    this.roundChange();
+                    let matching = checkAnswerForHand(question, Game3D.MyCardParent);
+                    let cardArr = checkQuestion(question, Game3D.MyCardParent);
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                        if (matching) {
+                            console.log('我回答正确');
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.queding);
+                            Laya.timer.once(time * 4, this, () => {
+                                Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni(cardArr[1], Game3D.MyCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                });
+                            });
+                        }
+                        else {
+                            console.log('我回答错误');
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
+                            Laya.timer.once(time * 4, this, () => {
+                                Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                    Laya.timer.once(time * 2, this, () => {
+                                        this.carFallAni(cardArr[0], Game3D.MyCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                });
+                            });
+                        }
+                    });
+                });
+                EventAdmin.reg(EventType.judgeMeClickCard, this, (MeshSprite3D) => {
                     if (MeshSprite3D[CardProperty.fall]) {
                         return;
                     }
-                    if (Game3D.whichBout == WhichBoutType.me) {
-                        if (MeshSprite3D.parent === Game3D.MyCardParent) {
-                            if (MeshSprite3D.name == Game3D.oppositeHandCard[0][CardProperty.name]) {
+                    if (Game3D.whichBout !== WhichBoutType.me) {
+                        return;
+                    }
+                    this.roundChange();
+                    if (MeshSprite3D.parent == Game3D.MyCardParent) {
+                        if (MeshSprite3D.name == Game3D.oppositeHandName) {
+                            Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
                                 console.log('我方赢了！');
-                                this.carFallAni([MeshSprite3D.name], true);
-                                EventAdmin.notify(EventAdmin.EventType.victory);
-                            }
-                            else {
-                                console.log('选错了！');
-                                this.carFallAni([MeshSprite3D.name]);
-                            }
+                                let ani = Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.zhuhetingliu);
+                                Laya.timer.once(time * 4, this, () => {
+                                    EventAdmin.notify(EventAdmin.EventType.victory);
+                                });
+                            });
+                        }
+                        else {
+                            Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
+                                console.log('我选错了！');
+                                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
+                                Laya.timer.once(time * 3, this, () => {
+                                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
+                                        Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
+                                        Laya.timer.once(time * 2, this, () => {
+                                            this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent);
+                                            Laya.timer.once(time * 3, this, () => {
+                                                EventAdmin.notify(EventType.nextRound);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
                         }
                     }
-                    else if (Game3D.whichBout == WhichBoutType.opposite) {
-                        if (MeshSprite3D.parent !== Game3D.OppositeCardParent) {
-                            if (MeshSprite3D.name == Game3D.myHandCard[0][CardProperty.name]) {
-                                console.log('对方赢了！');
-                                this.carFallAni([MeshSprite3D.name], true);
-                            }
-                        }
+                });
+                EventAdmin.reg(EventType.judgeOppositeAnswer, this, (question, bool) => {
+                    if (Game3D.whichBout !== WhichBoutType.opposite) {
+                        return;
+                    }
+                    this.roundChange();
+                    let cardArr = checkQuestion(question, Game3D.OppositeCardParent);
+                    let notFallLen = getNotFallCardNameOpposite().length;
+                    if (bool) {
+                        console.log('对方回答正确');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(5, 0, 0), time, this, () => {
+                            EventAdmin.notify(Game3D.EventType.hideGuessCard);
+                            Laya.timer.once(time * 4, this, () => {
+                                if (notFallLen == 2) {
+                                    console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
+                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
+                                    let name = getNameByChName(question.substring(1, question.length - 2));
+                                    console.log('即将倒下的牌是排除', name);
+                                    Laya.timer.once(time * 2, this, () => {
+                                        this.carFallAni([name], Game3D.OppositeCardParent, true);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventAdmin.EventType.defeated);
+                                        });
+                                    });
+                                }
+                                else if (notFallLen == 1) {
+                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
+                                    Laya.timer.once(time * 3, this, () => {
+                                        EventAdmin.notify(EventAdmin.EventType.defeated);
+                                    });
+                                }
+                                else {
+                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }
+                    else {
+                        console.log('对方回答错误');
+                        Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(0, 5, 0), time, this, () => {
+                            EventAdmin.notify(Game3D.EventType.hideGuessCard, [() => {
+                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
+                                }]);
+                            Laya.timer.once(time * 4, this, () => {
+                                console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
+                                if (notFallLen == 2) {
+                                    console.log('对方只剩下2张牌了，但是回答错了，我们还有一次机会~！');
+                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
+                                    let name = getNameByChName(question.substring(1, question.length - 2));
+                                    console.log('即将倒下的牌是', name);
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni([name], Game3D.OppositeCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                }
+                                else {
+                                    Laya.timer.once(time * 1, this, () => {
+                                        this.carFallAni(cardArr[0], Game3D.OppositeCardParent);
+                                        Laya.timer.once(time * 3, this, () => {
+                                            EventAdmin.notify(EventType.nextRound);
+                                        });
+                                    });
+                                }
+                            });
+                        });
                     }
                 });
                 EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 });
                 EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
-                    this.opening();
+                    this.init();
                 });
-                EventAdmin.reg(EventType.nextRound, this, () => {
-                    if (Game3D.whichBout == WhichBoutType.victory) ;
-                    else if (Game3D.whichBout == WhichBoutType.defeated) ;
-                    else {
-                        randomTaskCard(WhichScard.MyCardParent);
-                    }
+                EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
+                    this.init();
                 });
             }
-            carFallAni(arrName, exclude) {
-                let CardParent;
-                if (Game3D.whichBout == WhichBoutType.me) {
-                    CardParent = Game3D.MyCardParent;
-                }
-                else if (WhichBoutType.opposite) {
-                    CardParent = Game3D.OppositeCardParent;
-                }
-                else {
+            cameraMovement() {
+            }
+            roundChange() {
+                if (!Game3D.whichBout) {
+                    Game3D.whichBout = WhichBoutType.me;
                     return;
                 }
+                if (Game3D.whichBout == WhichBoutType.me) {
+                    EventAdmin.notify(Game3D.EventType.hideOption);
+                    Game3D.whichBout = WhichBoutType.opposite;
+                }
+                else if (Game3D.whichBout == WhichBoutType.opposite) {
+                    Game3D.whichBout = WhichBoutType.me;
+                }
+            }
+            carFallAni(arrName, CardParent, exclude) {
                 if (exclude) {
+                    let nofallArr = [];
                     for (let i = 0; i < CardParent.numChildren; i++) {
                         const Card = CardParent.getChildAt(i);
-                        for (let j = 0; j < arrName.length; j++) {
-                            if (Card.name !== arrName[j] && !Card[CardProperty.fall]) {
-                                Card[CardProperty.fall] = true;
-                                Card.transform.localRotationEulerX = -90;
-                            }
+                        if (!Card[CardProperty.fall]) {
+                            nofallArr.push(Card.name);
                         }
+                    }
+                    let arr = Tools.array1ExcludeArray2(nofallArr, arrName);
+                    for (let k = 0; k < arr.length; k++) {
+                        let Card = CardParent.getChildByName(arr[k]);
+                        Card[CardProperty.fall] = true;
+                        Card.transform.localRotationEulerX = -90;
                     }
                 }
                 else {
@@ -4402,24 +5924,26 @@
                         }
                     }
                 }
-                EventAdmin.notify(EventType.nextRound);
             }
             lwgOnEnable() {
-                this.opening();
+                this.init();
             }
-            opening() {
-                Game3D.whichBout = WhichBoutType.me;
-                if (Game3D.MyCardParent.numChildren > 0) {
-                    Game3D.MyCardParent.removeChildren(0, Game3D.MyCardParent.numChildren - 1);
-                }
-                if (Game3D.OppositeCardParent.numChildren > 0) {
-                    Game3D.OppositeCardParent.removeChildren(0, Game3D.OppositeCardParent.numChildren - 1);
-                }
-                if (Game3D.OppositeHandParent.numChildren > 0) {
-                    Game3D.OppositeHandParent.removeChildren(0, Game3D.OppositeHandParent.numChildren - 1);
-                }
-                randomlyTakeOut(WhichScard.MyCardParent);
-                randomTaskCard(WhichScard.MyCardParent);
+            init() {
+                Game3D.whichBout = null;
+                Tools.node_RemoveAllChildren(Game3D.MyCardParent);
+                Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
+                Tools.node_RemoveAllChildren(Game3D.OppositeHandDispaly);
+                set16InitialCards(WhichScard.MyCardParent);
+                set16InitialCards(WhichScard.OppositeCardParent);
+                this.changeOpppsiteRole();
+                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
+            }
+            changeOpppsiteRole() {
+                Game3D.OppositeRole = Game3D.OppositeRoleParent.getChildByName('Girl');
+                let CardMarked = Tools.node_3dFindChild(Game3D.OppositeRole, 'CardMarked');
+                let Card = Game3D.MyCardParent.getChildByName(Game3D.oppositeHandName);
+                let mt = Card.meshRenderer.material;
+                CardMarked.meshRenderer.material = mt;
             }
         }
         Game3D.MainScene = MainScene;
@@ -4427,32 +5951,50 @@
 
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
-            console.log('这是第一个脚本');
-            this.creatQuestion();
+            Gold.goldAppear();
         }
         lwgNodeDec() {
             this.OptionParent = this.self['OptionParent'];
         }
         lwgEventReg() {
-            EventAdmin.reg(Game3D.EventType.nextRound, this, () => {
-                this.creatQuestion();
+            EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
+                Admin._clickLock.switch = true;
+                Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
+                    Tools.node_RemoveAllChildren(this.OptionParent);
+                    this.createOppositeQuestion(questionAndYesOrNo, cardName);
+                    Admin._clickLock.switch = false;
+                });
+            });
+            EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+                Admin._clickLock.switch = true;
+                this.createQuestion(questionArr);
+                Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
+                    Admin._clickLock.switch = false;
+                });
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIVictory, this.self);
             });
+            EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
+                Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+            });
+            EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
+                Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { });
+            });
+        }
+        lwgAdaptive() {
+            this.self['SceneContent'].y = Laya.stage.height * 0.792;
         }
         lwgOnEnable() {
+            EventAdmin.notify(Game3D.EventType.opening);
         }
-        creatQuestion() {
-            if (this.OptionParent.numChildren > 0) {
-                this.OptionParent.removeChildren(0, this.OptionParent.numChildren - 1);
-            }
-            if (Game3D.questionArr.length < 3) {
-                this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, Game3D.questionArr[0], false);
+        createQuestion(questionArr) {
+            if (questionArr.length < 3) {
+                this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, questionArr[0], false);
             }
             else {
-                for (let index = 0; index < Game3D.questionArr.length; index++) {
+                for (let index = 0; index < questionArr.length; index++) {
                     let x, y;
                     switch (index) {
                         case 0:
@@ -4474,7 +6016,7 @@
                         default:
                             break;
                     }
-                    this.createOption(this.self['OptionParent'], x, y, Game3D.questionArr[index], true);
+                    this.createOption(this.self['OptionParent'], x, y, questionArr[index], true);
                 }
             }
         }
@@ -4484,40 +6026,103 @@
             Content.text = question;
             parent.addChild(Option);
             Option.pos(x, y);
+            if (Content.text.length >= 10) {
+                Content.fontSize = 22;
+            }
+            else if (Content.text.length >= 8 && Content.text.length < 10) {
+                Content.fontSize = 25;
+            }
+            else if (Content.text.length >= 6 && Content.text.length < 8) {
+                Content.fontSize = 28;
+            }
+            else if (Content.text.length < 6) {
+                Content.fontSize = 30;
+            }
             if (click) {
                 Click.on(Click.Type.largen, Option, this, null, null, () => {
-                    EventAdmin.notify(Game3D.EventType.judgeQuestion, question);
+                    EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
                 });
             }
             return Option;
         }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+            });
+        }
+        createOppositeQuestion(questionAndYesOrNo, cardName) {
+            let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
+            this.self.addChild(GuessCard);
+            GuessCard.pos(0, 0);
+            let QuestionBaord = GuessCard.getChildByName('QuestionBaord');
+            let Question = QuestionBaord.getChildByName('Question');
+            Question.text = questionAndYesOrNo[0];
+            Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
+            let Card = GuessCard.getChildByName('Card');
+            let CardName = Card.getChildByName('CardName');
+            CardName.text = cardName;
+            Card.y = Laya.stage.height * 0.483;
+            Animation2D.cardRotateX_TowFace(Card, 180);
+            Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
+            let BtnYes = GuessCard.getChildByName('BtnYes');
+            Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
+                if (questionAndYesOrNo[1]) {
+                    EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
+                }
+                else {
+                    console.log('不可胡乱回答！');
+                }
+            });
+            let BtnNo = GuessCard.getChildByName('BtnNo');
+            Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
+                if (!questionAndYesOrNo[1]) {
+                    EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
+                }
+                else {
+                    console.log('不可胡乱回答！');
+                }
+            });
+            BtnYes.y = Laya.stage.height * 0.874;
+            BtnNo.y = Laya.stage.height * 0.874;
+            Animation2D.scale_Alpha(BtnNo, 0, 0, 0, 1, 1, 1, 150, 600);
+            Animation2D.scale_Alpha(BtnYes, 0, 0, 0, 1, 1, 1, 150, 600);
+            EventAdmin.reg(Game3D.EventType.hideGuessCard, this, (func) => {
+                Animation2D.bombs_Vanish(QuestionBaord, 0, 0, 0, 150, 500);
+                Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
+                Animation2D.cardRotateX_TowFace(Card, 180, null, 200);
+                Animation2D.scale_Alpha(BtnNo, 1, 1, 1, 0, 0, 0, 150, 400);
+                Animation2D.scale_Alpha(BtnYes, 1, 1, 1, 0, 0, 0, 150, 400, () => {
+                    GuessCard.removeSelf();
+                    if (func) {
+                        func();
+                    }
+                });
+            });
+        }
         onStageMouseDown(e) {
-            let hitResult = Tools.d3_rayScanning(Game3D.MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
+            let MainCamera = Game3D.MainCamera.getChildAt(0);
+            let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
             let sprite3D;
             if (hitResult) {
                 sprite3D = hitResult.collider.owner;
-                EventAdmin.notify(Game3D.EventType.judgeClickCard, sprite3D);
+                EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
             }
-        }
-        judgeCharacteristic() {
-        }
-        lwgBtnClick() {
         }
     }
 
     class LwgInit extends Admin.Scene {
         lwgOnAwake() {
-            console.log(this.self.name);
             this.admin();
             this.game3D();
             this.shop();
             this.skin();
             this.task();
             this.easterEgg();
+            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
         }
         admin() {
+            Admin._commonVanishAni = true;
+            Admin._platform = Admin._platformTpye.Bytedance;
         }
-        ;
         game3D() {
             Game3D.dataInit();
             Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
@@ -4526,10 +6131,8 @@
         }
         skin() {
         }
-        ;
         shop() {
         }
-        ;
         task() {
         }
         easterEgg() {
@@ -4540,80 +6143,535 @@
         }
     }
 
+    class UIDefeated extends Defeated.DefeatedScene {
+        lwgOnAwake() {
+            ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
+            ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
+            ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
+            switch (Admin._platform) {
+                case Admin._platformTpye.OPPO:
+                    this.self['OPPO'].visible = true;
+                    this.self['WeChat'].visible = false;
+                    this.self['Bytedance'].visible = false;
+                    this.self['P202'].removeSelf();
+                    break;
+                case Admin._platformTpye.WeChat:
+                    this.self['OPPO'].visible = false;
+                    this.self['WeChat'].visible = true;
+                    this.self['Bytedance'].visible = false;
+                    this.self['P202'].removeSelf();
+                    break;
+                case Admin._platformTpye.Bytedance:
+                    this.self['OPPO'].visible = false;
+                    this.self['WeChat'].visible = false;
+                    this.self['Bytedance'].visible = true;
+                default:
+                    break;
+            }
+        }
+        lwgOnEnable() {
+            PalyAudio.playDefeatedSound();
+            Gold.GoldNode = this.self['GoldNode'];
+            let Num2 = this.self['GoldNode'].getChildByName('Num');
+            Num2.text = Gold._num.value.toString();
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+            Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
+            Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
+        }
+        btnSelectUp() {
+            let Dot;
+            switch (Admin._platform) {
+                case Admin._platformTpye.WeChat:
+                    Dot = this.self['Dot_WeChat'];
+                    break;
+                case Admin._platformTpye.Bytedance:
+                    Dot = this.self['Dot_Bytedance'];
+                    break;
+                default:
+                    break;
+            }
+            if (Dot.visible) {
+                Dot.visible = false;
+                this.self['BtnNext_WeChat'].visible = false;
+                this.self['BtnAgain_WeChat'].visible = true;
+                this.self['BtnNext_Bytedance'].visible = false;
+                this.self['BtnAgain_Bytedance'].visible = true;
+            }
+            else {
+                Dot.visible = true;
+                this.self['BtnNext_WeChat'].visible = true;
+                this.self['BtnAgain_WeChat'].visible = false;
+                this.self['BtnNext_Bytedance'].visible = true;
+                this.self['BtnAgain_Bytedance'].visible = false;
+            }
+        }
+        btnAgainUp() {
+            ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
+            console.log('重新开始！');
+            Admin._openScene(Admin.SceneName.UIStart, this.self);
+            EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+        }
+        btnNextUp() {
+            ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
+                Admin._gameLevel.value += 1;
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+                EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+            });
+        }
+        lwgOnDisable() {
+        }
+    }
+
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
-            Loding.list_2D = [
+            Loding.list_2DPic = [
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
             ];
+            Loding.list_2DScene = [
+                "Scene/LwgInit.json",
+            ];
+            Loding.list_2DPrefab = [];
             Loding.list_3DScene = [
                 "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
             Loding.list_3DPrefab = [];
-            Loding.list_Json = [
-                "GameData/Game/characteristics.json",
+            Loding.list_JsonData = [
+                "GameData/Game/Feature.json",
                 "GameData/Game/Card.json",
-                "Scene/LwgInit.json",
             ];
+        }
+        lwgAdaptive() {
+            this.self['Tag'].y = Laya.stage.height - 100;
+            this.self['ProgressBoard'].y = Laya.stage.height * 0.824;
+            this.self['Pic'].y = Laya.stage.height * 0.505;
+            this.self['Logo'].y = Laya.stage.height * 0.191;
         }
         lwgOnEnable() {
         }
+        lwgOpenAni() { return 0; }
         lodingPhaseComplete() {
+            this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;
         }
         lodingComplete() {
-        }
-        lwgOnUpdate() {
+            this.self['Progress'].mask.x = 0;
+            return 200;
         }
     }
 
     class UIStart extends Start.StartScene {
-        lwgOnAwake() { }
+        lwgOnAwake() {
+            Setting.setBtnAppear();
+            Gold.createGoldNode(629, 174);
+        }
+        lwgAdaptive() {
+            this.self['BtnStart'].y = Laya.stage.height * 0.779;
+        }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
         }
+        lwgOnDisable() {
+            Setting.setBtnVinish();
+            Gold.goldVinish();
+        }
     }
 
-    class victory extends VictoryScene {
-        lwgNodeDec() {
+    class RecordManager {
+        constructor() {
+            this.GRV = null;
+            this.isRecordVideoing = false;
+            this.isVideoRecord = false;
+            this.videoRecordTimer = 0;
+            this.isHasVideoRecord = false;
+        }
+        static Init() {
+            RecordManager.grv = new TJ.Platform.AppRt.DevKit.TT.GameRecorderVideo();
+        }
+        static startAutoRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (RecordManager.grv == null)
+                RecordManager.Init();
+            if (RecordManager.recording)
+                return;
+            RecordManager.autoRecording = true;
+            console.log("******************开始录屏");
+            RecordManager._start();
+            RecordManager.lastRecordTime = Date.now();
+        }
+        static stopAutoRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (!RecordManager.autoRecording) {
+                console.log("RecordManager.autoRecording", RecordManager.autoRecording);
+                return false;
+            }
+            RecordManager.autoRecording = false;
+            RecordManager._end(false);
+            if (Date.now() - RecordManager.lastRecordTime > 6000) {
+                return true;
+            }
+            if (Date.now() - RecordManager.lastRecordTime < 3000) {
+                console.log("小于3秒");
+                return false;
+            }
+            return true;
+        }
+        static startRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (RecordManager.autoRecording) {
+                this.stopAutoRecord();
+            }
+            RecordManager.recording = true;
+            RecordManager._start();
+            RecordManager.lastRecordTime = Date.now();
+        }
+        static stopRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("time:" + (Date.now() - RecordManager.lastRecordTime));
+            if (Date.now() - RecordManager.lastRecordTime <= 3000) {
+                return false;
+            }
+            RecordManager.recording = false;
+            RecordManager._end(true);
+            return true;
+        }
+        static _start() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************180s  ？？？？？");
+            RecordManager.grv.Start(180);
+        }
+        static _end(share) {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************180结束 ？？？？？");
+            RecordManager.grv.Stop(share);
+        }
+        static _share(type, successedAc, completedAc = null, failAc = null) {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************吊起分享 ？？？？？", RecordManager.grv, RecordManager.grv.videoPath);
+            if (RecordManager.grv.videoPath) {
+                let p = new TJ.Platform.AppRt.Extern.TT.ShareAppMessageParam();
+                p.extra.videoTopics = ["剃头大师", "番茄小游戏", "抖音小游戏"];
+                p.channel = "video";
+                p.success = () => {
+                    Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
+                    successedAc();
+                };
+                p.fail = () => {
+                    if (type === 'noAward') {
+                        Dialog.createHint_Middle(Dialog.HintContent["分享成功后才能获取奖励！"]);
+                    }
+                    else {
+                        Dialog.createHint_Middle(Dialog.HintContent["分享失败！"]);
+                    }
+                    failAc();
+                };
+                RecordManager.grv.Share(p);
+            }
+            else {
+                Dialog.createHint_Middle(Dialog.HintContent["暂无视频，玩一局游戏之后分享！"]);
+            }
+        }
+    }
+    RecordManager.recording = false;
+    RecordManager.autoRecording = false;
+
+    class UIVictory extends VictoryScene {
+        lwgOnAwake() {
+            switch (Admin._platform) {
+                case Admin._platformTpye.OPPO:
+                    this.self['OPPO'].visible = true;
+                    this.self['WeChat'].visible = false;
+                    this.self['Bytedance'].visible = false;
+                    break;
+                case Admin._platformTpye.WeChat:
+                    this.self['OPPO'].visible = false;
+                    this.self['WeChat'].visible = true;
+                    this.self['Bytedance'].visible = false;
+                    break;
+                case Admin._platformTpye.Bytedance:
+                    this.self['OPPO'].visible = false;
+                    this.self['WeChat'].visible = false;
+                    this.self['Bytedance'].visible = true;
+                    break;
+                default:
+                    break;
+            }
         }
         lwgOnEnable() {
-        }
-        getGoldDisPlay(number) {
+            PalyAudio.playVictorySound();
+            Effects.createFireworks(Laya.stage, 40, 430, 200);
+            Effects.createFireworks(Laya.stage, 40, 109, 200);
+            Effects.createLeftOrRightJet(Laya.stage, 'right', 40, 720, 300);
+            Effects.createLeftOrRightJet(Laya.stage, 'left', 40, 0, 300);
+            let Num1 = this.self['GlodNum'].getChildByName('Num');
+            Num1.text = '+' + 100;
+            Gold.GoldNode = this.self['GoldNode'];
+            let Num2 = this.self['GoldNode'].getChildByName('Num');
+            Num2.text = Gold._num.value.toString();
+            let time = 0;
+            Laya.timer.frameLoop(8, this, () => {
+                time++;
+                if (time % 2 == 0) {
+                    this.self['Tag'].skin = 'Game/UI/UIVictory/dajia.png';
+                }
+                else {
+                    this.self['Tag'].skin = 'Game/UI/UIVictory/qipao.png';
+                }
+            });
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
+                if (this.self['Dot_Bytedance'].visible) {
+                    ADManager.ShowReward(() => {
+                        ADManager.TAPoint(TaT.BtnClick, 'closeword_success');
+                        this.getGold(300);
+                    });
+                }
+                else {
+                    this.getGold(100);
+                }
             });
-        }
-        offClick() {
-        }
-        btnNext_BytedanceUp() {
-        }
-        btnSelectUp() {
-        }
-        btnNormalUp() {
-            ADManager.TAPoint(TaT.BtnClick, 'ADrewardbt_success');
-            this.offClick();
-            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                this.advFunc(1);
-            });
-        }
-        btnAdvUp() {
-            ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'closeword_success');
-                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                    this.advFunc(10);
+            Click.on(Click.Type.largen, this.self['BtnShare'], this, null, null, () => {
+                RecordManager._share('noAward', () => {
+                    Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
                 });
             });
+            Click.on(Click.Type.noEffect, this.self['BtnSelect_Bytedance'], this, null, null, () => {
+                if (this.self['Dot_Bytedance'].visible) {
+                    this.self['Dot_Bytedance'].visible = false;
+                }
+                else {
+                    this.self['Dot_Bytedance'].visible = true;
+                }
+            });
         }
-        advFunc(number) {
-            Gold.addGold(10);
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
+        getGold(number) {
+            Admin._clickLock.switch = true;
+            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                Gold.addGold(number);
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+                Admin._clickLock.switch = false;
+            });
         }
         lwgOnDisable() {
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
+        }
+    }
+
+    class UIVictoryBox_Cell extends Admin.Object {
+        constructor() { super(); }
+        lwgBtnClick() {
+            Click.on(Click.Type.noEffect, this.self, this, null, null, this.up, null);
+        }
+        btnoff() {
+            Click.off(Click.Type.noEffect, this.self, this, null, null, this.up, null);
+        }
+        up(e) {
+            if (this.self['_dataSource'][VictoryBox.BoxProperty.openState]) {
+                return;
+            }
+            else {
+                if (VictoryBox._defaultOpenNum > 0) {
+                    let Pic_Box = this.self.getChildByName('Pic_Box');
+                    if (!this.self['_dataSource'][VictoryBox.BoxProperty.ads]) {
+                        Pic_Box.skin = 'UI/VictoryBox/baoxian3.png';
+                    }
+                    this.btnoff();
+                    Animation2D.shookHead_Simple(Pic_Box, 10, 100, 0, f => {
+                        EventAdmin.notify(VictoryBox.EventType.openBox, [this.self['_dataSource']]);
+                        this.lwgBtnClick();
+                    });
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["观看广告可以获得三次开宝箱次数！"]);
+                }
+            }
+        }
+        lwgDisable() {
+        }
+    }
+
+    class UIVictoryBox extends VictoryBox.VictoryBoxScene {
+        constructor() { super(); }
+        victoryBoxOnAwake() {
+            ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
+            ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
+            Gold.goldAppear();
+            if (VictoryBox._openVictoryBoxNum > 1) {
+                let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
+                for (let index = 0; index < arr.length; index++) {
+                    const element = arr[index];
+                    VictoryBox.setProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
+                }
+            }
+            switch (Admin._platform) {
+                case Admin._platformTpye.WeChat:
+                    this.self['Bytedance'].visible = false;
+                    this.self['WeChat'].visible = true;
+                    this.self['BtnAgain_WeChat'].visible = false;
+                    this.self['BtnNo_WeChat'].visible = false;
+                    break;
+                case Admin._platformTpye.Bytedance:
+                    this.self['Bytedance'].visible = true;
+                    this.self['WeChat'].visible = false;
+                    this.self['BtnAgain_Bytedance'].visible = false;
+                    this.self['BtnNo_Bytedance'].visible = false;
+                    this.self['Select_Bytedance'].visible = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        victoryBoxEventReg() {
+            EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
+                console.log(dataSource, VictoryBox._defaultOpenNum);
+                if (VictoryBox._defaultOpenNum > 0) {
+                    if (dataSource[VictoryBox.BoxProperty.ads]) {
+                        ADManager.ShowReward(() => {
+                            ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
+                            this.getRewardFunc(dataSource);
+                        });
+                    }
+                    else {
+                        this.getRewardFunc(dataSource);
+                    }
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["观看广告可以获得三次开宝箱次数！"]);
+                }
+            });
+        }
+        getRewardFunc(dataSource) {
+            VictoryBox._alreadyOpenNum++;
+            let automan = false;
+            if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
+                EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
+                let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
+                let Automan = cell.getChildByName('Automan');
+                Automan.visible = true;
+                automan = true;
+            }
+            VictoryBox._defaultOpenNum--;
+            if (VictoryBox._defaultOpenNum == 0) {
+                this.self['BtnAgain_Bytedance'].visible = true;
+                this.self['BtnNo_Bytedance'].visible = true;
+                this.self['Select_Bytedance'].visible = true;
+            }
+            VictoryBox._selectBox = dataSource[VictoryBox.BoxProperty.name];
+            let diffX = dataSource.arrange % 3;
+            if (diffX == 0) {
+                diffX = 3;
+            }
+            let diffY = Math.floor(dataSource.arrange / 3 + 0.5);
+            let x = VictoryBox._BoxList.x + VictoryBox._BoxList.width / 3 * diffX - 45;
+            let y = VictoryBox._BoxList.y + VictoryBox._BoxList.height / 3 * diffY + 92;
+            Effects.createExplosion_Rotate(this.self, 25, x, y, 'star', 10, 15);
+            VictoryBox.setProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
+            if (!automan) {
+                Laya.timer.frameOnce(20, this, f => {
+                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                        Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                    });
+                });
+            }
+            EventAdmin.notify(Task.EventType.victoryBox);
+        }
+        boxList_Update(cell, index) {
+            let dataSource = cell.dataSource;
+            let Select = cell.getChildByName('Select');
+            if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
+                Select.visible = true;
+            }
+            else {
+                Select.visible = false;
+            }
+            let Num = cell.getChildByName('Num');
+            let Pic_Gold = cell.getChildByName('Pic_Gold');
+            let Pic_Box = cell.getChildByName('Pic_Box');
+            let BordPic = cell.getChildByName('BordPic');
+            if (!dataSource[VictoryBox.BoxProperty.openState]) {
+                if (dataSource[VictoryBox.BoxProperty.ads]) {
+                    Pic_Box.skin = 'UI/VictoryBox/baoxian_adv.png';
+                }
+                else {
+                    Pic_Box.skin = 'UI/VictoryBox/baoxian2.png';
+                }
+                Pic_Box.visible = true;
+                Pic_Gold.visible = false;
+                Num.visible = false;
+                BordPic.skin = 'UI/Common/kuang2.png';
+            }
+            else {
+                Pic_Box.visible = false;
+                Pic_Gold.visible = true;
+                Num.visible = true;
+                Num.text = dataSource[VictoryBox.BoxProperty.rewardNum];
+                BordPic.skin = 'UI/Common/kuang1.png';
+            }
+        }
+        victoryBoxBtnClick() {
+            Click.on('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.on('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+            Click.on('largen', this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
+            Click.on('largen', this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+            Click.on('largen', this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
+        }
+        btnOffClick() {
+            Click.off('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.off('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        }
+        btnSelect_BytedanceUp() {
+            if (this.self['Dot_Bytedance'].visible) {
+                this.self['Dot_Bytedance'].visible = false;
+                this.self['BtnNo_Bytedance'].visible = true;
+                this.self['BtnAgain_Bytedance'].visible = false;
+            }
+            else {
+                this.self['Dot_Bytedance'].visible = true;
+                this.self['BtnNo_Bytedance'].visible = false;
+                this.self['BtnAgain_Bytedance'].visible = true;
+            }
+        }
+        btnNoUp(event) {
+            Admin._openScene(Admin.SceneName.UIVictory, this.self);
+        }
+        btnAgainUp(event) {
+            ADManager.TAPoint(TaT.BtnClick, 'ADrewardbt_box');
+            ADManager.TAPoint(TaT.BtnClick, 'Adboxagain');
+            if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
+                ADManager.ShowReward(() => {
+                    Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
+                    VictoryBox._defaultOpenNum += 3;
+                    VictoryBox._adsMaxOpenNum -= 3;
+                    this.self['BtnAgain_Bytedance'].visible = false;
+                    this.self['BtnNo_Bytedance'].visible = false;
+                    this.self['Select_Bytedance'].visible = false;
+                });
+            }
+            else {
+                Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
+            }
+        }
+        victoryOnUpdate() {
+            if (VictoryBox._defaultOpenNum > 0) {
+                this.self['BtnAgain_WeChat'].visible = false;
+                this.self['BtnNo_WeChat'].visible = false;
+            }
+            else {
+                this.self['BtnAgain_WeChat'].visible = true;
+                this.self['BtnNo_WeChat'].visible = true;
+            }
         }
     }
 
@@ -4687,11 +6745,22 @@
         constructor() { }
         static init() {
             var reg = Laya.ClassUtils.regClass;
+            reg("TJ/Promo/script/PromoOpen.ts", PromoOpen);
+            reg("TJ/Promo/script/ButtonScale.ts", ButtonScale);
+            reg("TJ/Promo/script/PromoItem.ts", PromoItem);
+            reg("TJ/Promo/script/P201.ts", P201);
+            reg("TJ/Promo/script/P202.ts", P202);
+            reg("TJ/Promo/script/P204.ts", P204);
+            reg("TJ/Promo/script/P205.ts", P205);
+            reg("TJ/Promo/script/P106.ts", P106);
             reg("script/Game/GameScene.ts", GameScene);
             reg("script/Frame/LwgInit.ts", LwgInit);
+            reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UILoding.ts", UILoding);
             reg("script/Game/UIStart.ts", UIStart);
-            reg("script/Game/UIVictory.ts", victory);
+            reg("script/Game/UIVictory.ts", UIVictory);
+            reg("script/Game/UIVictoryBox_Cell.ts", UIVictoryBox_Cell);
+            reg("script/Game/UIVictoryBox.ts", UIVictoryBox);
             reg("script/GameUI.ts", GameUI);
         }
     }

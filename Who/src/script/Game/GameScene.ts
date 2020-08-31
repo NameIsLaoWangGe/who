@@ -119,7 +119,9 @@ export default class GameScene extends Admin.Scene {
     }
 
     lwgBtnClick(): void {
-        // Click.on(Click.Type.largen, this.self['BtnYse'], this, null, null, () => { });
+        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+
+        });
         // Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => { });
     }
 
@@ -132,21 +134,19 @@ export default class GameScene extends Admin.Scene {
         let QuestionBaord = GuessCard.getChildByName('QuestionBaord') as Laya.Label;
         let Question = QuestionBaord.getChildByName('Question') as Laya.Label;
         Question.text = questionAndYesOrNo[0];
-        Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 100, 50, 600);
+        Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
 
         let Card = GuessCard.getChildByName('Card') as Laya.Sprite;
         let CardName = Card.getChildByName('CardName') as Laya.Label;
         CardName.text = cardName;
         Card.y = Laya.stage.height * 0.483;
-        Animation2D.cardRotateX_TowFace(Card, 500,()=>{
-        });
-        Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 800);
+        Animation2D.cardRotateX_TowFace(Card, 180);
+        Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
         // console.log('问题的答案为：', questionAndYesOrNo[1]);
         Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
             if (questionAndYesOrNo[1]) {
-                GuessCard.removeSelf();
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
                 console.log('不可胡乱回答！');
@@ -156,7 +156,6 @@ export default class GameScene extends Admin.Scene {
         let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
         Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
             if (!questionAndYesOrNo[1]) {
-                GuessCard.removeSelf();
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
                 console.log('不可胡乱回答！');
@@ -166,8 +165,22 @@ export default class GameScene extends Admin.Scene {
         BtnYes.y = Laya.stage.height * 0.874;
         BtnNo.y = Laya.stage.height * 0.874;
 
-        Animation2D.blink_FadeOut(BtnNo, 0, 1, 100, 600);
-        Animation2D.blink_FadeOut(BtnYes, 0, 1, 100, 600);
+        Animation2D.scale_Alpha(BtnNo, 0, 0, 0, 1, 1, 1, 150, 600);
+        Animation2D.scale_Alpha(BtnYes, 0, 0, 0, 1, 1, 1, 150, 600);
+
+        EventAdmin.reg(Game3D.EventType.hideGuessCard, this, (func) => {
+            Animation2D.bombs_Vanish(QuestionBaord, 0, 0, 0, 150, 500);
+            Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
+            Animation2D.cardRotateX_TowFace(Card, 180, null, 200);
+
+            Animation2D.scale_Alpha(BtnNo, 1, 1, 1, 0, 0, 0, 150, 400);
+            Animation2D.scale_Alpha(BtnYes, 1, 1, 1, 0, 0, 0, 150, 400, () => {
+                GuessCard.removeSelf();
+                if (func) {
+                    func();
+                }
+            });
+        })
     }
 
     onStageMouseDown(e: Laya.Event): void {
