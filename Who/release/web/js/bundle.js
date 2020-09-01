@@ -1572,8 +1572,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -2195,8 +2195,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -2769,12 +2769,21 @@
                 }), 0);
             }
             Animation2D.leftRight_Overturn = leftRight_Overturn;
-            function leftRight_Shake(node, range, time, delayed, func) {
+            function leftRight_Shake(node, range, time, delayed, func, click) {
+                if (!delayed) {
+                    delayed = 0;
+                }
+                if (!click) {
+                    Admin._clickLock.switch = true;
+                }
                 Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { x: node.x + range * 2 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
-                            if (func !== null) {
+                            if (func) {
                                 func();
+                            }
+                            if (!click) {
+                                Admin._clickLock.switch = false;
                             }
                         }));
                     }));
@@ -2793,7 +2802,7 @@
                 }), delayed);
             }
             Animation2D.upDwon_Shake = upDwon_Shake;
-            function fadeOut(node, alpha1, alpha2, time, delayed, func) {
+            function fadeOut(node, alpha1, alpha2, time, delayed, func, stageClick) {
                 node.alpha = alpha1;
                 if (!delayed) {
                     delayed = 0;
@@ -2995,13 +3004,16 @@
                 }), 0);
             }
             Animation2D.move_changeRotate = move_changeRotate;
-            function bombs_Appear(node, firstAlpha, firstScale, scale1, rotation, time1, time2, delayed, audioType, func) {
+            function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed, func, audioType) {
                 node.scale(0, 0);
                 node.alpha = firstAlpha;
-                Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
-                    Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
-                        Laya.Tween.to(node, { scaleX: firstScale + (scale1 - firstScale) * 0.2, scaleY: firstScale + (scale1 - firstScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
-                            Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                if (!delayed) {
+                    delayed = 0;
+                }
+                Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation1 }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
+                    Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                        Laya.Tween.to(node, { scaleX: endScale + (scale1 - endScale) * 0.2, scaleY: endScale + (scale1 - endScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                            Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
                                 if (func) {
                                     func();
                                 }
@@ -3011,12 +3023,44 @@
                 }), delayed);
             }
             Animation2D.bombs_Appear = bombs_Appear;
+            function bombs_AppearAllChild(node, firstAlpha, endScale, scale1, rotation1, time1, time2, interval, func, audioType) {
+                let de1 = 0;
+                if (!interval) {
+                    interval = 100;
+                }
+                for (let index = 0; index < node.numChildren; index++) {
+                    let Child = node.getChildAt(index);
+                    Child.alpha = 0;
+                    Laya.timer.once(de1, this, () => {
+                        Child.alpha = 1;
+                        if (index !== node.numChildren - 1) ;
+                        bombs_Appear(Child, firstAlpha, endScale, scale1, rotation1, time1, time2, null, func);
+                    });
+                    de1 += interval;
+                }
+            }
+            Animation2D.bombs_AppearAllChild = bombs_AppearAllChild;
+            function bombs_VanishAllChild(node, endScale, alpha, rotation, time, interval, func) {
+                let de1 = 0;
+                if (!interval) {
+                    interval = 100;
+                }
+                for (let index = 0; index < node.numChildren; index++) {
+                    let Child = node.getChildAt(index);
+                    Laya.timer.once(de1, this, () => {
+                        if (index !== node.numChildren - 1) ;
+                        bombs_Vanish(node, endScale, alpha, rotation, time, 0, func);
+                    });
+                    de1 += interval;
+                }
+            }
+            Animation2D.bombs_VanishAllChild = bombs_VanishAllChild;
             function bombs_Vanish(node, scale, alpha, rotation, time, delayed, func) {
                 Laya.Tween.to(node, { scaleX: scale, scaleY: scale, alpha: alpha, rotation: rotation }, time, Laya.Ease.cubicOut, Laya.Handler.create(this, function () {
                     if (func) {
                         func();
                     }
-                }), delayed);
+                }), delayed ? delayed : 0);
             }
             Animation2D.bombs_Vanish = bombs_Vanish;
             function swell_shrink(node, firstScale, scale1, time, delayed, func) {
@@ -3027,7 +3071,7 @@
                     Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleX: firstScale + (scale1 - firstScale) * 0.5, scaleY: firstScale + (scale1 - firstScale) * 0.5, rotation: 0 }, time * 0.5, null, Laya.Handler.create(this, function () {
                             Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time, null, Laya.Handler.create(this, function () {
-                                if (func !== null) {
+                                if (func) {
                                     func();
                                 }
                             }), 0);
@@ -3480,10 +3524,26 @@
                 }
             }
             Tools.randomCountNumer = randomCountNumer;
-            function color_toHexString(r, g, b) {
+            function color_ToHexString(r, g, b) {
                 return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
             }
-            Tools.color_toHexString = color_toHexString;
+            Tools.color_ToHexString = color_ToHexString;
+            function color_Filter(node, arr, vanishtime) {
+                let cf = new Laya.ColorFilter();
+                cf.color(255, 0, 0, 1);
+                node.filters = [cf];
+                if (vanishtime) {
+                    Laya.timer.once(vanishtime, this, () => {
+                        for (let index = 0; index < node.filters.length; index++) {
+                            if (node.filters[index] == cf) {
+                                node.filters = [];
+                                break;
+                            }
+                        }
+                    });
+                }
+            }
+            Tools.color_Filter = color_Filter;
             function d2_dotRotateXY(x0, y0, x1, y1, angle) {
                 let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
                 let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
@@ -3830,13 +3890,13 @@
                 return arr1Capy;
             }
             Tools.array1ExcludeArray2 = array1ExcludeArray2;
-            function point_speedXYByAngle(angle, speed) {
+            function point_SpeedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
                 speedXY.y = speed * Math.sin(angle * Math.PI / 180);
                 return new Laya.Point(speedXY.x, speedXY.y);
             }
-            Tools.point_speedXYByAngle = point_speedXYByAngle;
+            Tools.point_SpeedXYByAngle = point_SpeedXYByAngle;
             function point_GetRoundPos(angle, radius, centerPos) {
                 var center = centerPos;
                 var radius = radius;
@@ -3846,8 +3906,24 @@
                 return new Laya.Point(X, Y);
             }
             Tools.point_GetRoundPos = point_GetRoundPos;
-            function angle_GetRad(degree) {
-                return degree / 180 * Math.PI;
+            function point_RandomPointByCenter(centerPos, radiusX, radiusY, count) {
+                if (!count) {
+                    count = 1;
+                }
+                let arr = [];
+                for (let index = 0; index < count; index++) {
+                    let x0 = Tools.randomCountNumer(0, radiusX, 1, false);
+                    let y0 = Tools.randomCountNumer(0, radiusY, 1, false);
+                    let diffX = Tools.randomOneHalf() == 0 ? x0[0] : -x0[0];
+                    let diffY = Tools.randomOneHalf() == 0 ? y0[0] : -y0[0];
+                    let p = new Laya.Point(centerPos.x + diffX, centerPos.y + diffY);
+                    arr.push(p);
+                }
+                return arr;
+            }
+            Tools.point_RandomPointByCenter = point_RandomPointByCenter;
+            function angle_GetRad(angle) {
+                return angle / 180 * Math.PI;
             }
             Tools.angle_GetRad = angle_GetRad;
             function numberConverte(number) {
@@ -4384,7 +4460,7 @@
         let VictoryBox;
         (function (VictoryBox) {
             VictoryBox._BoxArray = [];
-            VictoryBox._defaultOpenNum = 3;
+            VictoryBox._canOpenNum = 3;
             VictoryBox._alreadyOpenNum = 0;
             VictoryBox._adsMaxOpenNum = 6;
             VictoryBox._openVictoryBoxNum = 0;
@@ -4434,10 +4510,10 @@
             })(EventType = VictoryBox.EventType || (VictoryBox.EventType = {}));
             class VictoryBoxScene extends Admin.Scene {
                 moduleOnAwake() {
-                    VictoryBox._BoxList = this.self['BoxList'];
+                    VictoryBox._BoxList = this.self['MyList'];
                     VictoryBox._BoxArray = Tools.objArray_Copy(Laya.loader.getRes("GameData/VictoryBox/VictoryBox.json")['RECORDS']);
                     VictoryBox._selectBox = null;
-                    VictoryBox._defaultOpenNum = 3;
+                    VictoryBox._canOpenNum = 3;
                     VictoryBox._openVictoryBoxNum++;
                     VictoryBox._adsMaxOpenNum = 6;
                     VictoryBox._alreadyOpenNum = 0;
@@ -5295,6 +5371,7 @@
         (function (WhichBoutType) {
             WhichBoutType["me"] = "me";
             WhichBoutType["opposite"] = "opposite";
+            WhichBoutType["stop"] = "stop";
         })(WhichBoutType = Game3D.WhichBoutType || (Game3D.WhichBoutType = {}));
         let EventType;
         (function (EventType) {
@@ -5308,6 +5385,7 @@
             EventType["opening"] = "opening";
             EventType["hideOption"] = "hideOption";
             EventType["hideGuessCard"] = "hideGuessCard";
+            EventType["doWell"] = "doWell";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let RoleName;
         (function (RoleName) {
@@ -5324,6 +5402,16 @@
             RoleAniName["queding"] = "queding";
             RoleAniName["zhuhetingliu"] = "zhuhetingliu";
         })(RoleAniName = Game3D.RoleAniName || (Game3D.RoleAniName = {}));
+        let CardAni;
+        (function (CardAni) {
+            CardAni["standMe"] = "standMe";
+            CardAni["fallMe"] = "fallMe";
+            CardAni["standOpposite"] = "standOpposite";
+            CardAni["fallOpposite"] = "fallOpposite";
+            CardAni["blinkMe"] = "blinkMe";
+            CardAni["blinkOpposite"] = "blinkOpposite";
+            CardAni["clickMe"] = "clickMe";
+        })(CardAni = Game3D.CardAni || (Game3D.CardAni = {}));
         function set16InitialCards(type) {
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
@@ -5334,7 +5422,9 @@
                 Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             let AllCardParent = Game3D.AllCardTem.clone();
-            let startZ = 0.3;
+            let startZ = -0.24;
+            let startX = 0.258;
+            let spacingX = 0.3445;
             for (let index = 0; index < cardData16.length; index++) {
                 const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]);
                 if (type == WhichScard.MyCardParent) {
@@ -5342,20 +5432,19 @@
                     if (index % 4 == 0) {
                         startZ -= 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                    Card.transform.localRotationEulerX = 10;
+                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ);
+                    Tools.d3_animatorPlay(Card, CardAni.standMe);
                 }
                 else if (type == WhichScard.OppositeCardParent) {
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                    Card.transform.localRotationEulerX = -10;
+                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.15);
+                    Tools.d3_animatorPlay(Card, CardAni.standOpposite);
                 }
                 Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
                 Card[CardProperty.fall] = false;
-                Card.transform.localRotationEulerZ = 180;
             }
         }
         Game3D.set16InitialCards = set16InitialCards;
@@ -5392,22 +5481,7 @@
         function setAnswerForMe() {
             let weightArr = getFeatureWeights(Game3D.MyCardParent);
             let residueNum = getNotFallCardNameForMe().length;
-            let indexArr = [];
-            let medianIndex = Math.floor(weightArr.length / 2);
-            let index1 = weightArr[medianIndex]['index'];
-            let index2 = weightArr[medianIndex + 1]['index'];
-            let index3 = weightArr[medianIndex - 1]['index'];
-            let randIndex = Tools.randomOneHalf() ? -2 : 2;
-            let index4 = weightArr[medianIndex + randIndex]['index'];
-            indexArr.push(index1, index2, index3, index4);
             let arr = [];
-            for (let i = 0; i < Game3D.featureData.length; i++) {
-                for (let j = 0; j < indexArr.length; j++) {
-                    if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
-                        arr.push(Game3D.featureData[i][featureProperty.question]);
-                    }
-                }
-            }
             if (residueNum == 1) {
                 return ['是谁？'];
             }
@@ -5415,6 +5489,21 @@
                 return ['是谁？'];
             }
             else {
+                let indexArr = [];
+                let medianIndex = Math.floor(weightArr.length / 2);
+                let index1 = weightArr[medianIndex]['index'];
+                let index2 = weightArr[medianIndex + 1]['index'];
+                let index3 = weightArr[medianIndex - 1]['index'];
+                let randIndex = Tools.randomOneHalf() ? -2 : 2;
+                let index4 = weightArr[medianIndex + randIndex]['index'];
+                indexArr.push(index1, index2, index3, index4);
+                for (let i = 0; i < Game3D.featureData.length; i++) {
+                    for (let j = 0; j < indexArr.length; j++) {
+                        if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
+                            arr.push(Game3D.featureData[i][featureProperty.question]);
+                        }
+                    }
+                }
                 return arr;
             }
         }
@@ -5446,15 +5535,12 @@
                     }
                 }
                 let cardArr0 = getCardHaveFeature(Game3D.OppositeCardParent, featureIndex0, true);
-                console.log('所有卡牌数量和有这个属性卡牌的比例：', residueArr.length, cardArr0.length);
                 if (residueArr.length == cardArr0.length + 1) {
                     let indexArr = getTowCardNotFeatureArr(cardArr0[0], cardArr0[1]);
                     let index0 = Tools.arrayRandomGetOut(indexArr, 1)[0];
                     let question0 = getQuestionByIndex(index0);
-                    console.log('随机到了所有卡牌都有的属性！从', cardArr0[0].name, cardArr0[1].name, '中随机获取一条不同属性', question0);
                 }
             }
-            console.log(medianIndex, residueArr, weightArr, Game3D.myHandName, arr);
             return arr;
         }
         Game3D.setAnswerForOpposite = setAnswerForOpposite;
@@ -5702,11 +5788,9 @@
                 Game3D.OppositeRoleParent = this.self.getChildByName('OppositeRoleParent');
                 Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
                 Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
-                Game3D.OppositeHandDispaly = this.self.getChildByName('OppositeHandDispaly');
-                Game3D.MyHandDispaly = this.self.getChildByName('MyHandDispaly');
                 Game3D.AllCardTem = this.self.getChildByName('AllCard');
-                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveFar');
-                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost');
+                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
+                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
             }
             lwgEventReg() {
                 let time = 500;
@@ -5739,9 +5823,9 @@
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.queding);
                             Laya.timer.once(time * 4, this, () => {
                                 Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
-                                    Laya.timer.once(time * 1, this, () => {
+                                    Laya.timer.once(time * 1.5, this, () => {
                                         this.carFallAni(cardArr[1], Game3D.MyCardParent);
-                                        Laya.timer.once(time * 3, this, () => {
+                                        Laya.timer.once(time * 4, this, () => {
                                             EventAdmin.notify(EventType.nextRound);
                                         });
                                     });
@@ -5753,9 +5837,9 @@
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
                             Laya.timer.once(time * 4, this, () => {
                                 Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
-                                    Laya.timer.once(time * 2, this, () => {
+                                    Laya.timer.once(time * 1.5, this, () => {
                                         this.carFallAni(cardArr[0], Game3D.MyCardParent);
-                                        Laya.timer.once(time * 3, this, () => {
+                                        Laya.timer.once(time * 4, this, () => {
                                             EventAdmin.notify(EventType.nextRound);
                                         });
                                     });
@@ -5764,21 +5848,25 @@
                         }
                     });
                 });
-                EventAdmin.reg(EventType.judgeMeClickCard, this, (MeshSprite3D) => {
-                    if (MeshSprite3D[CardProperty.fall]) {
+                EventAdmin.reg(EventType.judgeMeClickCard, this, (Card) => {
+                    if (Card[CardProperty.fall]) {
                         return;
                     }
                     if (Game3D.whichBout !== WhichBoutType.me) {
                         return;
                     }
-                    this.roundChange();
-                    if (MeshSprite3D.parent == Game3D.MyCardParent) {
-                        if (MeshSprite3D.name == Game3D.oppositeHandName) {
+                    if (Card.parent == Game3D.MyCardParent) {
+                        Tools.d3_animatorPlay(Card, CardAni.clickMe);
+                        this.roundChange();
+                        if (Card.name == Game3D.oppositeHandName) {
                             Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
                                 console.log('我方赢了！');
                                 let ani = Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.zhuhetingliu);
-                                Laya.timer.once(time * 4, this, () => {
-                                    EventAdmin.notify(EventAdmin.EventType.victory);
+                                Laya.timer.once(time * 3, this, () => {
+                                    this.carFallAni([Game3D.oppositeHandName], Game3D.MyCardParent, true);
+                                    Laya.timer.once(time * 4, this, () => {
+                                        EventAdmin.notify(EventAdmin.EventType.victory);
+                                    });
                                 });
                             });
                         }
@@ -5786,12 +5874,12 @@
                             Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
                                 console.log('我选错了！');
                                 Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
-                                Laya.timer.once(time * 3, this, () => {
+                                Laya.timer.once(time * 4, this, () => {
                                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
                                         Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
-                                        Laya.timer.once(time * 2, this, () => {
-                                            this.carFallAni([MeshSprite3D.name], Game3D.MyCardParent);
-                                            Laya.timer.once(time * 3, this, () => {
+                                        Laya.timer.once(time * 1.5, this, () => {
+                                            this.carFallAni([Card.name], Game3D.MyCardParent);
+                                            Laya.timer.once(time * 4, this, () => {
                                                 EventAdmin.notify(EventType.nextRound);
                                             });
                                         });
@@ -5812,13 +5900,13 @@
                         console.log('对方回答正确');
                         Animation3D.rock(Game3D.MainCamera, new Laya.Vector3(5, 0, 0), time, this, () => {
                             EventAdmin.notify(Game3D.EventType.hideGuessCard);
-                            Laya.timer.once(time * 4, this, () => {
+                            Laya.timer.once(time * 2.5, this, () => {
                                 if (notFallLen == 2) {
                                     console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
                                     let name = getNameByChName(question.substring(1, question.length - 2));
                                     console.log('即将倒下的牌是排除', name);
-                                    Laya.timer.once(time * 2, this, () => {
+                                    Laya.timer.once(time * 3, this, () => {
                                         this.carFallAni([name], Game3D.OppositeCardParent, true);
                                         Laya.timer.once(time * 3, this, () => {
                                             EventAdmin.notify(EventAdmin.EventType.defeated);
@@ -5833,7 +5921,7 @@
                                 }
                                 else {
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
-                                    Laya.timer.once(time * 1, this, () => {
+                                    Laya.timer.once(time * 3, this, () => {
                                         this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
                                         Laya.timer.once(time * 3, this, () => {
                                             EventAdmin.notify(EventType.nextRound);
@@ -5849,11 +5937,10 @@
                             EventAdmin.notify(Game3D.EventType.hideGuessCard, [() => {
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
                                 }]);
-                            Laya.timer.once(time * 4, this, () => {
+                            Laya.timer.once(time * 3, this, () => {
                                 console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                                 if (notFallLen == 2) {
                                     console.log('对方只剩下2张牌了，但是回答错了，我们还有一次机会~！');
-                                    Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
                                     let name = getNameByChName(question.substring(1, question.length - 2));
                                     console.log('即将倒下的牌是', name);
                                     Laya.timer.once(time * 1, this, () => {
@@ -5884,22 +5971,38 @@
                     this.init();
                 });
             }
-            cameraMovement() {
-            }
             roundChange() {
-                if (!Game3D.whichBout) {
-                    Game3D.whichBout = WhichBoutType.me;
-                    return;
-                }
-                if (Game3D.whichBout == WhichBoutType.me) {
-                    EventAdmin.notify(Game3D.EventType.hideOption);
-                    Game3D.whichBout = WhichBoutType.opposite;
-                }
-                else if (Game3D.whichBout == WhichBoutType.opposite) {
-                    Game3D.whichBout = WhichBoutType.me;
+                switch (Game3D.whichBout) {
+                    case WhichBoutType.stop:
+                        Game3D.whichBout = WhichBoutType.me;
+                        break;
+                    case WhichBoutType.me:
+                        EventAdmin.notify(Game3D.EventType.hideOption);
+                        Game3D.whichBout = WhichBoutType.opposite;
+                        break;
+                    case WhichBoutType.opposite:
+                        Game3D.whichBout = WhichBoutType.me;
+                        break;
+                    default:
+                        break;
                 }
             }
             carFallAni(arrName, CardParent, exclude) {
+                let fallNum = 0;
+                var playAni = (Card) => {
+                    if (CardParent == Game3D.MyCardParent) {
+                        Tools.d3_animatorPlay(Card, CardAni.blinkMe);
+                        Laya.timer.once(600, this, () => {
+                            Tools.d3_animatorPlay(Card, CardAni.fallMe);
+                        });
+                    }
+                    else {
+                        Tools.d3_animatorPlay(Card, CardAni.blinkOpposite);
+                        Laya.timer.once(600, this, () => {
+                            Tools.d3_animatorPlay(Card, CardAni.fallOpposite);
+                        });
+                    }
+                };
                 if (exclude) {
                     let nofallArr = [];
                     for (let i = 0; i < CardParent.numChildren; i++) {
@@ -5910,29 +6013,37 @@
                     }
                     let arr = Tools.array1ExcludeArray2(nofallArr, arrName);
                     for (let k = 0; k < arr.length; k++) {
+                        fallNum++;
                         let Card = CardParent.getChildByName(arr[k]);
                         Card[CardProperty.fall] = true;
-                        Card.transform.localRotationEulerX = -90;
+                        playAni(Card);
                     }
                 }
                 else {
                     for (let i = 0; i < arrName.length; i++) {
                         let Card = CardParent.getChildByName(arrName[i]);
                         if (!Card[CardProperty.fall]) {
+                            fallNum++;
                             Card[CardProperty.fall] = true;
-                            Card.transform.localRotationEulerX = -90;
+                            playAni(Card);
                         }
                     }
                 }
+                Laya.timer.once(200, this, () => {
+                    if (fallNum >= 2) {
+                        if (CardParent == Game3D.MyCardParent) {
+                            EventAdmin.notify(EventType.doWell);
+                        }
+                    }
+                });
             }
             lwgOnEnable() {
                 this.init();
             }
             init() {
-                Game3D.whichBout = null;
+                Game3D.whichBout = WhichBoutType.stop;
                 Tools.node_RemoveAllChildren(Game3D.MyCardParent);
                 Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
-                Tools.node_RemoveAllChildren(Game3D.OppositeHandDispaly);
                 set16InitialCards(WhichScard.MyCardParent);
                 set16InitialCards(WhichScard.OppositeCardParent);
                 this.changeOpppsiteRole();
@@ -5958,29 +6069,28 @@
         }
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-                Admin._clickLock.switch = true;
                 Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
                     Tools.node_RemoveAllChildren(this.OptionParent);
                     this.createOppositeQuestion(questionAndYesOrNo, cardName);
-                    Admin._clickLock.switch = false;
                 });
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-                Admin._clickLock.switch = true;
                 this.createQuestion(questionArr);
                 Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
-                    Admin._clickLock.switch = false;
                 });
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._gameSwitch = false;
-                Admin._openScene(Admin.SceneName.UIVictory, this.self);
+                Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
                 Admin._openScene(Admin.SceneName.UIDefeated, this.self);
             });
             EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
                 Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { });
+            });
+            EventAdmin.reg(Game3D.EventType.doWell, this, () => {
+                this.createDoWall();
             });
         }
         lwgAdaptive() {
@@ -6021,6 +6131,7 @@
             }
         }
         createOption(parent, x, y, question, click) {
+            Admin._clickLock.switch = false;
             let Option = Laya.Pool.getItemByCreateFun('Option', this.Option.create, this.Option);
             let Content = Option.getChildByName('Content');
             Content.text = question;
@@ -6040,6 +6151,7 @@
             }
             if (click) {
                 Click.on(Click.Type.largen, Option, this, null, null, () => {
+                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
                 });
             }
@@ -6050,6 +6162,7 @@
             });
         }
         createOppositeQuestion(questionAndYesOrNo, cardName) {
+            Admin._clickLock.switch = false;
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
             GuessCard.pos(0, 0);
@@ -6064,23 +6177,35 @@
             Animation2D.cardRotateX_TowFace(Card, 180);
             Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
             let BtnYes = GuessCard.getChildByName('BtnYes');
-            Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
+            var btnYesUp = () => {
                 if (questionAndYesOrNo[1]) {
+                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
                 }
                 else {
-                    console.log('不可胡乱回答！');
+                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                    Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        console.log('回答错误！');
+                    }, false);
                 }
-            });
+            };
+            Click.on(Click.Type.largen, BtnYes, this, null, null, btnYesUp);
             let BtnNo = GuessCard.getChildByName('BtnNo');
-            Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
+            var btnNoUp = () => {
                 if (!questionAndYesOrNo[1]) {
+                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
                 }
                 else {
-                    console.log('不可胡乱回答！');
+                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                    Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        console.log('回答错误！');
+                    }, false);
                 }
-            });
+            };
+            Click.on(Click.Type.largen, BtnNo, this, null, null, btnNoUp);
             BtnYes.y = Laya.stage.height * 0.874;
             BtnNo.y = Laya.stage.height * 0.874;
             Animation2D.scale_Alpha(BtnNo, 0, 0, 0, 1, 1, 1, 150, 600);
@@ -6098,13 +6223,30 @@
                 });
             });
         }
+        createDoWall() {
+            let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell);
+            Laya.stage.addChild(DoWell);
+            DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
+            Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
+            for (let index = 0; index < 5; index++) {
+                let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
+                console.log(pointAarr[0]);
+                Laya.timer.once(300 * index, this, () => {
+                    Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
+                });
+            }
+            Laya.timer.once(1500, this, () => {
+                Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
+            });
+            console.log(DoWell);
+        }
         onStageMouseDown(e) {
             let MainCamera = Game3D.MainCamera.getChildAt(0);
             let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
-            let sprite3D;
+            let Sp3D;
             if (hitResult) {
-                sprite3D = hitResult.collider.owner;
-                EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
+                Sp3D = hitResult.collider.owner;
+                EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
         }
     }
@@ -6240,6 +6382,7 @@
             ];
             Loding.list_3DPrefab = [];
             Loding.list_JsonData = [
+                "GameData/VictoryBox/VictoryBox.json",
                 "GameData/Game/Feature.json",
                 "GameData/Game/Card.json",
             ];
@@ -6482,10 +6625,10 @@
                 return;
             }
             else {
-                if (VictoryBox._defaultOpenNum > 0) {
+                if (VictoryBox._canOpenNum > 0) {
                     let Pic_Box = this.self.getChildByName('Pic_Box');
                     if (!this.self['_dataSource'][VictoryBox.BoxProperty.ads]) {
-                        Pic_Box.skin = 'UI/VictoryBox/baoxian3.png';
+                        Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang3.png';
                     }
                     this.btnoff();
                     Animation2D.shookHead_Simple(Pic_Box, 10, 100, 0, f => {
@@ -6504,7 +6647,7 @@
 
     class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         constructor() { super(); }
-        victoryBoxOnAwake() {
+        lwgOnAwake() {
             ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
             ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
             Gold.goldAppear();
@@ -6532,11 +6675,21 @@
                 default:
                     break;
             }
+            for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
+                let name = VictoryBox._BoxArray[index][VictoryBox.BoxProperty.name];
+                let arr = VictoryBox.getProperty(name, VictoryBox.BoxProperty.rewardNum);
+                let num = Tools.randomCountNumer(arr[0], arr[1], 1);
+                VictoryBox.setProperty(name, VictoryBox.BoxProperty.rewardNum, num);
+            }
+            this.self['BtnClose'].visible = false;
+            Laya.timer.once(2000, this, () => {
+                this.self['BtnClose'].visible = true;
+            });
         }
-        victoryBoxEventReg() {
+        lwgEventReg() {
             EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
-                console.log(dataSource, VictoryBox._defaultOpenNum);
-                if (VictoryBox._defaultOpenNum > 0) {
+                console.log(dataSource, VictoryBox._canOpenNum);
+                if (VictoryBox._canOpenNum > 0) {
                     if (dataSource[VictoryBox.BoxProperty.ads]) {
                         ADManager.ShowReward(() => {
                             ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
@@ -6554,16 +6707,8 @@
         }
         getRewardFunc(dataSource) {
             VictoryBox._alreadyOpenNum++;
-            let automan = false;
-            if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
-                EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
-                let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
-                let Automan = cell.getChildByName('Automan');
-                Automan.visible = true;
-                automan = true;
-            }
-            VictoryBox._defaultOpenNum--;
-            if (VictoryBox._defaultOpenNum == 0) {
+            VictoryBox._canOpenNum--;
+            if (VictoryBox._canOpenNum == 0) {
                 this.self['BtnAgain_Bytedance'].visible = true;
                 this.self['BtnNo_Bytedance'].visible = true;
                 this.self['Select_Bytedance'].visible = true;
@@ -6578,10 +6723,11 @@
             let y = VictoryBox._BoxList.y + VictoryBox._BoxList.height / 3 * diffY + 92;
             Effects.createExplosion_Rotate(this.self, 25, x, y, 'star', 10, 15);
             VictoryBox.setProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
-            if (!automan) {
+            {
                 Laya.timer.frameOnce(20, this, f => {
-                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                        Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                        let rewardNum = VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum);
+                        Gold.addGold(rewardNum);
                     });
                 });
             }
@@ -6589,47 +6735,35 @@
         }
         boxList_Update(cell, index) {
             let dataSource = cell.dataSource;
-            let Select = cell.getChildByName('Select');
-            if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
-                Select.visible = true;
-            }
-            else {
-                Select.visible = false;
-            }
             let Num = cell.getChildByName('Num');
             let Pic_Gold = cell.getChildByName('Pic_Gold');
             let Pic_Box = cell.getChildByName('Pic_Box');
             let BordPic = cell.getChildByName('BordPic');
             if (!dataSource[VictoryBox.BoxProperty.openState]) {
                 if (dataSource[VictoryBox.BoxProperty.ads]) {
-                    Pic_Box.skin = 'UI/VictoryBox/baoxian_adv.png';
+                    Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang_adv.png';
                 }
                 else {
-                    Pic_Box.skin = 'UI/VictoryBox/baoxian2.png';
+                    Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang2.png';
                 }
                 Pic_Box.visible = true;
                 Pic_Gold.visible = false;
                 Num.visible = false;
-                BordPic.skin = 'UI/Common/kuang2.png';
             }
             else {
                 Pic_Box.visible = false;
                 Pic_Gold.visible = true;
                 Num.visible = true;
                 Num.text = dataSource[VictoryBox.BoxProperty.rewardNum];
-                BordPic.skin = 'UI/Common/kuang1.png';
             }
         }
-        victoryBoxBtnClick() {
-            Click.on('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-            Click.on('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-            Click.on('largen', this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
-            Click.on('largen', this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-            Click.on('largen', this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
-        }
-        btnOffClick() {
-            Click.off('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-            Click.off('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+            Click.on(Click.Type.largen, this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+            Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
         }
         btnSelect_BytedanceUp() {
             if (this.self['Dot_Bytedance'].visible) {
@@ -6652,7 +6786,7 @@
             if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
                 ADManager.ShowReward(() => {
                     Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
-                    VictoryBox._defaultOpenNum += 3;
+                    VictoryBox._canOpenNum += 3;
                     VictoryBox._adsMaxOpenNum -= 3;
                     this.self['BtnAgain_Bytedance'].visible = false;
                     this.self['BtnNo_Bytedance'].visible = false;
@@ -6664,7 +6798,7 @@
             }
         }
         victoryOnUpdate() {
-            if (VictoryBox._defaultOpenNum > 0) {
+            if (VictoryBox._canOpenNum > 0) {
                 this.self['BtnAgain_WeChat'].visible = false;
                 this.self['BtnNo_WeChat'].visible = false;
             }

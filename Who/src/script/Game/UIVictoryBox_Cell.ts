@@ -14,10 +14,10 @@ export default class UIVictoryBox_Cell extends Admin.Object {
         if (this.self['_dataSource'][VictoryBox.BoxProperty.openState]) {
             return;
         } else {
-            if (VictoryBox._defaultOpenNum > 0) {
+            if (VictoryBox._canOpenNum > 0) {
                 let Pic_Box = this.self.getChildByName('Pic_Box') as Laya.Image;
                 if (!this.self['_dataSource'][VictoryBox.BoxProperty.ads]) {
-                    Pic_Box.skin = 'UI/VictoryBox/baoxian3.png';
+                    Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang3.png';
                 }
                 this.btnoff();
                 Animation2D.shookHead_Simple(Pic_Box, 10, 100, 0, f => {

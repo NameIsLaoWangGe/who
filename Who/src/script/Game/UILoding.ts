@@ -31,7 +31,7 @@ export default class UILoding extends Loding.LodingScene {
             // "GameData/Shop/Props.json",
             // "GameData/Shop/Skin.json",
             // 'GameData/Task/everydayTask.json',
-            // "GameData/VictoryBox/VictoryBox.json",
+            "GameData/VictoryBox/VictoryBox.json",
             // "GameData/CheckIn/CheckIn.json",
             // "GameData/Dialog/Dialog.json",
             "GameData/Game/Feature.json",

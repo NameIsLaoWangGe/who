@@ -1572,8 +1572,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -2195,8 +2195,8 @@
                     }
                 }
                 commonSpeedXYByAngle(angle, speed) {
-                    this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                    this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                    this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                    this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
                 }
                 moveRules() {
                 }
@@ -3890,13 +3890,13 @@
                 return arr1Capy;
             }
             Tools.array1ExcludeArray2 = array1ExcludeArray2;
-            function point_speedXYByAngle(angle, speed) {
+            function point_SpeedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
                 speedXY.y = speed * Math.sin(angle * Math.PI / 180);
                 return new Laya.Point(speedXY.x, speedXY.y);
             }
-            Tools.point_speedXYByAngle = point_speedXYByAngle;
+            Tools.point_SpeedXYByAngle = point_SpeedXYByAngle;
             function point_GetRoundPos(angle, radius, centerPos) {
                 var center = centerPos;
                 var radius = radius;
@@ -3906,8 +3906,24 @@
                 return new Laya.Point(X, Y);
             }
             Tools.point_GetRoundPos = point_GetRoundPos;
-            function angle_GetRad(degree) {
-                return degree / 180 * Math.PI;
+            function point_RandomPointByCenter(centerPos, radiusX, radiusY, count) {
+                if (!count) {
+                    count = 1;
+                }
+                let arr = [];
+                for (let index = 0; index < count; index++) {
+                    let x0 = Tools.randomCountNumer(0, radiusX, 1, false);
+                    let y0 = Tools.randomCountNumer(0, radiusY, 1, false);
+                    let diffX = Tools.randomOneHalf() == 0 ? x0[0] : -x0[0];
+                    let diffY = Tools.randomOneHalf() == 0 ? y0[0] : -y0[0];
+                    let p = new Laya.Point(centerPos.x + diffX, centerPos.y + diffY);
+                    arr.push(p);
+                }
+                return arr;
+            }
+            Tools.point_RandomPointByCenter = point_RandomPointByCenter;
+            function angle_GetRad(angle) {
+                return angle / 180 * Math.PI;
             }
             Tools.angle_GetRad = angle_GetRad;
             function numberConverte(number) {
@@ -4444,7 +4460,7 @@
         let VictoryBox;
         (function (VictoryBox) {
             VictoryBox._BoxArray = [];
-            VictoryBox._defaultOpenNum = 3;
+            VictoryBox._canOpenNum = 3;
             VictoryBox._alreadyOpenNum = 0;
             VictoryBox._adsMaxOpenNum = 6;
             VictoryBox._openVictoryBoxNum = 0;
@@ -4494,10 +4510,10 @@
             })(EventType = VictoryBox.EventType || (VictoryBox.EventType = {}));
             class VictoryBoxScene extends Admin.Scene {
                 moduleOnAwake() {
-                    VictoryBox._BoxList = this.self['BoxList'];
+                    VictoryBox._BoxList = this.self['MyList'];
                     VictoryBox._BoxArray = Tools.objArray_Copy(Laya.loader.getRes("GameData/VictoryBox/VictoryBox.json")['RECORDS']);
                     VictoryBox._selectBox = null;
-                    VictoryBox._defaultOpenNum = 3;
+                    VictoryBox._canOpenNum = 3;
                     VictoryBox._openVictoryBoxNum++;
                     VictoryBox._adsMaxOpenNum = 6;
                     VictoryBox._alreadyOpenNum = 0;
@@ -5465,22 +5481,7 @@
         function setAnswerForMe() {
             let weightArr = getFeatureWeights(Game3D.MyCardParent);
             let residueNum = getNotFallCardNameForMe().length;
-            let indexArr = [];
-            let medianIndex = Math.floor(weightArr.length / 2);
-            let index1 = weightArr[medianIndex]['index'];
-            let index2 = weightArr[medianIndex + 1]['index'];
-            let index3 = weightArr[medianIndex - 1]['index'];
-            let randIndex = Tools.randomOneHalf() ? -2 : 2;
-            let index4 = weightArr[medianIndex + randIndex]['index'];
-            indexArr.push(index1, index2, index3, index4);
             let arr = [];
-            for (let i = 0; i < Game3D.featureData.length; i++) {
-                for (let j = 0; j < indexArr.length; j++) {
-                    if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
-                        arr.push(Game3D.featureData[i][featureProperty.question]);
-                    }
-                }
-            }
             if (residueNum == 1) {
                 return ['是谁？'];
             }
@@ -5488,6 +5489,21 @@
                 return ['是谁？'];
             }
             else {
+                let indexArr = [];
+                let medianIndex = Math.floor(weightArr.length / 2);
+                let index1 = weightArr[medianIndex]['index'];
+                let index2 = weightArr[medianIndex + 1]['index'];
+                let index3 = weightArr[medianIndex - 1]['index'];
+                let randIndex = Tools.randomOneHalf() ? -2 : 2;
+                let index4 = weightArr[medianIndex + randIndex]['index'];
+                indexArr.push(index1, index2, index3, index4);
+                for (let i = 0; i < Game3D.featureData.length; i++) {
+                    for (let j = 0; j < indexArr.length; j++) {
+                        if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
+                            arr.push(Game3D.featureData[i][featureProperty.question]);
+                        }
+                    }
+                }
                 return arr;
             }
         }
@@ -5890,7 +5906,7 @@
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
                                     let name = getNameByChName(question.substring(1, question.length - 2));
                                     console.log('即将倒下的牌是排除', name);
-                                    Laya.timer.once(time * 2, this, () => {
+                                    Laya.timer.once(time * 3, this, () => {
                                         this.carFallAni([name], Game3D.OppositeCardParent, true);
                                         Laya.timer.once(time * 3, this, () => {
                                             EventAdmin.notify(EventAdmin.EventType.defeated);
@@ -5905,7 +5921,7 @@
                                 }
                                 else {
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
-                                    Laya.timer.once(time * 1, this, () => {
+                                    Laya.timer.once(time * 3, this, () => {
                                         this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
                                         Laya.timer.once(time * 3, this, () => {
                                             EventAdmin.notify(EventType.nextRound);
@@ -6065,7 +6081,7 @@
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._gameSwitch = false;
-                Admin._openScene(Admin.SceneName.UIVictory, this.self);
+                Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
                 Admin._openScene(Admin.SceneName.UIDefeated, this.self);
@@ -6213,12 +6229,10 @@
             DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
             Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
             for (let index = 0; index < 5; index++) {
-                let diffX = Tools.randomCountNumer(0, 200, 1, false);
-                let diffY = Tools.randomCountNumer(0, 100, 1, false);
-                let x = Tools.randomOneHalf() == 0 ? diffX[0] : -diffX[0];
-                let y = Tools.randomOneHalf() == 0 ? diffY[0] : -diffY[0];
+                let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
+                console.log(pointAarr[0]);
                 Laya.timer.once(300 * index, this, () => {
-                    Effects.createExplosion_Rotate(this.self, 25, Laya.stage.width / 2 + x, Laya.stage.height / 2 - 150 + y, 'star', 10, 10);
+                    Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
                 });
             }
             Laya.timer.once(1500, this, () => {
@@ -6368,6 +6382,7 @@
             ];
             Loding.list_3DPrefab = [];
             Loding.list_JsonData = [
+                "GameData/VictoryBox/VictoryBox.json",
                 "GameData/Game/Feature.json",
                 "GameData/Game/Card.json",
             ];
@@ -6610,10 +6625,10 @@
                 return;
             }
             else {
-                if (VictoryBox._defaultOpenNum > 0) {
+                if (VictoryBox._canOpenNum > 0) {
                     let Pic_Box = this.self.getChildByName('Pic_Box');
                     if (!this.self['_dataSource'][VictoryBox.BoxProperty.ads]) {
-                        Pic_Box.skin = 'UI/VictoryBox/baoxian3.png';
+                        Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang3.png';
                     }
                     this.btnoff();
                     Animation2D.shookHead_Simple(Pic_Box, 10, 100, 0, f => {
@@ -6632,7 +6647,7 @@
 
     class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         constructor() { super(); }
-        victoryBoxOnAwake() {
+        lwgOnAwake() {
             ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
             ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
             Gold.goldAppear();
@@ -6660,11 +6675,21 @@
                 default:
                     break;
             }
+            for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
+                let name = VictoryBox._BoxArray[index][VictoryBox.BoxProperty.name];
+                let arr = VictoryBox.getProperty(name, VictoryBox.BoxProperty.rewardNum);
+                let num = Tools.randomCountNumer(arr[0], arr[1], 1);
+                VictoryBox.setProperty(name, VictoryBox.BoxProperty.rewardNum, num);
+            }
+            this.self['BtnClose'].visible = false;
+            Laya.timer.once(2000, this, () => {
+                this.self['BtnClose'].visible = true;
+            });
         }
-        victoryBoxEventReg() {
+        lwgEventReg() {
             EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
-                console.log(dataSource, VictoryBox._defaultOpenNum);
-                if (VictoryBox._defaultOpenNum > 0) {
+                console.log(dataSource, VictoryBox._canOpenNum);
+                if (VictoryBox._canOpenNum > 0) {
                     if (dataSource[VictoryBox.BoxProperty.ads]) {
                         ADManager.ShowReward(() => {
                             ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
@@ -6682,16 +6707,8 @@
         }
         getRewardFunc(dataSource) {
             VictoryBox._alreadyOpenNum++;
-            let automan = false;
-            if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
-                EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
-                let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
-                let Automan = cell.getChildByName('Automan');
-                Automan.visible = true;
-                automan = true;
-            }
-            VictoryBox._defaultOpenNum--;
-            if (VictoryBox._defaultOpenNum == 0) {
+            VictoryBox._canOpenNum--;
+            if (VictoryBox._canOpenNum == 0) {
                 this.self['BtnAgain_Bytedance'].visible = true;
                 this.self['BtnNo_Bytedance'].visible = true;
                 this.self['Select_Bytedance'].visible = true;
@@ -6706,10 +6723,11 @@
             let y = VictoryBox._BoxList.y + VictoryBox._BoxList.height / 3 * diffY + 92;
             Effects.createExplosion_Rotate(this.self, 25, x, y, 'star', 10, 15);
             VictoryBox.setProperty(dataSource[VictoryBox.BoxProperty.name], VictoryBox.BoxProperty.openState, true);
-            if (!automan) {
+            {
                 Laya.timer.frameOnce(20, this, f => {
-                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                        Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                        let rewardNum = VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum);
+                        Gold.addGold(rewardNum);
                     });
                 });
             }
@@ -6717,47 +6735,35 @@
         }
         boxList_Update(cell, index) {
             let dataSource = cell.dataSource;
-            let Select = cell.getChildByName('Select');
-            if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
-                Select.visible = true;
-            }
-            else {
-                Select.visible = false;
-            }
             let Num = cell.getChildByName('Num');
             let Pic_Gold = cell.getChildByName('Pic_Gold');
             let Pic_Box = cell.getChildByName('Pic_Box');
             let BordPic = cell.getChildByName('BordPic');
             if (!dataSource[VictoryBox.BoxProperty.openState]) {
                 if (dataSource[VictoryBox.BoxProperty.ads]) {
-                    Pic_Box.skin = 'UI/VictoryBox/baoxian_adv.png';
+                    Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang_adv.png';
                 }
                 else {
-                    Pic_Box.skin = 'UI/VictoryBox/baoxian2.png';
+                    Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang2.png';
                 }
                 Pic_Box.visible = true;
                 Pic_Gold.visible = false;
                 Num.visible = false;
-                BordPic.skin = 'UI/Common/kuang2.png';
             }
             else {
                 Pic_Box.visible = false;
                 Pic_Gold.visible = true;
                 Num.visible = true;
                 Num.text = dataSource[VictoryBox.BoxProperty.rewardNum];
-                BordPic.skin = 'UI/Common/kuang1.png';
             }
         }
-        victoryBoxBtnClick() {
-            Click.on('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-            Click.on('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-            Click.on('largen', this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
-            Click.on('largen', this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-            Click.on('largen', this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
-        }
-        btnOffClick() {
-            Click.off('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-            Click.off('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+            Click.on(Click.Type.largen, this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+            Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
         }
         btnSelect_BytedanceUp() {
             if (this.self['Dot_Bytedance'].visible) {
@@ -6780,7 +6786,7 @@
             if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
                 ADManager.ShowReward(() => {
                     Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
-                    VictoryBox._defaultOpenNum += 3;
+                    VictoryBox._canOpenNum += 3;
                     VictoryBox._adsMaxOpenNum -= 3;
                     this.self['BtnAgain_Bytedance'].visible = false;
                     this.self['BtnNo_Bytedance'].visible = false;
@@ -6792,7 +6798,7 @@
             }
         }
         victoryOnUpdate() {
-            if (VictoryBox._defaultOpenNum > 0) {
+            if (VictoryBox._canOpenNum > 0) {
                 this.self['BtnAgain_WeChat'].visible = false;
                 this.self['BtnNo_WeChat'].visible = false;
             }

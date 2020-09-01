@@ -2,11 +2,11 @@
     "x":0,
     "type":"View",
     "selectedBox":10,
-    "selecteID":102,
+    "selecteID":73,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":103,
+    "maxID":106,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -18,7 +18,7 @@
             "x":15,
             "type":"Image",
             "searchKey":"Image,Background,Background",
-            "props":{"y":0,"x":0,"width":720,"var":"Background","skin":"Frame/UI/ui_orthogon_black.png","sizeGrid":"5,6,5,10","name":"Background","height":1280,"alpha":0.7},
+            "props":{"y":-1,"x":0,"width":720,"var":"Background","skin":"Frame/UI/ui_orthogon_black.png","sizeGrid":"5,6,5,10","name":"Background","height":1280,"alpha":0.7},
             "nodeParent":2,
             "label":"Background",
             "isOpen":true,
@@ -33,7 +33,7 @@
             "x":15,
             "type":"Sprite",
             "searchKey":"Sprite,SceneContent,SceneContent",
-            "props":{"y":640,"x":351,"width":582,"var":"SceneContent","pivotY":451,"pivotX":288,"name":"SceneContent","height":902,"alpha":1},
+            "props":{"y":516,"x":355,"width":594,"var":"SceneContent","pivotY":451,"pivotX":288,"name":"SceneContent","height":930,"alpha":1},
             "nodeParent":2,
             "label":"SceneContent",
             "isOpen":true,
@@ -46,7 +46,22 @@
                     "x":30,
                     "type":"Image",
                     "searchKey":"Image",
-                    "props":{"y":193,"x":-3,"width":602,"skin":"UI/Common/dikuang.png","sizeGrid":"31,28,45,34","height":648,"alpha":1},
+                    "props":{"y":47,"x":182,"skin":"Game/UI/UIVictoryBox/liwu.png","sizeGrid":"0,57,0,67"},
+                    "nodeParent":10,
+                    "label":"Image",
+                    "isOpen":true,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":84,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "searchKey":"Image",
+                    "props":{"y":193,"x":-3,"width":602,"skin":"Game/UI/Common/di.png","sizeGrid":"105,28,130,34","height":738,"alpha":1},
                     "nodeParent":10,
                     "label":"Image",
                     "isDirectory":false,
@@ -60,58 +75,31 @@
                     "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite",
-                    "props":{"y":-91,"x":54,"texture":"UI/VictoryBox/baoxiang.png"},
+                    "props":{"y":217,"x":155.5,"texture":"Game/UI/UIVictoryBox/biaoti.png"},
                     "nodeParent":10,
                     "label":"Sprite",
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
-                    "compId":86,
+                    "compId":85,
                     "child":[
                         ]
                 },
                 {
                     "x":30,
-                    "type":"Image",
-                    "searchKey":"Image",
-                    "props":{"y":149,"x":131,"width":334,"skin":"UI/Common/biaotidi.png","sizeGrid":"0,57,0,67","height":86},
-                    "nodeParent":10,
-                    "label":"Image",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":84,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite",
-                            "props":{"y":23,"x":44.5,"texture":"UI/VictoryBox/biaoti.png"},
-                            "nodeParent":84,
-                            "label":"Sprite",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":85,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
                     "type":"List",
-                    "searchKey":"List,BoxList,BoxList",
-                    "props":{"y":222,"x":-3,"width":599,"var":"BoxList","spaceY":-50,"spaceX":-50,"repeatY":3,"repeatX":3,"name":"BoxList","height":571},
+                    "searchKey":"List,MyList,MyList",
+                    "props":{"y":272,"x":2,"width":587,"var":"MyList","spaceY":-52,"spaceX":-54,"repeatY":3,"repeatX":3,"name":"MyList","height":571},
                     "nodeParent":10,
-                    "label":"BoxList",
-                    "isOpen":false,
+                    "label":"MyList",
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":73,
                     "child":[
                         {
+                            "x":45,
                             "type":"Box",
                             "searchKey":"Box",
                             "props":{"y":114,"x":118,"width":235,"renderType":"render","pivotY":114,"pivotX":118,"height":227},
@@ -124,9 +112,10 @@
                             "compId":72,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,BordPic",
-                                    "props":{"y":31,"x":36,"skin":"UI/Common/kuang2.png","name":"BordPic"},
+                                    "props":{"y":31,"x":36,"skin":"Game/UI/UIVictoryBox/di.png","name":"BordPic"},
                                     "nodeParent":72,
                                     "label":"BordPic",
                                     "isOpen":true,
@@ -138,9 +127,10 @@
                                         ]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Pic_Gold",
-                                    "props":{"y":104,"x":72,"skin":"UI/GameStart/qian.png","name":"Pic_Gold"},
+                                    "props":{"y":56.5,"x":74.5,"skin":"Game/UI/Common/jinbi.png","name":"Pic_Gold"},
                                     "nodeParent":72,
                                     "label":"Pic_Gold",
                                     "isDirectory":false,
@@ -151,9 +141,10 @@
                                         ]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Label",
                                     "searchKey":"Label,Num",
-                                    "props":{"y":63,"x":84,"width":67,"valign":"middle","text":"999","name":"Num","height":29,"fontSize":35,"font":"Microsoft YaHei","color":"#ffffff","bold":true,"align":"center"},
+                                    "props":{"y":153,"x":114,"width":88,"valign":"middle","text":"x999","pivotY":19,"pivotX":44,"name":"Num","height":41,"fontSize":35,"font":"Microsoft YaHei","color":"#d66c59","bold":true,"align":"center"},
                                     "nodeParent":72,
                                     "label":"Num",
                                     "isDirectory":false,
@@ -164,9 +155,10 @@
                                         ]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Pic_Box",
-                                    "props":{"y":119,"x":116,"width":119,"skin":"UI/VictoryBox/baoxian3.png","pivotY":50,"pivotX":60,"name":"Pic_Box","height":99},
+                                    "props":{"y":111,"x":114,"skin":"Game/UI/UIVictoryBox/baoxiang2.png","pivotY":50,"pivotX":60,"name":"Pic_Box"},
                                     "nodeParent":72,
                                     "label":"Pic_Box",
                                     "isDirectory":false,
@@ -178,6 +170,7 @@
                                     "$HIDDEN":false
                                 },
                                 {
+                                    "x":60,
                                     "type":"Script",
                                     "switchAble":true,
                                     "source":"src/script/Game/UIVictoryBox_Cell.ts",
@@ -194,9 +187,10 @@
                                         ]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Sprite",
                                     "searchKey":"Sprite,Automan,Automan",
-                                    "props":{"y":31,"x":36,"visible":false,"var":"Automan","texture":"UI/Common/kuang1.png","name":"Automan"},
+                                    "props":{"y":31,"x":36,"visible":false,"var":"Automan","name":"Automan"},
                                     "nodeParent":72,
                                     "label":"Automan",
                                     "isOpen":true,
@@ -206,23 +200,26 @@
                                     "compId":91,
                                     "child":[
                                         {
-                                            "type":"Sprite",
-                                            "searchKey":"Sprite",
-                                            "props":{"y":66,"x":33,"texture":"UI/EasterEgg_Aotoman/Task/4.png"},
+                                            "x":75,
+                                            "type":"Image",
+                                            "searchKey":"Image",
+                                            "props":{"y":66,"x":33},
                                             "nodeParent":91,
-                                            "label":"Sprite",
+                                            "label":"Image",
                                             "isDirectory":false,
                                             "isAniNode":false,
                                             "hasChild":false,
                                             "compId":90,
                                             "child":[
                                                 ]
-                                        }]
+                                        }],
+                                    "$HIDDEN":false
                                 },
                                 {
+                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Select,Select",
-                                    "props":{"y":25,"x":30,"var":"Select","skin":"UI/Common/xuanzhong.png","name":"Select"},
+                                    "props":{"y":25,"x":30,"var":"Select","name":"Select"},
                                     "nodeParent":72,
                                     "label":"Select",
                                     "isOpen":true,
@@ -239,19 +236,20 @@
                     "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,WeChat,WeChat",
-                    "props":{"y":847,"x":144,"width":306,"var":"WeChat","name":"WeChat","height":195},
+                    "props":{"y":834,"x":664,"width":319,"var":"WeChat","name":"WeChat","height":195},
                     "nodeParent":10,
                     "label":"WeChat",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":101,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,BtnNo_WeChat,BtnNo_WeChat",
-                            "props":{"y":181,"x":144,"width":121,"var":"BtnNo_WeChat","texture":"UI/VictoryBox/txt_xiexie.png","pivotY":15,"pivotX":61,"name":"BtnNo_WeChat","height":29},
+                            "props":{"y":181,"x":144,"width":121,"var":"BtnNo_WeChat","texture":"Game/UI/Common/xiayiguan.png","pivotY":15,"pivotX":61,"name":"BtnNo_WeChat","height":29},
                             "nodeParent":101,
                             "label":"BtnNo_WeChat",
                             "isOpen":true,
@@ -263,23 +261,25 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,BtnAgain_WeChat,BtnAgain_WeChat",
-                            "props":{"y":71,"x":126,"var":"BtnAgain_WeChat","texture":"UI/Common/anniu.png","pivotY":63,"pivotX":117,"name":"BtnAgain_WeChat"},
+                            "props":{"y":71,"x":126,"var":"BtnAgain_WeChat","texture":"Game/UI/Common/anniu.png","pivotY":63,"pivotX":117,"name":"BtnAgain_WeChat"},
                             "nodeParent":101,
                             "label":"BtnAgain_WeChat",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":74,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite",
-                                    "props":{"y":45.5,"x":33,"texture":"UI/VictoryBox/txt_zaikai.png"},
+                                    "searchKey":"Sprite,Dis",
+                                    "props":{"y":40,"x":37,"texture":"Game/UI/Common/zaikai.png","name":"Dis"},
                                     "nodeParent":74,
-                                    "label":"Sprite",
+                                    "label":"Dis",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -288,11 +288,12 @@
                                         ]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite",
-                                    "props":{"y":12.5,"x":204,"texture":"UI/Common/shipin.png"},
+                                    "searchKey":"Sprite,AdvPic",
+                                    "props":{"y":19,"x":192,"texture":"Game/UI/Common/x.png","name":"AdvPic"},
                                     "nodeParent":74,
-                                    "label":"Sprite",
+                                    "label":"AdvPic",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -306,19 +307,20 @@
                     "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,Bytedance,Bytedance",
-                    "props":{"y":841,"x":129,"width":341,"var":"Bytedance","name":"Bytedance","height":207},
+                    "props":{"y":841,"x":129,"width":341,"var":"Bytedance","name":"Bytedance","height":294},
                     "nodeParent":10,
                     "label":"Bytedance",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":92,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,BtnNo_Bytedance,BtnNo_Bytedance",
-                            "props":{"y":79,"x":168,"width":288,"var":"BtnNo_Bytedance","texture":"UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnNo_Bytedance","height":128},
+                            "props":{"y":198,"x":168,"width":288,"var":"BtnNo_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnNo_Bytedance","height":128},
                             "nodeParent":92,
                             "label":"BtnNo_Bytedance",
                             "isOpen":true,
@@ -328,11 +330,12 @@
                             "compId":95,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite",
-                                    "props":{"y":41.5,"x":55.5,"texture":"UI/VictoryBox/buxiexie.png"},
+                                    "searchKey":"Sprite,Dis",
+                                    "props":{"y":41,"x":83,"texture":"Game/UI/Common/xiayiguan.png","name":"Dis"},
                                     "nodeParent":95,
-                                    "label":"Sprite",
+                                    "label":"Dis",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -342,9 +345,10 @@
                                 }]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,BtnAgain_Bytedance,BtnAgain_Bytedance",
-                            "props":{"y":79,"x":168,"width":288,"var":"BtnAgain_Bytedance","texture":"UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnAgain_Bytedance","height":128},
+                            "props":{"y":198,"x":168,"width":288,"var":"BtnAgain_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnAgain_Bytedance","height":128},
                             "nodeParent":92,
                             "label":"BtnAgain_Bytedance",
                             "isOpen":true,
@@ -354,11 +358,12 @@
                             "compId":93,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite",
-                                    "props":{"y":41.5,"x":56.5,"texture":"UI/VictoryBox/likekaiqi.png"},
+                                    "searchKey":"Sprite,Dis",
+                                    "props":{"y":41,"x":64.5,"texture":"Game/UI/Common/zaikai.png","name":"Dis"},
                                     "nodeParent":93,
-                                    "label":"Sprite",
+                                    "label":"Dis",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -368,12 +373,13 @@
                                 }]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Select_Bytedance,Select_Bytedance",
-                            "props":{"y":156,"x":21.5,"width":321,"var":"Select_Bytedance","name":"Select_Bytedance","height":42},
+                            "props":{"y":26,"x":-30,"width":396,"var":"Select_Bytedance","name":"Select_Bytedance","height":42},
                             "nodeParent":92,
                             "label":"Select_Bytedance",
-                            "isOpen":true,
+                            "isOpen":false,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
@@ -382,7 +388,7 @@
                                 {
                                     "type":"Sprite",
                                     "searchKey":"Sprite,BtnSelect_Bytedance,BtnSelect_Bytedance",
-                                    "props":{"y":2,"x":21,"var":"BtnSelect_Bytedance","texture":"UI/Common/yuan1.png","name":"BtnSelect_Bytedance"},
+                                    "props":{"y":2,"x":21,"var":"BtnSelect_Bytedance","texture":"Game/UI/Common/yuan-1.png","name":"BtnSelect_Bytedance"},
                                     "nodeParent":97,
                                     "label":"BtnSelect_Bytedance",
                                     "isOpen":true,
@@ -394,7 +400,7 @@
                                         {
                                             "type":"Sprite",
                                             "searchKey":"Sprite,Dot_Bytedance,Dot_Bytedance",
-                                            "props":{"y":8.75,"x":7.75,"var":"Dot_Bytedance","texture":"UI/Common/yuan2.png","name":"Dot_Bytedance"},
+                                            "props":{"y":6.75,"x":6.75,"var":"Dot_Bytedance","texture":"Game/UI/Common/yuan-2.png","name":"Dot_Bytedance"},
                                             "nodeParent":98,
                                             "label":"Dot_Bytedance",
                                             "isDirectory":false,
@@ -407,10 +413,10 @@
                                 },
                                 {
                                     "type":"Sprite",
-                                    "searchKey":"Sprite",
-                                    "props":{"y":6,"x":59,"texture":"UI/VictoryBox/adsthree.png"},
+                                    "searchKey":"Sprite,Dis",
+                                    "props":{"y":3,"x":55,"texture":"Game/UI/UIVictoryBox/3ci.png","name":"Dis"},
                                     "nodeParent":97,
-                                    "label":"Sprite",
+                                    "label":"Dis",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -419,21 +425,21 @@
                                         ]
                                 }]
                         }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite",
-                    "props":{"y":-189,"x":-793,"texture":"Game/UI/DesignPic/xuanliwu.png"},
-                    "nodeParent":10,
-                    "label":"Sprite",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":102,
-                    "child":[
-                        ]
                 }]
+        },
+        {
+            "x":15,
+            "type":"Sprite",
+            "searchKey":"Sprite,BtnClose,BtnClose",
+            "props":{"y":284,"x":638,"width":76,"var":"BtnClose","texture":"Game/UI/Common/x.png","pivotY":38,"pivotX":38,"name":"BtnClose","height":75},
+            "nodeParent":2,
+            "label":"BtnClose",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":103,
+            "child":[
+                ]
         },
         {
             "x":15,

@@ -5,7 +5,7 @@ import ADManager, { TaT } from "../../TJ/Admanager";
 export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     constructor() { super(); }
 
-    victoryBoxOnAwake(): void {
+    lwgOnAwake(): void {
 
         ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
         ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
@@ -39,12 +39,24 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
             default:
                 break;
         }
+        // 如果是随机金币，初始则设置好
+        for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
+            let name = VictoryBox._BoxArray[index][VictoryBox.BoxProperty.name];
+            let arr = VictoryBox.getProperty(name, VictoryBox.BoxProperty.rewardNum);
+            let num = Tools.randomCountNumer(arr[0], arr[1], 1);
+            VictoryBox.setProperty(name, VictoryBox.BoxProperty.rewardNum, num);
+        }
+
+        this.self['BtnClose'].visible = false;
+        Laya.timer.once(2000, this, () => {
+            this.self['BtnClose'].visible = true;
+        })
     }
 
-    victoryBoxEventReg(): void {
+    lwgEventReg(): void {
         EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
-            console.log(dataSource, VictoryBox._defaultOpenNum);
-            if (VictoryBox._defaultOpenNum > 0) {
+            console.log(dataSource, VictoryBox._canOpenNum);
+            if (VictoryBox._canOpenNum > 0) {
                 if (dataSource[VictoryBox.BoxProperty.ads]) {
                     ADManager.ShowReward(() => {
                         ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
@@ -63,23 +75,23 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     getRewardFunc(dataSource): void {
         VictoryBox._alreadyOpenNum++;
         let automan = false;
-        if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
-            EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
-            let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
-            let Automan = cell.getChildByName('Automan') as Laya.Sprite;
-            Automan.visible = true;
-            automan = true;
-        }
+        // if (VictoryBox._alreadyOpenNum === 9 && !EasterEgg.getProperty(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, EasterEgg.Property.complete)) {
+        //     EasterEgg.doDetection(EasterEgg.Classify.EasterEgg_01, EasterEgg.Name.assembly_4, 1);
+        //     let cell = VictoryBox._BoxList.getCell(dataSource.arrange - 1);
+        //     let Automan = cell.getChildByName('Automan') as Laya.Sprite;
+        //     Automan.visible = true;
+        //     automan = true;
+        // }
 
-        VictoryBox._defaultOpenNum--;
-        if (VictoryBox._defaultOpenNum == 0) {
+        VictoryBox._canOpenNum--;
+        if (VictoryBox._canOpenNum == 0) {
             this.self['BtnAgain_Bytedance'].visible = true;
             this.self['BtnNo_Bytedance'].visible = true;
             this.self['Select_Bytedance'].visible = true;
 
         }
         VictoryBox._selectBox = dataSource[VictoryBox.BoxProperty.name];
-        // 特效
+        // 特效位置
         let diffX = dataSource.arrange % 3;
         if (diffX == 0) {
             diffX = 3;
@@ -93,12 +105,12 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
         if (!automan) {
             Laya.timer.frameOnce(20, this, f => {
-                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                    Gold.addGold(VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum));
+                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                    let rewardNum = VictoryBox.getProperty(dataSource.name, VictoryBox.BoxProperty.rewardNum);
+                    Gold.addGold(rewardNum);
                 });
             })
         }
-
         EventAdmin.notify(Task.EventType.victoryBox);
     }
 
@@ -106,12 +118,12 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     boxList_Update(cell: Laya.Box, index: number): void {
         let dataSource = cell.dataSource;
 
-        let Select = cell.getChildByName('Select') as Laya.Image;
-        if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
-            Select.visible = true;
-        } else {
-            Select.visible = false;
-        }
+        // let Select = cell.getChildByName('Select') as Laya.Image;
+        // if (VictoryBox._selectBox === dataSource[VictoryBox.BoxProperty.name]) {
+        //     Select.visible = true;
+        // } else {
+        //     Select.visible = false;
+        // }
 
         let Num = cell.getChildByName('Num') as Laya.Label;
         let Pic_Gold = cell.getChildByName('Pic_Gold') as Laya.Image;
@@ -120,36 +132,32 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
         if (!dataSource[VictoryBox.BoxProperty.openState]) {
             if (dataSource[VictoryBox.BoxProperty.ads]) {
-                Pic_Box.skin = 'UI/VictoryBox/baoxian_adv.png';
+                Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang_adv.png';
             } else {
-                Pic_Box.skin = 'UI/VictoryBox/baoxian2.png';
+                Pic_Box.skin = 'Game/UI/UIVictoryBox/baoxiang2.png';
             }
-
             Pic_Box.visible = true;
             Pic_Gold.visible = false;
             Num.visible = false;
-            BordPic.skin = 'UI/Common/kuang2.png';
+            // BordPic.skin = 'UI/Common/kuang2.png';
         } else {
             Pic_Box.visible = false;
             Pic_Gold.visible = true;
             Num.visible = true;
             Num.text = dataSource[VictoryBox.BoxProperty.rewardNum];
-            BordPic.skin = 'UI/Common/kuang1.png';
+            // BordPic.skin = 'UI/Common/kuang1.png';
         }
     }
 
-    victoryBoxBtnClick(): void {
-        Click.on('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-        Click.on('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+    lwgBtnClick(): void {
+        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoUp);
 
-        Click.on('largen', this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
-        Click.on('largen', this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-        Click.on('largen', this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
+        Click.on(Click.Type.largen, this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
+        Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
 
-    }
-    btnOffClick(): void {
-        Click.off('largen', this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-        Click.off('largen', this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
+        Click.on(Click.Type.largen, this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
+        Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
+        Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
     }
 
     btnSelect_BytedanceUp(): void {
@@ -176,7 +184,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
             ADManager.ShowReward(() => {
                 Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
-                VictoryBox._defaultOpenNum += 3;
+                VictoryBox._canOpenNum += 3;
                 VictoryBox._adsMaxOpenNum -= 3;
                 this.self['BtnAgain_Bytedance'].visible = false;
                 this.self['BtnNo_Bytedance'].visible = false;
@@ -188,7 +196,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     }
 
     victoryOnUpdate(): void {
-        if (VictoryBox._defaultOpenNum > 0) {
+        if (VictoryBox._canOpenNum > 0) {
             this.self['BtnAgain_WeChat'].visible = false;
             this.self['BtnNo_WeChat'].visible = false;
 

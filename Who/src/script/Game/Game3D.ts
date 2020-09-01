@@ -217,28 +217,28 @@ export module Game3D {
     export function setAnswerForMe(): Array<string> {
         let weightArr = getFeatureWeights(MyCardParent);
         let residueNum = getNotFallCardNameForMe().length;
-        let indexArr = [];
-        let medianIndex = Math.floor(weightArr.length / 2);
-        let index1 = weightArr[medianIndex]['index'];
-        let index2 = weightArr[medianIndex + 1]['index'];
-        let index3 = weightArr[medianIndex - 1]['index'];
-        let randIndex = Tools.randomOneHalf() ? -2 : 2;
-        let index4 = weightArr[medianIndex + randIndex]['index'];
-        indexArr.push(index1, index2, index3, index4);
 
         let arr = [];
-        for (let i = 0; i < featureData.length; i++) {
-            for (let j = 0; j < indexArr.length; j++) {
-                if (featureData[i][featureProperty.index] == indexArr[j]) {
-                    arr.push(featureData[i][featureProperty.question])
-                }
-            }
-        }
         if (residueNum == 1) {
             return ['是谁？'];
         } else if (residueNum == 2) {
             return ['是谁？'];
         } else {
+            let indexArr = [];
+            let medianIndex = Math.floor(weightArr.length / 2);
+            let index1 = weightArr[medianIndex]['index'];
+            let index2 = weightArr[medianIndex + 1]['index'];
+            let index3 = weightArr[medianIndex - 1]['index'];
+            let randIndex = Tools.randomOneHalf() ? -2 : 2;
+            let index4 = weightArr[medianIndex + randIndex]['index'];
+            indexArr.push(index1, index2, index3, index4);
+            for (let i = 0; i < featureData.length; i++) {
+                for (let j = 0; j < indexArr.length; j++) {
+                    if (featureData[i][featureProperty.index] == indexArr[j]) {
+                        arr.push(featureData[i][featureProperty.question])
+                    }
+                }
+            }
             return arr;
         }
     }
@@ -714,7 +714,7 @@ export module Game3D {
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
                                 let name = getNameByChName(question.substring(1, question.length - 2));
                                 console.log('即将倒下的牌是排除', name);
-                                Laya.timer.once(time * 2, this, () => {
+                                Laya.timer.once(time * 3, this, () => {
                                     this.carFallAni([name], OppositeCardParent, true);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventAdmin.EventType.defeated);
@@ -728,7 +728,7 @@ export module Game3D {
                                 })
                             } else {
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
-                                Laya.timer.once(time * 1, this, () => {
+                                Laya.timer.once(time * 3, this, () => {
                                     this.carFallAni(cardArr[1], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -776,7 +776,6 @@ export module Game3D {
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                 this.init();
-
             })
             // 刷新
             EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
@@ -849,7 +848,7 @@ export module Game3D {
                 }
             }
 
-            Laya.timer.once(200, this, () => {
+            Laya.timer.once(300, this, () => {
                 if (fallNum >= 2) {
                     if (CardParent == MyCardParent) {
                         EventAdmin.notify(EventType.doWell);

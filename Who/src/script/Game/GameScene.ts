@@ -38,7 +38,7 @@ export default class GameScene extends Admin.Scene {
         // 胜利
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
             Admin._gameSwitch = false;
-            Admin._openScene(Admin.SceneName.UIVictory, this.self);
+            Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
         })
 
         // 失败
@@ -210,20 +210,16 @@ export default class GameScene extends Admin.Scene {
         Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
 
         for (let index = 0; index < 5; index++) {
-            let diffX = Tools.randomCountNumer(0, 200, 1, false);
-            let diffY = Tools.randomCountNumer(0, 100, 1, false);
-            let x = Tools.randomOneHalf() == 0 ? diffX[0] : -diffX[0];
-            let y = Tools.randomOneHalf() == 0 ? diffY[0] : -diffY[0];
-
+            let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
             Laya.timer.once(300 * index, this, () => {
-                Effects.createExplosion_Rotate(this.self, 25, Laya.stage.width / 2 + x, Laya.stage.height / 2 - 150 + y, 'star', 10, 10);
+                Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
             })
         }
         Laya.timer.once(1500, this, () => {
             Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
 
         })
-        console.log(DoWell);
+        // console.log(DoWell);
     }
 
     onStageMouseDown(e: Laya.Event): void {

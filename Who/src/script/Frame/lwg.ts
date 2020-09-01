@@ -691,8 +691,8 @@ export module lwg {
               * @param basedSpeed 基础速度
               */
             commonSpeedXYByAngle(angle, speed) {
-                this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
             }
             /**移动规则*/
             moveRules(): void {
@@ -1543,8 +1543,8 @@ export module lwg {
               * @param basedSpeed 基础速度
               */
             commonSpeedXYByAngle(angle, speed) {
-                this.self.x += Tools.point_speedXYByAngle(angle, speed + this.accelerated).x;
-                this.self.y += Tools.point_speedXYByAngle(angle, speed + this.accelerated).y;
+                this.self.x += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).x;
+                this.self.y += Tools.point_SpeedXYByAngle(angle, speed + this.accelerated).y;
             }
             /**移动规则*/
             moveRules(): void {
@@ -3444,10 +3444,10 @@ export module lwg {
         }
 
         /**
-        * 隐藏或者打开所有子节点
-        * @param node 节点
-        * @param bool visible控制
-       */
+         * 隐藏或者打开所有子节点
+         * @param node 节点
+         * @param bool visible控制
+        */
         export function node_ChildrenVisible(node: Laya.Node, bool: boolean): void {
             for (let index = 0; index < node.numChildren; index++) {
                 const element = node.getChildAt(index) as Laya.Node;
@@ -3475,8 +3475,6 @@ export module lwg {
             }
             return null;
         }
-
-
 
         /**2D递归向下查找子节点*/
         export function node_2dFindChild(parent: any, name: string): Laya.Sprite {
@@ -3522,7 +3520,7 @@ export module lwg {
          * @param section1 区间1
          * @param section2 区间2,不输入则是0~section1
          * @param count 数量默认是1
-         * @param intSet 是否是整数,默认是true
+         * @param intSet 是否是整数,默认是整数，为true
          */
         export function randomCountNumer(section1: number, section2?: number, count?: number, intSet?: boolean): Array<number> {
             let arr = [];
@@ -3590,7 +3588,6 @@ export module lwg {
                 })
             }
         }
-
 
         /**
          * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点
@@ -3835,7 +3832,6 @@ export module lwg {
             return drawPie;
         }
 
-
         /**
          * 对象数组按照对象的某个属性排序
          * @param array 对象数组
@@ -3951,9 +3947,9 @@ export module lwg {
         }
 
         /**
-      * 对象数组的拷贝
-      * @param ObjArray 需要拷贝的对象数组 
-      */
+         * 对象数组的拷贝
+         * @param ObjArray 需要拷贝的对象数组 
+         */
         export function objArray_Copy(ObjArray): any {
             var sourceCopy = ObjArray instanceof Array ? [] : {};
             for (var item in ObjArray) {
@@ -4095,7 +4091,7 @@ export module lwg {
          * @param angle 角度
          * @param speed 移动速度
          * */
-        export function point_speedXYByAngle(angle: number, speed: number): Laya.Point {
+        export function point_SpeedXYByAngle(angle: number, speed: number): Laya.Point {
             if (angle % 90 === 0 || !angle) {
                 //debugger
             }
@@ -4121,12 +4117,34 @@ export module lwg {
         }
 
         /**
-         * 
-         * @param degree 角度
-         * 根据角度计算弧度
+         * 返回在一个中心点周围的随机产生数个点的数组
+         * @param centerPos 中心点坐标
+         * @param radiusX X轴半径
+         * @param radiusY Y轴半径
+         * @param count 产生多少个随机点
          */
-        export function angle_GetRad(degree) {
-            return degree / 180 * Math.PI;
+        export function point_RandomPointByCenter(centerPos: Laya.Point, radiusX: number, radiusY: number, count?: number): Array<Laya.Point> {
+            if (!count) {
+                count = 1;
+            }
+            let arr: Array<Laya.Point> = [];
+            for (let index = 0; index < count; index++) {
+                let x0 = Tools.randomCountNumer(0, radiusX, 1, false);
+                let y0 = Tools.randomCountNumer(0, radiusY, 1, false);
+                let diffX = Tools.randomOneHalf() == 0 ? x0[0] : -x0[0];
+                let diffY = Tools.randomOneHalf() == 0 ? y0[0] : -y0[0];
+                let p = new Laya.Point(centerPos.x + diffX, centerPos.y + diffY);
+                arr.push(p);
+            }
+            return arr;
+        }
+
+        /**
+         * 根据角度计算弧度
+         * @param angle 角度
+         */
+        export function angle_GetRad(angle) {
+            return angle / 180 * Math.PI;
         }
 
         /**
@@ -4847,16 +4865,14 @@ export module lwg {
         export let _BoxList: Laya.List;
         /**宝箱数据集合*/
         export let _BoxArray = [];
-        /**领取次数,默认为三次，重写覆盖*/
-        export let _defaultOpenNum: number = 3;
+        /**还可以打开宝箱的次数,初始默认为三次，重写覆盖*/
+        export let _canOpenNum: number = 3;
         /**已经领取了几次奖励*/
         export let _alreadyOpenNum: number = 0;
         /**看宝箱可以领取的最大次数*/
         export let _adsMaxOpenNum: number = 6;
         /**第几次打开宝箱界面*/
         export let _openVictoryBoxNum: number = 0;
-        // /**当前是第几次打开宝箱*/
-        // export let alreadyNum: number = 0;
         /**当前被选中的那个宝箱是什么宝箱*/
         export let _selectBox: string;
         /**
@@ -4925,11 +4941,11 @@ export module lwg {
         export class VictoryBoxScene extends Admin.Scene {
             moduleOnAwake(): void {
                 /**结构，如果没有则为null*/
-                VictoryBox._BoxList = this.self['BoxList'];
+                VictoryBox._BoxList = this.self['MyList'];
                 //注意这里要复制数组，不可以直接赋值
                 _BoxArray = Tools.objArray_Copy(Laya.loader.getRes("GameData/VictoryBox/VictoryBox.json")['RECORDS']);
                 _selectBox = null;
-                _defaultOpenNum = 3;
+                _canOpenNum = 3;
                 _openVictoryBoxNum++;
                 _adsMaxOpenNum = 6;
                 _alreadyOpenNum = 0;
