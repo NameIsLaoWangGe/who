@@ -2338,15 +2338,25 @@ export module lwg {
          * @param time 花费时间
          * @param delayed 延时
          * @param func 回调函数
+         * @param click 是否设置场景此时可点击,默认可以点击，为true
          */
-        export function leftRight_Shake(node, range, time, delayed, func): void {
+        export function leftRight_Shake(node, range, time, delayed?: number, func?: Function, click?: boolean): void {
+            if (!delayed) {
+                delayed = 0;
+            }
+            if (!click) {
+                Admin._clickLock.switch = true;
+            }
             Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
                 // PalyAudio.playSound(Enum.AudioName.commonShake, 1);
                 Laya.Tween.to(node, { x: node.x + range * 2 }, time, null, Laya.Handler.create(this, function () {
                     // PalyAudio.playSound(Enum.AudioName.commonShake, 1);
                     Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
-                        if (func !== null) {
+                        if (func) {
                             func();
+                        }
+                        if (!click) {
+                            Admin._clickLock.switch = false;
                         }
                     }))
                 }))
@@ -2833,7 +2843,7 @@ export module lwg {
                     Laya.Tween.to(node, { scaleX: firstScale + (scale1 - firstScale) * 0.5, scaleY: firstScale + (scale1 - firstScale) * 0.5, rotation: 0 }, time * 0.5, null, Laya.Handler.create(this, function () {
 
                         Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time, null, Laya.Handler.create(this, function () {
-                            if (func !== null) {
+                            if (func) {
                                 func()
                             }
                         }), 0);
@@ -3490,9 +3500,32 @@ export module lwg {
           * @param g
           * @param b
           */
-        export function color_toHexString(r, g, b) {
+        export function color_ToHexString(r, g, b) {
             return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
         }
+
+        /**
+         * 给一张图片加入一个色滤镜,包括其子节点,也可以设置一个消失时间
+         * @param node 节点
+         * @param arr [R,G,B,A]
+         * @param vanishtime 默认没有消失时间，一旦设置后，将会在这个时间延时后消失
+         */
+        export function color_Filter(node: Laya.Sprite, arr: Array<number>, vanishtime?: number): void {
+            let cf = new Laya.ColorFilter();
+            cf.color(255, 0, 0, 1);
+            node.filters = [cf];
+            if (vanishtime) {
+                Laya.timer.once(vanishtime, this, () => {
+                    for (let index = 0; index < node.filters.length; index++) {
+                        if (node.filters[index] == cf) {
+                            node.filters = [];
+                            break;
+                        }
+                    }
+                })
+            }
+        }
+
 
         /**
          * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点

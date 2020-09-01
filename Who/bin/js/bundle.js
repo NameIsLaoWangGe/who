@@ -2769,12 +2769,21 @@
                 }), 0);
             }
             Animation2D.leftRight_Overturn = leftRight_Overturn;
-            function leftRight_Shake(node, range, time, delayed, func) {
+            function leftRight_Shake(node, range, time, delayed, func, click) {
+                if (!delayed) {
+                    delayed = 0;
+                }
+                if (!click) {
+                    Admin._clickLock.switch = true;
+                }
                 Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { x: node.x + range * 2 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { x: node.x - range }, time, null, Laya.Handler.create(this, function () {
-                            if (func !== null) {
+                            if (func) {
                                 func();
+                            }
+                            if (!click) {
+                                Admin._clickLock.switch = false;
                             }
                         }));
                     }));
@@ -3027,7 +3036,7 @@
                     Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleX: firstScale + (scale1 - firstScale) * 0.5, scaleY: firstScale + (scale1 - firstScale) * 0.5, rotation: 0 }, time * 0.5, null, Laya.Handler.create(this, function () {
                             Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time, null, Laya.Handler.create(this, function () {
-                                if (func !== null) {
+                                if (func) {
                                     func();
                                 }
                             }), 0);
@@ -3480,10 +3489,26 @@
                 }
             }
             Tools.randomCountNumer = randomCountNumer;
-            function color_toHexString(r, g, b) {
+            function color_ToHexString(r, g, b) {
                 return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
             }
-            Tools.color_toHexString = color_toHexString;
+            Tools.color_ToHexString = color_ToHexString;
+            function color_Filter(node, arr, vanishtime) {
+                let cf = new Laya.ColorFilter();
+                cf.color(255, 0, 0, 1);
+                node.filters = [cf];
+                if (vanishtime) {
+                    Laya.timer.once(vanishtime, this, () => {
+                        for (let index = 0; index < node.filters.length; index++) {
+                            if (node.filters[index] == cf) {
+                                node.filters = [];
+                                break;
+                            }
+                        }
+                    });
+                }
+            }
+            Tools.color_Filter = color_Filter;
             function d2_dotRotateXY(x0, y0, x1, y1, angle) {
                 let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
                 let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
@@ -5342,20 +5367,19 @@
                     if (index % 4 == 0) {
                         startZ -= 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                    Card.transform.localRotationEulerX = 10;
+                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, -0.1210217, startZ);
+                    Card.transform.localRotationEulerX = -30;
                 }
                 else if (type == WhichScard.OppositeCardParent) {
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
                         startZ += 0.5;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                    Card.transform.localRotationEulerX = -10;
+                    Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, -0.1210217, startZ);
+                    Card.transform.localRotationEulerX = -30;
                 }
                 Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
                 Card[CardProperty.fall] = false;
-                Card.transform.localRotationEulerZ = 180;
             }
         }
         Game3D.set16InitialCards = set16InitialCards;
@@ -5705,8 +5729,8 @@
                 Game3D.OppositeHandDispaly = this.self.getChildByName('OppositeHandDispaly');
                 Game3D.MyHandDispaly = this.self.getChildByName('MyHandDispaly');
                 Game3D.AllCardTem = this.self.getChildByName('AllCard');
-                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveFar');
-                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost');
+                Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
+                Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
             }
             lwgEventReg() {
                 let time = 500;
@@ -6069,7 +6093,11 @@
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
                 }
                 else {
-                    console.log('不可胡乱回答！');
+                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                    Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        console.log('回答错误！');
+                    }, false);
                 }
             });
             let BtnNo = GuessCard.getChildByName('BtnNo');
@@ -6078,7 +6106,11 @@
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
                 }
                 else {
-                    console.log('不可胡乱回答！');
+                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                    Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        console.log('回答错误！');
+                    }, false);
                 }
             });
             BtnYes.y = Laya.stage.height * 0.874;

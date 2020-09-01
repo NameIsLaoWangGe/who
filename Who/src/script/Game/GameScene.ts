@@ -149,7 +149,11 @@ export default class GameScene extends Admin.Scene {
             if (questionAndYesOrNo[1]) {
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
-                console.log('不可胡乱回答！');
+                Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                    console.log('回答错误！');
+                }, false);
             }
         });
 
@@ -158,7 +162,11 @@ export default class GameScene extends Admin.Scene {
             if (!questionAndYesOrNo[1]) {
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
-                console.log('不可胡乱回答！');
+                Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                Animation2D.swell_shrink(Card, 1, 1.05, 80);
+                Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                    console.log('回答错误！');
+                }, false);
             }
         });
 

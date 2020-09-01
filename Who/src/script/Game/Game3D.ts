@@ -140,8 +140,8 @@ export module Game3D {
                 if (index % 4 == 0) {
                     startZ -= 0.5;
                 }
-                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                Card.transform.localRotationEulerX = 10;
+                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, -0.1210217, startZ);
+                Card.transform.localRotationEulerX = -30;
 
             } else if (type == WhichScard.OppositeCardParent) {
 
@@ -149,13 +149,13 @@ export module Game3D {
                 if (index % 4 == 0) {
                     startZ += 0.5;
                 }
-                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, 0, startZ);
-                Card.transform.localRotationEulerX = -10;
+                Card.transform.localPosition = new Laya.Vector3(0.3 * (index % 4) - 0.23, -0.1210217, startZ);
+                Card.transform.localRotationEulerX = -30;
             }
             /**给每个卡牌赋值属性*/
             Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
             Card[CardProperty.fall] = false;
-            Card.transform.localRotationEulerZ = 180;
+            // Card.transform.localRotationEulerZ = 180;
         }
     }
 
@@ -574,8 +574,8 @@ export module Game3D {
             OppositeHandDispaly = this.self.getChildByName('OppositeHandDispaly') as Laya.MeshSprite3D;
             MyHandDispaly = this.self.getChildByName('MyHandDispaly') as Laya.MeshSprite3D;
             AllCardTem = this.self.getChildByName('AllCard') as Laya.MeshSprite3D;
-            PerspectiveMe = this.self.getChildByName('PerspectiveFar') as Laya.MeshSprite3D;
-            PerspectiveOPPosite = this.self.getChildByName('PerspectiveAlmost') as Laya.MeshSprite3D;
+            PerspectiveMe = this.self.getChildByName('PerspectiveMe') as Laya.MeshSprite3D;
+            PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite') as Laya.MeshSprite3D;
         }
 
         lwgEventReg(): void {
