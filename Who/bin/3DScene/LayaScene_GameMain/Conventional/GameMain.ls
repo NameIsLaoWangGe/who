@@ -311,126 +311,8 @@
 				]
 			},
 			{
-				"type":"MeshSprite3D",
-				"instanceID":8,
-				"props":{
-					"name":"OppositeHandDispaly",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						-0.085,
-						-0.393,
-						-4.53
-					],
-					"rotation":[
-						0,
-						0,
-						0,
-						-1
-					],
-					"scale":[
-						1,
-						1,
-						1
-					],
-					"meshPath":"Library/unity default resources-Cube.lm",
-					"enableRender":false,
-					"materials":[
-						{
-							"type":"Laya.BlinnPhongMaterial",
-							"path":"Resources/unity_builtin_extra.lmat"
-						}
-					]
-				},
-				"components":[
-					{
-						"type":"PhysicsCollider",
-						"restitution":0,
-						"friction":0.5,
-						"rollingFriction":0,
-						"shapes":[
-							{
-								"type":"BoxColliderShape",
-								"center":[
-									0,
-									0,
-									0
-								],
-								"size":[
-									1,
-									1,
-									1
-								]
-							}
-						],
-						"isTrigger":false
-					}
-				],
-				"child":[]
-			},
-			{
-				"type":"MeshSprite3D",
-				"instanceID":9,
-				"props":{
-					"name":"MyHandDispaly",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						0.85,
-						-0.393,
-						-6.03
-					],
-					"rotation":[
-						0,
-						0,
-						0,
-						-1
-					],
-					"scale":[
-						1,
-						1,
-						1
-					],
-					"meshPath":"Library/unity default resources-Cube.lm",
-					"enableRender":false,
-					"materials":[
-						{
-							"type":"Laya.BlinnPhongMaterial",
-							"path":"Resources/unity_builtin_extra.lmat"
-						}
-					]
-				},
-				"components":[
-					{
-						"type":"PhysicsCollider",
-						"restitution":0,
-						"friction":0.5,
-						"rollingFriction":0,
-						"shapes":[
-							{
-								"type":"BoxColliderShape",
-								"center":[
-									0,
-									0,
-									0
-								],
-								"size":[
-									1,
-									1,
-									1
-								]
-							}
-						],
-						"isTrigger":false
-					}
-				],
-				"child":[]
-			},
-			{
 				"type":"Sprite3D",
-				"instanceID":10,
+				"instanceID":8,
 				"props":{
 					"name":"OppositeRoleParent",
 					"active":true,
@@ -457,7 +339,7 @@
 				"child":[
 					{
 						"type":"Sprite3D",
-						"instanceID":11,
+						"instanceID":9,
 						"props":{
 							"name":"Girl",
 							"active":true,
@@ -531,7 +413,7 @@
 						"child":[
 							{
 								"type":"Sprite3D",
-								"instanceID":12,
+								"instanceID":10,
 								"props":{
 									"name":"Bip001",
 									"active":true,
@@ -558,7 +440,7 @@
 								"child":[
 									{
 										"type":"Sprite3D",
-										"instanceID":13,
+										"instanceID":11,
 										"props":{
 											"name":"Bip001 Pelvis",
 											"active":true,
@@ -585,7 +467,7 @@
 										"child":[
 											{
 												"type":"Sprite3D",
-												"instanceID":14,
+												"instanceID":12,
 												"props":{
 													"name":"Bip001 L Thigh",
 													"active":true,
@@ -612,7 +494,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":15,
+														"instanceID":13,
 														"props":{
 															"name":"Bip001 L Calf",
 															"active":true,
@@ -639,7 +521,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":16,
+																"instanceID":14,
 																"props":{
 																	"name":"Bip001 L Foot",
 																	"active":true,
@@ -666,7 +548,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":17,
+																		"instanceID":15,
 																		"props":{
 																			"name":"Bip001 L Toe0",
 																			"active":true,
@@ -700,7 +582,7 @@
 											},
 											{
 												"type":"Sprite3D",
-												"instanceID":18,
+												"instanceID":16,
 												"props":{
 													"name":"Bip001 R Thigh",
 													"active":true,
@@ -727,7 +609,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":19,
+														"instanceID":17,
 														"props":{
 															"name":"Bip001 R Calf",
 															"active":true,
@@ -754,7 +636,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":20,
+																"instanceID":18,
 																"props":{
 																	"name":"Bip001 R Foot",
 																	"active":true,
@@ -781,7 +663,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":21,
+																		"instanceID":19,
 																		"props":{
 																			"name":"Bip001 R Toe0",
 																			"active":true,
@@ -815,7 +697,7 @@
 											},
 											{
 												"type":"Sprite3D",
-												"instanceID":22,
+												"instanceID":20,
 												"props":{
 													"name":"Bip001 Spine",
 													"active":true,
@@ -842,7 +724,7 @@
 												"child":[
 													{
 														"type":"Sprite3D",
-														"instanceID":23,
+														"instanceID":21,
 														"props":{
 															"name":"Bip001 Spine1",
 															"active":true,
@@ -869,7 +751,7 @@
 														"child":[
 															{
 																"type":"Sprite3D",
-																"instanceID":24,
+																"instanceID":22,
 																"props":{
 																	"name":"Bip001 L Clavicle",
 																	"active":true,
@@ -896,7 +778,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":25,
+																		"instanceID":23,
 																		"props":{
 																			"name":"Bip001 L UpperArm",
 																			"active":true,
@@ -923,7 +805,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":26,
+																				"instanceID":24,
 																				"props":{
 																					"name":"Bip001 L Forearm",
 																					"active":true,
@@ -950,7 +832,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":27,
+																						"instanceID":25,
 																						"props":{
 																							"name":"Bip001 L Hand",
 																							"active":true,
@@ -977,7 +859,7 @@
 																						"child":[
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":28,
+																								"instanceID":26,
 																								"props":{
 																									"name":"Bip001 L Finger0",
 																									"active":true,
@@ -1004,7 +886,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":29,
+																										"instanceID":27,
 																										"props":{
 																											"name":"Bip001 L Finger01",
 																											"active":true,
@@ -1034,7 +916,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":30,
+																								"instanceID":28,
 																								"props":{
 																									"name":"Bip001 L Finger1",
 																									"active":true,
@@ -1061,33 +943,33 @@
 																								"child":[
 																									{
 																										"type":"MeshSprite3D",
-																										"instanceID":31,
+																										"instanceID":29,
 																										"props":{
 																											"name":"CardMarked",
 																											"active":true,
 																											"isStatic":false,
 																											"layer":0,
 																											"position":[
-																												0.00119,
-																												0.00043,
-																												-0.00027
+																												0.00083,
+																												0.00088,
+																												0.00158
 																											],
 																											"rotation":[
-																												-0.6428029,
-																												0.1137381,
-																												-0.1019309,
-																												-0.7506518
+																												0.7755356,
+																												0.1085816,
+																												0.09012121,
+																												-0.6153314
 																											],
 																											"scale":[
-																												0.002307693,
-																												0.002692312,
-																												0.0001538464
+																												0.08587117,
+																												0.08587117,
+																												0.08587115
 																											],
-																											"meshPath":"Library/unity default resources-Cube.lm",
+																											"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
 																											"enableRender":true,
 																											"materials":[
 																												{
-																													"path":"Assets/Material/Card/atmzw.lmat"
+																													"path":"Assets/Animator/dao ju/pai/pai.lmat"
 																												}
 																											]
 																										},
@@ -1101,14 +983,14 @@
 																													{
 																														"type":"BoxColliderShape",
 																														"center":[
-																															0,
-																															0,
-																															0
+																															2.328306E-09,
+																															0.01964615,
+																															-2.121727E-06
 																														],
 																														"size":[
-																															1,
-																															1,
-																															1
+																															0.02904213,
+																															0.0392923,
+																															0.001331031
 																														]
 																													}
 																												],
@@ -1119,7 +1001,7 @@
 																									},
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":32,
+																										"instanceID":30,
 																										"props":{
 																											"name":"Bip001 L Finger11",
 																											"active":true,
@@ -1149,7 +1031,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":33,
+																								"instanceID":31,
 																								"props":{
 																									"name":"Bip001 L Finger2",
 																									"active":true,
@@ -1176,7 +1058,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":34,
+																										"instanceID":32,
 																										"props":{
 																											"name":"Bip001 L Finger21",
 																											"active":true,
@@ -1206,7 +1088,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":35,
+																								"instanceID":33,
 																								"props":{
 																									"name":"Bip001 L Finger3",
 																									"active":true,
@@ -1233,7 +1115,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":36,
+																										"instanceID":34,
 																										"props":{
 																											"name":"Bip001 L Finger31",
 																											"active":true,
@@ -1271,7 +1153,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":37,
+																"instanceID":35,
 																"props":{
 																	"name":"Bip001 Neck",
 																	"active":true,
@@ -1298,7 +1180,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":38,
+																		"instanceID":36,
 																		"props":{
 																			"name":"Bip001 Head",
 																			"active":true,
@@ -1325,7 +1207,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":39,
+																				"instanceID":37,
 																				"props":{
 																					"name":"Bone003",
 																					"active":true,
@@ -1352,7 +1234,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":40,
+																						"instanceID":38,
 																						"props":{
 																							"name":"Bone004",
 																							"active":true,
@@ -1386,7 +1268,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":41,
+																"instanceID":39,
 																"props":{
 																	"name":"Bip001 R Clavicle",
 																	"active":true,
@@ -1413,7 +1295,7 @@
 																"child":[
 																	{
 																		"type":"Sprite3D",
-																		"instanceID":42,
+																		"instanceID":40,
 																		"props":{
 																			"name":"Bip001 R UpperArm",
 																			"active":true,
@@ -1440,7 +1322,7 @@
 																		"child":[
 																			{
 																				"type":"Sprite3D",
-																				"instanceID":43,
+																				"instanceID":41,
 																				"props":{
 																					"name":"Bip001 R Forearm",
 																					"active":true,
@@ -1467,7 +1349,7 @@
 																				"child":[
 																					{
 																						"type":"Sprite3D",
-																						"instanceID":44,
+																						"instanceID":42,
 																						"props":{
 																							"name":"Bip001 R Hand",
 																							"active":true,
@@ -1494,7 +1376,7 @@
 																						"child":[
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":45,
+																								"instanceID":43,
 																								"props":{
 																									"name":"Bip001 R Finger0",
 																									"active":true,
@@ -1521,7 +1403,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":46,
+																										"instanceID":44,
 																										"props":{
 																											"name":"Bip001 R Finger01",
 																											"active":true,
@@ -1551,7 +1433,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":47,
+																								"instanceID":45,
 																								"props":{
 																									"name":"Bip001 R Finger1",
 																									"active":true,
@@ -1578,7 +1460,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":48,
+																										"instanceID":46,
 																										"props":{
 																											"name":"Bip001 R Finger11",
 																											"active":true,
@@ -1608,7 +1490,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":49,
+																								"instanceID":47,
 																								"props":{
 																									"name":"Bip001 R Finger2",
 																									"active":true,
@@ -1635,7 +1517,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":50,
+																										"instanceID":48,
 																										"props":{
 																											"name":"Bip001 R Finger21",
 																											"active":true,
@@ -1665,7 +1547,7 @@
 																							},
 																							{
 																								"type":"Sprite3D",
-																								"instanceID":51,
+																								"instanceID":49,
 																								"props":{
 																									"name":"Bip001 R Finger3",
 																									"active":true,
@@ -1692,7 +1574,7 @@
 																								"child":[
 																									{
 																										"type":"Sprite3D",
-																										"instanceID":52,
+																										"instanceID":50,
 																										"props":{
 																											"name":"Bip001 R Finger31",
 																											"active":true,
@@ -1730,7 +1612,7 @@
 															},
 															{
 																"type":"Sprite3D",
-																"instanceID":53,
+																"instanceID":51,
 																"props":{
 																	"name":"Bone001",
 																	"active":true,
@@ -1760,7 +1642,7 @@
 													},
 													{
 														"type":"Sprite3D",
-														"instanceID":54,
+														"instanceID":52,
 														"props":{
 															"name":"Bone002",
 															"active":true,
@@ -1792,7 +1674,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":55,
+										"instanceID":53,
 										"props":{
 											"name":"上衣",
 											"active":true,
@@ -1819,7 +1701,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":56,
+												"instanceID":54,
 												"props":{
 													"name":"D TShirt",
 													"active":true,
@@ -1841,7 +1723,7 @@
 														1,
 														1
 													],
-													"rootBone":13,
+													"rootBone":11,
 													"boundBox":{
 														"min":[
 															0.0004550954,
@@ -1863,13 +1745,13 @@
 														"radius":0.005545914
 													},
 													"bones":[
-														23,
+														21,
+														20,
+														11,
+														40,
+														39,
 														22,
-														13,
-														42,
-														41,
-														24,
-														25
+														23
 													],
 													"materials":[
 														{
@@ -1883,7 +1765,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":57,
+												"instanceID":55,
 												"props":{
 													"name":"POLO",
 													"active":true,
@@ -1905,7 +1787,7 @@
 														1,
 														1
 													],
-													"rootBone":13,
+													"rootBone":11,
 													"boundBox":{
 														"min":[
 															0.0004550954,
@@ -1927,13 +1809,13 @@
 														"radius":0.005539732
 													},
 													"bones":[
+														21,
+														20,
+														11,
+														40,
+														39,
 														23,
-														22,
-														13,
-														42,
-														41,
-														25,
-														24
+														22
 													],
 													"materials":[
 														{
@@ -1947,7 +1829,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":58,
+												"instanceID":56,
 												"props":{
 													"name":"XZ",
 													"active":true,
@@ -1969,7 +1851,7 @@
 														1,
 														1
 													],
-													"rootBone":13,
+													"rootBone":11,
 													"boundBox":{
 														"min":[
 															-0.0003139914,
@@ -1991,20 +1873,20 @@
 														"radius":0.007900102
 													},
 													"bones":[
-														23,
-														22,
-														13,
-														18,
+														21,
+														20,
+														11,
+														16,
+														40,
+														39,
 														42,
 														41,
-														44,
-														43,
-														37,
-														24,
-														14,
+														35,
+														22,
+														12,
+														23,
 														25,
-														27,
-														26
+														24
 													],
 													"materials":[
 														{
@@ -2023,7 +1905,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":59,
+										"instanceID":57,
 										"props":{
 											"name":"下装",
 											"active":true,
@@ -2050,7 +1932,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":60,
+												"instanceID":58,
 												"props":{
 													"name":"DK",
 													"active":true,
@@ -2072,7 +1954,7 @@
 														1,
 														1
 													],
-													"rootBone":13,
+													"rootBone":11,
 													"boundBox":{
 														"min":[
 															-0.003217205,
@@ -2094,10 +1976,10 @@
 														"radius":0.003544485
 													},
 													"bones":[
-														18,
-														13,
-														14,
-														22
+														16,
+														11,
+														12,
+														20
 													],
 													"materials":[
 														{
@@ -2111,7 +1993,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":61,
+												"instanceID":59,
 												"props":{
 													"name":"DQ",
 													"active":true,
@@ -2133,7 +2015,7 @@
 														1,
 														1
 													],
-													"rootBone":13,
+													"rootBone":11,
 													"boundBox":{
 														"min":[
 															-0.004311926,
@@ -2155,10 +2037,10 @@
 														"radius":0.004805514
 													},
 													"bones":[
-														18,
-														13,
-														14,
-														22
+														16,
+														11,
+														12,
+														20
 													],
 													"materials":[
 														{
@@ -2174,7 +2056,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":62,
+										"instanceID":60,
 										"props":{
 											"name":"发型",
 											"active":true,
@@ -2201,7 +2083,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":63,
+												"instanceID":61,
 												"props":{
 													"name":"CF",
 													"active":true,
@@ -2223,7 +2105,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															-0.00289009,
@@ -2245,9 +2127,9 @@
 														"radius":0.007292289
 													},
 													"bones":[
-														38,
-														39,
-														40
+														36,
+														37,
+														38
 													],
 													"materials":[
 														{
@@ -2261,7 +2143,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":64,
+												"instanceID":62,
 												"props":{
 													"name":"CF001",
 													"active":true,
@@ -2283,7 +2165,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															-0.002703608,
@@ -2305,9 +2187,9 @@
 														"radius":0.007394528
 													},
 													"bones":[
-														38,
-														39,
-														40
+														36,
+														37,
+														38
 													],
 													"materials":[
 														{
@@ -2321,7 +2203,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":65,
+												"instanceID":63,
 												"props":{
 													"name":"SMW",
 													"active":true,
@@ -2343,7 +2225,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															0.0005111229,
@@ -2365,7 +2247,7 @@
 														"radius":0.006570822
 													},
 													"bones":[
-														38
+														36
 													],
 													"materials":[
 														{
@@ -2379,7 +2261,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":66,
+												"instanceID":64,
 												"props":{
 													"name":"WZT",
 													"active":true,
@@ -2401,7 +2283,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															0.0005785581,
@@ -2423,7 +2305,7 @@
 														"radius":0.005950129
 													},
 													"bones":[
-														38
+														36
 													],
 													"materials":[
 														{
@@ -2437,7 +2319,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":67,
+												"instanceID":65,
 												"props":{
 													"name":"XJJ",
 													"active":true,
@@ -2459,7 +2341,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															-0.001813464,
@@ -2481,9 +2363,9 @@
 														"radius":0.00749743
 													},
 													"bones":[
-														38,
-														39,
-														40
+														36,
+														37,
+														38
 													],
 													"materials":[
 														{
@@ -2499,7 +2381,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":68,
+										"instanceID":66,
 										"props":{
 											"name":"裙子",
 											"active":true,
@@ -2527,7 +2409,7 @@
 									},
 									{
 										"type":"Sprite3D",
-										"instanceID":69,
+										"instanceID":67,
 										"props":{
 											"name":"配饰",
 											"active":true,
@@ -2554,7 +2436,7 @@
 										"child":[
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":70,
+												"instanceID":68,
 												"props":{
 													"name":"EH",
 													"active":true,
@@ -2576,7 +2458,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															0.001387475,
@@ -2598,7 +2480,7 @@
 														"radius":0.00420201
 													},
 													"bones":[
-														38
+														36
 													],
 													"materials":[
 														{
@@ -2612,7 +2494,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":71,
+												"instanceID":69,
 												"props":{
 													"name":"HDJ",
 													"active":true,
@@ -2634,7 +2516,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															0.005008993,
@@ -2656,7 +2538,7 @@
 														"radius":0.004583345
 													},
 													"bones":[
-														38
+														36
 													],
 													"materials":[
 														{
@@ -2670,7 +2552,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":72,
+												"instanceID":70,
 												"props":{
 													"name":"LD",
 													"active":true,
@@ -2692,7 +2574,7 @@
 														1,
 														1
 													],
-													"rootBone":22,
+													"rootBone":20,
 													"boundBox":{
 														"min":[
 															3.662053E-05,
@@ -2714,10 +2596,10 @@
 														"radius":0.002872078
 													},
 													"bones":[
+														20,
+														21,
 														22,
-														23,
-														24,
-														41
+														39
 													],
 													"materials":[
 														{
@@ -2731,7 +2613,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":73,
+												"instanceID":71,
 												"props":{
 													"name":"LJ",
 													"active":true,
@@ -2753,7 +2635,7 @@
 														1,
 														1
 													],
-													"rootBone":23,
+													"rootBone":21,
 													"boundBox":{
 														"min":[
 															0.002301089,
@@ -2775,9 +2657,9 @@
 														"radius":0.0007696921
 													},
 													"bones":[
-														23,
-														24,
-														41
+														21,
+														22,
+														39
 													],
 													"materials":[
 														{
@@ -2791,7 +2673,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":74,
+												"instanceID":72,
 												"props":{
 													"name":"XL",
 													"active":true,
@@ -2813,7 +2695,7 @@
 														1,
 														1
 													],
-													"rootBone":23,
+													"rootBone":21,
 													"boundBox":{
 														"min":[
 															0.001985574,
@@ -2835,9 +2717,9 @@
 														"radius":0.00159795
 													},
 													"bones":[
-														23,
-														24,
-														41
+														21,
+														22,
+														39
 													],
 													"materials":[
 														{
@@ -2851,7 +2733,7 @@
 											},
 											{
 												"type":"SkinnedMeshSprite3D",
-												"instanceID":75,
+												"instanceID":73,
 												"props":{
 													"name":"YJ",
 													"active":true,
@@ -2873,7 +2755,7 @@
 														1,
 														1
 													],
-													"rootBone":38,
+													"rootBone":36,
 													"boundBox":{
 														"min":[
 															0.001797533,
@@ -2895,7 +2777,7 @@
 														"radius":0.004488255
 													},
 													"bones":[
-														38
+														36
 													],
 													"materials":[
 														{
@@ -2913,7 +2795,7 @@
 							},
 							{
 								"type":"SkinnedMeshSprite3D",
-								"instanceID":76,
+								"instanceID":74,
 								"props":{
 									"name":"girl_body",
 									"active":true,
@@ -2935,7 +2817,7 @@
 										1,
 										1
 									],
-									"rootBone":23,
+									"rootBone":21,
 									"boundBox":{
 										"min":[
 											-0.01426059,
@@ -2957,41 +2839,41 @@
 										"radius":0.01400468
 									},
 									"bones":[
-										35,
-										36,
-										27,
 										33,
-										26,
 										34,
-										38,
-										37,
-										23,
-										41,
-										42,
-										24,
 										25,
-										28,
-										29,
-										30,
+										31,
+										24,
 										32,
-										51,
-										52,
-										44,
+										36,
+										35,
+										21,
+										39,
+										40,
+										22,
+										23,
+										26,
+										27,
+										28,
+										30,
 										49,
-										43,
 										50,
+										42,
+										47,
+										41,
+										48,
+										43,
+										44,
 										45,
 										46,
-										47,
-										48,
+										12,
+										13,
 										14,
 										15,
 										16,
 										17,
 										18,
-										19,
-										20,
-										21
+										19
 									],
 									"materials":[
 										{
@@ -3009,7 +2891,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":77,
+				"instanceID":75,
 				"props":{
 					"name":"PerspectiveMe",
 					"active":true,
@@ -3068,7 +2950,7 @@
 			},
 			{
 				"type":"MeshSprite3D",
-				"instanceID":78,
+				"instanceID":76,
 				"props":{
 					"name":"PerspectiveOPPosite",
 					"active":true,
@@ -3127,9 +3009,9 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":79,
+				"instanceID":77,
 				"props":{
-					"name":"chang jing",
+					"name":"changjing",
 					"active":true,
 					"isStatic":false,
 					"layer":0,
@@ -3154,7 +3036,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":80,
+						"instanceID":78,
 						"props":{
 							"name":"changjing",
 							"active":true,
@@ -3189,7 +3071,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":81,
+						"instanceID":79,
 						"props":{
 							"name":"zhuozi",
 							"active":true,
@@ -3224,7 +3106,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":82,
+						"instanceID":80,
 						"props":{
 							"name":"dengzi",
 							"active":true,
@@ -3259,7 +3141,7 @@
 					},
 					{
 						"type":"Sprite3D",
-						"instanceID":83,
+						"instanceID":81,
 						"props":{
 							"name":"pai",
 							"active":true,
@@ -3286,7 +3168,7 @@
 						"child":[
 							{
 								"type":"Sprite3D",
-								"instanceID":84,
+								"instanceID":82,
 								"props":{
 									"name":"kapai",
 									"active":true,
@@ -3313,7 +3195,7 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":85,
+										"instanceID":83,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3321,6 +3203,76 @@
 											"layer":0,
 											"position":[
 												-0.4751537,
+												-0.9555589,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":84,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555589,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":85,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
 												-0.9555589,
 												2.031072
 											],
@@ -3355,7 +3307,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555589,
 												2.031072
 											],
@@ -3390,9 +3342,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.4751537,
 												-0.9555589,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3425,9 +3377,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.1096842,
 												-0.9555589,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3460,7 +3412,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.256316,
 												-0.9555589,
 												1.477189
 											],
@@ -3495,7 +3447,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555589,
 												1.477189
 											],
@@ -3530,9 +3482,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.4751537,
 												-0.9555589,
-												1.477189
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3565,9 +3517,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.1096842,
 												-0.9555589,
-												1.477189
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3600,7 +3552,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.256316,
 												-0.9555589,
 												0.9331894
 											],
@@ -3635,7 +3587,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555589,
 												0.9331894
 											],
@@ -3670,76 +3622,6 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
-												-0.9555589,
-												0.9331894
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":96,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.6273158,
-												-0.9555589,
-												0.9331894
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":97,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
 												-0.4751537,
 												-0.9555589,
 												0.3891895
@@ -3768,7 +3650,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":98,
+										"instanceID":96,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3803,7 +3685,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":99,
+										"instanceID":97,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3838,7 +3720,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":100,
+										"instanceID":98,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3875,7 +3757,7 @@
 							},
 							{
 								"type":"Sprite3D",
-								"instanceID":101,
+								"instanceID":99,
 								"props":{
 									"name":"kapai (1)",
 									"active":true,
@@ -3902,7 +3784,7 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":102,
+										"instanceID":100,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3910,6 +3792,76 @@
 											"layer":0,
 											"position":[
 												-0.4751537,
+												-0.9555588,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":101,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555588,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":102,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
 												-0.9555588,
 												2.031072
 											],
@@ -3944,7 +3896,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555588,
 												2.031072
 											],
@@ -3979,9 +3931,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.4751537,
 												-0.9555588,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -4014,9 +3966,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.1096842,
 												-0.9555588,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -4049,7 +4001,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.256316,
 												-0.9555588,
 												1.477189
 											],
@@ -4084,7 +4036,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555588,
 												1.477189
 											],
@@ -4119,9 +4071,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.4751537,
 												-0.9555588,
-												1.477189
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -4154,9 +4106,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.1096842,
 												-0.9555588,
-												1.477189
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -4189,7 +4141,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.256316,
 												-0.9555588,
 												0.9331896
 											],
@@ -4224,7 +4176,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.6273158,
 												-0.9555588,
 												0.9331896
 											],
@@ -4259,76 +4211,6 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
-												-0.9555588,
-												0.9331896
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":113,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.6273158,
-												-0.9555588,
-												0.9331896
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":114,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
 												-0.4751537,
 												-0.9555588,
 												0.3891893
@@ -4357,7 +4239,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":115,
+										"instanceID":113,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -4392,7 +4274,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":116,
+										"instanceID":114,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -4427,7 +4309,7 @@
 									},
 									{
 										"type":"MeshSprite3D",
-										"instanceID":117,
+										"instanceID":115,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -4467,43 +4349,8 @@
 				]
 			},
 			{
-				"type":"MeshSprite3D",
-				"instanceID":118,
-				"props":{
-					"name":"Object008",
-					"active":true,
-					"isStatic":false,
-					"layer":0,
-					"position":[
-						-1.652,
-						-1.327463,
-						-4.533286
-					],
-					"rotation":[
-						-0.2588189,
-						-7.292537E-08,
-						-1.954029E-08,
-						0.9659259
-					],
-					"scale":[
-						9.44582,
-						9.44582,
-						9.44582
-					],
-					"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
-					"enableRender":true,
-					"materials":[
-						{
-							"path":"Assets/Animator/dao ju/pai/pai.lmat"
-						}
-					]
-				},
-				"components":[],
-				"child":[]
-			},
-			{
 				"type":"Sprite3D",
-				"instanceID":119,
+				"instanceID":116,
 				"props":{
 					"name":"AllCard",
 					"active":true,
@@ -4530,7 +4377,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":120,
+						"instanceID":117,
 						"props":{
 							"name":"zds1",
 							"active":true,
@@ -4543,9 +4390,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4560,12 +4407,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":121,
+						"instanceID":118,
 						"props":{
 							"name":"zds2",
 							"active":true,
@@ -4578,9 +4494,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4595,12 +4511,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":122,
+						"instanceID":119,
 						"props":{
 							"name":"zds3",
 							"active":true,
@@ -4613,9 +4598,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4630,12 +4615,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":123,
+						"instanceID":120,
 						"props":{
 							"name":"zds4",
 							"active":true,
@@ -4648,9 +4702,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4665,12 +4719,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":124,
+						"instanceID":121,
 						"props":{
 							"name":"zds5",
 							"active":true,
@@ -4683,9 +4806,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4700,12 +4823,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.091925E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":125,
+						"instanceID":122,
 						"props":{
 							"name":"lyy1",
 							"active":true,
@@ -4718,9 +4910,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4735,12 +4927,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":126,
+						"instanceID":123,
 						"props":{
 							"name":"lyy2",
 							"active":true,
@@ -4753,9 +5014,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4770,12 +5031,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":127,
+						"instanceID":124,
 						"props":{
 							"name":"lyy3",
 							"active":true,
@@ -4788,9 +5118,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4805,12 +5135,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":128,
+						"instanceID":125,
 						"props":{
 							"name":"lyy4",
 							"active":true,
@@ -4823,9 +5222,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4840,12 +5239,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":129,
+						"instanceID":126,
 						"props":{
 							"name":"lyy5",
 							"active":true,
@@ -4858,9 +5326,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4875,12 +5343,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":130,
+						"instanceID":127,
 						"props":{
 							"name":"cxk1",
 							"active":true,
@@ -4893,9 +5430,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4910,12 +5447,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":131,
+						"instanceID":128,
 						"props":{
 							"name":"cxk2",
 							"active":true,
@@ -4928,9 +5534,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4945,12 +5551,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":132,
+						"instanceID":129,
 						"props":{
 							"name":"cxk3",
 							"active":true,
@@ -4963,9 +5638,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -4980,12 +5655,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":133,
+						"instanceID":130,
 						"props":{
 							"name":"cxk4",
 							"active":true,
@@ -4998,9 +5742,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5015,12 +5759,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":134,
+						"instanceID":131,
 						"props":{
 							"name":"cxk5",
 							"active":true,
@@ -5033,9 +5846,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5050,12 +5863,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.091925E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":135,
+						"instanceID":132,
 						"props":{
 							"name":"cxy1",
 							"active":true,
@@ -5068,9 +5950,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5085,12 +5967,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":136,
+						"instanceID":133,
 						"props":{
 							"name":"cxy2",
 							"active":true,
@@ -5103,9 +6054,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5120,12 +6071,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":137,
+						"instanceID":134,
 						"props":{
 							"name":"cxy3",
 							"active":true,
@@ -5138,9 +6158,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5155,12 +6175,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":138,
+						"instanceID":135,
 						"props":{
 							"name":"cxy4",
 							"active":true,
@@ -5173,9 +6262,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5190,12 +6279,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":139,
+						"instanceID":136,
 						"props":{
 							"name":"cxy5",
 							"active":true,
@@ -5208,9 +6366,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5225,12 +6383,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":140,
+						"instanceID":137,
 						"props":{
 							"name":"xxs1",
 							"active":true,
@@ -5243,9 +6470,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5260,12 +6487,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":141,
+						"instanceID":138,
 						"props":{
 							"name":"xxs2",
 							"active":true,
@@ -5278,9 +6574,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5295,12 +6591,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":142,
+						"instanceID":139,
 						"props":{
 							"name":"xxs3",
 							"active":true,
@@ -5313,9 +6678,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5330,12 +6695,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":143,
+						"instanceID":140,
 						"props":{
 							"name":"xxs4",
 							"active":true,
@@ -5348,9 +6782,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5365,12 +6799,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":144,
+						"instanceID":141,
 						"props":{
 							"name":"xxs5",
 							"active":true,
@@ -5383,9 +6886,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5400,12 +6903,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.091925E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":145,
+						"instanceID":142,
 						"props":{
 							"name":"scp1",
 							"active":true,
@@ -5418,9 +6990,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5435,12 +7007,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":146,
+						"instanceID":143,
 						"props":{
 							"name":"scp2",
 							"active":true,
@@ -5453,9 +7094,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5470,12 +7111,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":147,
+						"instanceID":144,
 						"props":{
 							"name":"scp3",
 							"active":true,
@@ -5488,9 +7198,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5505,12 +7215,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":148,
+						"instanceID":145,
 						"props":{
 							"name":"scp4",
 							"active":true,
@@ -5523,9 +7302,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5540,12 +7319,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":149,
+						"instanceID":146,
 						"props":{
 							"name":"scp5",
 							"active":true,
@@ -5558,9 +7406,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5575,12 +7423,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":150,
+						"instanceID":147,
 						"props":{
 							"name":"fkr1",
 							"active":true,
@@ -5593,9 +7510,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5610,12 +7527,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":151,
+						"instanceID":148,
 						"props":{
 							"name":"fkr2",
 							"active":true,
@@ -5628,9 +7614,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5645,12 +7631,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":152,
+						"instanceID":149,
 						"props":{
 							"name":"fkr3",
 							"active":true,
@@ -5663,9 +7718,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5680,12 +7735,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":153,
+						"instanceID":150,
 						"props":{
 							"name":"fkr4",
 							"active":true,
@@ -5698,9 +7822,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5715,12 +7839,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":154,
+						"instanceID":151,
 						"props":{
 							"name":"fkr5",
 							"active":true,
@@ -5733,9 +7926,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5750,12 +7943,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":155,
+						"instanceID":152,
 						"props":{
 							"name":"fkr6",
 							"active":true,
@@ -5768,9 +8030,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5785,12 +8047,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":156,
+						"instanceID":153,
 						"props":{
 							"name":"fkr7",
 							"active":true,
@@ -5803,9 +8134,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5820,12 +8151,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":157,
+						"instanceID":154,
 						"props":{
 							"name":"fkr8",
 							"active":true,
@@ -5838,9 +8238,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5855,12 +8255,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":158,
+						"instanceID":155,
 						"props":{
 							"name":"fkr9",
 							"active":true,
@@ -5873,9 +8342,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5890,12 +8359,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":159,
+						"instanceID":156,
 						"props":{
 							"name":"atmzw",
 							"active":true,
@@ -5908,9 +8446,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5925,12 +8463,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.091925E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":160,
+						"instanceID":157,
 						"props":{
 							"name":"atm2",
 							"active":true,
@@ -5943,9 +8550,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5960,12 +8567,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":161,
+						"instanceID":158,
 						"props":{
 							"name":"atm3",
 							"active":true,
@@ -5978,9 +8654,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -5995,12 +8671,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":162,
+						"instanceID":159,
 						"props":{
 							"name":"atm4",
 							"active":true,
@@ -6013,9 +8758,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6030,12 +8775,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":163,
+						"instanceID":160,
 						"props":{
 							"name":"atm5",
 							"active":true,
@@ -6048,9 +8862,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6065,12 +8879,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":164,
+						"instanceID":161,
 						"props":{
 							"name":"atm6",
 							"active":true,
@@ -6083,9 +8966,9 @@
 							],
 							"rotation":[
 								0,
-								0,
-								0,
-								-1
+								-0.9396927,
+								-0.3420201,
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6100,12 +8983,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":165,
+						"instanceID":162,
 						"props":{
 							"name":"lb",
 							"active":true,
@@ -6118,9 +9070,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6135,12 +9087,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":166,
+						"instanceID":163,
 						"props":{
 							"name":"zbj",
 							"active":true,
@@ -6153,9 +9174,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6170,12 +9191,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":167,
+						"instanceID":164,
 						"props":{
 							"name":"swk",
 							"active":true,
@@ -6188,9 +9278,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6205,12 +9295,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":168,
+						"instanceID":165,
 						"props":{
 							"name":"yj",
 							"active":true,
@@ -6223,9 +9382,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6240,12 +9399,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.121727E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":169,
+						"instanceID":166,
 						"props":{
 							"name":"nz",
 							"active":true,
@@ -6258,9 +9486,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6275,12 +9503,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.091925E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":170,
+						"instanceID":167,
 						"props":{
 							"name":"nm",
 							"active":true,
@@ -6293,9 +9590,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6310,12 +9607,81 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											2.328306E-09,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":171,
+						"instanceID":168,
 						"props":{
 							"name":"dj",
 							"active":true,
@@ -6328,9 +9694,9 @@
 							],
 							"rotation":[
 								0,
+								-1,
 								0,
-								0,
-								-1
+								0
 							],
 							"scale":[
 								9.44582,
@@ -6345,7 +9711,76 @@
 								}
 							]
 						},
-						"components":[],
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											6.193295E-08,
+											0.01964615,
+											-2.062123E-06
+										],
+										"size":[
+											0.02904213,
+											0.0392923,
+											0.001331031
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/Card/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/Card/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/Card/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/Card/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/Card/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/Card/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/Card/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
 						"child":[]
 					}
 				]

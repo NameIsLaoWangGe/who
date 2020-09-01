@@ -1565,9 +1565,11 @@ export module lwg {
          * @param parent 父节点
          * @param quantity 数量
          * @param speed 速度
-         * @param continueTime 持续时间（按帧数计算）
          * @param x X轴位置
          * @param y Y轴位置
+         * @param style 图片样式
+         * @param speed 移动速度
+         * @param continueTime 持续时间（按帧数计算）
          */
         export function createCommonExplosion(parent, quantity, x, y, style, speed, continueTime): void {
             for (let index = 0; index < quantity; index++) {
@@ -2258,6 +2260,7 @@ export module lwg {
            * @param ease 缓动函数
            * @param complete 播放完成回调 
            * @param delay 延迟
+           * @param clickLock 场景按钮此时是否可以继续点击
            * @param coverBefore 是否覆盖上一个缓动
            * @param update 更新函数
            * @param frame 帧数间隔
@@ -2391,8 +2394,9 @@ export module lwg {
          * @param time 花费时间
          * @param delayed 延时
          * @param func 回调函数
+         * @param  场景可否点击
          */
-        export function fadeOut(node, alpha1, alpha2, time, delayed?: number, func?: Function): void {
+        export function fadeOut(node, alpha1, alpha2, time, delayed?: number, func?: Function, stageClick?: boolean): void {
             node.alpha = alpha1;
             if (!delayed) {
                 delayed = 0;
@@ -2775,10 +2779,13 @@ export module lwg {
          * @param audioType 音效类型
          * @param func 完成后的回调
          */
-        export function bombs_Appear(node, firstAlpha, firstScale, scale1, rotation, time1, time2, delayed, audioType?: String, func?: Function): void {
+        export function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed?: number, func?: Function, audioType?: String): void {
             node.scale(0, 0);
             node.alpha = firstAlpha;
-            Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
+            if (!delayed) {
+                delayed = 0;
+            }
+            Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation1 }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
                 switch (audioType) {
                     case 'balloon':
                         // PalyAudio.playSound(Enum.AudioName.commonPopup, 1);
@@ -2789,10 +2796,10 @@ export module lwg {
                     default:
                         break;
                 }
-                Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
-                    Laya.Tween.to(node, { scaleX: firstScale + (scale1 - firstScale) * 0.2, scaleY: firstScale + (scale1 - firstScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                    Laya.Tween.to(node, { scaleX: endScale + (scale1 - endScale) * 0.2, scaleY: endScale + (scale1 - endScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
 
-                        Laya.Tween.to(node, { scaleX: firstScale, scaleY: firstScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
+                        Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
                             if (func) {
                                 func()
                             }
@@ -2800,6 +2807,66 @@ export module lwg {
                     }), 0);
                 }), 0);
             }), delayed);
+        }
+
+        /**
+         * 类似气球弹出并且回弹，所有子节点按顺序弹出来
+         * @param node 节点
+         * @param firstAlpha 初始透明度
+         * @param endScale 初始大小
+         * @param rotation1 第一阶段角度
+         * @param scale1 第一阶段放大比例
+         * @param time1 第一阶段花费时间
+         * @param time2 第二阶段花费时间
+         * @param interval 每个子节点的时间间隔
+         * @param func 完成回调
+         * @param audioType 音效类型
+         */
+        export function bombs_AppearAllChild(node: Laya.Sprite, firstAlpha, endScale, scale1, rotation1, time1, time2, interval?: number, func?: Function, audioType?: String): void {
+            let de1 = 0;
+            if (!interval) {
+                interval = 100;
+            }
+            for (let index = 0; index < node.numChildren; index++) {
+                let Child = node.getChildAt(index) as Laya.Sprite;
+                Child.alpha = 0;
+                Laya.timer.once(de1, this, () => {
+                    Child.alpha = 1;
+                    if (index !== node.numChildren - 1) {
+                        func == null;
+                    }
+                    bombs_Appear(Child, firstAlpha, endScale, scale1, rotation1, time1, time2, null, func, audioType);
+                })
+                de1 += interval;
+            }
+        }
+
+
+        /**
+         *  类似气球消失，所有子节点按顺序消失
+          * @param node 节点
+         * @param scale 收缩后的大小
+         * @param alpha 收缩后的透明度
+         * @param rotation 收缩后的角度 
+         * @param time 每个子节点花费时间
+         * @param interval 每个子节点时间间隔
+         * @param func 完成后的回调
+         */
+        export function bombs_VanishAllChild(node, endScale, alpha, rotation, time, interval, func?: Function) {
+            let de1 = 0;
+            if (!interval) {
+                interval = 100;
+            }
+            for (let index = 0; index < node.numChildren; index++) {
+                let Child = node.getChildAt(index);
+                Laya.timer.once(de1, this, () => {
+                    if (index !== node.numChildren - 1) {
+                        func == null;
+                    }
+                    bombs_Vanish(node, endScale, alpha, rotation, time, 0, func);
+                })
+                de1 += interval;
+            }
         }
 
         /**
@@ -2812,14 +2879,12 @@ export module lwg {
          * @param delayed 延时时间
          * @param func 完成后的回调
          */
-        export function bombs_Vanish(node, scale, alpha, rotation, time, delayed, func?: Function): void {
-
+        export function bombs_Vanish(node, scale, alpha, rotation, time, delayed?: number, func?: Function): void {
             Laya.Tween.to(node, { scaleX: scale, scaleY: scale, alpha: alpha, rotation: rotation }, time, Laya.Ease.cubicOut, Laya.Handler.create(this, function () {
-                // PalyAudio.playSound(Enum.AudioName.commonVanish, 1);
                 if (func) {
                     func()
                 }
-            }), delayed);
+            }), delayed ? delayed : 0);
         }
 
         /**

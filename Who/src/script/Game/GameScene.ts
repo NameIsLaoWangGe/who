@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
@@ -6,6 +6,8 @@ export default class GameScene extends Admin.Scene {
     public Option: Laya.Prefab;
     /** @prop {name:GuessCard, tips:"对方提问预制体", type:Prefab}*/
     public GuessCard: Laya.Prefab;
+    /** @prop {name:DoWell, tips:"干得漂亮预制体", type:Prefab}*/
+    public DoWell: Laya.Prefab;
 
     /**选项卡*/
     OptionParent: Laya.Sprite;
@@ -20,20 +22,16 @@ export default class GameScene extends Admin.Scene {
     lwgEventReg(): void {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-            Admin._clickLock.switch = true;
             Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
                 Tools.node_RemoveAllChildren(this.OptionParent);
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
-                Admin._clickLock.switch = false;
             });
         })
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-            Admin._clickLock.switch = true;
             this.createQuestion(questionArr);
             Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
-                Admin._clickLock.switch = false;
             });
         })
 
@@ -52,6 +50,12 @@ export default class GameScene extends Admin.Scene {
         EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
             Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { })
         })
+
+        // 干得漂亮提示
+        EventAdmin.reg(Game3D.EventType.doWell, this, () => {
+            this.createDoWall();
+        })
+
     }
 
     lwgAdaptive(): void {
@@ -96,6 +100,7 @@ export default class GameScene extends Admin.Scene {
 
     /**创建选项卡*/
     createOption(parent, x, y, question: string, click: boolean): Laya.Sprite {
+        Admin._clickLock.switch = false;
         let Option = Laya.Pool.getItemByCreateFun('Option', this.Option.create, this.Option) as Laya.Sprite;
         let Content = Option.getChildByName('Content') as Laya.Label;
         Content.text = question;
@@ -112,6 +117,7 @@ export default class GameScene extends Admin.Scene {
         }
         if (click) {
             Click.on(Click.Type.largen, Option, this, null, null, () => {
+                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
             });
         }
@@ -120,13 +126,12 @@ export default class GameScene extends Admin.Scene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-
         });
-        // Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => { });
     }
 
     /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
+        Admin._clickLock.switch = false;
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
         GuessCard.pos(0, 0);
@@ -144,9 +149,10 @@ export default class GameScene extends Admin.Scene {
         Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
-        // console.log('问题的答案为：', questionAndYesOrNo[1]);
-        Click.on(Click.Type.largen, BtnYes, this, null, null, () => {
+
+        var btnYesUp = () => {
             if (questionAndYesOrNo[1]) {
+                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
                 Tools.color_Filter(Card, [255, 0, 0, 1], 100);
@@ -155,11 +161,15 @@ export default class GameScene extends Admin.Scene {
                     console.log('回答错误！');
                 }, false);
             }
-        });
+        }
+
+        Click.on(Click.Type.largen, BtnYes, this, null, null, btnYesUp);
 
         let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
-        Click.on(Click.Type.largen, BtnNo, this, null, null, () => {
+
+        var btnNoUp = () => {
             if (!questionAndYesOrNo[1]) {
+                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
                 Tools.color_Filter(Card, [255, 0, 0, 1], 100);
@@ -168,7 +178,8 @@ export default class GameScene extends Admin.Scene {
                     console.log('回答错误！');
                 }, false);
             }
-        });
+        }
+        Click.on(Click.Type.largen, BtnNo, this, null, null, btnNoUp);
 
         BtnYes.y = Laya.stage.height * 0.874;
         BtnNo.y = Laya.stage.height * 0.874;
@@ -191,16 +202,38 @@ export default class GameScene extends Admin.Scene {
         })
     }
 
+    /**创建干的漂亮提示*/
+    createDoWall(): void {
+        let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell) as Laya.Sprite;
+        Laya.stage.addChild(DoWell);
+        DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
+        Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
+
+        for (let index = 0; index < 5; index++) {
+            let diffX = Tools.randomCountNumer(0, 200, 1, false);
+            let diffY = Tools.randomCountNumer(0, 100, 1, false);
+            let x = Tools.randomOneHalf() == 0 ? diffX[0] : -diffX[0];
+            let y = Tools.randomOneHalf() == 0 ? diffY[0] : -diffY[0];
+
+            Laya.timer.once(300 * index, this, () => {
+                Effects.createExplosion_Rotate(this.self, 25, Laya.stage.width / 2 + x, Laya.stage.height / 2 - 150 + y, 'star', 10, 10);
+            })
+        }
+        Laya.timer.once(1500, this, () => {
+            Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
+
+        })
+        console.log(DoWell);
+    }
+
     onStageMouseDown(e: Laya.Event): void {
         let MainCamera = Game3D.MainCamera.getChildAt(0) as Laya.Camera;
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
-        let sprite3D;
+        let Sp3D;
         if (hitResult) {
-            sprite3D = hitResult.collider.owner;
-            EventAdmin.notify(Game3D.EventType.judgeMeClickCard, sprite3D);
+            Sp3D = hitResult.collider.owner;
+            EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
         }
     }
-
-
 }
 
