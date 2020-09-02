@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
@@ -38,12 +38,12 @@ export default class GameScene extends Admin.Scene {
         // 胜利
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
             Admin._gameSwitch = false;
-            Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
+            Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory });
         })
 
         // 失败
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
-            Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+            Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated });
         })
 
         //隐藏选项卡

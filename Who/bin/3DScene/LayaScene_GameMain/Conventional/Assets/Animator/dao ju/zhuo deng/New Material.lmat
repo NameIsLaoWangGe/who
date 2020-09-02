@@ -21,7 +21,7 @@
 		"textures":[
 			{
 				"name":"albedoTexture",
-				"path":"桌子.jpg",
+				"path":"zhuozipic.jpg",
 				"constructParams":[
 					256,
 					256,

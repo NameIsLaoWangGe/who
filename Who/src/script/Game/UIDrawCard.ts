@@ -1,4 +1,5 @@
-import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects } from "../Frame/lwg";
+import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold } from "../Frame/lwg";
+import ADManager from "../../TJ/Admanager";
 
 
 export default class UIDrawCard extends DrawCard.DrawCardScene {
@@ -6,11 +7,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     public Card: Laya.Prefab;
 
     lwgOnAwake(): void {
-
-    }
-
-    lwgOnEnable(): void {
-
+        Gold.goldAppear();
     }
 
     lwgEventReg(): void {
@@ -60,44 +57,72 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
             let Card = this.self['CardParent'].getChildByName('Card' + this.self['cardIndex']) as Laya.Sprite;
             if (!Card) {
+                this.self['cardIndex'] = null;
+                Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard });
                 return;
             }
+            var func = () => {
+                this.self['cardIndex']++;
+                EventAdmin.notify('flop');
+            }
+
             Animation2D.cardRotateX_OneFace(Card, () => {
                 let Pic = Card.getChildByName('Pic') as Laya.Image;
                 Pic.visible = true;
             }, 100, 50, () => {
-                if (this.self['cardIndex'] == 4) {
+                if (this.self['cardIndex'] == 4 || this.self['cardIndex'] == 8) {
                     Card.zOrder = 4 * 10;
                     let x = Card.x;
                     let y = Card.y;
                     Animation2D.leftRight_Shake(Card, 20, 100, 200, () => {
-                        
-                        Effects.createExplosion_Rotate(this.self['SceneContent'], 40, this.self['SceneContent'].width / 2, this.self['SceneContent'].height / 2 - 100, Effects.SkinStyle.star, 20, 15);
-
                         Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
+                            for (let index = 0; index < 5; index++) {
+                                let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
+                                Laya.timer.once(300 * index, this, () => {
+                                    Effects.createExplosion_Rotate(this.self['CardParent'], 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
+                                })
+                            }
                             Animation2D.move_Scale(Card, 3, Card.x, Card.y, x, y, 1, 200, 2000, null, () => {
-                                this.self['cardIndex']++;
-                                EventAdmin.notify('flop');
+                                func();
                             });
                         });
                         Animation2D.move_Simple(Card, x, y, globalPos.x, globalPos.y, 250, 100);
                     });
                 } else {
-                    this.self['cardIndex']++;
-                    EventAdmin.notify('flop');
+                    func();
                 }
             });
         })
 
+        EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
+            this.self['BtnTake'].visible = true;
+        })
     }
 
     lwgBtnClick(): void {
+
+        Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
+            ADManager.ShowReward(() => {
+
+            })
+        });
+
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UIStart, this.self);
         });
 
         Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e: Laya.Event) => {
             e.stopPropagation();
+        }, null, null);
+
+        Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e: Laya.Event) => {
+            this.self['DrawDisPlay'].x = -800;
+            Tools.node_RemoveAllChildren(this.self['CardParent']);
+        }, null, null);
+
+        Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e: Laya.Event) => {
+            this.self['DrawDisPlay'].x = -800;
+            Tools.node_RemoveAllChildren(this.self['CardParent']);
         }, null, null);
 
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
@@ -134,11 +159,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             },
             // 抬起
             () => {
-                if (this.self['Drawlength'] > 2000) {
-                    console.log('画线长度够了，弹出十连抽！');
-                    this.self.getChildByName('DrawSp').removeSelf();
-                    EventAdmin.notify('drawCard');
-                }
+                this.self.getChildByName('DrawSp').removeSelf();
+                EventAdmin.notify('drawCard');
                 this.self['DrawPosArr'] = null;
             },
             // 出图片

@@ -12,6 +12,7 @@ import LwgInit from "./script/Frame/LwgInit"
 import UIDefeated from "./script/Game/UIDefeated"
 import UIDrawCard from "./script/Game/UIDrawCard"
 import UILoding from "./script/Game/UILoding"
+import UIShare from "./script/Game/UIShare"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
 import UIVictoryBox_Cell from "./script/Game/UIVictoryBox_Cell"
@@ -49,6 +50,7 @@ export default class GameConfig{
         reg("script/Game/UIDefeated.ts",UIDefeated);
         reg("script/Game/UIDrawCard.ts",UIDrawCard);
         reg("script/Game/UILoding.ts",UILoding);
+        reg("script/Game/UIShare.ts",UIShare);
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);
         reg("script/Game/UIVictoryBox_Cell.ts",UIVictoryBox_Cell);

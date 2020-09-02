@@ -1,4 +1,5 @@
 import ADManager, { TaT } from "../../TJ/Admanager";
+import UIShare from "../Game/UIShare";
 
 /**综合模板*/
 export module lwg {
@@ -1184,6 +1185,8 @@ export module lwg {
                 }
                 if (cloesScene) {
                     _closeScene(cloesScene, openf);
+                } else {
+                    openf();
                 }
                 if (func) {
                     func();
@@ -2862,7 +2865,7 @@ export module lwg {
                         func2();
                     }
                 }), 0);
-            }), delayed?delayed:0);
+            }), delayed ? delayed : 0);
         }
 
         /**
@@ -3572,13 +3575,13 @@ export module lwg {
          * @param node 节点
          * @param bool visible控制
         */
-        export function node_ChildrenVisible(node: Laya.Node, bool: boolean): void {
+        export function node_ChildrenVisible(node: Laya.Sprite, bool: boolean): void {
             for (let index = 0; index < node.numChildren; index++) {
-                const element = node.getChildAt(index) as Laya.Node;
+                const element = node.getChildAt(index) as Laya.Sprite;
                 if (bool) {
-                    element.active = false;
+                    element.visible = true;
                 } else {
-                    element.active = true;
+                    element.visible = false;
                 }
             }
         }
@@ -5703,7 +5706,41 @@ export module lwg {
 
     /**抽卡模块*/
     export module DrawCard {
+        /**
+         * 剩余免费抽奖次数
+         */
+        export let _freeDrawNum = {
+            get value(): number {
+                return Laya.LocalStorage.getItem('_freeDrawNum') ? Number(Laya.LocalStorage.getItem('_freeDrawNum')) : 1;
+            },
+            set value(val) {
+                Laya.LocalStorage.setItem('_freeDrawNum', val.toString());
+            }
+        };
+
+        /**抽奖场景*/
         export class DrawCardScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+    }
+
+    /**
+     * 分享模块
+     */
+    export module Share {
+
+        /**从哪个界面弹出的分享*/
+        export let _fromWhich: string = Admin.SceneName.UIVictory;
+
+        export class ShareScene extends Admin.Scene {
             moduleOnAwake(): void {
 
             };
@@ -6056,6 +6093,8 @@ export let Defeated = lwg.Defeated;
 export let DefeatedScene = lwg.Defeated.DefeatedScene;
 export let DrawCard = lwg.DrawCard;
 export let DrawCardScene = lwg.DrawCard.DrawCardScene;
+export let Share = lwg.Share;
+export let ShareScene = lwg.Share.ShareScene;
 // 其他
 export let Tomato = lwg.Tomato;
 
