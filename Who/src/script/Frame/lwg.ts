@@ -455,18 +455,18 @@ export module lwg {
 
         /**增加金币以并且在节点上也表现出来*/
         export function addGold(number: number) {
-            _num.value += number;
+            _num.value += Number(number);
             let Num = GoldNode.getChildByName('Num') as Laya.Text;
             Num.text = _num.value.toString();
         }
         /**增加金币节点上的表现动画，并不会增加金币*/
         export function addGoldDisPlay(number) {
             let Num = GoldNode.getChildByName('Num') as Laya.FontClip;
-            Num.value = (Number(Num.value) + number).toString();
+            Num.value = (Number(Num.value) + Number(number)).toString();
         }
         /**增加金币，但是不表现出来*/
         export function addGoldNoDisPlay(number) {
-            _num.value += number;
+            _num.value += Number(number);
         }
 
         /**
@@ -1153,11 +1153,12 @@ export module lwg {
         export function _closeScene(cloesScene?: Laya.Scene, func?: Function): void {
             /**传入的回调函数*/
             var closef = () => {
+                _clickLock.switch = false;
+                cloesScene.close();
+                // 先关闭场景在打开场景，否则有些场景可能因为上个场景而初始化失败
                 if (func) {
                     func();
                 }
-                _clickLock.switch = false;
-                cloesScene.close();
             }
             // 如果关闭了场景消失动画，则不会执行任何动画
             if (!_commonVanishAni) {
@@ -1561,6 +1562,81 @@ export module lwg {
         }
 
         /**
+         * 在一个点内的随机范围内，创建一个星星，闪烁后消失
+         * @param parent 父节点
+         * @param centerPos 中心点
+         * @param radiusX X轴半径，默认问100
+         * @param radiusY Y轴半径，默认为100
+         * @param skinUrl 图片地址，默认为星星图片
+         * @param width 图片宽度，默认为50;
+         * @param height 图片宽度，默认为50;
+         * @param rotationSpeed 角度变化速率,默认为正负5度
+         */
+        export function star_Blink(parent, centerPos: Laya.Point, radiusX?: number, radiusY?: number, skinUrl?: string, width?: number, height?: number, rotationSpeed?: number): void {
+            if (!rotationSpeed) {
+                rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
+            }
+            let star = Laya.Pool.getItemByClass('star_Blink', Laya.Image) as Laya.Image;
+            star.name = 'star_Blink';//标识符和名称一样
+            let num;
+            if (skinUrl == SkinStyle.star || !skinUrl) {
+                num = 12 + Math.floor(Math.random() * 12);
+                star.skin = SkinUrl[num];
+            } else if (skinUrl == SkinStyle.dot) {
+                num = Math.floor(Math.random() * 12);
+                star.skin = SkinUrl[num];
+            } else {
+                star.skin = skinUrl;
+            }
+            star.alpha = 0;
+            star.width = width;
+            star.height = height;
+            star.scaleX = 0;
+            star.scaleY = 0;
+            star.pivotX = star.width / 2;
+            star.pivotY = star.height / 2;
+            parent.addChild(star);
+            let p = Tools.point_RandomPointByCenter(centerPos, radiusX, radiusY, 1);
+            star.pos(p[0].x, p[0].y);
+
+            // 最大放大大小
+            let maxScale = Tools.randomCountNumer(0.9, 1.3)[0];
+
+            let timer = 0;
+            let caller = {};
+            var ani = () => {
+                timer++;
+                if (timer > 0 && timer <= 15) {
+                    star.alpha += 0.1;
+                    star.rotation += rotationSpeed;
+                    star.scaleX += 0.02;
+                    star.scaleY += 0.02;
+                } else if (timer > 15) {
+                    if (!star['reduce']) {
+                        if (star.scaleX > maxScale) {
+                            star['reduce'] = true;
+                        } else {
+                            star.rotation += rotationSpeed;
+                            star.scaleX += 0.015;
+                            star.scaleY += 0.015;
+                        }
+                    } else {
+                        star.rotation -= rotationSpeed;
+                        star.alpha -= 0.015;
+                        star.scaleX -= 0.01;
+                        star.scaleY -= 0.01;
+                        if (star.scaleX <= 0) {
+                            star.removeSelf();
+                            Laya.timer.clearAll(caller);
+                        }
+                    }
+                }
+
+            }
+            Laya.timer.frameLoop(1, caller, ani);
+        }
+
+        /**
          * 创建普通爆炸动画，四周爆炸随机散开
          * @param parent 父节点
          * @param quantity 数量
@@ -1576,9 +1652,9 @@ export module lwg {
                 let ele = Laya.Pool.getItemByClass('ele', Laya.Image) as Laya.Image;
                 ele.name = 'ele';//标识符和名称一样
                 let num
-                if (style === 'star') {
+                if (style === SkinStyle.star) {
                     num = 12 + Math.floor(Math.random() * 12);
-                } else if (style === 'dot') {
+                } else if (style === SkinStyle.dot) {
                     num = Math.floor(Math.random() * 12);
                 }
                 ele.skin = SkinUrl[num];
@@ -1655,7 +1731,9 @@ export module lwg {
             }
         }
 
-        /**普通爆炸移动类*/
+        /**
+         * 创建爆炸旋转动画控制脚本
+         * */
         export class Explosion_Rotate extends lwg.Effects.EffectsBase {
             lwgInit(): void {
                 this.self.width = 41;

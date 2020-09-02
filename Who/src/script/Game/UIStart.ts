@@ -13,7 +13,7 @@ export default class UIStart extends Start.StartScene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-            Admin._openScene(Admin.SceneName.GameScene, this.self);
+            Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
         });
     }
 

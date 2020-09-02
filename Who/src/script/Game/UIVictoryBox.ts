@@ -10,6 +10,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
         ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
         Gold.goldAppear();
+        console.log(Gold.GoldNode);
 
         // ADManager.TAPoint(TaT.BtnShow, 'ADrewardbt_box');
 
@@ -51,6 +52,10 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         Laya.timer.once(2000, this, () => {
             this.self['BtnClose'].visible = true;
         })
+        // 星星闪烁动画
+        Laya.timer.frameLoop(60, this, () => {
+            Effects.star_Blink(this.self['TopPic'], new Laya.Point(this.self['TopPic'].width / 2, this.self['TopPic'].height / 2), 250, 250, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+        })
     }
 
     lwgEventReg(): void {
@@ -70,6 +75,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
             }
         })
     }
+
 
     /**领取奖励动画*/
     getRewardFunc(dataSource): void {

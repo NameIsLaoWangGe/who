@@ -848,7 +848,7 @@ export module Game3D {
                 }
             }
 
-            Laya.timer.once(300, this, () => {
+            Laya.timer.once(400, this, () => {
                 if (fallNum >= 2) {
                     if (CardParent == MyCardParent) {
                         EventAdmin.notify(EventType.doWell);

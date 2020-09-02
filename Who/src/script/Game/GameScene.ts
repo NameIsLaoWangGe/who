@@ -55,7 +55,6 @@ export default class GameScene extends Admin.Scene {
         EventAdmin.reg(Game3D.EventType.doWell, this, () => {
             this.createDoWall();
         })
-
     }
 
     lwgAdaptive(): void {
@@ -219,7 +218,6 @@ export default class GameScene extends Admin.Scene {
             Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
 
         })
-        // console.log(DoWell);
     }
 
     onStageMouseDown(e: Laya.Event): void {

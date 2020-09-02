@@ -1423,18 +1423,18 @@
             }
             Gold_1.createGoldNode = createGoldNode;
             function addGold(number) {
-                Gold_1._num.value += number;
+                Gold_1._num.value += Number(number);
                 let Num = Gold_1.GoldNode.getChildByName('Num');
                 Num.text = Gold_1._num.value.toString();
             }
             Gold_1.addGold = addGold;
             function addGoldDisPlay(number) {
                 let Num = Gold_1.GoldNode.getChildByName('Num');
-                Num.value = (Number(Num.value) + number).toString();
+                Num.value = (Number(Num.value) + Number(number)).toString();
             }
             Gold_1.addGoldDisPlay = addGoldDisPlay;
             function addGoldNoDisPlay(number) {
-                Gold_1._num.value += number;
+                Gold_1._num.value += Number(number);
             }
             Gold_1.addGoldNoDisPlay = addGoldNoDisPlay;
             function goldAppear(delayed, x, y) {
@@ -1907,11 +1907,11 @@
             Admin._openScene = _openScene;
             function _closeScene(cloesScene, func) {
                 var closef = () => {
+                    Admin._clickLock.switch = false;
+                    cloesScene.close();
                     if (func) {
                         func();
                     }
-                    Admin._clickLock.switch = false;
-                    cloesScene.close();
                 };
                 if (!Admin._commonVanishAni) {
                     closef();
@@ -2211,15 +2211,80 @@
                 }
             }
             Effects.EffectsBase = EffectsBase;
+            function star_Blink(parent, centerPos, radiusX, radiusY, skinUrl, width, height, rotationSpeed) {
+                if (!rotationSpeed) {
+                    rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
+                }
+                let star = Laya.Pool.getItemByClass('star_Blink', Laya.Image);
+                star.name = 'star_Blink';
+                let num;
+                if (skinUrl == SkinStyle.star || !skinUrl) {
+                    num = 12 + Math.floor(Math.random() * 12);
+                    star.skin = SkinUrl[num];
+                }
+                else if (skinUrl == SkinStyle.dot) {
+                    num = Math.floor(Math.random() * 12);
+                    star.skin = SkinUrl[num];
+                }
+                else {
+                    star.skin = skinUrl;
+                }
+                star.alpha = 0;
+                star.width = width;
+                star.height = height;
+                star.scaleX = 0;
+                star.scaleY = 0;
+                star.pivotX = star.width / 2;
+                star.pivotY = star.height / 2;
+                parent.addChild(star);
+                let p = Tools.point_RandomPointByCenter(centerPos, radiusX, radiusY, 1);
+                star.pos(p[0].x, p[0].y);
+                let maxScale = Tools.randomCountNumer(0.9, 1.3)[0];
+                let timer = 0;
+                let caller = {};
+                var ani = () => {
+                    timer++;
+                    if (timer > 0 && timer <= 15) {
+                        star.alpha += 0.1;
+                        star.rotation += rotationSpeed;
+                        star.scaleX += 0.02;
+                        star.scaleY += 0.02;
+                    }
+                    else if (timer > 15) {
+                        if (!star['reduce']) {
+                            if (star.scaleX > maxScale) {
+                                star['reduce'] = true;
+                            }
+                            else {
+                                star.rotation += rotationSpeed;
+                                star.scaleX += 0.02;
+                                star.scaleY += 0.02;
+                            }
+                        }
+                        else {
+                            star.rotation -= rotationSpeed;
+                            star.alpha -= 0.015;
+                            star.scaleX -= 0.01;
+                            star.scaleY -= 0.01;
+                            if (star.scaleX <= 0) {
+                                star.removeSelf();
+                                Laya.timer.clearAll(caller);
+                            }
+                        }
+                    }
+                };
+                Laya.timer.frameLoop(1, caller, ani);
+            }
+            Effects.star_Blink = star_Blink;
             function createCommonExplosion(parent, quantity, x, y, style, speed, continueTime) {
                 for (let index = 0; index < quantity; index++) {
                     let ele = Laya.Pool.getItemByClass('ele', Laya.Image);
                     ele.name = 'ele';
                     let num;
-                    if (style === 'star') {
+                    if (style === SkinStyle.star) {
                         num = 12 + Math.floor(Math.random() * 12);
                     }
-                    else if (style === 'dot') {
+                    else if (style === SkinStyle.dot) {
                         num = Math.floor(Math.random() * 12);
                     }
                     ele.skin = SkinUrl[num];
@@ -6029,7 +6094,7 @@
                         }
                     }
                 }
-                Laya.timer.once(200, this, () => {
+                Laya.timer.once(400, this, () => {
                     if (fallNum >= 2) {
                         if (CardParent == Game3D.MyCardParent) {
                             EventAdmin.notify(EventType.doWell);
@@ -6230,7 +6295,6 @@
             Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
             for (let index = 0; index < 5; index++) {
                 let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
-                console.log(pointAarr[0]);
                 Laya.timer.once(300 * index, this, () => {
                     Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
                 });
@@ -6238,7 +6302,6 @@
             Laya.timer.once(1500, this, () => {
                 Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
             });
-            console.log(DoWell);
         }
         onStageMouseDown(e) {
             let MainCamera = Game3D.MainCamera.getChildAt(0);
@@ -6415,7 +6478,7 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.GameScene, this.self);
+                Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
             });
         }
         lwgOnDisable() {
@@ -6651,6 +6714,7 @@
             ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
             ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
             Gold.goldAppear();
+            console.log(Gold.GoldNode);
             if (VictoryBox._openVictoryBoxNum > 1) {
                 let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
                 for (let index = 0; index < arr.length; index++) {
@@ -6684,6 +6748,9 @@
             this.self['BtnClose'].visible = false;
             Laya.timer.once(2000, this, () => {
                 this.self['BtnClose'].visible = true;
+            });
+            Laya.timer.frameLoop(60, this, () => {
+                Effects.star_Blink(this.self['TopPic'], new Laya.Point(this.self['TopPic'].width / 2, this.self['TopPic'].height / 2), 250, 250, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
             });
         }
         lwgEventReg() {
