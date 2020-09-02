@@ -10,6 +10,7 @@ import P106 from "./TJ/Promo/script/P106"
 import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
 import UIDefeated from "./script/Game/UIDefeated"
+import UIDrawCard from "./script/Game/UIDrawCard"
 import UILoding from "./script/Game/UILoding"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
@@ -46,6 +47,7 @@ export default class GameConfig{
         reg("script/Game/GameScene.ts",GameScene);
         reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UIDefeated.ts",UIDefeated);
+        reg("script/Game/UIDrawCard.ts",UIDrawCard);
         reg("script/Game/UILoding.ts",UILoding);
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);

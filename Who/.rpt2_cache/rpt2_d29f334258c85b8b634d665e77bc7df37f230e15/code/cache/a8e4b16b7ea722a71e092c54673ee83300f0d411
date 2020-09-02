@@ -1,7 +1,0 @@
-{
-  "code": "import { Admin, Loding, Setting, Gold } from \"./lwg\";\r\nimport { Game3D } from \"../Game/Game3D\";\r\nexport default class LwgInit extends Admin.Scene {\r\n    lwgOnAwake() {\r\n        this.admin();\r\n        this.game3D();\r\n        this.shop();\r\n        this.skin();\r\n        this.task();\r\n        this.easterEgg();\r\n        Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');\r\n        Gold.createGoldNode(629, 174);\r\n    }\r\n    admin() {\r\n        Admin._commonVanishAni = true;\r\n        Admin._platform = Admin._platformTpye.Bytedance;\r\n    }\r\n    game3D() {\r\n        Game3D.dataInit();\r\n        Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);\r\n        Laya.stage.addChild(Game3D.Scene3D);\r\n        Game3D.Scene3D.addComponent(Game3D.MainScene);\r\n    }\r\n    skin() {\r\n    }\r\n    shop() {\r\n    }\r\n    task() {\r\n    }\r\n    easterEgg() {\r\n    }\r\n    lwgOnEnable() {\r\n        console.log('完成初始化');\r\n        Admin._openScene(Admin.SceneName.UIStart, this.self);\r\n    }\r\n}\r\n",
-  "references": [
-    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
-    "D:/Game/project/Who/Project/Who/src/script/Game/Game3D.ts"
-  ]
-}

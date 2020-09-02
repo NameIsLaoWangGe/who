@@ -1,7 +1,0 @@
-{
-  "code": "import { Loding } from \"../Frame/lwg\";\r\nexport default class UILoding extends Loding.LodingScene {\r\n    lwgOnAwake() {\r\n        Loding.list_2DPic = [\r\n            \"res/atlas/Frame/Effects.png\",\r\n            \"res/atlas/Frame/UI.png\",\r\n        ];\r\n        Loding.list_2DScene = [\r\n            \"Scene/LwgInit.json\",\r\n        ];\r\n        Loding.list_2DPrefab = [];\r\n        Loding.list_3DScene = [\r\n            \"3DScene/LayaScene_GameMain/Conventional/GameMain.ls\"\r\n        ];\r\n        Loding.list_3DPrefab = [];\r\n        Loding.list_JsonData = [\r\n            \"GameData/Game/characteristics.json\",\r\n            \"GameData/Game/Card.json\",\r\n        ];\r\n    }\r\n    lwgAdaptive() {\r\n        this.self['Tag'].y = Laya.stage.height - 100;\r\n        this.self['ProgressBoard'].y = Laya.stage.height * 0.824;\r\n        this.self['Pic'].y = Laya.stage.height * 0.505;\r\n        this.self['Logo'].y = Laya.stage.height * 0.191;\r\n    }\r\n    lwgOnEnable() {\r\n    }\r\n    lwgOpenAni() { return 0; }\r\n    lodingPhaseComplete() {\r\n        this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;\r\n    }\r\n    lodingComplete() {\r\n        this.self['Progress'].mask.x = 0;\r\n        return 200;\r\n    }\r\n}\r\n",
-  "references": [
-    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
-    "D:/Game/project/Who/Project/Who/src/script/Game/Game3D.ts"
-  ]
-}

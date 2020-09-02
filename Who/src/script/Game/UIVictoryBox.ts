@@ -1,5 +1,5 @@
 
-import { VictoryBox, Gold, Tools, Admin, EventAdmin, Dialog, EasterEgg, Effects, Task, Click } from "../Frame/lwg";
+import { VictoryBox, Gold, Tools, Admin, EventAdmin, Dialog, EasterEgg, Effects, Task, Click, TimerAdmin } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
@@ -9,11 +9,9 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
         ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
         ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
-        Gold.goldAppear();
-        console.log(Gold.GoldNode);
+        Gold.createGoldNode(629, 174);
 
         // ADManager.TAPoint(TaT.BtnShow, 'ADrewardbt_box');
-
         if (VictoryBox._openVictoryBoxNum > 1) {
             let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
             for (let index = 0; index < arr.length; index++) {
@@ -52,10 +50,16 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         Laya.timer.once(2000, this, () => {
             this.self['BtnClose'].visible = true;
         })
-        // 星星闪烁动画
-        Laya.timer.frameLoop(60, this, () => {
-            Effects.star_Blink(this.self['TopPic'], new Laya.Point(this.self['TopPic'].width / 2, this.self['TopPic'].height / 2), 250, 250, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
-        })
+        // 星星闪烁动画左边
+        TimerAdmin.frameRandomLoop(30, 50, this, () => {
+            let x = this.self['SceneContent'].width / 2 - 160;
+            Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+        }, true)
+        // 星星闪烁动画右边
+        TimerAdmin.frameRandomLoop(30, 50, this, () => {
+            let x = this.self['SceneContent'].width / 2 + 160;
+            Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+        }, true)
     }
 
     lwgEventReg(): void {
@@ -201,7 +205,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         }
     }
 
-    victoryOnUpdate(): void {
+    lwgOnUpdate(): void {
         if (VictoryBox._canOpenNum > 0) {
             this.self['BtnAgain_WeChat'].visible = false;
             this.self['BtnNo_WeChat'].visible = false;
@@ -209,7 +213,9 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         } else {
             this.self['BtnAgain_WeChat'].visible = true;
             this.self['BtnNo_WeChat'].visible = true;
-
         }
+    }
+    lwgOnDisable(): void {
+        Gold.GoldNode.removeSelf();
     }
 }

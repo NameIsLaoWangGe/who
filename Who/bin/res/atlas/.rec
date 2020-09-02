@@ -137,6 +137,7 @@ P 2A39B90F anniu1.png
 P 79B07BD5 congxin.png
 R B4540864 di.png
 P 70FF211F douyao.png
+P DBDF552F fanhui.png
 P C35F448E jinbi.png
 P 289D58A5 kanshipin.png
 P 127255F4 qiandao.png
@@ -170,7 +171,6 @@ P 94FDDFDD baidi.png
 P 1095C8EC baidi2.png
 P 3D068B3B budui.png
 P 22392773 dui.png
-P DBDF552F fanhui.png
 P 309BC52D heidi.png
 P 1EA50B9B hong.png
 P B3BB7FE4 qipao.png
@@ -182,6 +182,16 @@ P 0FBAFC11 wode.png
 D Game/UI/UICheckIn
 D Game/UI/UIDefeated
 P 02B20F84 shibai.png
+D Game/UI/UIDrawCard
+R 76C26590 bj.png
+R 4BC25796 guang.png
+R CE53F713 jinzi.png
+P 9FC4A4E0 mianfei.png
+P D1B89093 mojing.png
+P 63402EB5 qidong.png
+P E251178C shenyu.png
+P 1E6EB0DD shuzi4.png
+R A630413C yuan.png
 D Game/UI/UILoding
 R B3AA2A09 bj.png
 R BC36AD45 jiankan.png
@@ -275,3 +285,5 @@ R A24BEE5A white.jpg
 P BCCD0083 y1.png
 P 3ECD784B yjjx14.png
 P BBB689A3 zt_1_10.png
+D Game/UI/UIDrawCard/Card
+P C9867BC2 01.png

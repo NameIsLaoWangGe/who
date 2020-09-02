@@ -37,7 +37,6 @@ export default class UIVictory extends VictoryScene {
         Effects.createLeftOrRightJet(Laya.stage, 'right', 40, 720, 300);
         Effects.createLeftOrRightJet(Laya.stage, 'left', 40, 0, 300);
 
-
         let Num1 = this.self['GlodNum'].getChildByName('Num') as Laya.Label;
         Num1.text = '+' + 100;
 
@@ -50,7 +49,7 @@ export default class UIVictory extends VictoryScene {
             time++;
             if (time % 2 == 0) {
                 this.self['Tag'].skin = 'Game/UI/UIVictory/dajia.png';
-            }else{
+            } else {
                 this.self['Tag'].skin = 'Game/UI/UIVictory/qipao.png';
             }
         })

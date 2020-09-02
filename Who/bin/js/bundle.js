@@ -1727,6 +1727,30 @@
                 }
             };
         })(DateAdmin = lwg.DateAdmin || (lwg.DateAdmin = {}));
+        let TimerAdmin;
+        (function (TimerAdmin) {
+            function frameLoop(delay, caller, method, immediately, args, coverBefore) {
+                if (immediately) {
+                    method();
+                }
+                Laya.timer.frameLoop(delay, caller, () => {
+                    method();
+                }, args, coverBefore);
+            }
+            TimerAdmin.frameLoop = frameLoop;
+            function frameRandomLoop(delay1, delay2, caller, method, immediately, args, coverBefore) {
+                if (immediately) {
+                    method();
+                }
+                Laya.timer.frameLoop(delay1, caller, () => {
+                    let delay = Tools.randomNumber(delay1, delay2);
+                    Laya.timer.frameOnce(delay, this, () => {
+                        method();
+                    });
+                }, args, coverBefore);
+            }
+            TimerAdmin.frameRandomLoop = frameRandomLoop;
+        })(TimerAdmin = lwg.TimerAdmin || (lwg.TimerAdmin = {}));
         let Admin;
         (function (Admin) {
             let _platformTpye;
@@ -1876,6 +1900,7 @@
                 SceneName["GameScene"] = "GameScene";
                 SceneName["UISmallHint"] = "UISmallHint";
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
+                SceneName["UIDrawCard"] = "UIDrawCard";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
@@ -2239,7 +2264,7 @@
                 parent.addChild(star);
                 let p = Tools.point_RandomPointByCenter(centerPos, radiusX, radiusY, 1);
                 star.pos(p[0].x, p[0].y);
-                let maxScale = Tools.randomCountNumer(0.9, 1.3)[0];
+                let maxScale = Tools.randomCountNumer(0.8, 1.2)[0];
                 let timer = 0;
                 let caller = {};
                 var ani = () => {
@@ -2247,8 +2272,8 @@
                     if (timer > 0 && timer <= 15) {
                         star.alpha += 0.1;
                         star.rotation += rotationSpeed;
-                        star.scaleX += 0.02;
-                        star.scaleY += 0.02;
+                        star.scaleX += 0.015;
+                        star.scaleY += 0.015;
                     }
                     else if (timer > 15) {
                         if (!star['reduce']) {
@@ -2932,7 +2957,7 @@
                     if (func) {
                         func();
                     }
-                }), delayed);
+                }), delayed ? delayed : 0);
             }
             Animation2D.move_Scale = move_Scale;
             function rotate_Scale(target, fRotate, fScaleX, fScaleY, eRotate, eScaleX, eScaleY, time, delayed, func) {
@@ -3046,15 +3071,15 @@
             Animation2D.cardRotateY_TowFace = cardRotateY_TowFace;
             function cardRotateY_OneFace(node, func1, time, delayed, func2) {
                 Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
-                    if (func1 !== null) {
+                    if (func1) {
                         func1();
                     }
                     Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
-                        if (func2 !== null) {
+                        if (func2) {
                             func2();
                         }
                     }), 0);
-                }), delayed);
+                }), delayed ? delayed : 0);
             }
             Animation2D.cardRotateY_OneFace = cardRotateY_OneFace;
             function move_changeRotate(node, targetX, targetY, per, rotation_pe, time, func) {
@@ -3752,7 +3777,7 @@
                 sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
             }
             Tools.sk_indexControl = sk_indexControl;
-            function img_drawPieMask(parent, startAngle, endAngle) {
+            function draw_drawPieMask(parent, startAngle, endAngle) {
                 parent.cacheAs = "bitmap";
                 let drawPieSpt = new Laya.Sprite();
                 drawPieSpt.blendMode = "destination-out";
@@ -3760,7 +3785,43 @@
                 let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
                 return drawPie;
             }
-            Tools.img_drawPieMask = img_drawPieMask;
+            Tools.draw_drawPieMask = draw_drawPieMask;
+            function draw_LineInScene(Scene, node, nodeForm, radius, color) {
+                let length;
+                Click.on(Click.Type.noEffect, node, this, (e) => {
+                    if (!this.self.getChildByName('DrawSp')) {
+                        length = 0;
+                        let DrawSp = new Laya.Sprite();
+                        Scene.addChild(DrawSp);
+                        DrawSp.name = 'DrawSp';
+                        DrawSp.pos(0, 0);
+                        Scene['DrawSp'] = DrawSp;
+                    }
+                    Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                }, (e) => {
+                    let Img = node;
+                    let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
+                    if (new Laya.Point(e.stageX, e.stageY).distance(globalPos.x, globalPos.y) > Img.width / 2) {
+                        Scene['DrawPosArr'] = null;
+                        return;
+                    }
+                    if (Scene['DrawPosArr']) {
+                        Scene['DrawSp'].graphics.drawLine(Scene['DrawPosArr'].x, Scene['DrawPosArr'].y, e.stageX, e.stageY, color, radius * 2);
+                        Scene['DrawSp'].graphics.drawCircle(e.stageX, e.stageY, radius, color);
+                        length += Scene['DrawPosArr'].distance(e.stageX, e.stageY);
+                        Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                    }
+                }, () => {
+                    if (length > 3000) {
+                        Scene.getChildByName('DrawSp').removeSelf();
+                    }
+                    Scene['DrawPosArr'] = null;
+                }, () => {
+                    Scene['DrawPosArr'] = null;
+                });
+                return length;
+            }
+            Tools.draw_LineInScene = draw_LineInScene;
             function objArrPropertySort(array, property) {
                 var compare = function (obj1, obj2) {
                     var val1 = obj1[property];
@@ -5011,6 +5072,21 @@
             }
             Defeated.DefeatedScene = DefeatedScene;
         })(Defeated = lwg.Defeated || (lwg.Defeated = {}));
+        let DrawCard;
+        (function (DrawCard) {
+            class DrawCardScene extends Admin.Scene {
+                moduleOnAwake() {
+                }
+                ;
+                moduleEventReg() {
+                }
+                ;
+                moduleOnEnable() {
+                }
+                ;
+            }
+            DrawCard.DrawCardScene = DrawCardScene;
+        })(DrawCard = lwg.DrawCard || (lwg.DrawCard = {}));
         let Loding;
         (function (Loding) {
             Loding.list_3DScene = [];
@@ -5274,6 +5350,7 @@
     let Admin = lwg.Admin;
     let EventAdmin = lwg.EventAdmin;
     let DateAdmin = lwg.DateAdmin;
+    let TimerAdmin = lwg.TimerAdmin;
     let Pause = lwg.Pause;
     let Execution = lwg.Execution;
     let Gold = lwg.Gold;
@@ -5307,6 +5384,8 @@
     let VictoryScene = lwg.Victory.VictoryScene;
     let Defeated = lwg.Defeated;
     let DefeatedScene = lwg.Defeated.DefeatedScene;
+    let DrawCard = lwg.DrawCard;
+    let DrawCardScene = lwg.DrawCard.DrawCardScene;
     let Tomato = lwg.Tomato;
 
     var lwg3D;
@@ -6430,6 +6509,123 @@
         }
     }
 
+    class UIDrawCard extends DrawCard.DrawCardScene {
+        lwgOnAwake() {
+        }
+        lwgOnEnable() {
+        }
+        lwgEventReg() {
+            let Img = this.self['Surface'];
+            let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
+            EventAdmin.reg('drawCard', this, () => {
+                this.self['DrawDisPlay'].x = 0;
+                this.self['BtnTake'].visible = false;
+                for (let index = 0; index < 10; index++) {
+                    Laya.timer.once(index * 100, this, () => {
+                        let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card);
+                        this.self['CardParent'].addChild(Card);
+                        let spcing = (Laya.stage.width - 5 * Card.width) / 6;
+                        Card.pos(globalPos.x, globalPos.y);
+                        Card.scale(0, 0);
+                        Card.name = 'Card' + index;
+                        let Pic = Card.getChildByName('Pic');
+                        Pic.visible = false;
+                        let x, y;
+                        if (index <= 4) {
+                            x = (spcing + Card.width / 2) + (Card.width + spcing) * index;
+                            y = globalPos.y - 150;
+                        }
+                        else {
+                            x = (spcing + Card.width / 2) + (Card.width + spcing) * (index - 5);
+                            y = globalPos.y + 150;
+                        }
+                        Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200);
+                        if (index == 8) {
+                            Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 300);
+                        }
+                        else if (index == 9) {
+                            EventAdmin.notify('flop');
+                        }
+                    });
+                }
+            });
+            EventAdmin.reg('flop', this, () => {
+                if (!this.self['cardIndex']) {
+                    this.self['cardIndex'] = 0;
+                }
+                let Card = this.self['CardParent'].getChildByName('Card' + this.self['cardIndex']);
+                if (!Card) {
+                    return;
+                }
+                Animation2D.cardRotateX_OneFace(Card, () => {
+                    let Pic = Card.getChildByName('Pic');
+                    Pic.visible = true;
+                }, 100, 50, () => {
+                    if (this.self['cardIndex'] == 4) {
+                        Card.zOrder = 4 * 10;
+                        let x = Card.x;
+                        let y = Card.y;
+                        Animation2D.leftRight_Shake(Card, 20, 100, 200, () => {
+                            Effects.createExplosion_Rotate(this.self['SceneContent'], 40, this.self['SceneContent'].width / 2, this.self['SceneContent'].height / 2 - 100, Effects.SkinStyle.star, 20, 15);
+                            Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
+                                Animation2D.move_Scale(Card, 3, Card.x, Card.y, x, y, 1, 200, 2000, null, () => {
+                                    this.self['cardIndex']++;
+                                    EventAdmin.notify('flop');
+                                });
+                            });
+                            Animation2D.move_Simple(Card, x, y, globalPos.x, globalPos.y, 250, 100);
+                        });
+                    }
+                    else {
+                        this.self['cardIndex']++;
+                        EventAdmin.notify('flop');
+                    }
+                });
+            });
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            });
+            Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e) => {
+                e.stopPropagation();
+            }, null, null);
+            Click.on(Click.Type.noEffect, this.self['Surface'], this, (e) => {
+                if (!this.self.getChildByName('DrawSp')) {
+                    this.self['Drawlength'] = 0;
+                    let DrawSp = new Laya.Sprite();
+                    this.self.addChild(DrawSp);
+                    DrawSp.name = 'DrawSp';
+                    DrawSp.pos(0, 0);
+                    this.self['DrawSp'] = DrawSp;
+                }
+                this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+            }, (e) => {
+                let Img = this.self['Surface'];
+                let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
+                if (new Laya.Point(e.stageX, e.stageY).distance(globalPos.x, globalPos.y) > Img.width / 2) {
+                    this.self['DrawPosArr'] = null;
+                    return;
+                }
+                if (this.self['DrawPosArr']) {
+                    this.self['DrawSp'].graphics.drawLine(this.self['DrawPosArr'].x, this.self['DrawPosArr'].y, e.stageX, e.stageY, "#000000", 8);
+                    this.self['DrawSp'].graphics.drawCircle(e.stageX, e.stageY, 4, "#000000");
+                    this.self['Drawlength'] += this.self['DrawPosArr'].distance(e.stageX, e.stageY);
+                    this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                }
+            }, () => {
+                if (this.self['Drawlength'] > 2000) {
+                    console.log('画线长度够了，弹出十连抽！');
+                    this.self.getChildByName('DrawSp').removeSelf();
+                    EventAdmin.notify('drawCard');
+                }
+                this.self['DrawPosArr'] = null;
+            }, () => {
+                this.self['DrawPosArr'] = null;
+            });
+        }
+    }
+
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
             Loding.list_2DPic = [
@@ -6478,7 +6674,10 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            });
+            Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
             });
         }
         lwgOnDisable() {
@@ -6713,8 +6912,7 @@
         lwgOnAwake() {
             ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
             ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
-            Gold.goldAppear();
-            console.log(Gold.GoldNode);
+            Gold.createGoldNode(629, 174);
             if (VictoryBox._openVictoryBoxNum > 1) {
                 let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
                 for (let index = 0; index < arr.length; index++) {
@@ -6749,9 +6947,14 @@
             Laya.timer.once(2000, this, () => {
                 this.self['BtnClose'].visible = true;
             });
-            Laya.timer.frameLoop(60, this, () => {
-                Effects.star_Blink(this.self['TopPic'], new Laya.Point(this.self['TopPic'].width / 2, this.self['TopPic'].height / 2), 250, 250, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
-            });
+            TimerAdmin.frameRandomLoop(30, 50, this, () => {
+                let x = this.self['SceneContent'].width / 2 - 160;
+                Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+            }, true);
+            TimerAdmin.frameRandomLoop(30, 50, this, () => {
+                let x = this.self['SceneContent'].width / 2 + 160;
+                Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+            }, true);
         }
         lwgEventReg() {
             EventAdmin.reg(VictoryBox.EventType.openBox, this, (dataSource) => {
@@ -6864,7 +7067,7 @@
                 Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
             }
         }
-        victoryOnUpdate() {
+        lwgOnUpdate() {
             if (VictoryBox._canOpenNum > 0) {
                 this.self['BtnAgain_WeChat'].visible = false;
                 this.self['BtnNo_WeChat'].visible = false;
@@ -6873,6 +7076,9 @@
                 this.self['BtnAgain_WeChat'].visible = true;
                 this.self['BtnNo_WeChat'].visible = true;
             }
+        }
+        lwgOnDisable() {
+            Gold.GoldNode.removeSelf();
         }
     }
 
@@ -6957,6 +7163,7 @@
             reg("script/Game/GameScene.ts", GameScene);
             reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UIDefeated.ts", UIDefeated);
+            reg("script/Game/UIDrawCard.ts", UIDrawCard);
             reg("script/Game/UILoding.ts", UILoding);
             reg("script/Game/UIStart.ts", UIStart);
             reg("script/Game/UIVictory.ts", UIVictory);

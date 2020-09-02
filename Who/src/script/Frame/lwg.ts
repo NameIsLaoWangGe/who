@@ -908,7 +908,52 @@ export module lwg {
                 Laya.LocalStorage.setItem('_loginNumber', val.toString());
             }
         }
+    }
 
+    /**
+     * 时间管理
+     * 计时器的封装
+    */
+    export module TimerAdmin {
+        /**
+         * 普通无限循环
+         * @param delay 时间
+         * @param caller 执行域
+         * @param method 方法回调
+         * @param immediately 是否立即执行一次，默认为false
+         * @param args 
+         * @param coverBefore 
+         */
+        export function frameLoop(delay: number, caller: any, method: Function, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
+            if (immediately) {
+                method();
+            }
+            Laya.timer.frameLoop(delay, caller, () => {
+                method();
+            }, args, coverBefore);
+        }
+
+        /**
+         * 在两个时间区间内中随机时间点触发的无限循环
+         * @param delay1 时间区间1
+         * @param delay2 时间区间2
+         * @param caller 执行域
+         * @param method 方法回调
+         * @param immediately 是否立即执行一次，默认为false
+         * @param args 
+         * @param coverBefore 
+         */
+        export function frameRandomLoop(delay1: number, delay2: number, caller: any, method: Function, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
+            if (immediately) {
+                method();
+            }
+            Laya.timer.frameLoop(delay1, caller, () => {
+                let delay = Tools.randomNumber(delay1, delay2);
+                Laya.timer.frameOnce(delay, this, () => {
+                    method();
+                })
+            }, args, coverBefore);
+        }
     }
 
     /**游戏整体控制*/
@@ -1108,6 +1153,7 @@ export module lwg {
             GameScene = 'GameScene',
             UISmallHint = 'UISmallHint',
             UIExecutionHint = 'UIExecutionHint',
+            UIDrawCard = 'UIDrawCard',
         }
 
         /**
@@ -1600,7 +1646,7 @@ export module lwg {
             star.pos(p[0].x, p[0].y);
 
             // 最大放大大小
-            let maxScale = Tools.randomCountNumer(0.9, 1.3)[0];
+            let maxScale = Tools.randomCountNumer(0.8, 1.2)[0];
 
             let timer = 0;
             let caller = {};
@@ -1609,16 +1655,16 @@ export module lwg {
                 if (timer > 0 && timer <= 15) {
                     star.alpha += 0.1;
                     star.rotation += rotationSpeed;
-                    star.scaleX += 0.02;
-                    star.scaleY += 0.02;
+                    star.scaleX += 0.015;
+                    star.scaleY += 0.015;
                 } else if (timer > 15) {
                     if (!star['reduce']) {
                         if (star.scaleX > maxScale) {
                             star['reduce'] = true;
                         } else {
                             star.rotation += rotationSpeed;
-                            star.scaleX += 0.015;
-                            star.scaleY += 0.015;
+                            star.scaleX += 0.02;
+                            star.scaleY += 0.02;
                         }
                     } else {
                         star.rotation -= rotationSpeed;
@@ -2586,7 +2632,7 @@ export module lwg {
          * @param ease 效果函数
          * @param func 回调函数
          */
-        export function move_Scale(node, fScale, fX, fY, tX, tY, eScale, time, delayed, ease?: Function, func?: Function): void {
+        export function move_Scale(node, fScale, fX, fY, tX, tY, eScale, time, delayed?: number, ease?: Function, func?: Function): void {
             node.scaleX = fScale;
             node.scaleY = fScale;
             node.x = fX;
@@ -2595,7 +2641,7 @@ export module lwg {
                 if (func) {
                     func();
                 }
-            }), delayed)
+            }), delayed ? delayed : 0);
         }
 
         /**
@@ -2806,17 +2852,17 @@ export module lwg {
         * @param delayed 延时时间
         * @param func2 结束时回调函数
         */
-        export function cardRotateY_OneFace(node: Laya.Sprite, func1: Function, time: number, delayed: number, func2: Function): void {
+        export function cardRotateY_OneFace(node: Laya.Sprite, func1: Function, time: number, delayed?: number, func2?: Function): void {
             Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
-                if (func1 !== null) {
+                if (func1) {
                     func1();
                 }
                 Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
-                    if (func2 !== null) {
+                    if (func2) {
                         func2();
                     }
                 }), 0);
-            }), delayed);
+            }), delayed?delayed:0);
         }
 
         /**
@@ -3890,13 +3936,13 @@ export module lwg {
         }
 
         /**
-         * 为一个节点创建一个扇形遮罩
+         * 为一个节点绘制一个扇形遮罩
          * 想要遮罩的形状发生变化，必须先将父节点的cacheAs改回“none”，接着改变其角度，再次将cacheAs改为“bitmap”，必须在同一帧内进行，因为是同一帧，所以在当前帧最后或者下一帧前表现出来，帧内时间不会表现任何状态，这是个思路，帧内做任何变化都不会显示，只要帧结尾改回来就行。
          * @param parent 被遮罩的节点，也是父节点
          * @param startAngle 扇形的初始角度
          * @param endAngle 扇形结束角度
         */
-        export function img_drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
+        export function draw_drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
             // 父节点cacheAs模式必须为"bitmap"
             parent.cacheAs = "bitmap";
             //新建一个sprite作为绘制扇形节点
@@ -3908,6 +3954,64 @@ export module lwg {
             // 绘制扇形，位置在中心位置，大小略大于父节点，保证完全遮住
             let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
             return drawPie;
+        }
+
+        /**
+         * 在一个场景中，在一个节点图片上画线，线画在场景里，目前支持方形和圆形
+         * @param Scene 场景
+         * @param node 节点，如果输入为null，则是清除当前事件
+         * @param nodeForm 图片是圆形还是方形,默认是圆形'r'，'s'为方形
+         * @param radius 线段的半径
+         * @param color 颜色
+         */
+        export function draw_LineInScene(Scene: Laya.Scene, node: Laya.Sprite, nodeForm: string, radius: number, color: string): number {
+            let length;
+            Click.on(Click.Type.noEffect, node, this,
+                // 按下
+                (e: Laya.Event) => {
+                    if (!this.self.getChildByName('DrawSp')) {
+                        length = 0;
+                        let DrawSp = new Laya.Sprite();
+                        Scene.addChild(DrawSp);
+                        DrawSp.name = 'DrawSp';
+                        DrawSp.pos(0, 0);
+                        Scene['DrawSp'] = DrawSp;
+                    }
+                    Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                },
+                // 移动
+                (e: Laya.Event) => {
+                    // 范围控制
+                    if (nodeForm == '') {
+
+                    }
+                    let Img = node as Laya.Sprite;
+                    let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
+                    if (new Laya.Point(e.stageX, e.stageY).distance(globalPos.x, globalPos.y) > Img.width / 2) {
+                        Scene['DrawPosArr'] = null;
+                        return;
+                    }
+                    // 画线
+                    if (Scene['DrawPosArr']) {
+                        Scene['DrawSp'].graphics.drawLine(Scene['DrawPosArr'].x, Scene['DrawPosArr'].y, e.stageX, e.stageY, color, radius * 2);
+
+                        Scene['DrawSp'].graphics.drawCircle(e.stageX, e.stageY, radius, color);
+                        length += (Scene['DrawPosArr'] as Laya.Point).distance(e.stageX, e.stageY);
+                        Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                    }
+                },
+                // 抬起
+                () => {
+                    if (length > 3000) {
+                        Scene.getChildByName('DrawSp').removeSelf();
+                    }
+                    Scene['DrawPosArr'] = null;
+                },
+                // 出图片
+                () => {
+                    Scene['DrawPosArr'] = null;
+                });
+            return length;
         }
 
         /**
@@ -5597,6 +5701,21 @@ export module lwg {
         }
     }
 
+    /**抽卡模块*/
+    export module DrawCard {
+        export class DrawCardScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+    }
+
     export module Loding {
         /**3D场景的加载，其他3D物体，贴图，Mesh详见：  https://ldc2.layabox.com/doc/?nav=zh-ts-4-3-1   */
         export let list_3DScene: Array<any> = [];
@@ -5900,6 +6019,7 @@ export default lwg;
 export let Admin = lwg.Admin;
 export let EventAdmin = lwg.EventAdmin;
 export let DateAdmin = lwg.DateAdmin;
+export let TimerAdmin = lwg.TimerAdmin;
 export let Pause = lwg.Pause;
 export let Execution = lwg.Execution;
 export let Gold = lwg.Gold;
@@ -5934,6 +6054,8 @@ export let Victory = lwg.Victory;
 export let VictoryScene = lwg.Victory.VictoryScene;
 export let Defeated = lwg.Defeated;
 export let DefeatedScene = lwg.Defeated.DefeatedScene;
+export let DrawCard = lwg.DrawCard;
+export let DrawCardScene = lwg.DrawCard.DrawCardScene;
 // 其他
 export let Tomato = lwg.Tomato;
 
