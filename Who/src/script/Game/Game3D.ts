@@ -589,13 +589,15 @@ export module Game3D {
         }
 
         lwgEventReg(): void {
-            let time = 500;
+
+
             //开局
             EventAdmin.reg(EventType.opening, this, () => {
                 this.roundChange();
                 EventAdmin.notify(EventType.nextRound);
             })
 
+            let time = 500;
             //下一回合
             EventAdmin.reg(EventType.nextRound, this, () => {
                 if (whichBout == WhichBoutType.me) {
@@ -768,13 +770,12 @@ export module Game3D {
                     });
                 }
             })
-
-            // 胜利
-            EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
-
-            })
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
+                this.init();
+            })
+            // 复活
+            EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
                 this.init();
             })
             // 刷新

@@ -1,6 +1,4 @@
-import ADManager, { TaT } from "../../TJ/Admanager";
-import UIShare from "../Game/UIShare";
-
+// import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
     /**暂停模块，控制游戏的暂停和开启*/
@@ -477,6 +475,9 @@ export module lwg {
          * @param y 允许改变一次Y轴位置
         */
         export function goldAppear(delayed?: number, x?: number, y?: number): void {
+            if (!GoldNode) {
+                return;
+            }
             if (delayed) {
                 Animation2D.scale_Alpha(GoldNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                     GoldNode.visible = true;
@@ -499,6 +500,9 @@ export module lwg {
          * @param delayed 延时时间
         */
         export function goldVinish(delayed?: number): void {
+            if (!GoldNode) {
+                return;
+            }
             if (delayed) {
                 Animation2D.scale_Alpha(GoldNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                     GoldNode.visible = false;
@@ -831,35 +835,35 @@ export module lwg {
     export module DateAdmin {
         export let _date = {
             /**年*/
-            get Year(): number {
+            get year(): number {
                 return (new Date()).getFullYear();
             },
             /**月*/
-            get Month(): number {
+            get month(): number {
                 return (new Date()).getMonth();
             },
             /**日*/
-            get Date(): number {
+            get date(): number {
                 return (new Date()).getDate();
             },
             /**周几*/
-            get Day(): number {
+            get day(): number {
                 return (new Date()).getDay();
             },
             /**小时*/
-            get Hours(): number {
+            get hours(): number {
                 return (new Date()).getHours();
             },
             /**分钟*/
-            get Minutes(): number {
+            get minutes(): number {
                 return (new Date()).getMinutes();
             },
             /**秒*/
-            get Seconds(): number {
+            get seconds(): number {
                 return (new Date()).getSeconds();
             },
             /**毫秒*/
-            get Milliseconds(): number {
+            get milliseconds(): number {
                 return (new Date()).getMilliseconds();
             },
             /**全日期*/
@@ -1085,6 +1089,7 @@ export module lwg {
             set switch(bool: boolean) {
                 if (bool) {
                     if (!Laya.stage.getChildByName('__stageClickLock__')) {
+                        console.log('锁住点击！');
                         let __stageClickLock__ = new Laya.Sprite();
                         __stageClickLock__.name = '__stageClickLock__';
                         Laya.stage.addChild(__stageClickLock__);
@@ -1096,11 +1101,13 @@ export module lwg {
                             console.log('舞台点击被锁住了！请用admin._clickLock=false解锁');
                             e.stopPropagation();
                         });
+                    } else {
+                        // console.log('场景锁已存在！');
                     }
                 } else {
                     if (Laya.stage.getChildByName('__stageClickLock__')) {
                         Laya.stage.getChildByName('__stageClickLock__').removeSelf();
-                        console.log('场景点击解锁！');
+                        // console.log('场景点击解锁！');
                     }
                 }
             }
@@ -1152,8 +1159,6 @@ export module lwg {
         /**场景控制,访问特定场景用_sceneControl[name]访问*/
         export let _sceneControl: any = {};
 
-
-
         /**场景动效类型*/
         export enum OpenAniType {
             fadeOut = 'fadeOut',
@@ -1193,7 +1198,7 @@ export module lwg {
             UICheckIn = 'UICheckIn',
             UIResurgence = 'UIResurgence',
             UIEasterEgg = 'UIEasterEgg',
-            UIADSHint = 'UIADSHint',
+            UIAdsHint = 'UIAdsHint',
             LwgInit = 'LwgInit',
             GameScene = 'GameScene',
             UISmallHint = 'UISmallHint',
@@ -5234,6 +5239,15 @@ export module lwg {
         }
 
         /**
+         * 今天是否已经签到
+         */
+        export let _todayCheckIn = {
+            get bool(): boolean {
+                return _lastCheckDate.date == DateAdmin._date.date ? true : false;
+            },
+        }
+
+        /**
          * 通过名称获取签到的一个属性值
          * @param name 签到名称
          * @param property 签到属性名称
@@ -5282,9 +5296,7 @@ export module lwg {
          * 是否弹出签到页面
          */
         export function openCheckIn(): void {
-            let todayDate = (new Date).getDate();
-            let bool;
-            if (todayDate !== _lastCheckDate.date) {
+            if (!_todayCheckIn.bool) {
                 console.log('没有签到过，弹出签到页面！');
                 Admin._openScene(Admin.SceneName.UICheckIn);
             } else {
@@ -5296,16 +5308,21 @@ export module lwg {
          * 七日签到，签到一次并且返回今天的奖励
         */
         export function todayCheckIn_7Days(): number {
-            let todayDate = (new Date).getDate();
-            _lastCheckDate.date = todayDate;
+            _lastCheckDate.date = DateAdmin._date.date;
             _checkInNum.number++;
             setProperty(CheckClass.chek_7Days, 'day' + _checkInNum.number, CheckProPerty.checkInState, true);
-            let rewardNum = getProperty('day' + _checkInNum.number, CheckProPerty.rewardNum)
-            if (_checkInNum.number === 7) {
+            let rewardNum = getProperty('day' + _checkInNum.number, CheckProPerty.rewardNum);
+            return rewardNum;
+        }
+
+        /**
+         * 签到初始化
+         * */
+        export function init(): void {
+            if (_checkInNum.number === 7 && !_todayCheckIn.bool) {
                 _checkInNum.number = 0;
                 Laya.LocalStorage.removeItem(CheckClass.chek_7Days);
             }
-            return rewardNum;
         }
 
         /**签到种类*/
@@ -5344,6 +5361,9 @@ export module lwg {
             }
             moduleOnEnable(): void {
                 this.checkList_Create();
+            }
+            moduleEventReg(): void {
+
             }
             /**初始化list*/
             checkList_Create(): void {
@@ -6026,62 +6046,62 @@ export module lwg {
         * @param sceneName 场景名称
         */
         export function scenePrintPoint(sceneName: string, type: string): void {
-            switch (sceneName) {
-                case Admin.SceneName.UILoding:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'UIPreload');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'UIPreload');
-                    }
-                    break;
-                case Admin.SceneName.UIStart:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'mianpage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'mianpage');
-                    }
-                    break;
-                case Admin.SceneName.UIVictory:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'successpage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'successpage');
-                    }
-                    break;
+            // switch (sceneName) {
+            //     case Admin.SceneName.UILoding:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'UIPreload');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'UIPreload');
+            //         }
+            //         break;
+            //     case Admin.SceneName.UIStart:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'mianpage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'mianpage');
+            //         }
+            //         break;
+            //     case Admin.SceneName.UIVictory:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'successpage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'successpage');
+            //         }
+            //         break;
 
-                case Admin.SceneName.UIDefeated:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'failpage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'failpage');
-                    }
-                    break;
+            //     case Admin.SceneName.UIDefeated:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'failpage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'failpage');
+            //         }
+            //         break;
 
-                case Admin.SceneName.UIResurgence:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'revivepage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'revivepage');
-                    }
-                    break;
-                case Admin.SceneName.UISkinXD:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'limmitpage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'limmitpage');
-                    }
-                    break;
-                case Admin.SceneName.UIShare:
-                    if (type === scenePointType.open) {
-                        ADManager.TAPoint(TaT.PageEnter, 'sharepage');
-                    } else if (type === scenePointType.close) {
-                        ADManager.TAPoint(TaT.PageLeave, 'sharepage');
-                    }
-                    break;
-                default:
+            //     case Admin.SceneName.UIResurgence:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'revivepage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'revivepage');
+            //         }
+            //         break;
+            //     case Admin.SceneName.UISkinXD:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'limmitpage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'limmitpage');
+            //         }
+            //         break;
+            //     case Admin.SceneName.UIShare:
+            //         if (type === scenePointType.open) {
+            //             ADManager.TAPoint(TaT.PageEnter, 'sharepage');
+            //         } else if (type === scenePointType.close) {
+            //             ADManager.TAPoint(TaT.PageLeave, 'sharepage');
+            //         }
+            //         break;
+            //     default:
 
-                    break;
-            }
+            //         break;
+            // }
         }
         /**按钮打点类型*/
         export enum btnPointType {

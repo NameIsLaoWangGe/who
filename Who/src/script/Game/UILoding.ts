@@ -8,7 +8,7 @@ export default class UILoding extends Loding.LodingScene {
         ];
         Loding.list_2DScene = [
             "Scene/LwgInit.json",
-            // "Scene/UICheckIn.json",
+            "Scene/UICheckIn.json",
             // "Scene/UIEasterEgg.json",
             // "Scene/UIOperation.json",
             // "Scene/UISet.json",

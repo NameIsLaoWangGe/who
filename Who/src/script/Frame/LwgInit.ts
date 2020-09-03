@@ -1,10 +1,11 @@
-import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold } from "./lwg";
+import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold, CheckIn } from "./lwg";
 import { Game3D } from "../Game/Game3D";
 export default class LwgInit extends Admin.Scene {
     lwgOnAwake(): void {
         //如果加载时间过长，可以复制loding页面的内容到init界面
         this.admin();
         this.game3D();
+        this.checkIn();
         this.shop();
         this.skin();
         this.task();
@@ -17,7 +18,6 @@ export default class LwgInit extends Admin.Scene {
         Admin._commonVanishAni = true;
         Admin._platform = Admin._platformTpye.Bytedance;
     }
-
     /**3D模块初始化*/
     game3D(): void {
         Game3D.dataInit();
@@ -25,7 +25,10 @@ export default class LwgInit extends Admin.Scene {
         Laya.stage.addChild(Game3D.Scene3D);
         Game3D.Scene3D.addComponent(Game3D.MainScene);
     }
-
+    /**签到初始化*/
+    checkIn(): void {
+        CheckIn.init();
+    }
     /**皮肤初始化*/
     skin(): void {
     }

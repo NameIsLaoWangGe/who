@@ -1,7 +1,7 @@
-import { lwg, Click, Setting } from "../Lwg_Template/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
+import { Admin, Setting, Click } from "../Frame/lwg";
+import ADManager, { TaT } from "../../TJ/Admanager";
 
-export default class UISet extends lwg.Admin.Scene {
+export default class UISet extends Admin.Scene {
     lwgOnAwake(): void {
         Setting.setBtnVinish();
         this.audioOnOff();

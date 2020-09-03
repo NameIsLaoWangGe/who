@@ -43,7 +43,12 @@ export default class GameScene extends Admin.Scene {
 
         // 失败
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
-            Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated });
+            Admin._openScene(Admin.SceneName.UIResurgence);
+        })
+
+        // 复活
+        EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
+            Tools.node_RemoveAllChildren(this.OptionParent);
         })
 
         //隐藏选项卡

@@ -1,0 +1,54 @@
+{ 
+"RECORDS": 
+[
+  {
+    "name": "day1",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 1
+  },
+  {
+    "name": "day2",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 2
+  },
+  {
+    "name": "day3",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 3
+  },
+  {
+    "name": "day4",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 4
+  },
+  {
+    "name": "day5",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 5
+  },
+  {
+    "name": "day6",
+    "rewardType": "gold",
+    "rewardNum": 50,
+    "checkInState": false,
+    "arrange": 6
+  },
+  {
+    "name": "day7",
+    "rewardType": "gold",
+    "rewardNum": 200,
+    "checkInState": false,
+    "arrange": 7
+  }
+]
+}

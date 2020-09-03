@@ -205,6 +205,10 @@ P 852250CF shuxing.png
 P 801B796F wen.png
 R A182C39C wenti.png
 P 0FBAFC11 wode.png
+D Game/UI/UIAdsHint
+P 2861DD61 queding.png
+P E11347E3 tishi.png
+P 32BD1DD1 zi.png
 D Game/UI/UICheckIn
 P 5FCD294C 3bei.png
 P 3215322F biaoti.png
@@ -230,6 +234,13 @@ P 57FF38CC jindu2.png
 R 55BAF028 kapai.png
 R C1BD5F29 LOGO.png
 D Game/UI/UIResurgence
+P 10000417 fuhuo.png
+P 2130EDCD fuhuoanniu.png
+P 6E7670DE hongkuang.png
+P 207E6009 jujue.png
+P 207E6009 jujue2.png
+R 9BACB081 shuzi5.png
+P F15BFCAD xin.png
 D Game/UI/UISet
 D Game/UI/UIShare
 P DC61CD59 tioaguo.png

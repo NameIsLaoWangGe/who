@@ -5,7 +5,6 @@ import RecordManager from "../../TJ/RecordManager";
 export default class UIShare extends Share.ShareScene {
 
     lwgOnAwake(): void {
-        console.log('打开分享界面！');
         Gold.goldAppear();
     }
 

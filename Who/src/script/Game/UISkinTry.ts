@@ -1,14 +1,11 @@
-import { lwg, Admin, Shop, Click, Setting, EventAdmin } from "../Lwg_Template/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
-import { GEnum, GVariate } from "../Lwg_Template/Global";
-import { Game } from "../Lwg_Template/Game";
+import { Admin, Shop, Click, EventAdmin } from "../Frame/lwg";
 
 export default class UISkinTry extends Admin.Scene {
 
     lwgOnAwake(): void {
         this.randomNoHave();
 
-        if (Game._platform == Game._platformTpye.OPPO) {
+        if (Admin._platform == Admin._platformTpye.OPPO) {
             this.self['BtnGet_OPPO'].visible = true;
             this.self['BtnGet_WeChat'].visible = false;
         } else {
@@ -26,15 +23,15 @@ export default class UISkinTry extends Admin.Scene {
         let ele;
         let hair;
         let beard;
-        // 查看当前关卡状况
-        for (let index = 0; index < GVariate._taskArr.length; index++) {
-            const element = GVariate._taskArr[index];
-            if (element === GEnum.TaskType.HairParent) {
-                hair = true;
-            } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
-                beard = true;
-            }
-        }
+        // // 查看当前关卡状况
+        // for (let index = 0; index < GVariate._taskArr.length; index++) {
+        //     const element = GVariate._taskArr[index];
+        //     if (element === GEnum.TaskType.HairParent) {
+        //         hair = true;
+        //     } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
+        //         beard = true;
+        //     }
+        // }
 
         if (hair) {
             console.log('本关有剃头任务！');
@@ -77,24 +74,24 @@ export default class UISkinTry extends Admin.Scene {
     }
 
     lwgBtnClick(): void {
-        Click.on(lwg.Click.Type.largen, this.self['BtnNo'], this, null, null, this.btnNoUp);
-        Click.on(lwg.Click.Type.largen, this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
-        Click.on(lwg.Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
+        Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, this.btnNoUp);
+        Click.on(Click.Type.largen, this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
+        Click.on(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
 
     }
 
     btnGetUp(event): void {
-        if (Game._platform == Game._platformTpye.OPPO) {
-            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-            EventAdmin.notify(GEnum.EventType.changeOther);
-            EventAdmin.notify(GEnum.EventType.changeProp);
-        } else {
-            ADManager.ShowReward(() => {
-                Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-                EventAdmin.notify(GEnum.EventType.changeOther);
-                EventAdmin.notify(GEnum.EventType.changeProp);
-            })
-        }
+        // if (Admin._platform == Admin._platformTpye.OPPO) {
+        //     Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+        //     EventAdmin.notify(GEnum.EventType.changeOther);
+        //     EventAdmin.notify(GEnum.EventType.changeProp);
+        // } else {
+        //     ADManager.ShowReward(() => {
+        //         Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+        //         EventAdmin.notify(GEnum.EventType.changeOther);
+        //         EventAdmin.notify(GEnum.EventType.changeProp);
+        //     })
+        // }
     }
 
     btnNoUp(event): void {
@@ -104,9 +101,9 @@ export default class UISkinTry extends Admin.Scene {
         if (this.beforeTryPropName) {
             Shop._currentProp.name = this.beforeTryPropName;
         }
-        Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-        EventAdmin.notify(GEnum.EventType.changeOther);
-        EventAdmin.notify(GEnum.EventType.changeProp);
+        // Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+        // EventAdmin.notify(GEnum.EventType.changeOther);
+        // EventAdmin.notify(GEnum.EventType.changeProp);
     }
 
     lwgOnDisable(): void {

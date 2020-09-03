@@ -1,4 +1,4 @@
-import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold } from "../Frame/lwg";
+import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold, EventAdmin, TimerAdmin } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UICheckIn extends CheckIn.CheckInScene {
@@ -26,13 +26,33 @@ export default class UICheckIn extends CheckIn.CheckInScene {
                     break;
             }
         }
+        Setting.setBtnVinish();
+        Gold.goldVinish();
+    }
+
+    lwgEventReg(): void {
+        EventAdmin.reg('seven', this, () => {
+            let ChinkTip = this.self['Seven'].getChildByName('ChinkTip') as Laya.Image;
+            let Num = this.self['Seven'].getChildByName('Num') as Laya.Image;
+            let Pic_Gold = this.self['Seven'].getChildByName('Pic_Gold') as Laya.Image;
+            if (CheckIn._checkInNum.number === 7) {
+                ChinkTip.visible = true;
+                Num.visible = false;
+                Pic_Gold.visible = false;
+                // this.self['Seven'].skin = 'UI/Common/kuang1.png';
+            } else {
+                ChinkTip.visible = false;
+            }
+        })
     }
 
     lwgOnEnable(): void {
         ADManager.TAPoint(TaT.BtnShow, 'AD3award');
-        // Setting.setBtnVinish();
-        let ChinkTip = this.self['BtnSeven'].getChildByName('ChinkTip') as Laya.Image;
-        ChinkTip.visible = false;
+        EventAdmin.notify('seven');
+
+        Gold.GoldNode = this.self['GoldNode'];
+        let Num2 = this.self['GoldNode'].getChildByName('Num') as Laya.Label;
+        Num2.text = Gold._num.value.toString();
     }
 
     checkList_Update(cell: Laya.Box, index: number): void {
@@ -48,13 +68,13 @@ export default class UICheckIn extends CheckIn.CheckInScene {
             Pic_Gold.visible = false;
             Num.visible = false;
             ChinkTip.visible = true;
-            Pic_Board.skin = 'UI/Common/kuang1.png'
+            // Pic_Board.skin = 'UI/Common/kuang1.png'
         } else {
             Pic_Gold.visible = true;
             Num.visible = true;
             Num.text = dataSource[CheckIn.CheckProPerty.rewardNum];
             ChinkTip.visible = false;
-            Pic_Board.skin = 'UI/Common/kuang2.png'
+            // Pic_Board.skin = 'UI/Common/kuang2.png'
         }
 
         switch (dataSource[CheckIn.CheckProPerty.name]) {
@@ -100,18 +120,8 @@ export default class UICheckIn extends CheckIn.CheckInScene {
 
         Click.on('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
     }
-    btnOffClick(): void {
-        Click.off('largen', this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
-        Click.off('largen', this.self['BtnThreeGet_WeChat'], this, null, null, this.btnThreeGetUp);
-        Click.off(Click.Type.noEffect, this.self['Select_WeChat'], this, null, null, this.btnSelectUp);
-
-        Click.off(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
-        Click.off(Click.Type.largen, this.self['BtnThreeGet_OPPO'], this, null, null, this.btnThreeGetUp);
-
-        Click.off('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
-    }
     btnBackUp(): void {
-        this.self.close();
+        Admin._closeScene(this.self);
     }
     btnThreeGetUp(): void {
         ADManager.ShowReward(() => {
@@ -140,14 +150,13 @@ export default class UICheckIn extends CheckIn.CheckInScene {
      * @param number 几倍领取
      */
     btnGetUpFunc(number): void {
-
-        this.btnOffClick();
+        Admin._clickLock.switch = true;
         let index = CheckIn._checkInNum.number;
         let target;
         if (index < 6) {
             target = CheckIn._checkList.getCell(index)
         } else {
-            target = this.self['BtnSeven'];
+            target = this.self['Seven'];
         }
         Animation2D.swell_shrink(target, 1, 1.1, 100, 0, () => {
             // 特效
@@ -155,18 +164,12 @@ export default class UICheckIn extends CheckIn.CheckInScene {
             ]];
             Effects.createExplosion_Rotate(this.self['SceneContent'], 25, arr[index][0], arr[index][1], 'star', 10, 15);
             let rewardNum = CheckIn.todayCheckIn_7Days();
-            if (CheckIn._checkInNum.number === 7) {
-                let ChinkTip = this.self['BtnSeven'].getChildByName('ChinkTip') as Laya.Image;
-                ChinkTip.visible = true;
-                let Num = this.self['BtnSeven'].getChildByName('Num') as Laya.Image;
-                Num.visible = false;
-                let Pic_Gold = this.self['BtnSeven'].getChildByName('Pic_Gold') as Laya.Image;
-                Pic_Gold.visible = false;
-                this.self['BtnSeven'].skin = 'UI/Common/kuang1.png';
-            }
-            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+            EventAdmin.notify('seven');
+            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
                 Gold.addGold(rewardNum * number);
-                this.self.close();
+                Laya.timer.once(500, this, () => {
+                    Admin._closeScene(this.self);
+                })
             });
         });
     }
@@ -180,7 +183,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
 
     lwgOnUpdate(): void {
-        if (CheckIn._lastCheckDate.date !== (new Date).getDate()) {
+        if (!CheckIn._todayCheckIn.bool) {
             switch (Admin._platform) {
                 case Admin._platformTpye.WeChat:
                     if (this.self['Dot'].visible) {
@@ -203,6 +206,8 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
 
     lwgOnDisable(): void {
-        // Setting.setBtnAppear();
+        Setting.setBtnAppear();
+        Gold.goldAppear();
+        Admin._clickLock.switch = false;
     }
 }
