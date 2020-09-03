@@ -70,6 +70,14 @@ D Frame/UI
 P C36AA67B icon_execution.png
 P A5763191 icon_gold.png
 P BF63B6AC icon_set.png
+P 9BF3B9B8 ui__l_orthogon_blue.png
+P C13CE94A ui__l_orthogon_cycn.png
+P 7D04FB62 ui__l_orthogon_green.png
+P 1F6AC9C0 ui__l_orthogon_magenta.png
+P 91BF47BB ui__l_orthogon_orange.png
+P 2D9E0E06 ui__l_orthogon_red.png
+P C61DDA06 ui__l_orthogon_white.png
+P 86BE810F ui__l_orthogon_yellow.png
 P A173F0A1 ui_circle_001.png
 P 14E83654 ui_circle_002.png
 P 1AB75078 ui_circle_003.png
@@ -94,7 +102,25 @@ P 96604B1E ui_circle_c_009.png
 P 316A475D ui_circle_c_010.png
 P FE444F46 ui_circle_c_011.png
 P 6AABC0D1 ui_circle_c_012.png
+P 58E86704 ui_Circular_l_blue.png
+P E2DD3178 ui_Circular_l_cyan.png
+P 7646FA41 ui_Circular_l_green.png
+P 514137D2 ui_Circular_l_orange.png
+P 6BD468BC ui_Circular_l_pink.png
+P C13AF3C2 ui_Circular_l_red.png
+P A9665D25 ui_Circular_l_violet.png
+P 064ED689 ui_Circular_l_white.png
+P FEDDF281 ui_Circular_l_yellow.png
+P BF8DFFF1 ui_l_orthogon_purple.png
 P 4A839BCB ui_orthogon_black.png
+P 9D61148C ui_orthogon_blue.png
+P 06695FD9 ui_orthogon_cycn.png
+P 0CA59940 ui_orthogon_green.png
+P 1518D67A ui_orthogon_magenta.png
+P 2FAF870C ui_orthogon_orange.png
+P B8F7D4BC ui_orthogon_purple.png
+P 9D87EFFF ui_orthogon_red.png
+P 55B586A8 ui_orthogon_yellow.png
 P 88399698 ui_square_001.png
 P 1BDF6103 ui_square_002.png
 P 0D1207AB ui_square_003.png
@@ -180,6 +206,9 @@ P 801B796F wen.png
 R A182C39C wenti.png
 P 0FBAFC11 wode.png
 D Game/UI/UICheckIn
+P 5FCD294C 3bei.png
+P 3215322F biaoti.png
+P 7AF4590C jitian.png
 D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard

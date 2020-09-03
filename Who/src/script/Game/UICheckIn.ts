@@ -1,22 +1,23 @@
-import { CheckIn, Setting, Click, Animation2D, Effects, Gold, Game } from "../Frame/lwg";
-import ADManager, { TaT } from "../TJ/Admanager";
+import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold } from "../Frame/lwg";
+import ADManager, { TaT } from "../../TJ/Admanager";
+
 export default class UICheckIn extends CheckIn.CheckInScene {
 
-    checkInNodeDec(): void {
+    lwgOnAwake(): void {
         if (CheckIn._lastCheckDate.date == (new Date).getDate()) {
             this.self['WeChat'].visible = false;
             this.self['OPPO'].visible = false;
         } else {
-            switch (Game._platform) {
-                case Game._platformTpye.OPPO:
+            switch (Admin._platform) {
+                case Admin._platformTpye.OPPO:
                     this.self['OPPO'].visible = true;
                     this.self['WeChat'].visible = false;
                     break;
-                case Game._platformTpye.WeChat:
+                case Admin._platformTpye.WeChat:
                     this.self['OPPO'].visible = false;
                     this.self['WeChat'].visible = true;
                     break;
-                case Game._platformTpye.Bytedance:
+                case Admin._platformTpye.Bytedance:
                     this.self['OPPO'].visible = false;
                     this.self['WeChat'].visible = true;
                     break;
@@ -27,11 +28,9 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         }
     }
 
-    checkInOnEnable(): void {
-
+    lwgOnEnable(): void {
         ADManager.TAPoint(TaT.BtnShow, 'AD3award');
-
-        Setting.setBtnVinish();
+        // Setting.setBtnVinish();
         let ChinkTip = this.self['BtnSeven'].getChildByName('ChinkTip') as Laya.Image;
         ChinkTip.visible = false;
     }
@@ -91,7 +90,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         }
     }
 
-    checkInBtnClick(): void {
+    lwgBtnClick(): void {
         Click.on('largen', this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
         Click.on('largen', this.self['BtnThreeGet_WeChat'], this, null, null, this.btnThreeGetUp);
         Click.on(Click.Type.noEffect, this.self['Select_WeChat'], this, null, null, this.btnSelectUp);
@@ -122,7 +121,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
 
     btnGetUp(): void {
-        if (Game._platform === Game._platformTpye.Bytedance) {
+        if (Admin._platform === Admin._platformTpye.Bytedance) {
             if (this.self['Dot'].visible) {
                 ADManager.ShowReward(() => {
                     ADManager.TAPoint(TaT.BtnClick, 'AD3award');
@@ -180,10 +179,10 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         }
     }
 
-    checkInOnUpdate(): void {
+    lwgOnUpdate(): void {
         if (CheckIn._lastCheckDate.date !== (new Date).getDate()) {
-            switch (Game._platform) {
-                case Game._platformTpye.WeChat:
+            switch (Admin._platform) {
+                case Admin._platformTpye.WeChat:
                     if (this.self['Dot'].visible) {
                         this.self['BtnGet_WeChat'].visible = false;
                         this.self['BtnThreeGet_WeChat'].visible = true;
@@ -193,7 +192,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
                     }
                     break;
 
-                case Game._platformTpye.Bytedance:
+                case Admin._platformTpye.Bytedance:
                     this.self['BtnGet_WeChat'].visible = true;
                     this.self['BtnThreeGet_WeChat'].visible = false;
                     break;
@@ -203,7 +202,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         }
     }
 
-    checkInOnDisable(): void {
-        Setting.setBtnAppear();
+    lwgOnDisable(): void {
+        // Setting.setBtnAppear();
     }
 }

@@ -917,8 +917,8 @@ export module lwg {
     */
     export module TimerAdmin {
         /**
-         * 普通无限循环
-         * @param delay 时间
+         * 普通无限循环，基于帧
+         * @param delay 间隔帧数
          * @param caller 执行域
          * @param method 方法回调
          * @param immediately 是否立即执行一次，默认为false
@@ -935,9 +935,9 @@ export module lwg {
         }
 
         /**
-         * 在两个时间区间内中随机时间点触发的无限循环
-         * @param delay1 时间区间1
-         * @param delay2 时间区间2
+         * 在两个时间区间内中随机时间点触发的无限循环，基于帧
+         * @param delay1 间隔帧数区间1
+         * @param delay2 间隔帧数区间2
          * @param caller 执行域
          * @param method 方法回调
          * @param immediately 是否立即执行一次，默认为false
@@ -955,6 +955,50 @@ export module lwg {
                 })
             }, args, coverBefore);
         }
+
+
+        /**
+       * 普通无限循环，基于时间
+       * @param delay 时间
+       * @param caller 执行域
+       * @param method 方法回调
+       * @param immediately 是否立即执行一次，默认为false
+       * @param args 
+       * @param coverBefore 
+       */
+        export function loop(delay: number, caller: any, method: Function, count?: number, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
+            if (immediately) {
+                method();
+            }
+            Laya.timer.loop(delay, caller, () => {
+                method();
+            }, args, coverBefore);
+        }
+
+        /**
+         * 在两个时间区间内中随机时间点触发的无限循环，基于时间
+         * @param delay1 时间区间1
+         * @param delay2 时间区间2
+         * @param caller 执行域
+         * @param method 方法回调
+         * @param immediately 是否立即执行一次，默认为false
+         * @param args 
+         * @param coverBefore 
+         */
+        export function randomLoop(delay1: number, delay2: number, caller: any, method: Function, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
+            if (immediately) {
+                method();
+            }
+            Laya.timer.loop(delay1, caller, () => {
+                let delay = Tools.randomNumber(delay1, delay2);
+                Laya.timer.frameOnce(delay, this, () => {
+                    method();
+                })
+            }, args, coverBefore);
+        }
+
+
+
     }
 
     /**游戏整体控制*/

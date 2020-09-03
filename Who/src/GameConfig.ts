@@ -9,6 +9,7 @@ import P205 from "./TJ/Promo/script/P205"
 import P106 from "./TJ/Promo/script/P106"
 import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
+import UICheckIn from "./script/Game/UICheckIn"
 import UIDefeated from "./script/Game/UIDefeated"
 import UIDrawCard from "./script/Game/UIDrawCard"
 import UILoding from "./script/Game/UILoding"
@@ -47,6 +48,7 @@ export default class GameConfig{
         reg("TJ/Promo/script/P106.ts",P106);
         reg("script/Game/GameScene.ts",GameScene);
         reg("script/Frame/LwgInit.ts",LwgInit);
+        reg("script/Game/UICheckIn.ts",UICheckIn);
         reg("script/Game/UIDefeated.ts",UIDefeated);
         reg("script/Game/UIDrawCard.ts",UIDrawCard);
         reg("script/Game/UILoding.ts",UILoding);

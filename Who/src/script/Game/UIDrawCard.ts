@@ -1,4 +1,4 @@
-import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold } from "../Frame/lwg";
+import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 
 
@@ -8,6 +8,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
     lwgOnAwake(): void {
         Gold.goldAppear();
+
+        TimerAdmin.frameLoop(10, this, () => {
+            
+        })
     }
 
     lwgEventReg(): void {

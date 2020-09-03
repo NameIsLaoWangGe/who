@@ -141,15 +141,15 @@ export module Game3D {
         }
 
         let AllCardParent = AllCardTem.clone() as Laya.MeshSprite3D;
-        let startZ = -0.24;
-        let startX = 0.258;
-        let spacingX = 0.3445;
+        let startX = 0.204;
+        let spacingX = 0.3055;
+        let startZ = -0.26;
         for (let index = 0; index < cardData16.length; index++) {
             const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]) as Laya.MeshSprite3D;
             if (type == WhichScard.MyCardParent) {
                 MyCardParent.addChild(Card);
                 if (index % 4 == 0) {
-                    startZ -= 0.5;
+                    startZ -= 0.45;//和startZ一起调整
                 }
                 Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ);
 
@@ -158,9 +158,9 @@ export module Game3D {
             } else if (type == WhichScard.OppositeCardParent) {
                 OppositeCardParent.addChild(Card);
                 if (index % 4 == 0) {
-                    startZ += 0.5;
+                    startZ += 0.45;
                 }
-                Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.15);
+                Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.145);
 
                 Tools.d3_animatorPlay(Card, CardAni.standOpposite);
             }

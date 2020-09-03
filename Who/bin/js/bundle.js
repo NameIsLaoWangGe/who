@@ -1750,6 +1750,27 @@
                 }, args, coverBefore);
             }
             TimerAdmin.frameRandomLoop = frameRandomLoop;
+            function loop(delay, caller, method, count, immediately, args, coverBefore) {
+                if (immediately) {
+                    method();
+                }
+                Laya.timer.loop(delay, caller, () => {
+                    method();
+                }, args, coverBefore);
+            }
+            TimerAdmin.loop = loop;
+            function randomLoop(delay1, delay2, caller, method, immediately, args, coverBefore) {
+                if (immediately) {
+                    method();
+                }
+                Laya.timer.loop(delay1, caller, () => {
+                    let delay = Tools.randomNumber(delay1, delay2);
+                    Laya.timer.frameOnce(delay, this, () => {
+                        method();
+                    });
+                }, args, coverBefore);
+            }
+            TimerAdmin.randomLoop = randomLoop;
         })(TimerAdmin = lwg.TimerAdmin || (lwg.TimerAdmin = {}));
         let Admin;
         (function (Admin) {
@@ -5077,11 +5098,12 @@
         })(Defeated = lwg.Defeated || (lwg.Defeated = {}));
         let DrawCard;
         (function (DrawCard) {
-            DrawCard.freeDrawNum = {
+            DrawCard._freeDrawNum = {
                 get value() {
-                    return;
+                    return Laya.LocalStorage.getItem('_freeDrawNum') ? Number(Laya.LocalStorage.getItem('_freeDrawNum')) : 1;
                 },
-                set value(v) {
+                set value(val) {
+                    Laya.LocalStorage.setItem('_freeDrawNum', val.toString());
                 }
             };
             class DrawCardScene extends Admin.Scene {
@@ -5594,15 +5616,15 @@
                 Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             let AllCardParent = Game3D.AllCardTem.clone();
-            let startZ = -0.24;
-            let startX = 0.258;
-            let spacingX = 0.3445;
+            let startX = 0.204;
+            let spacingX = 0.3055;
+            let startZ = -0.26;
             for (let index = 0; index < cardData16.length; index++) {
                 const Card = AllCardParent.getChildByName(cardData16[index][CardProperty.name]);
                 if (type == WhichScard.MyCardParent) {
                     Game3D.MyCardParent.addChild(Card);
                     if (index % 4 == 0) {
-                        startZ -= 0.5;
+                        startZ -= 0.45;
                     }
                     Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ);
                     Tools.d3_animatorPlay(Card, CardAni.standMe);
@@ -5610,9 +5632,9 @@
                 else if (type == WhichScard.OppositeCardParent) {
                     Game3D.OppositeCardParent.addChild(Card);
                     if (index % 4 == 0) {
-                        startZ += 0.5;
+                        startZ += 0.45;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.15);
+                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.145);
                     Tools.d3_animatorPlay(Card, CardAni.standOpposite);
                 }
                 Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
@@ -6455,6 +6477,187 @@
         }
     }
 
+    class UICheckIn extends CheckIn.CheckInScene {
+        lwgOnAwake() {
+            if (CheckIn._lastCheckDate.date == (new Date).getDate()) {
+                this.self['WeChat'].visible = false;
+                this.self['OPPO'].visible = false;
+            }
+            else {
+                switch (Admin._platform) {
+                    case Admin._platformTpye.OPPO:
+                        this.self['OPPO'].visible = true;
+                        this.self['WeChat'].visible = false;
+                        break;
+                    case Admin._platformTpye.WeChat:
+                        this.self['OPPO'].visible = false;
+                        this.self['WeChat'].visible = true;
+                        break;
+                    case Admin._platformTpye.Bytedance:
+                        this.self['OPPO'].visible = false;
+                        this.self['WeChat'].visible = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        lwgOnEnable() {
+            ADManager.TAPoint(TaT.BtnShow, 'AD3award');
+            let ChinkTip = this.self['BtnSeven'].getChildByName('ChinkTip');
+            ChinkTip.visible = false;
+        }
+        checkList_Update(cell, index) {
+            let dataSource = cell.dataSource;
+            let Pic_Board = cell.getChildByName('Pic_Board');
+            let Pic_Gold = cell.getChildByName('Pic_Gold');
+            let Num = cell.getChildByName('Num');
+            let ChinkTip = cell.getChildByName('ChinkTip');
+            let DayNum = cell.getChildByName('DayNum');
+            if (dataSource[CheckIn.CheckProPerty.checkInState]) {
+                Pic_Gold.visible = false;
+                Num.visible = false;
+                ChinkTip.visible = true;
+                Pic_Board.skin = 'UI/Common/kuang1.png';
+            }
+            else {
+                Pic_Gold.visible = true;
+                Num.visible = true;
+                Num.text = dataSource[CheckIn.CheckProPerty.rewardNum];
+                ChinkTip.visible = false;
+                Pic_Board.skin = 'UI/Common/kuang2.png';
+            }
+            switch (dataSource[CheckIn.CheckProPerty.name]) {
+                case 'day1':
+                    DayNum.text = '第一天';
+                    break;
+                case 'day2':
+                    DayNum.text = '第二天';
+                    break;
+                case 'day3':
+                    DayNum.text = '第三天';
+                    break;
+                case 'day4':
+                    DayNum.text = '第四天';
+                    break;
+                case 'day5':
+                    DayNum.text = '第五天';
+                    break;
+                case 'day6':
+                    DayNum.text = '第六天';
+                    break;
+                case 'day7':
+                    DayNum.text = '第七天';
+                    break;
+                default:
+                    break;
+            }
+        }
+        lwgBtnClick() {
+            Click.on('largen', this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
+            Click.on('largen', this.self['BtnThreeGet_WeChat'], this, null, null, this.btnThreeGetUp);
+            Click.on(Click.Type.noEffect, this.self['Select_WeChat'], this, null, null, this.btnSelectUp);
+            Click.on(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
+            Click.on(Click.Type.largen, this.self['BtnThreeGet_OPPO'], this, null, null, this.btnThreeGetUp);
+            Click.on('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
+        }
+        btnOffClick() {
+            Click.off('largen', this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
+            Click.off('largen', this.self['BtnThreeGet_WeChat'], this, null, null, this.btnThreeGetUp);
+            Click.off(Click.Type.noEffect, this.self['Select_WeChat'], this, null, null, this.btnSelectUp);
+            Click.off(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
+            Click.off(Click.Type.largen, this.self['BtnThreeGet_OPPO'], this, null, null, this.btnThreeGetUp);
+            Click.off('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
+        }
+        btnBackUp() {
+            this.self.close();
+        }
+        btnThreeGetUp() {
+            ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+                this.btnGetUpFunc(3);
+            });
+        }
+        btnGetUp() {
+            if (Admin._platform === Admin._platformTpye.Bytedance) {
+                if (this.self['Dot'].visible) {
+                    ADManager.ShowReward(() => {
+                        ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+                        this.btnGetUpFunc(3);
+                    });
+                }
+                else {
+                    this.btnGetUpFunc(1);
+                }
+            }
+            else {
+                this.btnGetUpFunc(1);
+            }
+        }
+        btnGetUpFunc(number) {
+            this.btnOffClick();
+            let index = CheckIn._checkInNum.number;
+            let target;
+            if (index < 6) {
+                target = CheckIn._checkList.getCell(index);
+            }
+            else {
+                target = this.self['BtnSeven'];
+            }
+            Animation2D.swell_shrink(target, 1, 1.1, 100, 0, () => {
+                let arr = [[111, 191], [296, 191], [486, 191], [111, 394], [296, 394], [486, 394], [306, 597
+                    ]];
+                Effects.createExplosion_Rotate(this.self['SceneContent'], 25, arr[index][0], arr[index][1], 'star', 10, 15);
+                let rewardNum = CheckIn.todayCheckIn_7Days();
+                if (CheckIn._checkInNum.number === 7) {
+                    let ChinkTip = this.self['BtnSeven'].getChildByName('ChinkTip');
+                    ChinkTip.visible = true;
+                    let Num = this.self['BtnSeven'].getChildByName('Num');
+                    Num.visible = false;
+                    let Pic_Gold = this.self['BtnSeven'].getChildByName('Pic_Gold');
+                    Pic_Gold.visible = false;
+                    this.self['BtnSeven'].skin = 'UI/Common/kuang1.png';
+                }
+                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'UI/GameStart/qian.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                    Gold.addGold(rewardNum * number);
+                    this.self.close();
+                });
+            });
+        }
+        btnSelectUp() {
+            if (this.self['Dot'].visible) {
+                this.self['Dot'].visible = false;
+            }
+            else {
+                this.self['Dot'].visible = true;
+            }
+        }
+        lwgOnUpdate() {
+            if (CheckIn._lastCheckDate.date !== (new Date).getDate()) {
+                switch (Admin._platform) {
+                    case Admin._platformTpye.WeChat:
+                        if (this.self['Dot'].visible) {
+                            this.self['BtnGet_WeChat'].visible = false;
+                            this.self['BtnThreeGet_WeChat'].visible = true;
+                        }
+                        else {
+                            this.self['BtnGet_WeChat'].visible = true;
+                            this.self['BtnThreeGet_WeChat'].visible = false;
+                        }
+                        break;
+                    case Admin._platformTpye.Bytedance:
+                        this.self['BtnGet_WeChat'].visible = true;
+                        this.self['BtnThreeGet_WeChat'].visible = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        lwgOnDisable() {
+        }
+    }
+
     class UIDefeated extends Defeated.DefeatedScene {
         lwgOnAwake() {
             ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
@@ -6540,6 +6743,8 @@
     class UIDrawCard extends DrawCard.DrawCardScene {
         lwgOnAwake() {
             Gold.goldAppear();
+            TimerAdmin.frameLoop(10, this, () => {
+            });
         }
         lwgEventReg() {
             let Img = this.self['Surface'];
@@ -6874,6 +7079,9 @@
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
+            });
+            Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UICheckIn);
             });
         }
         lwgOnDisable() {
@@ -7253,6 +7461,7 @@
             reg("TJ/Promo/script/P106.ts", P106);
             reg("script/Game/GameScene.ts", GameScene);
             reg("script/Frame/LwgInit.ts", LwgInit);
+            reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
             reg("script/Game/UILoding.ts", UILoding);

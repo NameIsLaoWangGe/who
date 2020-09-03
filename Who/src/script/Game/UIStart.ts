@@ -19,6 +19,10 @@ export default class UIStart extends Start.StartScene {
         Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
         });
+
+        Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+            Admin._openScene(Admin.SceneName.UICheckIn);
+        });
     }
 
     lwgOnDisable(): void {
