@@ -112,7 +112,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
+            Admin._closeScene(this.self);
         });
 
         Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e: Laya.Event) => {
