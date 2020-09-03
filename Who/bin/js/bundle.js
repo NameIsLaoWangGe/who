@@ -3399,6 +3399,30 @@
                 }
             }
             Tools.node_RemoveAllChildren = node_RemoveAllChildren;
+            function node_ShowExcludedChild(node, childNameArr, bool) {
+                for (let i = 0; i < node.numChildren; i++) {
+                    let Child = node.getChildAt(i);
+                    for (let j = 0; j < childNameArr.length; j++) {
+                        if (Child.name == childNameArr[j]) {
+                            if (bool) {
+                                Child.visible = true;
+                            }
+                            else {
+                                Child.visible = false;
+                            }
+                        }
+                        else {
+                            if (bool) {
+                                Child.visible = false;
+                            }
+                            else {
+                                Child.visible = true;
+                            }
+                        }
+                    }
+                }
+            }
+            Tools.node_ShowExcludedChild = node_ShowExcludedChild;
             function node_ChildrenVisible(node, bool) {
                 for (let index = 0; index < node.numChildren; index++) {
                     const element = node.getChildAt(index);
@@ -7246,7 +7270,6 @@
             Laya.timer.once(200, this, () => {
                 CheckIn.openCheckIn();
             });
-            Admin._openScene(Admin.SceneName.UIResurgence);
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;

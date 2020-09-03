@@ -3620,6 +3620,33 @@ export module lwg {
         }
 
         /**
+         * 切换隐藏或显示子节点，当输入的名称数组是隐藏时，其他子节点则是显示
+         * @param node 节点
+         * @param childNameArr 子节点名称数组
+         * @param bool 隐藏还是显示，true为显示，flase为隐藏
+         */
+        export function node_ShowExcludedChild(node: Laya.Sprite, childNameArr: Array<string>, bool: boolean): void {
+            for (let i = 0; i < node.numChildren; i++) {
+                let Child = node.getChildAt(i) as Laya.Sprite;
+                for (let j = 0; j < childNameArr.length; j++) {
+                    if (Child.name == childNameArr[j]) {
+                        if (bool) {
+                            Child.visible = true;
+                        } else {
+                            Child.visible = false;
+                        }
+                    } else {
+                        if (bool) {
+                            Child.visible = false;
+                        } else {
+                            Child.visible = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
          * 隐藏或者打开所有子节点
          * @param node 节点
          * @param bool visible控制

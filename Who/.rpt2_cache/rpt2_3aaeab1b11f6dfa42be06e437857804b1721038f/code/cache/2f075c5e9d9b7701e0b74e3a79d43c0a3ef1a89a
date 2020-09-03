@@ -1,0 +1,7 @@
+{
+  "code": "import { Start, Click, Admin, Setting, Gold, CheckIn } from \"../Frame/lwg\";\r\nexport default class UIStart extends Start.StartScene {\r\n    lwgOnAwake() {\r\n        Setting.setBtnAppear();\r\n        Gold.createGoldNode(629, 174);\r\n        Laya.timer.once(200, this, () => {\r\n            CheckIn.openCheckIn();\r\n        });\r\n    }\r\n    lwgAdaptive() {\r\n        this.self['BtnStart'].y = Laya.stage.height * 0.779;\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.GameScene, this.self);\r\n        });\r\n        Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.UIDrawCard);\r\n        });\r\n        Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.UICheckIn);\r\n        });\r\n    }\r\n    lwgOnDisable() {\r\n        Setting.setBtnVinish();\r\n        Gold.goldVinish();\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIResurgence.ts"
+  ]
+}

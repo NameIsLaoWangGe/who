@@ -31,7 +31,7 @@
 					"position":[
 						0,
 						0.48,
-						-8.87
+						-8.97
 					],
 					"rotation":[
 						-0.2575919,
@@ -297,11 +297,11 @@
 								9.44582,
 								9.44582
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -965,11 +965,11 @@
 																												0.08587117,
 																												0.08587115
 																											],
-																											"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+																											"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 																											"enableRender":true,
 																											"materials":[
 																												{
-																													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+																													"path":"Assets/Animator/daoju/pai/pai.lmat"
 																												}
 																											]
 																										},
@@ -2899,8 +2899,8 @@
 					"layer":0,
 					"position":[
 						0,
-						0.714,
-						-8.881
+						0.634,
+						-8.764
 					],
 					"rotation":[
 						-0.4462635,
@@ -3058,11 +3058,11 @@
 								1.500001,
 								1.500001
 							],
-							"meshPath":"Assets/Animator/dao ju/changjing/changjing-Box008.lm",
+							"meshPath":"Assets/Animator/daoju/changjing/changjing-Box008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/changjing/chang jing.lmat"
+									"path":"Assets/Animator/daoju/changjing/chang jing.lmat"
 								}
 							]
 						},
@@ -3093,11 +3093,11 @@
 								1.4,
 								1.4
 							],
-							"meshPath":"Assets/Animator/dao ju/zhuo deng/zhuozi-Box014.lm",
+							"meshPath":"Assets/Animator/daoju/zhuodeng/zhuozi-Box014.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/zhuo deng/New Material.lmat"
+									"path":"Assets/Animator/daoju/zhuodeng/New Material.lmat"
 								}
 							]
 						},
@@ -3128,11 +3128,11 @@
 								2.1,
 								2.1
 							],
-							"meshPath":"Assets/Animator/dao ju/zhuo deng/dengzi-Box015.lm",
+							"meshPath":"Assets/Animator/daoju/zhuodeng/dengzi-Box015.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/zhuo deng/New Material.lmat"
+									"path":"Assets/Animator/daoju/zhuodeng/New Material.lmat"
 								}
 							]
 						},
@@ -3148,7 +3148,7 @@
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-3.570801,
+								-3.58,
 								0.3818579,
 								0.5849605
 							],
@@ -3175,8 +3175,8 @@
 									"isStatic":false,
 									"layer":0,
 									"position":[
-										2.13066,
-										0.6551783,
+										2.15,
+										0.558,
 										-1.35181
 									],
 									"rotation":[
@@ -3186,9 +3186,9 @@
 										-1
 									],
 									"scale":[
-										0.9255999,
-										0.9255999,
-										0.9255999
+										0.83,
+										0.83,
+										0.83
 									]
 								},
 								"components":[],
@@ -3217,11 +3217,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3252,11 +3252,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3287,11 +3287,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3322,11 +3322,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3357,11 +3357,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3392,11 +3392,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3427,11 +3427,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3462,11 +3462,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3497,11 +3497,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3532,11 +3532,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3567,11 +3567,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3602,11 +3602,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3637,11 +3637,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3672,11 +3672,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3707,11 +3707,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3742,11 +3742,11 @@
 												14.61629,
 												14.61629
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3765,7 +3765,7 @@
 									"layer":0,
 									"position":[
 										2.273106,
-										0.6551783,
+										0.558,
 										-1.45
 									],
 									"rotation":[
@@ -3775,9 +3775,9 @@
 										0
 									],
 									"scale":[
-										0.9255999,
-										0.9255999,
-										0.9255999
+										0.83,
+										0.83,
+										0.83
 									]
 								},
 								"components":[],
@@ -3806,11 +3806,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3841,11 +3841,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3876,11 +3876,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3911,11 +3911,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3946,11 +3946,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -3981,11 +3981,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4016,11 +4016,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4051,11 +4051,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4086,11 +4086,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4121,11 +4121,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4156,11 +4156,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4191,11 +4191,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4226,11 +4226,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4261,11 +4261,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4296,11 +4296,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4331,11 +4331,11 @@
 												14.61628,
 												14.61628
 											],
-											"meshPath":"Assets/Animator/dao ju/pai/pai-Object007.lm",
+											"meshPath":"Assets/Animator/daoju/pai/pai-Object007.lm",
 											"enableRender":true,
 											"materials":[
 												{
-													"path":"Assets/Animator/dao ju/pai/pai.lmat"
+													"path":"Assets/Animator/daoju/pai/pai.lmat"
 												}
 											]
 										},
@@ -4395,15 +4395,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -4499,15 +4499,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -4603,15 +4603,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -4707,15 +4707,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -4811,15 +4811,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -4915,15 +4915,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5019,15 +5019,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5123,15 +5123,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5227,15 +5227,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5331,15 +5331,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5435,15 +5435,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5539,15 +5539,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5643,15 +5643,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5747,15 +5747,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5851,15 +5851,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -5955,15 +5955,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6059,15 +6059,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6163,15 +6163,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6267,15 +6267,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6371,15 +6371,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6475,15 +6475,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6579,15 +6579,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6683,15 +6683,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6787,15 +6787,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6891,15 +6891,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -6995,15 +6995,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7099,15 +7099,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7203,15 +7203,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7307,15 +7307,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7411,15 +7411,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7515,15 +7515,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7619,15 +7619,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7723,15 +7723,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7827,15 +7827,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -7931,15 +7931,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8035,15 +8035,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8139,15 +8139,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8243,15 +8243,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8347,15 +8347,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8451,15 +8451,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8555,15 +8555,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8659,15 +8659,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8763,15 +8763,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8867,15 +8867,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -8971,15 +8971,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9075,15 +9075,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9179,15 +9179,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9283,15 +9283,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9387,15 +9387,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9491,15 +9491,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9595,15 +9595,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
@@ -9699,15 +9699,15 @@
 								0
 							],
 							"scale":[
-								9.44582,
-								9.44582,
-								9.44582
+								8.473,
+								8.473,
+								8.473
 							],
-							"meshPath":"Assets/Animator/dao ju/pai/pai-Object008.lm",
+							"meshPath":"Assets/Animator/daoju/pai/pai-Object008.lm",
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/dao ju/pai/pai.lmat"
+									"path":"Assets/Animator/daoju/pai/pai.lmat"
 								}
 							]
 						},
