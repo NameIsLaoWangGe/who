@@ -1,7 +1,6 @@
 import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 
-
 export default class UIDrawCard extends DrawCard.DrawCardScene {
     /** @prop {name:Card, tips:"选项卡预制体", type:Prefab}*/
     public Card: Laya.Prefab;
@@ -9,6 +8,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
+    }
+
+    lwgOnEnable(): void {
         TimerAdmin.frameLoop(10, this, () => {
 
         })
@@ -19,7 +21,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
 
         //开始抽卡 
-        EventAdmin.reg('drawCard', this, () => {
+        EventAdmin.reg('drawCardEvent', this, () => {
             this.self['DrawDisPlay'].x = 0;
             this.self['BtnTake'].visible = false;
 
@@ -104,10 +106,15 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     }
 
     lwgBtnClick(): void {
-
         Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
             ADManager.ShowReward(() => {
-
+                DrawCard._freeAds.num++;
+                if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                    DrawCard._freeAds.num = 0;
+                    DrawCard._freeDraw.num++;
+                    this.self['ResidueNum'].text = Tools.format_StrAddNum(this.self['ResidueNum'].text, 1);
+                }
+                this.self['FreeNum'].value = (DrawCard._freeAds.num % 3).toString();
             })
         });
 
@@ -132,6 +139,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
             (e: Laya.Event) => {
+                // 初始化一个绘制节点
                 if (!this.self.getChildByName('DrawSp')) {
                     this.self['Drawlength'] = 0;
                     let DrawSp = new Laya.Sprite();
@@ -140,6 +148,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     DrawSp.pos(0, 0);
                     this.self['DrawSp'] = DrawSp;
                 }
+                // 初始化初始位置
                 this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
             },
             // 移动
@@ -164,7 +173,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             // 抬起
             () => {
                 this.self.getChildByName('DrawSp').removeSelf();
-                EventAdmin.notify('drawCard');
+                EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
             },
             // 出图片

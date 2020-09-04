@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":40,
+    "selectedBox":7,
+    "selecteID":20,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
@@ -150,13 +150,14 @@
                     "props":{"y":1035,"x":235,"var":"Residue","texture":"Game/UI/UIDrawCard/shenyu.png","name":"Residue"},
                     "nodeParent":19,
                     "label":"Residue",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":7,
                     "child":[
                         {
+                            "x":45,
                             "type":"Label",
                             "searchKey":"Label,ResidueNum,ResidueNum",
                             "props":{"y":-1,"x":172,"width":59,"var":"ResidueNum","text":"10","name":"ResidueNum","height":39,"fontSize":40,"color":"#a85546","bold":true,"align":"left"},
@@ -177,13 +178,14 @@
                     "props":{"y":1166,"x":371,"width":371,"var":"BtnFree","skin":"Game/UI/Common/anniu.png","sizeGrid":"0,78,0,98","pivotY":60,"pivotX":193,"name":"BtnFree","height":120},
                     "nodeParent":19,
                     "label":"BtnFree",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":8,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
                             "props":{"y":37,"x":44.5,"texture":"Game/UI/UIDrawCard/mianfei.png"},
@@ -197,9 +199,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip,MaxNum,MaxNum",
-                            "props":{"y":37,"x":276,"var":"MaxNum","value":"5","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"MaxNum"},
+                            "props":{"y":37,"x":276,"var":"MaxNum","value":"3","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"MaxNum"},
                             "nodeParent":8,
                             "label":"MaxNum",
                             "isDirectory":false,
@@ -210,9 +213,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip,FreeNum,FreeNum",
-                            "props":{"y":37,"x":228,"var":"FreeNum","value":"5","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"FreeNum"},
+                            "props":{"y":37,"x":228,"var":"FreeNum","value":"0","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"FreeNum"},
                             "nodeParent":8,
                             "label":"FreeNum",
                             "isDirectory":false,

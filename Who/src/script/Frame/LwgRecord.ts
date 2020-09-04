@@ -143,22 +143,18 @@ export module record {
         'JSON.parse()' = 'json转换成对象问题，同上在pc浏览器中，会自动把“null”转换为null，当Laya.LocalStorage.getJson()时，如果是没有上传json，那么在小游戏中返回的是“null”，pc会自动把“null”转换为null，此时浏览器不会报错，而小游戏中JSON.parse(“null”)是报错的，因为非json结构，所以此时不可以直接用JSON.parse(Laya.LocalStorage.getJson())，需先做判断!Laya.LocalStorage.getItem(),有上传过才可以转换',
 
         '上传格式' = '为了统一，不要用number进行存储，所有的数据在本地存取的时候都用string和null，需要转换时则转换成number等',
-
     }
 
     /**出包*/
     export enum Pack {
-
         '资源加载不出来——01' = '分包后，依然需要把分包的一些资源例如场景json、图片等进行预加载，否则可能会出现丢失的情况',
-        '资源加载不出来——02' = '上传平台是，如果还有写资源包括文件夹，因为大小写对不上而加载不出来，但是在浏览器中可能会忽略',
-
+        '资源加载不出来——02' = '上传平台是，如果还有写资源包括文件夹，因为大小写对不上而加载不出来，但是在浏览器中可能会忽略大小写',
     }
 
     /**语法*/
     export enum TypeScript {
         " if(0)" = 'false',
         " if(1)" = 'true',
-
     }
 
     export enum ObjArray {
@@ -186,5 +182,6 @@ export module record {
         '模块中的全局变量名称' = '模块中的全局变量名称用_name命名形式，一看到这样的命名方式则是模块中的全局变量',
         '模块中的方法名' = '模块中的全局方法名称用_func（）命名形式，一看到这样的命名方式则是模块中的全局方法',
         '工具模块方法头名称含义' = '代表了当前分类和作用例如，node开头则是节点相关，random开头是随机，draw开头表示绘制矢量图，d2开头表示2维方面的工具，d3表示3d中的工具，dAll是2d和3d都可用，point表示坐标相关，number表示数字，obj表示处理对象，array表示处理数组，objArray表示处理对象数组，json表示处理json',
+        '没有声明的变量赋值[name]'='这样的变量赋值必须只用在当前页面，否则会发生找不到的情况。'
     }
 }

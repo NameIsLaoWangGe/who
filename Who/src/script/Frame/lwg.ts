@@ -3609,6 +3609,42 @@ export module lwg {
 
     /**工具模块*/
     export module Tools {
+
+        /**
+       * 将数字格式化，例如1000 = 1k；
+       * @param number 数字
+       */
+        export function format_FormatNumber(number: number): string {
+            if (typeof (number) !== "number") {
+                console.warn("要转化的数字并不为number");
+                return number;
+            }
+            let backNum: string;
+            if (number < 1000) {
+                backNum = "" + number;
+            } else if (number < 1000000) {
+                backNum = "" + (number / 1000).toFixed(1) + "k";
+            } else if (number < 10e8) {
+                backNum = "" + (number / 1000000).toFixed(1) + "m";
+            } else {
+                backNum = "" + number;
+            }
+            return backNum;
+        }
+
+        /**
+         * 字符串和数字相加返回字符串
+         * */
+        export function format_StrAddNum(str: string, num: number): string {
+            return (Number(str) + num).toString();
+        }
+        /**
+         * 数字和字符串相加返回数字
+         * */
+        export function format_NumAddStr(num: number, str: string): number {
+            return Number(str) + num;
+        }
+
         /**
          * 移除该节点的所有子节点，没有子节点则无操作
          * @param node 节点
@@ -4408,27 +4444,7 @@ export module lwg {
             return angle / 180 * Math.PI;
         }
 
-        /**
-         * 将数字格式化，例如1000 = 1k；
-         * @param number 数字
-         */
-        export function numberConverte(number: number): string {
-            if (typeof (number) !== "number") {
-                console.warn("要转化的数字并不为number");
-                return number;
-            }
-            let backNum: string;
-            if (number < 1000) {
-                backNum = "" + number;
-            } else if (number < 1000000) {
-                backNum = "" + (number / 1000).toFixed(1) + "k";
-            } else if (number < 10e8) {
-                backNum = "" + (number / 1000000).toFixed(1) + "m";
-            } else {
-                backNum = "" + number;
-            }
-            return backNum;
-        }
+
 
 
         /**
@@ -5797,14 +5813,27 @@ export module lwg {
 
     /**抽卡模块*/
     export module DrawCard {
+
         /**
-         * 剩余免费抽奖次数
-         */
-        export let _freeDrawNum = {
-            get value(): number {
-                return Laya.LocalStorage.getItem('_freeDrawNum') ? Number(Laya.LocalStorage.getItem('_freeDrawNum')) : 1;
+         * 当前免费抽奖看广告次数
+         * */
+        export let _freeAds = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('_freeAdsNum') ? Number(Laya.LocalStorage.getItem('_freeAdsNum')) : 0;
             },
-            set value(val) {
+            set num(val) {
+                Laya.LocalStorage.setItem('_freeAdsNum', val.toString());
+            }
+        }
+
+        /**
+         * 剩余免费抽奖次数,初始化为2次
+         */
+        export let _freeDraw = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('_freeDraw') ? Number(Laya.LocalStorage.getItem('_freeDraw')) : 2;
+            },
+            set num(val) {
                 Laya.LocalStorage.setItem('_freeDrawNum', val.toString());
             }
         };
