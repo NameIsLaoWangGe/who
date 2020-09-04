@@ -9,8 +9,6 @@ export default class GameScene extends Admin.Scene {
     /** @prop {name:DoWell, tips:"干得漂亮预制体", type:Prefab}*/
     public DoWell: Laya.Prefab;
 
-    /**选项卡*/
-
     lwgOnAwake(): void {
         Gold.goldAppear();
     }
@@ -23,27 +21,29 @@ export default class GameScene extends Admin.Scene {
         EventAdmin.notify(Game3D.EventType.opening);
         this.self['BtnSCNum'].text = Backpack._prop1.num;
         this.self['BtnSXNum'].text = Backpack._prop2.num;
+        this.self['SceneContent'].alpha = 0;
     }
+
+    // lwgOpenAni(): number {
+    //     return 100;
+    // }
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            
+            // 
         });
         Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
-
+            //四个属性中随机一个属性，然后把我方牌中有这个属性的卡牌倒下，然后再刷新生成四个问题继续作答，此时问题随机选取，而不是中间四个
         });
         Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
-
+            //刷新问题，此时问题随机选取，而不是中间四个
         });
     }
 
     lwgEventReg(): void {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-            if (!Admin._gameSwitch) {
-                return;
-            }
-            Animation2D.fadeOut(this.self['OptionParent'], this.self['OptionParent'].alpha, 0, 300, 0, () => {
+            Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
                 Tools.node_RemoveAllChildren(this.self['OptionParent']);
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
             });
@@ -51,35 +51,30 @@ export default class GameScene extends Admin.Scene {
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-            if (!Admin._gameSwitch) {
-                return;
-            }
+           
             this.createQuestion(questionArr);
-            Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0, () => {
+            Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0, () => {
             });
         })
 
         // 胜利
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
-            Admin._gameSwitch = false;
             Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory });
         })
 
         // 失败
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
-            Admin._gameSwitch = false;
             Admin._openScene(Admin.SceneName.UIResurgence);
         })
 
         // 复活
         EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-            Admin._gameSwitch = false;
             Tools.node_RemoveAllChildren(this.self['OptionParent']);
         })
 
         //隐藏选项卡
         EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-            Animation2D.fadeOut(this.self['OptionParent'], 1, 0.5, 500, 100, () => { })
+            Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100, () => { })
         })
 
         // 干得漂亮提示

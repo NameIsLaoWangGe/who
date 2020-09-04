@@ -160,7 +160,7 @@ export module Game3D {
                 if (index % 4 == 0) {
                     startZ += 0.45;
                 }
-                Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.145);
+                Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.2);
 
                 Tools.d3_animatorPlay(Card, CardAni.standOpposite);
             }

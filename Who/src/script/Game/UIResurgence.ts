@@ -3,6 +3,12 @@ import ADManager, { TaT } from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 
 export default class UIResurgence extends Admin.Scene {
+
+    lwgOnAwake(): void {
+        Admin._gameSwitch = false;
+        Admin._clickLock.switch = false;
+    }
+
     lwgOnEnable(): void {
         console.log('打开复活界面！')
         ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');
@@ -36,5 +42,9 @@ export default class UIResurgence extends Admin.Scene {
             ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
             Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated });
         });
+    }
+
+    lwgOnDisable(): void {
+        Admin._gameSwitch = true;
     }
 }

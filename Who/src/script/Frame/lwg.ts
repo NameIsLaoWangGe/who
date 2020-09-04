@@ -1416,11 +1416,9 @@ export module lwg {
             /**通过openni返回的时间来延时开启点击事件*/
             private btnAndlwgOpenAni(): void {
                 let time = this.lwgOpenAni();
-                if (time == null) {
+                if (!time) {
                     time = commonOpenAni(this.self);
-                    if (time == null) {
-                        time = 0;
-                    }
+                    time = 0;
                 }
                 Laya.timer.once(time, this, f => {
                     this.lwgBtnClick();
@@ -3258,19 +3256,19 @@ export module lwg {
           * @param delayed 延迟时间
           * @param func 完成后的回调
           */
-        export function shookHead_Simple(target, rotate, time, delayed, func): void {
+        export function shookHead_Simple(target, rotate, time, delayed?: number, func?: Function): void {
             let firstR = target.rotation;
             Laya.Tween.to(target, { rotation: firstR + rotate }, time, null, Laya.Handler.create(this, function () {
                 Laya.Tween.to(target, { rotation: firstR - rotate * 2 }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(target, { rotation: firstR + rotate }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(target, { rotation: firstR }, time, null, Laya.Handler.create(this, function () {
-                            if (func !== null) {
+                            if (func ) {
                                 func()
                             }
                         }), 0);
                     }), 0);
                 }), 0);
-            }), delayed);
+            }), delayed ? delayed : 0);
         }
 
         /**

@@ -1947,11 +1947,9 @@
                 lwgOnEnable() { }
                 btnAndlwgOpenAni() {
                     let time = this.lwgOpenAni();
-                    if (time == null) {
+                    if (!time) {
                         time = commonOpenAni(this.self);
-                        if (time == null) {
-                            time = 0;
-                        }
+                        time = 0;
                     }
                     Laya.timer.once(time, this, f => {
                         this.lwgBtnClick();
@@ -3138,13 +3136,13 @@
                     Laya.Tween.to(target, { rotation: firstR - rotate * 2 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(target, { rotation: firstR + rotate }, time, null, Laya.Handler.create(this, function () {
                             Laya.Tween.to(target, { rotation: firstR }, time, null, Laya.Handler.create(this, function () {
-                                if (func !== null) {
+                                if (func) {
                                     func();
                                 }
                             }), 0);
                         }), 0);
                     }), 0);
-                }), delayed);
+                }), delayed ? delayed : 0);
             }
             Animation2D.shookHead_Simple = shookHead_Simple;
             function HintAni_01(target, upNum, time1, stopTime, downNum, time2, func) {
@@ -5529,7 +5527,7 @@
                     if (index % 4 == 0) {
                         startZ += 0.45;
                     }
-                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.145);
+                    Card.transform.localPosition = new Laya.Vector3(spacingX * (index % 4) - startX, -0.1210217, startZ + 0.2);
                     Tools.d3_animatorPlay(Card, CardAni.standOpposite);
                 }
                 Card[CardProperty.featureArr] = cardData16[index][CardProperty.featureArr];
@@ -6164,6 +6162,7 @@
             EventAdmin.notify(Game3D.EventType.opening);
             this.self['BtnSCNum'].text = Backpack._prop1.num;
             this.self['BtnSXNum'].text = Backpack._prop2.num;
+            this.self['SceneContent'].alpha = 0;
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
@@ -6175,36 +6174,27 @@
         }
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-                if (!Admin._gameSwitch) {
-                    return;
-                }
-                Animation2D.fadeOut(this.self['OptionParent'], this.self['OptionParent'].alpha, 0, 300, 0, () => {
+                Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
                     Tools.node_RemoveAllChildren(this.self['OptionParent']);
                     this.createOppositeQuestion(questionAndYesOrNo, cardName);
                 });
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-                if (!Admin._gameSwitch) {
-                    return;
-                }
                 this.createQuestion(questionArr);
-                Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0, () => {
+                Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0, () => {
                 });
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
-                Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory; });
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
-                Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIResurgence);
             });
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                Admin._gameSwitch = false;
                 Tools.node_RemoveAllChildren(this.self['OptionParent']);
             });
             EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-                Animation2D.fadeOut(this.self['OptionParent'], 1, 0.5, 500, 100, () => { });
+                Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100, () => { });
             });
             EventAdmin.reg(Game3D.EventType.doWell, this, () => {
                 this.createDoWall();
@@ -7102,6 +7092,10 @@
     }
 
     class UIResurgence extends Admin.Scene {
+        lwgOnAwake() {
+            Admin._gameSwitch = false;
+            Admin._clickLock.switch = false;
+        }
         lwgOnEnable() {
             console.log('打开复活界面！');
             ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');
@@ -7131,6 +7125,9 @@
                 ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated; });
             });
+        }
+        lwgOnDisable() {
+            Admin._gameSwitch = true;
         }
     }
 
@@ -7402,6 +7399,28 @@
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;
+        }
+        lwgOnEnable() {
+            Admin._gameLevel.value++;
+            for (let i = 0; i < this.self['LevelStyle'].numChildren; i++) {
+                let ele = this.self['LevelStyle'].getChildAt(i);
+                let index = Number(ele.name.substring(9, ele.name.length));
+                if (Admin._gameLevel.value % 4 !== 0) {
+                    if (index <= Admin._gameLevel.value % 4) {
+                        ele.gray = false;
+                    }
+                    else {
+                        ele.gray = true;
+                    }
+                }
+                else {
+                    TimerAdmin.frameLoop(100, this, () => {
+                        Animation2D.shookHead_Simple(this.self['LvIcon4'], 15, 200);
+                        Effects.createExplosion_Rotate(this.self['LvIcon4'].parent, 25, this.self['LvIcon4'].x, this.self['LvIcon4'].y, 'star', 10, 5);
+                    });
+                    break;
+                }
+            }
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
