@@ -1,3 +1,5 @@
+import UIPropTry from "../Game/UIPropTry";
+
 // import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
@@ -83,6 +85,7 @@ export module lwg {
             '没有宝箱领可以领了！',
             '请前往皮肤界面购买！',
             '今天已经签到过了！',
+            '没有抽奖次数了，请通过观看广告获取！'
         }
         enum Skin {
             blackBord = 'Frame/UI/ui_orthogon_black.png'
@@ -1204,6 +1207,7 @@ export module lwg {
             UISmallHint = 'UISmallHint',
             UIExecutionHint = 'UIExecutionHint',
             UIDrawCard = 'UIDrawCard',
+            UIPropTry = 'UIPropTry',
         }
 
         /**
@@ -5819,22 +5823,22 @@ export module lwg {
          * */
         export let _freeAds = {
             get num(): number {
-                return Laya.LocalStorage.getItem('_freeAdsNum') ? Number(Laya.LocalStorage.getItem('_freeAdsNum')) : 0;
+                return Laya.LocalStorage.getItem('DrawCard_freeAdsNum') ? Number(Laya.LocalStorage.getItem('DrawCard_freeAdsNum')) : 0;
             },
             set num(val) {
-                Laya.LocalStorage.setItem('_freeAdsNum', val.toString());
+                Laya.LocalStorage.setItem('DrawCard_freeAdsNum', val.toString());
             }
         }
 
         /**
-         * 剩余免费抽奖次数,初始化为2次
+         * 剩余抽奖次数,初始化为2次
          */
-        export let _freeDraw = {
+        export let _residueDraw = {
             get num(): number {
-                return Laya.LocalStorage.getItem('_freeDraw') ? Number(Laya.LocalStorage.getItem('_freeDraw')) : 2;
+                return Laya.LocalStorage.getItem('DrawCard_residueDraw') ? Number(Laya.LocalStorage.getItem('DrawCard_residueDraw')) : 2;
             },
             set num(val) {
-                Laya.LocalStorage.setItem('_freeDrawNum', val.toString());
+                Laya.LocalStorage.setItem('DrawCard_residueDraw', val.toString());
             }
         };
 
@@ -5871,6 +5875,60 @@ export module lwg {
 
             };
         }
+    }
+
+    /**道具试用模块*/
+    export module PropTry {
+        export class PropTryScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+    }
+
+    /**背包系统*/
+    export module Backpack {
+        /**特殊道具1*/
+        export let _prop1 = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('Backpack_prop1') ? Number(Laya.LocalStorage.getItem('Backpack_prop1')) : 1;
+            },
+            set num(val) {
+                Laya.LocalStorage.setItem('Backpack_prop1', val.toString());
+            }
+        }
+        /**特殊道具2*/
+        export let _prop2 = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('Backpack_prop2') ? Number(Laya.LocalStorage.getItem('Backpack_prop2')) : 1;
+            },
+            set num(val) {
+                Laya.LocalStorage.setItem('Backpack_prop2', val.toString());
+            }
+        }
+        /**
+         * 道具数组,对象数组的数组
+         * */
+        export let _backpackArray: Array<Array<{}>> = [];
+
+        export class BackpackScene extends Admin.Scene {
+            moduleOnAwake(): void {
+
+            };
+            moduleEventReg(): void {
+
+            };
+            moduleOnEnable(): void {
+
+            };
+        }
+
     }
 
     export module Loding {
@@ -6215,6 +6273,10 @@ export let DrawCard = lwg.DrawCard;
 export let DrawCardScene = lwg.DrawCard.DrawCardScene;
 export let Share = lwg.Share;
 export let ShareScene = lwg.Share.ShareScene;
+export let PropTry = lwg.PropTry;
+export let PropTryScene = lwg.PropTry.PropTryScene;
+export let Backpack = lwg.Backpack;
+export let BackpackScene = lwg.Backpack.BackpackScene;
 // 其他
 export let Tomato = lwg.Tomato;
 

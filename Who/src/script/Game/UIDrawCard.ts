@@ -1,4 +1,4 @@
-import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting } from "../Frame/lwg";
+import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 
 export default class UIDrawCard extends DrawCard.DrawCardScene {
@@ -11,6 +11,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     }
 
     lwgOnEnable(): void {
+        this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+        this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
         TimerAdmin.frameLoop(10, this, () => {
 
         })
@@ -22,6 +24,14 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
+            if (DrawCard._residueDraw.num <= 0) {
+                Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
+                return;
+            } else {
+                DrawCard._residueDraw.num--;
+                this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+            }
+
             this.self['DrawDisPlay'].x = 0;
             this.self['BtnTake'].visible = false;
 
@@ -64,7 +74,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             let Card = this.self['CardParent'].getChildByName('Card' + this.self['cardIndex']) as Laya.Sprite;
             if (!Card) {
                 this.self['cardIndex'] = null;
-                Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard });
+                Laya.timer.once(500, this, () => {
+                    Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard });
+                })
                 return;
             }
             var func = () => {
@@ -111,10 +123,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 DrawCard._freeAds.num++;
                 if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
                     DrawCard._freeAds.num = 0;
-                    DrawCard._freeDraw.num++;
-                    this.self['ResidueNum'].text = Tools.format_StrAddNum(this.self['ResidueNum'].text, 1);
+                    DrawCard._residueDraw.num++;
+                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
                 }
-                this.self['FreeNum'].value = (DrawCard._freeAds.num % 3).toString();
+                this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
             })
         });
 

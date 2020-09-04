@@ -984,6 +984,7 @@
                 HintContent[HintContent["\u6CA1\u6709\u5B9D\u7BB1\u9886\u53EF\u4EE5\u9886\u4E86\uFF01"] = 26] = "\u6CA1\u6709\u5B9D\u7BB1\u9886\u53EF\u4EE5\u9886\u4E86\uFF01";
                 HintContent[HintContent["\u8BF7\u524D\u5F80\u76AE\u80A4\u754C\u9762\u8D2D\u4E70\uFF01"] = 27] = "\u8BF7\u524D\u5F80\u76AE\u80A4\u754C\u9762\u8D2D\u4E70\uFF01";
                 HintContent[HintContent["\u4ECA\u5929\u5DF2\u7ECF\u7B7E\u5230\u8FC7\u4E86\uFF01"] = 28] = "\u4ECA\u5929\u5DF2\u7ECF\u7B7E\u5230\u8FC7\u4E86\uFF01";
+                HintContent[HintContent["\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01"] = 29] = "\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01";
             })(HintContent = Dialog.HintContent || (Dialog.HintContent = {}));
             let Skin;
             (function (Skin) {
@@ -1776,6 +1777,7 @@
                 SceneName["UISmallHint"] = "UISmallHint";
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
                 SceneName["UIDrawCard"] = "UIDrawCard";
+                SceneName["UIPropTry"] = "UIPropTry";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
@@ -3393,6 +3395,35 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
+            function format_FormatNumber(number) {
+                if (typeof (number) !== "number") {
+                    console.warn("要转化的数字并不为number");
+                    return number;
+                }
+                let backNum;
+                if (number < 1000) {
+                    backNum = "" + number;
+                }
+                else if (number < 1000000) {
+                    backNum = "" + (number / 1000).toFixed(1) + "k";
+                }
+                else if (number < 10e8) {
+                    backNum = "" + (number / 1000000).toFixed(1) + "m";
+                }
+                else {
+                    backNum = "" + number;
+                }
+                return backNum;
+            }
+            Tools.format_FormatNumber = format_FormatNumber;
+            function format_StrAddNum(str, num) {
+                return (Number(str) + num).toString();
+            }
+            Tools.format_StrAddNum = format_StrAddNum;
+            function format_NumAddStr(num, str) {
+                return Number(str) + num;
+            }
+            Tools.format_NumAddStr = format_NumAddStr;
             function node_RemoveAllChildren(node) {
                 if (node.numChildren > 0) {
                     node.removeChildren(0, node.numChildren - 1);
@@ -3954,27 +3985,6 @@
                 return angle / 180 * Math.PI;
             }
             Tools.angle_GetRad = angle_GetRad;
-            function numberConverte(number) {
-                if (typeof (number) !== "number") {
-                    console.warn("要转化的数字并不为number");
-                    return number;
-                }
-                let backNum;
-                if (number < 1000) {
-                    backNum = "" + number;
-                }
-                else if (number < 1000000) {
-                    backNum = "" + (number / 1000).toFixed(1) + "k";
-                }
-                else if (number < 10e8) {
-                    backNum = "" + (number / 1000000).toFixed(1) + "m";
-                }
-                else {
-                    backNum = "" + number;
-                }
-                return backNum;
-            }
-            Tools.numberConverte = numberConverte;
             function jsonCompare(url, storageName, propertyName) {
                 let dataArr;
                 if (Laya.LocalStorage.getJSON(storageName)) {
@@ -4984,12 +4994,20 @@
         })(Defeated = lwg.Defeated || (lwg.Defeated = {}));
         let DrawCard;
         (function (DrawCard) {
-            DrawCard._freeDrawNum = {
-                get value() {
-                    return Laya.LocalStorage.getItem('_freeDrawNum') ? Number(Laya.LocalStorage.getItem('_freeDrawNum')) : 1;
+            DrawCard._freeAds = {
+                get num() {
+                    return Laya.LocalStorage.getItem('DrawCard_freeAdsNum') ? Number(Laya.LocalStorage.getItem('DrawCard_freeAdsNum')) : 0;
                 },
-                set value(val) {
-                    Laya.LocalStorage.setItem('_freeDrawNum', val.toString());
+                set num(val) {
+                    Laya.LocalStorage.setItem('DrawCard_freeAdsNum', val.toString());
+                }
+            };
+            DrawCard._residueDraw = {
+                get num() {
+                    return Laya.LocalStorage.getItem('DrawCard_residueDraw') ? Number(Laya.LocalStorage.getItem('DrawCard_residueDraw')) : 2;
+                },
+                set num(val) {
+                    Laya.LocalStorage.setItem('DrawCard_residueDraw', val.toString());
                 }
             };
             class DrawCardScene extends Admin.Scene {
@@ -5021,6 +5039,53 @@
             }
             Share.ShareScene = ShareScene;
         })(Share = lwg.Share || (lwg.Share = {}));
+        let PropTry;
+        (function (PropTry) {
+            class PropTryScene extends Admin.Scene {
+                moduleOnAwake() {
+                }
+                ;
+                moduleEventReg() {
+                }
+                ;
+                moduleOnEnable() {
+                }
+                ;
+            }
+            PropTry.PropTryScene = PropTryScene;
+        })(PropTry = lwg.PropTry || (lwg.PropTry = {}));
+        let Backpack;
+        (function (Backpack) {
+            Backpack._prop1 = {
+                get num() {
+                    return Laya.LocalStorage.getItem('Backpack_prop1') ? Number(Laya.LocalStorage.getItem('Backpack_prop1')) : 1;
+                },
+                set num(val) {
+                    Laya.LocalStorage.setItem('Backpack_prop1', val.toString());
+                }
+            };
+            Backpack._prop2 = {
+                get num() {
+                    return Laya.LocalStorage.getItem('Backpack_prop2') ? Number(Laya.LocalStorage.getItem('Backpack_prop2')) : 1;
+                },
+                set num(val) {
+                    Laya.LocalStorage.setItem('Backpack_prop2', val.toString());
+                }
+            };
+            Backpack._backpackArray = [];
+            class BackpackScene extends Admin.Scene {
+                moduleOnAwake() {
+                }
+                ;
+                moduleEventReg() {
+                }
+                ;
+                moduleOnEnable() {
+                }
+                ;
+            }
+            Backpack.BackpackScene = BackpackScene;
+        })(Backpack = lwg.Backpack || (lwg.Backpack = {}));
         let Loding;
         (function (Loding) {
             Loding.list_3DScene = [];
@@ -5262,6 +5327,10 @@
     let DrawCardScene = lwg.DrawCard.DrawCardScene;
     let Share = lwg.Share;
     let ShareScene = lwg.Share.ShareScene;
+    let PropTry = lwg.PropTry;
+    let PropTryScene = lwg.PropTry.PropTryScene;
+    let Backpack = lwg.Backpack;
+    let BackpackScene = lwg.Backpack.BackpackScene;
     let Tomato = lwg.Tomato;
 
     var lwg3D;
@@ -5814,6 +5883,7 @@
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
+                    Admin._gameSwitch = true;
                     this.roundChange();
                     EventAdmin.notify(EventType.nextRound);
                 });
@@ -5986,9 +6056,11 @@
                     this.init();
                 });
                 EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
+                    Admin._gameSwitch = true;
                     this.init();
                 });
                 EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
+                    Admin._gameSwitch = true;
                     this.init();
                 });
             }
@@ -6085,19 +6157,38 @@
         lwgOnAwake() {
             Gold.goldAppear();
         }
-        lwgNodeDec() {
-            this.OptionParent = this.self['OptionParent'];
+        lwgAdaptive() {
+            this.self['SceneContent'].y = Laya.stage.height * 0.792;
+        }
+        lwgOnEnable() {
+            EventAdmin.notify(Game3D.EventType.opening);
+            this.self['BtnSCNum'].text = Backpack._prop1.num;
+            this.self['BtnSXNum'].text = Backpack._prop2.num;
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+            });
+            Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+            });
+            Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+            });
         }
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-                Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
-                    Tools.node_RemoveAllChildren(this.OptionParent);
+                if (!Admin._gameSwitch) {
+                    return;
+                }
+                Animation2D.fadeOut(this.self['OptionParent'], this.self['OptionParent'].alpha, 0, 300, 0, () => {
+                    Tools.node_RemoveAllChildren(this.self['OptionParent']);
                     this.createOppositeQuestion(questionAndYesOrNo, cardName);
                 });
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+                if (!Admin._gameSwitch) {
+                    return;
+                }
                 this.createQuestion(questionArr);
-                Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
+                Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0, () => {
                 });
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
@@ -6105,23 +6196,19 @@
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory; });
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
+                Admin._gameSwitch = false;
                 Admin._openScene(Admin.SceneName.UIResurgence);
             });
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                Tools.node_RemoveAllChildren(this.OptionParent);
+                Admin._gameSwitch = false;
+                Tools.node_RemoveAllChildren(this.self['OptionParent']);
             });
             EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-                Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { });
+                Animation2D.fadeOut(this.self['OptionParent'], 1, 0.5, 500, 100, () => { });
             });
             EventAdmin.reg(Game3D.EventType.doWell, this, () => {
                 this.createDoWall();
             });
-        }
-        lwgAdaptive() {
-            this.self['SceneContent'].y = Laya.stage.height * 0.792;
-        }
-        lwgOnEnable() {
-            EventAdmin.notify(Game3D.EventType.opening);
         }
         createQuestion(questionArr) {
             if (questionArr.length < 3) {
@@ -6180,10 +6267,6 @@
                 });
             }
             return Option;
-        }
-        lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            });
         }
         createOppositeQuestion(questionAndYesOrNo, cardName) {
             Admin._clickLock.switch = false;
@@ -6793,13 +6876,25 @@
         lwgOnAwake() {
             Gold.goldAppear();
             Setting.setBtnVinish();
+        }
+        lwgOnEnable() {
+            this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+            this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
             TimerAdmin.frameLoop(10, this, () => {
             });
         }
         lwgEventReg() {
             let Img = this.self['Surface'];
             let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
-            EventAdmin.reg('drawCard', this, () => {
+            EventAdmin.reg('drawCardEvent', this, () => {
+                if (DrawCard._residueDraw.num <= 0) {
+                    Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
+                    return;
+                }
+                else {
+                    DrawCard._residueDraw.num--;
+                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+                }
                 this.self['DrawDisPlay'].x = 0;
                 this.self['BtnTake'].visible = false;
                 for (let index = 0; index < 10; index++) {
@@ -6838,7 +6933,9 @@
                 let Card = this.self['CardParent'].getChildByName('Card' + this.self['cardIndex']);
                 if (!Card) {
                     this.self['cardIndex'] = null;
-                    Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard; });
+                    Laya.timer.once(500, this, () => {
+                        Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard; });
+                    });
                     return;
                 }
                 var func = () => {
@@ -6880,6 +6977,13 @@
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
                 ADManager.ShowReward(() => {
+                    DrawCard._freeAds.num++;
+                    if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                        DrawCard._freeAds.num = 0;
+                        DrawCard._residueDraw.num++;
+                        this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+                    }
+                    this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
@@ -6921,7 +7025,7 @@
                 }
             }, () => {
                 this.self.getChildByName('DrawSp').removeSelf();
-                EventAdmin.notify('drawCard');
+                EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
             }, () => {
                 this.self['DrawPosArr'] = null;
@@ -6969,6 +7073,31 @@
         lodingComplete() {
             this.self['Progress'].mask.x = 0;
             return 200;
+        }
+    }
+
+    class UIPropTry extends PropTry.PropTryScene {
+        lwgOnAwake() {
+            Tools.node_ShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+        }
+        lwgOnEnable() {
+            this.self['BtnClose'].visible = false;
+            Laya.timer.once(2000, this, () => {
+                this.self['BtnClose'].visible = true;
+            });
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            });
+            Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, () => {
+                this.self['Bytedance_Low_BtnGet'].visible = this.self['Bytedance_Low_Dot'].visible = this.self['Bytedance_Low_Dot'].visible ? false : true;
+            });
+            Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, () => {
+                Backpack._prop1.num++;
+                Backpack._prop2.num++;
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            });
         }
     }
 
@@ -7276,7 +7405,7 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.GameScene, this.self);
+                Admin._openScene(Admin.SceneName.UIPropTry, this.self);
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UIDrawCard);
@@ -7667,6 +7796,7 @@
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
             reg("script/Game/UILoding.ts", UILoding);
+            reg("script/Game/UIPropTry.ts", UIPropTry);
             reg("script/Game/UIResurgence.ts", UIResurgence);
             reg("script/Game/UISet.ts", UISet);
             reg("script/Game/UIShare.ts", UIShare);

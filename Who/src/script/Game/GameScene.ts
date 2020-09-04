@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 export default class GameScene extends Admin.Scene {
@@ -10,28 +10,52 @@ export default class GameScene extends Admin.Scene {
     public DoWell: Laya.Prefab;
 
     /**选项卡*/
-    OptionParent: Laya.Sprite;
+
     lwgOnAwake(): void {
         Gold.goldAppear();
     }
 
-    lwgNodeDec(): void {
-        this.OptionParent = this.self['OptionParent'] as Laya.Sprite;
+    lwgAdaptive(): void {
+        this.self['SceneContent'].y = Laya.stage.height * 0.792;
+    }
+
+    lwgOnEnable(): void {
+        EventAdmin.notify(Game3D.EventType.opening);
+        this.self['BtnSCNum'].text = Backpack._prop1.num;
+        this.self['BtnSXNum'].text = Backpack._prop2.num;
+    }
+
+    lwgBtnClick(): void {
+        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+            
+        });
+        Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+
+        });
+        Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+
+        });
     }
 
     lwgEventReg(): void {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
-            Animation2D.fadeOut(this.OptionParent, this.OptionParent.alpha, 0, 300, 0, () => {
-                Tools.node_RemoveAllChildren(this.OptionParent);
+            if (!Admin._gameSwitch) {
+                return;
+            }
+            Animation2D.fadeOut(this.self['OptionParent'], this.self['OptionParent'].alpha, 0, 300, 0, () => {
+                Tools.node_RemoveAllChildren(this.self['OptionParent']);
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
             });
         })
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+            if (!Admin._gameSwitch) {
+                return;
+            }
             this.createQuestion(questionArr);
-            Animation2D.fadeOut(this.OptionParent, 0, 1, 300, 0, () => {
+            Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0, () => {
             });
         })
 
@@ -43,31 +67,25 @@ export default class GameScene extends Admin.Scene {
 
         // 失败
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
+            Admin._gameSwitch = false;
             Admin._openScene(Admin.SceneName.UIResurgence);
         })
 
         // 复活
         EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-            Tools.node_RemoveAllChildren(this.OptionParent);
+            Admin._gameSwitch = false;
+            Tools.node_RemoveAllChildren(this.self['OptionParent']);
         })
 
         //隐藏选项卡
         EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-            Animation2D.fadeOut(this.OptionParent, 1, 0.5, 500, 100, () => { })
+            Animation2D.fadeOut(this.self['OptionParent'], 1, 0.5, 500, 100, () => { })
         })
 
         // 干得漂亮提示
         EventAdmin.reg(Game3D.EventType.doWell, this, () => {
             this.createDoWall();
         })
-    }
-
-    lwgAdaptive(): void {
-        this.self['SceneContent'].y = Laya.stage.height * 0.792;
-    }
-
-    lwgOnEnable(): void {
-        EventAdmin.notify(Game3D.EventType.opening);
     }
 
     /**创建问题*/
@@ -128,10 +146,6 @@ export default class GameScene extends Admin.Scene {
         return Option;
     }
 
-    lwgBtnClick(): void {
-        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-        });
-    }
 
     /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {

@@ -593,6 +593,7 @@ export module Game3D {
 
             //开局
             EventAdmin.reg(EventType.opening, this, () => {
+                Admin._gameSwitch = true;
                 this.roundChange();
                 EventAdmin.notify(EventType.nextRound);
             })
@@ -776,10 +777,12 @@ export module Game3D {
             })
             // 复活
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
+                Admin._gameSwitch = true;
                 this.init();
             })
             // 刷新
             EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
+                Admin._gameSwitch = true;
                 this.init();
             })
         }

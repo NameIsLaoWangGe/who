@@ -13,7 +13,8 @@
       21,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "zds2",
@@ -26,7 +27,8 @@
       20,
       22,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "zds3",
@@ -34,13 +36,13 @@
     "featureArr": [
       3,
       6,
-      9,
       11,
       15,
       21,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "zds4",
@@ -52,7 +54,8 @@
       19,
       20,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "zds5",
@@ -60,13 +63,13 @@
     "featureArr": [
       1,
       8,
-      9,
       11,
       15,
       21,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "lyy1",
@@ -77,7 +80,8 @@
       14,
       22,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "lyy2",
@@ -88,10 +92,10 @@
       9,
       11,
       14,
-      19,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "lyy3",
@@ -102,7 +106,8 @@
       14,
       22,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "lyy4",
@@ -113,10 +118,10 @@
       9,
       11,
       14,
-      19,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "lyy5",
@@ -126,7 +131,8 @@
       8,
       14,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxk1",
@@ -140,7 +146,8 @@
       21,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxk2",
@@ -152,7 +159,8 @@
       18,
       19,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxk3",
@@ -160,14 +168,14 @@
     "featureArr": [
       3,
       6,
-      9,
       16,
       18,
       21,
       22,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxk4",
@@ -179,7 +187,8 @@
       18,
       19,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxk5",
@@ -193,7 +202,8 @@
       21,
       23,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxy1",
@@ -204,7 +214,8 @@
       9,
       16,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxy2",
@@ -214,12 +225,12 @@
       5,
       11,
       16,
-      19,
       20,
       21,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxy3",
@@ -231,7 +242,8 @@
       16,
       22,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxy4",
@@ -241,12 +253,12 @@
       7,
       11,
       16,
-      19,
       20,
       21,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "cxy5",
@@ -257,7 +269,8 @@
       9,
       16,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "xxs1",
@@ -265,13 +278,13 @@
     "featureArr": [
       1,
       4,
-      9,
       11,
       17,
       21,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "xxs2",
@@ -281,7 +294,8 @@
       5,
       17,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "xxs3",
@@ -289,13 +303,13 @@
     "featureArr": [
       3,
       6,
-      9,
       11,
       17,
       21,
       23,
       26
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "xxs4",
@@ -305,7 +319,8 @@
       7,
       17,
       25
-    ]
+    ],
+    "quality": "R"
   },
   {
     "name": "xxs5",
@@ -319,7 +334,375 @@
       21,
       23,
       26
-    ]
+    ],
+    "quality": "R"
+  },
+  {
+    "name": "scp1",
+    "ChName": "scp1",
+    "featureArr": [
+      1,
+      4,
+      13,
+      14,
+      19,
+      20
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "scp2",
+    "ChName": "scp2",
+    "featureArr": [
+      2,
+      5,
+      13,
+      15,
+      20,
+      21,
+      26
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "scp3",
+    "ChName": "scp3",
+    "featureArr": [
+      3,
+      6,
+      13,
+      16,
+      19,
+      20
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "scp4",
+    "ChName": "scp4",
+    "featureArr": [
+      2,
+      7,
+      9,
+      13,
+      17,
+      20,
+      21,
+      26
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "wzry1",
+    "ChName": "鲁班",
+    "featureArr": [
+      3,
+      4,
+      10,
+      17,
+      19,
+      20,
+      23,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry2",
+    "ChName": "妲己",
+    "featureArr": [
+      2,
+      5,
+      9,
+      10,
+      14,
+      20,
+      21,
+      24,
+      26
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry3",
+    "ChName": "猪八戒",
+    "featureArr": [
+      1,
+      7,
+      10,
+      15,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry4",
+    "ChName": "孙悟空",
+    "featureArr": [
+      2,
+      8,
+      10,
+      15,
+      20,
+      21,
+      22,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry5",
+    "ChName": "牛魔",
+    "featureArr": [
+      1,
+      8,
+      10,
+      16,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry6",
+    "ChName": "杨戬",
+    "featureArr": [
+      3,
+      7,
+      9,
+      10,
+      16,
+      20,
+      21,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wzry7",
+    "ChName": "哪吒",
+    "featureArr": [
+      3,
+      5,
+      10,
+      15,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "UR"
+  },
+  {
+    "name": "wdsj1",
+    "ChName": "方块人1",
+    "featureArr": [
+      1,
+      4,
+      9,
+      11,
+      12,
+      14,
+      20,
+      23,
+      26
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj2",
+    "ChName": "方块人2",
+    "featureArr": [
+      2,
+      5,
+      12,
+      15,
+      19,
+      21,
+      25
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj3",
+    "ChName": "方块人3",
+    "featureArr": [
+      3,
+      6,
+      11,
+      12,
+      16,
+      20,
+      23,
+      26
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj4",
+    "ChName": "方块人4",
+    "featureArr": [
+      1,
+      7,
+      12,
+      17,
+      19,
+      21,
+      25
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj5",
+    "ChName": "方块人5",
+    "featureArr": [
+      2,
+      8,
+      11,
+      12,
+      16,
+      20,
+      23,
+      26
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj6",
+    "ChName": "方块人6",
+    "featureArr": [
+      3,
+      7,
+      12,
+      15,
+      21,
+      26
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj7",
+    "ChName": "方块人7",
+    "featureArr": [
+      1,
+      6,
+      11,
+      12,
+      14,
+      20,
+      23,
+      25
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj8",
+    "ChName": "方块人8",
+    "featureArr": [
+      2,
+      5,
+      9,
+      12,
+      17,
+      19,
+      21,
+      26
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "wdsj9",
+    "ChName": "方块人9",
+    "featureArr": [
+      3,
+      4,
+      11,
+      12,
+      16,
+      20,
+      23,
+      25
+    ],
+    "quality": "SSR"
+  },
+  {
+    "name": "atm1",
+    "ChName": "奥特曼之王",
+    "featureArr": [
+      1,
+      4,
+      14,
+      20,
+      22,
+      24,
+      25
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "atm2",
+    "ChName": "奥特曼2",
+    "featureArr": [
+      2,
+      5,
+      9,
+      15,
+      20,
+      23,
+      24,
+      25
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "atm3",
+    "ChName": "奥特曼3",
+    "featureArr": [
+      3,
+      6,
+      16,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "atm4",
+    "ChName": "奥特曼4",
+    "featureArr": [
+      2,
+      7,
+      9,
+      17,
+      20,
+      23,
+      24,
+      25
+    ],
+    "quality": "SR"
+  },
+  {
+    "name": "atm5",
+    "ChName": "奥特曼5",
+    "featureArr": [
+      1,
+      8,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "SR"
   }
 ]
 }
