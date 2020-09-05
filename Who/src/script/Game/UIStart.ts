@@ -23,14 +23,19 @@ export default class UIStart extends Start.StartScene {
             if (Admin._gameLevel.value % 4 !== 0) {
                 if (index <= Admin._gameLevel.value % 4) {
                     ele.gray = false;
-                    // console.log(ele);
+                    if (index == Admin._gameLevel.value % 4) {
+                        TimerAdmin.frameLoop(100, this, () => {
+                            Animation2D.swell_shrink(ele.getChildAt(1), 1, 1.1, 200);
+                        })
+                    }
                 } else {
                     ele.gray = true;
                 }
             } else {
                 TimerAdmin.frameLoop(100, this, () => {
+                    this.self['LvIcon4'].zOrder = 1000;
                     Animation2D.shookHead_Simple(this.self['LvIcon4'], 15, 200);
-                    Effects.createExplosion_Rotate(this.self['LvIcon4'].parent, 25, this.self['LvIcon4'].x,this.self['LvIcon4'].y, 'star', 10, 5);
+                    Effects.createExplosion_Rotate(this.self['LvIcon4'].parent, 10, this.self['LvIcon4'].x, this.self['LvIcon4'].y, 'star', 1, 15);
                 });
                 break;
             }

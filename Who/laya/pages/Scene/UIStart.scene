@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":519,
-    "selecteID":521,
+    "selectedBox":2,
+    "selecteID":512,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
@@ -134,7 +134,7 @@
             "x":15,
             "type":"Sprite",
             "searchKey":"Sprite,LevelDisplay,LevelDisplay",
-            "props":{"y":230,"x":96,"width":510,"var":"LevelDisplay","name":"LevelDisplay","height":168},
+            "props":{"y":273,"x":99,"width":510,"var":"LevelDisplay","name":"LevelDisplay","height":168},
             "nodeParent":2,
             "label":"LevelDisplay",
             "isOpen":true,
@@ -277,7 +277,7 @@
                                     "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon3,LvIcon3",
-                                    "props":{"y":0,"x":0,"var":"LvIcon3","skin":"Game/UI/UIStart/zhentan-pai1.png","name":"LvIcon3"},
+                                    "props":{"y":42,"x":37,"width":74,"var":"LvIcon3","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon3","height":84},
                                     "nodeParent":523,
                                     "label":"LvIcon3",
                                     "isDirectory":false,
@@ -336,6 +336,21 @@
                                 {
                                     "x":60,
                                     "type":"Image",
+                                    "searchKey":"Image,LvIcon2,LvIcon2",
+                                    "props":{"y":42,"x":44,"width":74,"var":"LvIcon2","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon2","height":84},
+                                    "nodeParent":527,
+                                    "label":"LvIcon2",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":529,
+                                    "child":[
+                                        ],
+                                    "$HIDDEN":false
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Image",
                                     "searchKey":"Image,Num",
                                     "props":{"y":98,"x":24,"value":"15","spaceX":-10,"skin":"Game/UI/UIStart/zhentan-4.png","sheet":"0123456789","name":"Num","align":"center"},
                                     "nodeParent":527,
@@ -344,21 +359,6 @@
                                     "isAniNode":true,
                                     "hasChild":false,
                                     "compId":530,
-                                    "child":[
-                                        ],
-                                    "$HIDDEN":false
-                                },
-                                {
-                                    "x":60,
-                                    "type":"Image",
-                                    "searchKey":"Image,LvIcon2,LvIcon2",
-                                    "props":{"y":0,"x":7,"var":"LvIcon2","skin":"Game/UI/UIStart/zhentan-pai1.png","name":"LvIcon2"},
-                                    "nodeParent":527,
-                                    "label":"LvIcon2",
-                                    "isDirectory":false,
-                                    "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":529,
                                     "child":[
                                         ],
                                     "$HIDDEN":false
@@ -397,7 +397,7 @@
                                     "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon1,LvIcon1",
-                                    "props":{"y":1,"x":0,"var":"LvIcon1","skin":"Game/UI/UIStart/zhentan-pai1.png","name":"LvIcon1"},
+                                    "props":{"y":43,"x":37,"width":74,"var":"LvIcon1","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon1","height":84},
                                     "nodeParent":531,
                                     "label":"LvIcon1",
                                     "isDirectory":false,
