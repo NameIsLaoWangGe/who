@@ -3611,7 +3611,6 @@ export module lwg {
 
     /**工具模块*/
     export module Tools {
-
         /**
        * 将数字格式化，例如1000 = 1k；
        * @param number 数字
@@ -4300,7 +4299,7 @@ export module lwg {
          * @param arr 数组
          * @param num 取出几个元素默认为1个
          */
-        export function arrayRandomGetOut(arr: Array<any>, num: number): any {
+        export function arrayRandomGetOut(arr: Array<any>, num?: number): any {
             if (!num) {
                 num = 1;
             }
@@ -4309,7 +4308,7 @@ export module lwg {
                 return '数组长度小于取出的数！';
             } else {
                 for (let index = 0; index < num; index++) {
-                    let ran = Math.floor(Math.random() * (arr.length - 1));
+                    let ran = Math.round(Math.random() * (arr.length - 1));
                     let a1 = arr[ran];
                     arr.splice(ran, 1);
                     arr0.push(a1);
@@ -4445,9 +4444,6 @@ export module lwg {
         export function angle_GetRad(angle) {
             return angle / 180 * Math.PI;
         }
-
-
-
 
         /**
           * 获取本地存储数据并且和文件中数据表对比,对比后会上传
