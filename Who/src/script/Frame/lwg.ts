@@ -2434,7 +2434,7 @@ export module lwg {
            * @param Sp3d 要移动的物体
            * @param Target 目标物体
            * @param duration 间隔
-           * @param caller 回调执行领域
+           * @param caller 执行域
            * @param ease 缓动函数
            * @param complete 播放完成回调 
            * @param delay 延迟

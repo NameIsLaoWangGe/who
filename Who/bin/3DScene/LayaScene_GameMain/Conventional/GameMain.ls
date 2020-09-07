@@ -30,8 +30,8 @@
 					"layer":0,
 					"position":[
 						0,
-						0.48,
-						-8.97
+						3.04,
+						-16.02
 					],
 					"rotation":[
 						-0.2575919,
@@ -2415,7 +2415,7 @@
 				]
 			},
 			{
-				"type":"MeshSprite3D",
+				"type":"Sprite3D",
 				"instanceID":67,
 				"props":{
 					"name":"PerspectiveMe",
@@ -2437,14 +2437,6 @@
 						1,
 						1,
 						1
-					],
-					"meshPath":"Library/unity default resources-Cube.lm",
-					"enableRender":false,
-					"materials":[
-						{
-							"type":"Laya.BlinnPhongMaterial",
-							"path":"Resources/unity_builtin_extra.lmat"
-						}
 					]
 				},
 				"components":[
@@ -2474,7 +2466,7 @@
 				"child":[]
 			},
 			{
-				"type":"MeshSprite3D",
+				"type":"Sprite3D",
 				"instanceID":68,
 				"props":{
 					"name":"PerspectiveOPPosite",
@@ -2496,14 +2488,6 @@
 						0.1,
 						0.1,
 						0.1
-					],
-					"meshPath":"Library/unity default resources-Cube.lm",
-					"enableRender":false,
-					"materials":[
-						{
-							"type":"Laya.BlinnPhongMaterial",
-							"path":"Resources/unity_builtin_extra.lmat"
-						}
 					]
 				},
 				"components":[
@@ -2536,6 +2520,34 @@
 				"type":"Sprite3D",
 				"instanceID":69,
 				"props":{
+					"name":"PerspectiveAwait",
+					"active":true,
+					"isStatic":false,
+					"layer":0,
+					"position":[
+						0,
+						3.04,
+						-16.02
+					],
+					"rotation":[
+						-0.2575919,
+						0,
+						0,
+						-0.9662538
+					],
+					"scale":[
+						0.1,
+						0.1,
+						0.1
+					]
+				},
+				"components":[],
+				"child":[]
+			},
+			{
+				"type":"Sprite3D",
+				"instanceID":70,
+				"props":{
 					"name":"changjing",
 					"active":true,
 					"isStatic":false,
@@ -2561,7 +2573,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":70,
+						"instanceID":71,
 						"props":{
 							"name":"changjing",
 							"active":true,
@@ -2596,7 +2608,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":71,
+						"instanceID":72,
 						"props":{
 							"name":"zhuozi",
 							"active":true,
@@ -2631,7 +2643,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":72,
+						"instanceID":73,
 						"props":{
 							"name":"dengzi",
 							"active":true,
@@ -2666,7 +2678,7 @@
 					},
 					{
 						"type":"Sprite3D",
-						"instanceID":73,
+						"instanceID":74,
 						"props":{
 							"name":"pai",
 							"active":true,
@@ -2693,7 +2705,7 @@
 						"child":[
 							{
 								"type":"Sprite3D",
-								"instanceID":74,
+								"instanceID":75,
 								"props":{
 									"name":"kapai",
 									"active":true,
@@ -2720,41 +2732,6 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":75,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.4751537,
-												-0.9555589,
-												2.031072
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Card/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Card/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
 										"instanceID":76,
 										"props":{
 											"name":"Object007",
@@ -2762,7 +2739,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555589,
 												2.031072
 											],
@@ -2797,7 +2774,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555589,
 												2.031072
 											],
@@ -2832,7 +2809,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555589,
 												2.031072
 											],
@@ -2867,9 +2844,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555589,
-												1.477189
+												2.031072
 											],
 											"rotation":[
 												-0.7071068,
@@ -2902,7 +2879,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555589,
 												1.477189
 											],
@@ -2937,7 +2914,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555589,
 												1.477189
 											],
@@ -2972,7 +2949,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555589,
 												1.477189
 											],
@@ -3007,9 +2984,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555589,
-												0.9331894
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3042,7 +3019,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555589,
 												0.9331894
 											],
@@ -3077,7 +3054,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555589,
 												0.9331894
 											],
@@ -3112,7 +3089,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555589,
 												0.9331894
 											],
@@ -3147,9 +3124,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555589,
-												0.3891895
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3182,7 +3159,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555589,
 												0.3891895
 											],
@@ -3217,7 +3194,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555589,
 												0.3891895
 											],
@@ -3246,6 +3223,41 @@
 									{
 										"type":"MeshSprite3D",
 										"instanceID":90,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
+												-0.9555589,
+												0.3891895
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Card/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Card/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":91,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3282,7 +3294,7 @@
 							},
 							{
 								"type":"Sprite3D",
-								"instanceID":91,
+								"instanceID":92,
 								"props":{
 									"name":"kapai (1)",
 									"active":true,
@@ -3309,41 +3321,6 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":92,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.4751537,
-												-0.9555588,
-												2.031072
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Card/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Card/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
 										"instanceID":93,
 										"props":{
 											"name":"Object007",
@@ -3351,7 +3328,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555588,
 												2.031072
 											],
@@ -3386,7 +3363,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555588,
 												2.031072
 											],
@@ -3421,7 +3398,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555588,
 												2.031072
 											],
@@ -3456,9 +3433,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555588,
-												1.477189
+												2.031072
 											],
 											"rotation":[
 												-0.7071068,
@@ -3491,7 +3468,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555588,
 												1.477189
 											],
@@ -3526,7 +3503,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555588,
 												1.477189
 											],
@@ -3561,7 +3538,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555588,
 												1.477189
 											],
@@ -3596,9 +3573,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555588,
-												0.9331896
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3631,7 +3608,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555588,
 												0.9331896
 											],
@@ -3666,7 +3643,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555588,
 												0.9331896
 											],
@@ -3701,7 +3678,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												0.256316,
 												-0.9555588,
 												0.9331896
 											],
@@ -3736,9 +3713,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												0.6273158,
 												-0.9555588,
-												0.3891893
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -3771,7 +3748,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												-0.4751537,
 												-0.9555588,
 												0.3891893
 											],
@@ -3806,7 +3783,7 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												-0.1096842,
 												-0.9555588,
 												0.3891893
 											],
@@ -3835,6 +3812,41 @@
 									{
 										"type":"MeshSprite3D",
 										"instanceID":107,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
+												-0.9555588,
+												0.3891893
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Card/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Card/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":108,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3875,7 +3887,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":108,
+				"instanceID":109,
 				"props":{
 					"name":"AllCard",
 					"active":true,
@@ -3902,7 +3914,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":109,
+						"instanceID":110,
 						"props":{
 							"name":"zds1",
 							"active":true,
@@ -3943,111 +3955,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
-										],
-										"size":[
-											0.296779,
-											0.35,
-											0.01295553
-										]
-									}
-								],
-								"isTrigger":false
-							},
-							{
-								"type":"Animator",
-								"layers":[
-									{
-										"name":"Base Layer",
-										"weight":0,
-										"blendingMode":0,
-										"states":[
-											{
-												"name":"standMe",
-												"clipPath":"Assets/Animator/CardAni/standMe-standMe.lani"
-											},
-											{
-												"name":"standOpposite",
-												"clipPath":"Assets/Animator/CardAni/standOpposite-standOpposite.lani"
-											},
-											{
-												"name":"fallMe",
-												"clipPath":"Assets/Animator/CardAni/fallMe-fallMe.lani"
-											},
-											{
-												"name":"fallOpposite",
-												"clipPath":"Assets/Animator/CardAni/fallOpposite-fallOpposite.lani"
-											},
-											{
-												"name":"blinkMe",
-												"clipPath":"Assets/Animator/CardAni/blinkMe-blinkMe.lani"
-											},
-											{
-												"name":"blinkOpposite",
-												"clipPath":"Assets/Animator/CardAni/blinkOpposite-blinkOpposite.lani"
-											},
-											{
-												"name":"clinkMe",
-												"clipPath":"Assets/Animator/CardAni/clickMe-clickMe.lani"
-											},
-											{
-												"name":"clickMe",
-												"clipPath":"Assets/Animator/CardAni/clickMe-clickMe.lani"
-											}
-										]
-									}
-								],
-								"cullingMode":0,
-								"playOnWake":true
-							}
-						],
-						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":110,
-						"props":{
-							"name":"zds2",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								0,
-								0,
-								-0.45
-							],
-							"rotation":[
-								0,
-								-1,
-								0,
-								0
-							],
-							"scale":[
-								0.83,
-								0.83,
-								0.83
-							],
-							"meshPath":"Assets/Animator/Card/1mesh-Object008.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Animator/Card/zds2.lmat"
-								}
-							]
-						},
-						"components":[
-							{
-								"type":"PhysicsCollider",
-								"restitution":0,
-								"friction":0.5,
-								"rollingFriction":0,
-								"shapes":[
-									{
-										"type":"BoxColliderShape",
-										"center":[
-											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -4112,14 +4020,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":111,
 						"props":{
-							"name":"zds3",
+							"name":"zds2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								0.45
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -4136,7 +4044,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/zds3.lmat"
+									"path":"Assets/Animator/Card/zds2.lmat"
 								}
 							]
 						},
@@ -4151,7 +4059,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -4216,14 +4124,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":112,
 						"props":{
-							"name":"zds4",
+							"name":"zds3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								-0.9
+								0.45
 							],
 							"rotation":[
 								0,
@@ -4240,7 +4148,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/zds4.lmat"
+									"path":"Assets/Animator/Card/zds3.lmat"
 								}
 							]
 						},
@@ -4255,8 +4163,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -4320,14 +4228,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":113,
 						"props":{
-							"name":"zds5",
+							"name":"zds4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								0.9
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -4344,7 +4252,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk1.lmat"
+									"path":"Assets/Animator/Card/zds4.lmat"
 								}
 							]
 						},
@@ -4359,8 +4267,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-4.854519E-07
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -4424,14 +4332,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":114,
 						"props":{
-							"name":"lyy1",
+							"name":"zds5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								-1.35
+								0.9
 							],
 							"rotation":[
 								0,
@@ -4448,7 +4356,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/lyy1.lmat"
+									"path":"Assets/Animator/Card/cxk1.lmat"
 								}
 							]
 						},
@@ -4463,8 +4371,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											-4.854519E-07
 										],
 										"size":[
 											0.296779,
@@ -4528,14 +4436,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":115,
 						"props":{
-							"name":"lyy2",
+							"name":"lyy1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								1.35
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -4552,7 +4460,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/lyy2.lmat"
+									"path":"Assets/Animator/Card/lyy1.lmat"
 								}
 							]
 						},
@@ -4567,7 +4475,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -4632,14 +4540,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":116,
 						"props":{
-							"name":"lyy3",
+							"name":"lyy2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								-1.8
+								1.35
 							],
 							"rotation":[
 								0,
@@ -4656,7 +4564,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/lyy3.lmat"
+									"path":"Assets/Animator/Card/lyy2.lmat"
 								}
 							]
 						},
@@ -4671,8 +4579,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-9.622891E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -4736,14 +4644,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":117,
 						"props":{
-							"name":"lyy4",
+							"name":"lyy3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								1.8
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -4760,7 +4668,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/lyy4.lmat"
+									"path":"Assets/Animator/Card/lyy3.lmat"
 								}
 							]
 						},
@@ -4775,8 +4683,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-9.622891E-07
 										],
 										"size":[
 											0.296779,
@@ -4840,14 +4748,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":118,
 						"props":{
-							"name":"lyy5",
+							"name":"lyy4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0,
 								0,
-								-2.25
+								1.8
 							],
 							"rotation":[
 								0,
@@ -4864,7 +4772,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/lyy5.lmat"
+									"path":"Assets/Animator/Card/lyy4.lmat"
 								}
 							]
 						},
@@ -4879,8 +4787,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -4944,14 +4852,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":119,
 						"props":{
-							"name":"cxk1",
+							"name":"lyy5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								0.5,
 								0,
-								0
+								0,
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -4968,7 +4876,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk1.lmat"
+									"path":"Assets/Animator/Card/lyy5.lmat"
 								}
 							]
 						},
@@ -4983,7 +4891,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -5048,14 +4956,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":120,
 						"props":{
-							"name":"cxk2",
+							"name":"cxk1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								-0.45
+								0
 							],
 							"rotation":[
 								0,
@@ -5072,7 +4980,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk2.lmat"
+									"path":"Assets/Animator/Card/cxk1.lmat"
 								}
 							]
 						},
@@ -5087,7 +4995,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -5152,14 +5060,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":121,
 						"props":{
-							"name":"cxk3",
+							"name":"cxk2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								0.45
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -5176,7 +5084,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk3.lmat"
+									"path":"Assets/Animator/Card/cxk2.lmat"
 								}
 							]
 						},
@@ -5191,7 +5099,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -5256,14 +5164,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":122,
 						"props":{
-							"name":"cxk4",
+							"name":"cxk3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								-0.9
+								0.45
 							],
 							"rotation":[
 								0,
@@ -5280,7 +5188,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk4.lmat"
+									"path":"Assets/Animator/Card/cxk3.lmat"
 								}
 							]
 						},
@@ -5295,8 +5203,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -5360,14 +5268,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":123,
 						"props":{
-							"name":"cxk5",
+							"name":"cxk4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								0.9
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -5384,7 +5292,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk5.lmat"
+									"path":"Assets/Animator/Card/cxk4.lmat"
 								}
 							]
 						},
@@ -5399,8 +5307,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-4.854519E-07
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -5464,14 +5372,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":124,
 						"props":{
-							"name":"cxy1",
+							"name":"cxk5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								-1.35
+								0.9
 							],
 							"rotation":[
 								0,
@@ -5488,7 +5396,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxy1.lmat"
+									"path":"Assets/Animator/Card/cxk5.lmat"
 								}
 							]
 						},
@@ -5503,8 +5411,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											-4.854519E-07
 										],
 										"size":[
 											0.296779,
@@ -5568,14 +5476,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":125,
 						"props":{
-							"name":"cxy2",
+							"name":"cxy1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								1.35
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -5592,7 +5500,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxy2.lmat"
+									"path":"Assets/Animator/Card/cxy1.lmat"
 								}
 							]
 						},
@@ -5607,7 +5515,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -5672,14 +5580,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":126,
 						"props":{
-							"name":"cxy3",
+							"name":"cxy2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								-1.8
+								1.35
 							],
 							"rotation":[
 								0,
@@ -5696,7 +5604,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxy3.lmat"
+									"path":"Assets/Animator/Card/cxy2.lmat"
 								}
 							]
 						},
@@ -5711,8 +5619,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-9.622891E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -5776,14 +5684,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":127,
 						"props":{
-							"name":"cxy4",
+							"name":"cxy3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								1.8
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -5800,7 +5708,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxy4.lmat"
+									"path":"Assets/Animator/Card/cxy3.lmat"
 								}
 							]
 						},
@@ -5815,8 +5723,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-9.622891E-07
 										],
 										"size":[
 											0.296779,
@@ -5880,14 +5788,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":128,
 						"props":{
-							"name":"cxy5",
+							"name":"cxy4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								0.5,
 								0,
-								-2.25
+								1.8
 							],
 							"rotation":[
 								0,
@@ -5904,7 +5812,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxy5.lmat"
+									"path":"Assets/Animator/Card/cxy4.lmat"
 								}
 							]
 						},
@@ -5919,8 +5827,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -5984,14 +5892,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":129,
 						"props":{
-							"name":"xxs1",
+							"name":"cxy5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-0.5,
+								0.5,
 								0,
-								0
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -6008,7 +5916,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk1.lmat"
+									"path":"Assets/Animator/Card/cxy5.lmat"
 								}
 							]
 						},
@@ -6023,7 +5931,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -6088,14 +5996,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":130,
 						"props":{
-							"name":"xxs2",
+							"name":"xxs1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								-0.45
+								0
 							],
 							"rotation":[
 								0,
@@ -6127,7 +6035,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -6192,14 +6100,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":131,
 						"props":{
-							"name":"xxs3",
+							"name":"xxs2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								0.45
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -6231,7 +6139,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -6296,14 +6204,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":132,
 						"props":{
-							"name":"xxs4",
+							"name":"xxs3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								-0.9
+								0.45
 							],
 							"rotation":[
 								0,
@@ -6335,8 +6243,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -6400,14 +6308,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":133,
 						"props":{
-							"name":"xxs5",
+							"name":"xxs4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								0.9
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -6439,8 +6347,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-4.854519E-07
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -6504,14 +6412,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":134,
 						"props":{
-							"name":"scp1",
+							"name":"xxs5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								-1.35
+								0.9
 							],
 							"rotation":[
 								0,
@@ -6528,7 +6436,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/scp1.lmat"
+									"path":"Assets/Animator/Card/cxk1.lmat"
 								}
 							]
 						},
@@ -6543,8 +6451,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											-4.854519E-07
 										],
 										"size":[
 											0.296779,
@@ -6608,14 +6516,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":135,
 						"props":{
-							"name":"scp2",
+							"name":"scp1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								1.35
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -6632,7 +6540,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/scp2.lmat"
+									"path":"Assets/Animator/Card/scp1.lmat"
 								}
 							]
 						},
@@ -6647,7 +6555,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -6712,14 +6620,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":136,
 						"props":{
-							"name":"scp3",
+							"name":"scp2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								-1.8
+								1.35
 							],
 							"rotation":[
 								0,
@@ -6736,7 +6644,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/scp3.lmat"
+									"path":"Assets/Animator/Card/scp2.lmat"
 								}
 							]
 						},
@@ -6751,8 +6659,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-9.622891E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -6816,14 +6724,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":137,
 						"props":{
-							"name":"scp4",
+							"name":"scp3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								1.8
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -6840,7 +6748,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/scp4.lmat"
+									"path":"Assets/Animator/Card/scp3.lmat"
 								}
 							]
 						},
@@ -6855,8 +6763,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-9.622891E-07
 										],
 										"size":[
 											0.296779,
@@ -6920,14 +6828,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":138,
 						"props":{
-							"name":"wzry1",
+							"name":"scp4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-0.5,
 								0,
-								-2.25
+								1.8
 							],
 							"rotation":[
 								0,
@@ -6944,7 +6852,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry1.lmat"
+									"path":"Assets/Animator/Card/scp4.lmat"
 								}
 							]
 						},
@@ -6959,8 +6867,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -7024,14 +6932,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":139,
 						"props":{
-							"name":"wzry2",
+							"name":"wzry1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								1,
+								-0.5,
 								0,
-								0
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -7048,7 +6956,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry2.lmat"
+									"path":"Assets/Animator/Card/wzry1.lmat"
 								}
 							]
 						},
@@ -7062,8 +6970,8 @@
 									{
 										"type":"BoxColliderShape",
 										"center":[
-											-4.768372E-07,
-											0.35,
+											0,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -7128,14 +7036,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":140,
 						"props":{
-							"name":"wzry3",
+							"name":"wzry2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								-0.45
+								0
 							],
 							"rotation":[
 								0,
@@ -7152,7 +7060,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry3.lmat"
+									"path":"Assets/Animator/Card/wzry2.lmat"
 								}
 							]
 						},
@@ -7167,7 +7075,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -7232,14 +7140,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":141,
 						"props":{
-							"name":"wzry4",
+							"name":"wzry3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								0.45
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -7256,7 +7164,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry4.lmat"
+									"path":"Assets/Animator/Card/wzry3.lmat"
 								}
 							]
 						},
@@ -7271,7 +7179,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -7336,14 +7244,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":142,
 						"props":{
-							"name":"wzry5",
+							"name":"wzry4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								-0.9
+								0.45
 							],
 							"rotation":[
 								0,
@@ -7360,7 +7268,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry5.lmat"
+									"path":"Assets/Animator/Card/wzry4.lmat"
 								}
 							]
 						},
@@ -7375,8 +7283,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
-											4.682224E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -7440,14 +7348,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":143,
 						"props":{
-							"name":"wzry6",
+							"name":"wzry5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								0.9
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -7464,7 +7372,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry6.lmat"
+									"path":"Assets/Animator/Card/wzry5.lmat"
 								}
 							]
 						},
@@ -7479,8 +7387,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
-											-4.854519E-07
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -7544,14 +7452,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":144,
 						"props":{
-							"name":"wzry7",
+							"name":"wzry6",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								1.532,
+								1,
 								0,
-								-1.35
+								0.9
 							],
 							"rotation":[
 								0,
@@ -7568,7 +7476,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wzry7.lmat"
+									"path":"Assets/Animator/Card/wzry6.lmat"
 								}
 							]
 						},
@@ -7582,9 +7490,9 @@
 									{
 										"type":"BoxColliderShape",
 										"center":[
-											0,
-											0.35,
-											-8.614734E-09
+											-4.768372E-07,
+											0.33,
+											-4.854519E-07
 										],
 										"size":[
 											0.296779,
@@ -7648,14 +7556,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":145,
 						"props":{
-							"name":"wdsj1",
+							"name":"wzry7",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								1,
+								-1,
 								0,
-								-1.35
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -7672,7 +7580,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wdsj1.lmat"
+									"path":"Assets/Animator/Card/wzry7.lmat"
 								}
 							]
 						},
@@ -7686,8 +7594,8 @@
 									{
 										"type":"BoxColliderShape",
 										"center":[
-											-4.768372E-07,
-											0.35,
+											0,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -7752,14 +7660,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":146,
 						"props":{
-							"name":"wdsj2",
+							"name":"wdsj1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								1.35
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -7776,7 +7684,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wdsj2.lmat"
+									"path":"Assets/Animator/Card/wdsj1.lmat"
 								}
 							]
 						},
@@ -7791,7 +7699,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -7856,14 +7764,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":147,
 						"props":{
-							"name":"wdsj3",
+							"name":"wdsj2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								-1.8
+								1.35
 							],
 							"rotation":[
 								0,
@@ -7880,7 +7788,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wdsj3.lmat"
+									"path":"Assets/Animator/Card/wdsj2.lmat"
 								}
 							]
 						},
@@ -7895,8 +7803,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
-											-9.622891E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -7960,14 +7868,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":148,
 						"props":{
-							"name":"wdsj4",
+							"name":"wdsj3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								1.8
+								-1.8
 							],
 							"rotation":[
 								0,
@@ -7984,7 +7892,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/wdsj4.lmat"
+									"path":"Assets/Animator/Card/wdsj3.lmat"
 								}
 							]
 						},
@@ -7999,8 +7907,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
-											4.682224E-07
+											0.33,
+											-9.622891E-07
 										],
 										"size":[
 											0.296779,
@@ -8064,14 +7972,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":149,
 						"props":{
-							"name":"wdsj5",
+							"name":"wdsj4",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								1,
 								0,
-								-2.25
+								1.8
 							],
 							"rotation":[
 								0,
@@ -8103,8 +8011,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											-4.768372E-07,
-											0.35,
-											-8.614734E-09
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -8168,14 +8076,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":150,
 						"props":{
-							"name":"wdsj6",
+							"name":"wdsj5",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
-								-1,
+								1,
 								0,
-								0
+								-2.25
 							],
 							"rotation":[
 								0,
@@ -8192,7 +8100,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Card/cxk1.lmat"
+									"path":"Assets/Animator/Card/wdsj4.lmat"
 								}
 							]
 						},
@@ -8206,8 +8114,8 @@
 									{
 										"type":"BoxColliderShape",
 										"center":[
-											0,
-											0.35,
+											-4.768372E-07,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -8272,14 +8180,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":151,
 						"props":{
-							"name":"wdsj7",
+							"name":"wdsj6",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								-0.45
+								0
 							],
 							"rotation":[
 								0,
@@ -8311,7 +8219,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -8376,14 +8284,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":152,
 						"props":{
-							"name":"wdsj8",
+							"name":"wdsj7",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								0.45
+								-0.45
 							],
 							"rotation":[
 								0,
@@ -8415,7 +8323,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -8480,14 +8388,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":153,
 						"props":{
-							"name":"wdsj9",
+							"name":"wdsj8",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								-0.9
+								0.45
 							],
 							"rotation":[
 								0,
@@ -8519,8 +8427,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											4.682224E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -8584,14 +8492,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":154,
 						"props":{
-							"name":"atm1",
+							"name":"wdsj9",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								0.9
+								-0.9
 							],
 							"rotation":[
 								0,
@@ -8623,8 +8531,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-4.854519E-07
+											0.33,
+											4.682224E-07
 										],
 										"size":[
 											0.296779,
@@ -8688,14 +8596,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":155,
 						"props":{
-							"name":"atm2",
+							"name":"atm1",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								-1.35
+								0.9
 							],
 							"rotation":[
 								0,
@@ -8727,8 +8635,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-8.614734E-09
+											0.33,
+											-4.854519E-07
 										],
 										"size":[
 											0.296779,
@@ -8792,14 +8700,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":156,
 						"props":{
-							"name":"atm3",
+							"name":"atm2",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								1.35
+								-1.35
 							],
 							"rotation":[
 								0,
@@ -8831,7 +8739,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											-8.614734E-09
 										],
 										"size":[
@@ -8896,14 +8804,14 @@
 						"type":"MeshSprite3D",
 						"instanceID":157,
 						"props":{
-							"name":"atm4",
+							"name":"atm3",
 							"active":true,
 							"isStatic":false,
 							"layer":0,
 							"position":[
 								-1,
 								0,
-								-1.8
+								1.35
 							],
 							"rotation":[
 								0,
@@ -8935,8 +8843,8 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
-											-9.622891E-07
+											0.33,
+											-8.614734E-09
 										],
 										"size":[
 											0.296779,
@@ -9000,6 +8908,110 @@
 						"type":"MeshSprite3D",
 						"instanceID":158,
 						"props":{
+							"name":"atm4",
+							"active":true,
+							"isStatic":false,
+							"layer":0,
+							"position":[
+								-1,
+								0,
+								-1.8
+							],
+							"rotation":[
+								0,
+								-1,
+								0,
+								0
+							],
+							"scale":[
+								0.83,
+								0.83,
+								0.83
+							],
+							"meshPath":"Assets/Animator/Card/1mesh-Object008.lm",
+							"enableRender":true,
+							"materials":[
+								{
+									"path":"Assets/Animator/Card/cxk1.lmat"
+								}
+							]
+						},
+						"components":[
+							{
+								"type":"PhysicsCollider",
+								"restitution":0,
+								"friction":0.5,
+								"rollingFriction":0,
+								"shapes":[
+									{
+										"type":"BoxColliderShape",
+										"center":[
+											0,
+											0.33,
+											-9.622891E-07
+										],
+										"size":[
+											0.296779,
+											0.35,
+											0.01295553
+										]
+									}
+								],
+								"isTrigger":false
+							},
+							{
+								"type":"Animator",
+								"layers":[
+									{
+										"name":"Base Layer",
+										"weight":0,
+										"blendingMode":0,
+										"states":[
+											{
+												"name":"standMe",
+												"clipPath":"Assets/Animator/CardAni/standMe-standMe.lani"
+											},
+											{
+												"name":"standOpposite",
+												"clipPath":"Assets/Animator/CardAni/standOpposite-standOpposite.lani"
+											},
+											{
+												"name":"fallMe",
+												"clipPath":"Assets/Animator/CardAni/fallMe-fallMe.lani"
+											},
+											{
+												"name":"fallOpposite",
+												"clipPath":"Assets/Animator/CardAni/fallOpposite-fallOpposite.lani"
+											},
+											{
+												"name":"blinkMe",
+												"clipPath":"Assets/Animator/CardAni/blinkMe-blinkMe.lani"
+											},
+											{
+												"name":"blinkOpposite",
+												"clipPath":"Assets/Animator/CardAni/blinkOpposite-blinkOpposite.lani"
+											},
+											{
+												"name":"clinkMe",
+												"clipPath":"Assets/Animator/CardAni/clickMe-clickMe.lani"
+											},
+											{
+												"name":"clickMe",
+												"clipPath":"Assets/Animator/CardAni/clickMe-clickMe.lani"
+											}
+										]
+									}
+								],
+								"cullingMode":0,
+								"playOnWake":true
+							}
+						],
+						"child":[]
+					},
+					{
+						"type":"MeshSprite3D",
+						"instanceID":159,
+						"props":{
 							"name":"atm5",
 							"active":true,
 							"isStatic":false,
@@ -9039,7 +9051,7 @@
 										"type":"BoxColliderShape",
 										"center":[
 											0,
-											0.35,
+											0.33,
 											4.682224E-07
 										],
 										"size":[

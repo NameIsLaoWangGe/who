@@ -1,0 +1,4 @@
+{
+  "code": "export var Test;\r\n(function (Test) {\r\n    class TestSecene extends Laya.Script {\r\n    }\r\n    Test.TestSecene = TestSecene;\r\n})(Test || (Test = {}));\r\nexport default class UITest extends Test.TestSecene {\r\n    onEnable() {\r\n        Test['name'] = '大网格';\r\n        console.log(Test, parent, Test['name']);\r\n    }\r\n    onDisable() {\r\n    }\r\n}\r\n",
+  "references": []
+}

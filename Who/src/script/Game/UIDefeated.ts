@@ -87,7 +87,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
 
         console.log('重新开始！');
         Admin._openScene(Admin.SceneName.UIStart, this.self);
-        EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+        EventAdmin.notify(EventAdmin.EventType.nextCustoms);
     }
 
     btnNextUp(): void {
@@ -97,7 +97,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
 
             Admin._gameLevel.value += 1;
             Admin._openScene(Admin.SceneName.UIStart, this.self);
-            EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         })
     }
 

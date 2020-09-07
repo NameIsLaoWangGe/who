@@ -1,0 +1,7 @@
+{
+  "code": "import { PropTry, Tools, Admin, Click, Backpack } from \"../Frame/lwg\";\r\nexport default class UIPropTry extends PropTry.PropTryScene {\r\n    lwgOnAwake() {\r\n        Tools.node_ShowExcludedChild(this.self['Platform'], [Admin._platform], true);\r\n    }\r\n    lwgOnEnable() {\r\n        this.self['BtnClose'].visible = false;\r\n        Laya.timer.once(2000, this, () => {\r\n            this.self['BtnClose'].visible = true;\r\n        });\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.GameScene, this.self);\r\n        });\r\n        Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, () => {\r\n            this.self['Bytedance_Low_BtnGet'].visible = this.self['Bytedance_Low_Dot'].visible = this.self['Bytedance_Low_Dot'].visible ? false : true;\r\n        });\r\n        Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, () => {\r\n            Backpack._prop1.num++;\r\n            Backpack._prop2.num++;\r\n            Admin._openScene(Admin.SceneName.GameScene, this.self);\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Admanager.ts"
+  ]
+}

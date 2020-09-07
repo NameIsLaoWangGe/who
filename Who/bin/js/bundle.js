@@ -3888,7 +3888,7 @@
                 }
                 else {
                     for (let index = 0; index < num; index++) {
-                        let ran = Math.floor(Math.random() * (arr.length - 1));
+                        let ran = Math.round(Math.random() * (arr.length - 1));
                         let a1 = arr[ran];
                         arr.splice(ran, 1);
                         arr0.push(a1);
@@ -5878,12 +5878,22 @@
                 Game3D.AllCardTem = this.self.getChildByName('AllCard');
                 Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
                 Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
+                Game3D.PerspectiveAwait = this.self.getChildByName('PerspectiveAwait');
+            }
+            lwgOnEnable() {
+                this.init();
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
-                    Admin._gameSwitch = true;
-                    this.roundChange();
-                    EventAdmin.notify(EventType.nextRound);
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time * 3, this, null, () => {
+                        Laya.timer.once(time * 3, this, () => {
+                            Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
+                            Laya.timer.once(time * 4, this, () => {
+                                this.roundChange();
+                                EventAdmin.notify(EventType.nextRound);
+                            });
+                        });
+                    });
                 });
                 let time = 500;
                 EventAdmin.reg(EventType.nextRound, this, () => {
@@ -6051,14 +6061,10 @@
                     }
                 });
                 EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this);
                     this.init();
                 });
                 EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                    Admin._gameSwitch = true;
-                    this.init();
-                });
-                EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
-                    Admin._gameSwitch = true;
                     this.init();
                 });
             }
@@ -6128,10 +6134,8 @@
                     }
                 });
             }
-            lwgOnEnable() {
-                this.init();
-            }
             init() {
+                Admin._gameSwitch = true;
                 Game3D.whichBout = WhichBoutType.stop;
                 Tools.node_RemoveAllChildren(Game3D.MyCardParent);
                 Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
@@ -6166,6 +6170,8 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+                EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
             Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
             });
@@ -6197,7 +6203,19 @@
                 Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100, () => { });
             });
             EventAdmin.reg(Game3D.EventType.doWell, this, () => {
-                this.createDoWall();
+                let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell);
+                Laya.stage.addChild(DoWell);
+                DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
+                Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
+                for (let index = 0; index < 5; index++) {
+                    let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
+                    Laya.timer.once(300 * index, this, () => {
+                        Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
+                    });
+                }
+                Laya.timer.once(1500, this, () => {
+                    Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
+                });
             });
         }
         createQuestion(questionArr) {
@@ -6318,21 +6336,6 @@
                         func();
                     }
                 });
-            });
-        }
-        createDoWall() {
-            let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell);
-            Laya.stage.addChild(DoWell);
-            DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
-            Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
-            for (let index = 0; index < 5; index++) {
-                let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
-                Laya.timer.once(300 * index, this, () => {
-                    Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
-                });
-            }
-            Laya.timer.once(1500, this, () => {
-                Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
             });
         }
         onStageMouseDown(e) {
@@ -6848,14 +6851,14 @@
             ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
             console.log('重新开始！');
             Admin._openScene(Admin.SceneName.UIStart, this.self);
-            EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         }
         btnNextUp() {
             ADManager.ShowReward(() => {
                 ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
                 Admin._gameLevel.value += 1;
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
-                EventAdmin.notify(EventAdmin.EventType.scene3DRefresh);
+                EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
         }
         lwgOnDisable() {
@@ -7401,7 +7404,6 @@
             this.self['BtnStart'].y = Laya.stage.height * 0.779;
         }
         lwgOnEnable() {
-            Admin._gameLevel.value++;
             for (let i = 0; i < this.self['LevelStyle'].numChildren; i++) {
                 let ele = this.self['LevelStyle'].getChildAt(i);
                 let index = Number(ele.name.substring(9, ele.name.length));
@@ -7466,6 +7468,7 @@
                 default:
                     break;
             }
+            Admin._gameLevel.value++;
         }
         lwgOnEnable() {
             PalyAudio.playVictorySound();

@@ -24,13 +24,10 @@ export default class GameScene extends Admin.Scene {
         this.self['SceneContent'].alpha = 0;
     }
 
-    // lwgOpenAni(): number {
-    //     return 100;
-    // }
-
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            // 
+            Admin._openScene(Admin.SceneName.UIStart, this.self);
+            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         });
         Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
             //四个属性中随机一个属性，然后把我方牌中有这个属性的卡牌倒下，然后再刷新生成四个问题继续作答，此时问题随机选取，而不是中间四个
@@ -51,7 +48,7 @@ export default class GameScene extends Admin.Scene {
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-           
+
             this.createQuestion(questionArr);
             Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0, () => {
             });
@@ -79,7 +76,20 @@ export default class GameScene extends Admin.Scene {
 
         // 干得漂亮提示
         EventAdmin.reg(Game3D.EventType.doWell, this, () => {
-            this.createDoWall();
+            let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell) as Laya.Sprite;
+            Laya.stage.addChild(DoWell);
+            DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
+            Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
+
+            for (let index = 0; index < 5; index++) {
+                let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
+                Laya.timer.once(300 * index, this, () => {
+                    Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
+                })
+            }
+            Laya.timer.once(1500, this, () => {
+                Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
+            })
         })
     }
 
@@ -140,7 +150,6 @@ export default class GameScene extends Admin.Scene {
         }
         return Option;
     }
-
 
     /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
@@ -212,25 +221,6 @@ export default class GameScene extends Admin.Scene {
                     func();
                 }
             });
-        })
-    }
-
-    /**创建干的漂亮提示*/
-    createDoWall(): void {
-        let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell) as Laya.Sprite;
-        Laya.stage.addChild(DoWell);
-        DoWell.pos(Laya.stage.width / 2, Laya.stage.height / 2 - 150);
-        Animation2D.bombs_AppearAllChild(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200, 100, 200);
-
-        for (let index = 0; index < 5; index++) {
-            let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2 - 150), 200, 100);
-            Laya.timer.once(300 * index, this, () => {
-                Effects.createExplosion_Rotate(this.self, 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
-            })
-        }
-        Laya.timer.once(1500, this, () => {
-            Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
-
         })
     }
 

@@ -16,7 +16,6 @@ export default class UIStart extends Start.StartScene {
     }
 
     lwgOnEnable(): void {
-        Admin._gameLevel.value++;
         for (let i = 0; i < this.self['LevelStyle'].numChildren; i++) {
             let ele = this.self['LevelStyle'].getChildAt(i) as Laya.Image;
             let index = Number(ele.name.substring(9, ele.name.length));

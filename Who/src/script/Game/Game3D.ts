@@ -31,6 +31,8 @@ export module Game3D {
     export let PerspectiveMe: Laya.MeshSprite3D;
     /**对方视角*/
     export let PerspectiveOPPosite: Laya.MeshSprite3D;
+    /**等待视角*/
+    export let PerspectiveAwait: Laya.MeshSprite3D;
 
     /**特征总表*/
     export let featureData = [];
@@ -96,6 +98,10 @@ export module Game3D {
         hideGuessCard = 'hideGuessCard',
         /**干得漂亮提示*/
         doWell = 'doWell',
+        /**删除道具*/ 
+        BtnSC='BtnSC',
+        /**刷新道具*/ 
+        BtnSX='BtnSX',
     }
 
     /**角色名称*/
@@ -586,16 +592,25 @@ export module Game3D {
             AllCardTem = this.self.getChildByName('AllCard') as Laya.MeshSprite3D;
             PerspectiveMe = this.self.getChildByName('PerspectiveMe') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite') as Laya.MeshSprite3D;
+            PerspectiveAwait = this.self.getChildByName('PerspectiveAwait') as Laya.MeshSprite3D;
+        }
+
+        lwgOnEnable(): void {
+            this.init();
         }
 
         lwgEventReg(): void {
-
-
-            //开局
+            //开始游戏
             EventAdmin.reg(EventType.opening, this, () => {
-                Admin._gameSwitch = true;
-                this.roundChange();
-                EventAdmin.notify(EventType.nextRound);
+                Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time * 3, this, null, () => {
+                    Laya.timer.once(time * 3, this, () => {
+                        Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
+                        Laya.timer.once(time * 4, this, () => {
+                            this.roundChange();
+                            EventAdmin.notify(EventType.nextRound);
+                        })
+                    })
+                })
             })
 
             let time = 500;
@@ -773,20 +788,19 @@ export module Game3D {
             })
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
+                Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
                 this.init();
             })
             // 复活
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                Admin._gameSwitch = true;
                 this.init();
             })
             // 刷新
             EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
-                Admin._gameSwitch = true;
+                Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
                 this.init();
             })
         }
-
         /**回合以及状态切换*/
         roundChange(): void {
             switch (whichBout) {
@@ -863,12 +877,10 @@ export module Game3D {
             })
         }
 
-        lwgOnEnable(): void {
-            this.init();
-        }
 
         /**开局*/
         init(): void {
+            Admin._gameSwitch = true;
             whichBout = WhichBoutType.stop;
             Tools.node_RemoveAllChildren(MyCardParent);
             Tools.node_RemoveAllChildren(OppositeCardParent);

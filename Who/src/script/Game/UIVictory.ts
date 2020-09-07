@@ -26,6 +26,8 @@ export default class UIVictory extends VictoryScene {
             default:
                 break;
         }
+
+        Admin._gameLevel.value++;
     }
 
     lwgOnEnable(): void {
