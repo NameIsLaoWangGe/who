@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 
 export default class UIStart extends Start.StartScene {
@@ -38,6 +38,14 @@ export default class UIStart extends Start.StartScene {
                 });
                 break;
             }
+        }
+
+        if (Admin._gameLevel.value % 4 == 0) {
+            this.self['ProgressBar'].mask.x = 0;
+            this.self['Percent'].text = '100 %';
+        } else {
+            this.self['ProgressBar'].mask.x = -460 + Admin._gameLevel.value % 4 * (460 / 4);
+            this.self['Percent'].text = Admin._gameLevel.value % 4 * 25 + '%';
         }
     }
 

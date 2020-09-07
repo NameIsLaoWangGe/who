@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":512,
+    "selectedBox":512,
+    "selecteID":538,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":537,
+    "maxID":543,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -171,6 +171,62 @@
                     "child":[
                         ],
                     "$HIDDEN":false
+                },
+                {
+                    "x":30,
+                    "type":"Sprite",
+                    "searchKey":"Sprite,Progress,Progress",
+                    "props":{"y":201,"x":1,"var":"Progress","texture":"Game/UI/UIStart/jindu-1.png","name":"Progress"},
+                    "nodeParent":512,
+                    "label":"Progress",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":538,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "searchKey":"Sprite,ProgressBar,ProgressBar",
+                            "props":{"y":0,"x":0,"width":460,"var":"ProgressBar","texture":"Game/UI/UIStart/jindu-2.png","name":"ProgressBar","height":24},
+                            "nodeParent":538,
+                            "label":"ProgressBar",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":539,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,Mask",
+                                    "props":{"y":0,"x":-460,"width":460,"texture":"Game/UI/UIStart/jindu-2.png","renderType":"mask","name":"Mask","height":24},
+                                    "nodeParent":539,
+                                    "label":"Mask",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":540,
+                                    "child":[
+                                        ]
+                                }]
+                        },
+                        {
+                            "x":45,
+                            "type":"Label",
+                            "searchKey":"Label,Percent,Percent",
+                            "props":{"y":-6.5,"x":460,"width":60,"var":"Percent","valign":"middle","text":"50%","name":"Percent","height":37,"fontSize":22,"color":"#f5820d","bold":true,"align":"center"},
+                            "nodeParent":538,
+                            "label":"Percent",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":542,
+                            "child":[
+                                ]
+                        }]
                 },
                 {
                     "x":30,

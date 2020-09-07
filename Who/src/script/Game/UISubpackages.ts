@@ -1,6 +1,5 @@
-import { Admin } from "../Lwg_Template/lwg";
-import { SubpackController } from "./SubpackController";
-import { Game } from "../Lwg_Template/Game";
+import { Admin } from "../Frame/lwg";
+import { SubpackController } from "../../TJ/SubpackController";
 
 let isInit = false;
 TJ.Common.PriorityInit.Add(100, () => {
@@ -8,8 +7,8 @@ TJ.Common.PriorityInit.Add(100, () => {
 });
 export default class UISubpackages extends Laya.Script {
     onAwake(): void {
-        Game._platform == Game._platformTpye.Bytedance;
-        if (Game._platform !== Game._platformTpye.WeChat) {
+        Admin._platform == Admin._platformTpye.Bytedance;
+        if (Admin._platform !== Admin._platformTpye.WeChat) {
             Admin._openScene('UILoding');
             return;
         }

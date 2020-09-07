@@ -4,7 +4,7 @@ import ADManager from "../../TJ/Admanager";
 export default class UIPropTry extends PropTry.PropTryScene {
 
     lwgOnAwake(): void {
-        Tools.node_ShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform], true);
     }
 
     lwgOnEnable(): void {
@@ -24,13 +24,11 @@ export default class UIPropTry extends PropTry.PropTryScene {
         });
 
         Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, () => {
-            // ADManager.ShowReward(() => {
-            Backpack._prop1.num++;
-            Backpack._prop2.num++;
-            Admin._openScene(Admin.SceneName.GameScene, this.self);
-            // })
+            ADManager.ShowReward(() => {
+                Backpack._prop1.num++;
+                Backpack._prop2.num++;
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            })
         });
-
     }
-
 }

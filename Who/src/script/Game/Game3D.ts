@@ -98,10 +98,10 @@ export module Game3D {
         hideGuessCard = 'hideGuessCard',
         /**干得漂亮提示*/
         doWell = 'doWell',
-        /**删除道具*/ 
-        BtnSC='BtnSC',
-        /**刷新道具*/ 
-        BtnSX='BtnSX',
+        /**删除道具*/
+        BtnSC = 'BtnSC',
+        /**刷新道具*/
+        BtnSX = 'BtnSX',
     }
 
     /**角色名称*/
@@ -249,6 +249,37 @@ export module Game3D {
         }
     }
 
+    /**刷新我方答题,规则是从所有属性中随机挑选，不做刻意控制*/
+    export function setRefrashAnswerForMe(): Array<string> {
+        // let weightArr = getFeatureWeights(MyCardParent);
+        let cardArr = getNotFallCard(MyCardParent);
+
+        let arr = [];
+        if (cardArr.length == 1) {
+            return ['是谁？'];
+        } else if (cardArr.length == 2) {
+            return ['是谁？'];
+        } else {
+
+            // 防止随机出来的四个属性问题，恰好剩余的牌都有
+            let cardArr0 = Tools.arrayRandomGetOut(cardArr, 4);
+            let diffIndexArr = Tools.array_ExcludeArrays([cardArr0[0][CardProperty.featureArr], cardArr0[1][CardProperty.featureArr], cardArr0[2][CardProperty.featureArr], cardArr0[3][CardProperty.featureArr]], true);
+            // console.log(diffIndexArr);
+            let diffIndexArr0 = Tools.arrayRandomGetOut(diffIndexArr, diffIndexArr.length);
+            // console.log(diffIndexArr0);
+            let indexArr = [diffIndexArr0[0], diffIndexArr0[1], diffIndexArr0[2], diffIndexArr0[3]];
+            // console.log(indexArr);
+            for (let i = 0; i < featureData.length; i++) {
+                for (let j = 0; j < indexArr.length; j++) {
+                    if (featureData[i][featureProperty.index] == indexArr[j]) {
+                        arr.push(featureData[i][featureProperty.question])
+                    }
+                }
+            }
+            return arr;
+        }
+    }
+
     /**
      * 设置对方回答问题
      * 对方提出问题时，我方必然会回答，也就是说，问题和答案我已经知道，而且不可以乱点
@@ -287,8 +318,8 @@ export module Game3D {
                 let indexArr = getTowCardNotFeatureArr(cardArr0[0], cardArr0[1]);
                 let index0 = Tools.arrayRandomGetOut(indexArr, 1)[0];
                 let question0 = getQuestionByIndex(index0);
-
                 // console.log('随机到了所有卡牌都有的属性！从', cardArr0[0].name, cardArr0[1].name, '中随机获取一条不同属性', question0);
+                arr = [question0, checkAnswerForHand(question0, OppositeCardParent)];
             }
         }
         // console.log(medianIndex, residueArr, weightArr, myHandName, arr);
@@ -603,9 +634,10 @@ export module Game3D {
             //开始游戏
             EventAdmin.reg(EventType.opening, this, () => {
                 Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time * 3, this, null, () => {
-                    Laya.timer.once(time * 3, this, () => {
+                    Laya.timer.once(time * 2, this, () => {
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
                         Laya.timer.once(time * 4, this, () => {
+                            Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
                             this.roundChange();
                             EventAdmin.notify(EventType.nextRound);
                         })
@@ -641,8 +673,8 @@ export module Game3D {
                         console.log('我回答正确');
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.queding);
                         Laya.timer.once(time * 4, this, () => {
+                            Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
                             Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
-
                                 Laya.timer.once(time * 1.5, this, () => {
                                     this.carFallAni(cardArr[1], MyCardParent);
                                     Laya.timer.once(time * 4, this, () => {
@@ -656,6 +688,7 @@ export module Game3D {
                         console.log('我回答错误');
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.fouren);
                         Laya.timer.once(time * 4, this, () => {
+                            Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
                             Animation3D.moveRotateTo(MainCamera, PerspectiveMe, time, this, null, () => {
                                 Laya.timer.once(time * 1.5, this, () => {
                                     this.carFallAni(cardArr[0], MyCardParent);
@@ -742,11 +775,13 @@ export module Game3D {
                                 // 我方失败
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
                                 Laya.timer.once(time * 3, this, () => {
+                                    Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
                                     EventAdmin.notify(EventAdmin.EventType.defeated);
                                 })
                             } else {
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai);
                                 Laya.timer.once(time * 3, this, () => {
+                                    Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
                                     this.carFallAni(cardArr[1], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
                                         EventAdmin.notify(EventType.nextRound);
@@ -786,6 +821,25 @@ export module Game3D {
                     });
                 }
             })
+
+            // 道具1，倒下一个选项的卡牌并刷新问题
+            EventAdmin.reg(EventType.BtnSC, this, (question) => {
+
+                let matching = checkAnswerForHand(question, MyCardParent);
+                let cardArr = checkQuestion(question, MyCardParent);
+                if (matching) {
+                    console.log('我回答正确');
+                    Laya.timer.once(time * 2, this, () => {
+                        this.carFallAni(cardArr[1], MyCardParent);
+                    })
+                } else {
+                    console.log('我回答错误');
+                    Laya.timer.once(time * 2, this, () => {
+                        this.carFallAni(cardArr[0], MyCardParent);
+                    })
+                }
+            })
+
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                 Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
@@ -793,11 +847,6 @@ export module Game3D {
             })
             // 复活
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                this.init();
-            })
-            // 刷新
-            EventAdmin.reg(EventAdmin.EventType.scene3DRefresh, this, () => {
-                Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
                 this.init();
             })
         }
@@ -821,7 +870,7 @@ export module Game3D {
         }
 
         /**
-         * 没有倒下的卡牌倒下动画
+         * 没有倒下的卡牌倒下动画,一般是答对了，就倒下不对的卡牌，打错了，也是倒下错误的牌，所以正确的那个牌永远不会倒下
          * @param arrName 名称数组，哪些卡牌需要倒下
          * @param exclude 是否是反向排除这些卡牌，默认是不排除为false
          */

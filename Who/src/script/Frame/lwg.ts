@@ -85,7 +85,9 @@ export module lwg {
             '没有宝箱领可以领了！',
             '请前往皮肤界面购买！',
             '今天已经签到过了！',
-            '没有抽奖次数了，请通过观看广告获取！'
+            '没有抽奖次数了，请通过观看广告获取！',
+            '没有库存了！',
+            '牌数太少，无法使用道具！',
         }
         enum Skin {
             blackBord = 'Frame/UI/ui_orthogon_black.png'
@@ -2827,14 +2829,14 @@ export module lwg {
         export function cardRotateX_TowFace(node: Laya.Sprite, time: number, func1?: Function, delayed?: number, func2?: Function): void {
             Laya.Tween.to(node, { scaleX: 0 }, time, null, Laya.Handler.create(this, function () {
                 // 所有子节点消失
-                Tools.node_ChildrenVisible(node, false);
+                Tools.node_2DChildrenVisible(node, false);
                 if (func1) {
                     func1();
                 }
                 Laya.Tween.to(node, { scaleX: 1 }, time * 0.9, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleX: 0 }, time * 0.8, null, Laya.Handler.create(this, function () {
 
-                        Tools.node_ChildrenVisible(node, true);
+                        Tools.node_2DChildrenVisible(node, true);
 
                         Laya.Tween.to(node, { scaleX: 1 }, time * 0.7, null, Laya.Handler.create(this, function () {
                             if (func2) {
@@ -2880,14 +2882,14 @@ export module lwg {
         export function cardRotateY_TowFace(node: Laya.Sprite, time: number, func1?: Function, delayed?: number, func2?: Function): void {
             Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                 // 所有子节点消失
-                Tools.node_ChildrenVisible(node, false);
+                Tools.node_2DChildrenVisible(node, false);
                 if (func1) {
                     func1();
                 }
                 Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleY: 1 }, time * 1 / 2, null, Laya.Handler.create(this, function () {
-                            Tools.node_ChildrenVisible(node, true);
+                            Tools.node_2DChildrenVisible(node, true);
                             if (func2) {
                                 func2();
                             }
@@ -3262,7 +3264,7 @@ export module lwg {
                 Laya.Tween.to(target, { rotation: firstR - rotate * 2 }, time, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(target, { rotation: firstR + rotate }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(target, { rotation: firstR }, time, null, Laya.Handler.create(this, function () {
-                            if (func ) {
+                            if (func) {
                                 func()
                             }
                         }), 0);
@@ -3647,6 +3649,24 @@ export module lwg {
         }
 
         /**
+         * 随机出数个子节点，返回这个子节点数组
+         * @param node 节点
+         * @param num 数量，默认为1
+         */
+        export function node_RandomChildren(node: Laya.Node, num?: number): Array<Laya.Node> {
+            let childArr = [];
+            let indexArr = [];
+            for (let i = 0; i < node.numChildren; i++) {
+                indexArr.push(i);
+            }
+            let randomIndex = Tools.arrayRandomGetOut(indexArr, num);
+            for (let j = 0; j < randomIndex.length; j++) {
+                childArr.push(node.getChildAt(randomIndex[j]));
+            }
+            return childArr;
+        }
+
+        /**
          * 移除该节点的所有子节点，没有子节点则无操作
          * @param node 节点
          */
@@ -3662,7 +3682,7 @@ export module lwg {
          * @param childNameArr 子节点名称数组
          * @param bool 隐藏还是显示，true为显示，flase为隐藏
          */
-        export function node_ShowExcludedChild(node: Laya.Sprite, childNameArr: Array<string>, bool: boolean): void {
+        export function node_2DShowExcludedChild(node: Laya.Sprite, childNameArr: Array<string>, bool: boolean): void {
             for (let i = 0; i < node.numChildren; i++) {
                 let Child = node.getChildAt(i) as Laya.Sprite;
                 for (let j = 0; j < childNameArr.length; j++) {
@@ -3682,19 +3702,61 @@ export module lwg {
                 }
             }
         }
+        /**
+         * 切换隐藏或显示子节点，当输入的名称数组是隐藏时，其他子节点则是显示
+         * @param node 节点
+         * @param childNameArr 子节点名称数组
+         * @param bool 隐藏还是显示，true为显示，flase为隐藏
+         */
+        export function node_3DShowExcludedChild(node: Laya.MeshSprite3D, childNameArr: Array<string>, bool: boolean): void {
+            for (let i = 0; i < node.numChildren; i++) {
+                let Child = node.getChildAt(i) as Laya.MeshSprite3D;
+                for (let j = 0; j < childNameArr.length; j++) {
+                    if (Child.name == childNameArr[j]) {
+                        if (bool) {
+                            Child.active = true;
+                        } else {
+                            Child.active = false;
+                        }
+                    } else {
+                        if (bool) {
+                            Child.active = false;
+                        } else {
+                            Child.active = true;
+                        }
+                    }
+                }
+            }
+        }
 
         /**
-         * 隐藏或者打开所有子节点
+         *2D隐藏或者打开所有子节点
          * @param node 节点
          * @param bool visible控制
         */
-        export function node_ChildrenVisible(node: Laya.Sprite, bool: boolean): void {
+        export function node_2DChildrenVisible(node: Laya.Sprite, bool: boolean): void {
             for (let index = 0; index < node.numChildren; index++) {
                 const element = node.getChildAt(index) as Laya.Sprite;
                 if (bool) {
                     element.visible = true;
                 } else {
                     element.visible = false;
+                }
+            }
+        }
+
+        /**
+         *2D隐藏或者打开所有子节点
+         * @param node 节点
+         * @param bool visible控制
+        */
+        export function node_3DChildrenVisible(node: Laya.MeshSprite3D, bool: boolean): void {
+            for (let index = 0; index < node.numChildren; index++) {
+                const element = node.getChildAt(index) as Laya.MeshSprite3D;
+                if (bool) {
+                    element.active = true;
+                } else {
+                    element.active = false;
                 }
             }
         }
@@ -4295,7 +4357,7 @@ export module lwg {
         }
 
         /**
-         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序
+         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序,不改变原数组
          * @param arr 数组
          * @param num 取出几个元素默认为1个
          */
@@ -4303,14 +4365,15 @@ export module lwg {
             if (!num) {
                 num = 1;
             }
+            let arrCopy = Tools.array_Copy(arr);
             let arr0 = [];
-            if (num > arr.length) {
+            if (num > arrCopy.length) {
                 return '数组长度小于取出的数！';
             } else {
                 for (let index = 0; index < num; index++) {
-                    let ran = Math.round(Math.random() * (arr.length - 1));
-                    let a1 = arr[ran];
-                    arr.splice(ran, 1);
+                    let ran = Math.round(Math.random() * (arrCopy.length - 1));
+                    let a1 = arrCopy[ran];
+                    arrCopy.splice(ran, 1);
                     arr0.push(a1);
                 }
                 return arr0;
@@ -4382,6 +4445,61 @@ export module lwg {
                 }
             }
             return arr1Capy;
+        }
+
+        /**
+         * 找出几个数组中都有的元素，或者相互没有的元素，
+         * 如果某个元素的个数等于数组个数，这说明他们都有
+         * @param arrays 数组组成的数组
+         * @param exclude 默认为false,false为返回都有的元素，true为返回排除这些相同元素，也就是相互没有的元素
+         */
+        export function array_ExcludeArrays(arrays: Array<Array<any>>, exclude?: boolean): Array<any> {
+
+            // 避免三重for循环嵌套，一步一步做
+            let arr0 = [];
+            for (let i = 0; i < arrays.length; i++) {
+                for (let j = 0; j < arrays[i].length; j++) {
+                    arr0.push(arrays[i][j]);
+                }
+            }
+            // 保留arr0，赋值一份
+            let arr1 = Tools.array_Copy(arr0);
+            // 去重排列出元素列表
+            let arr2 = Tools.arrayUnique_01(arr1);
+
+            // 列出记录数量的数组
+            let arrNum = [];
+            for (let k = 0; k < arr2.length; k++) {
+                arrNum.push({
+                    index: arr2[k],
+                    num: 0,
+                });
+            }
+
+            // 记录数量
+            for (let l = 0; l < arr0.length; l++) {
+                for (let m = 0; m < arrNum.length; m++) {
+                    if (arr0[l] == arrNum[m]['index']) {
+                        arrNum[m]['num']++;
+                    }
+                }
+            }
+            // 找出四个或者不是四个的数组
+            let arrAllHave = [];
+            let arrDiffHave = [];
+            for (let n = 0; n < arrNum.length; n++) {
+                const element = arrNum[n];
+                if (arrNum[n]['num'] == 4) {
+                    arrAllHave.push(arrNum[n]['index']);
+                } else {
+                    arrDiffHave.push(arrNum[n]['index']);
+                }
+            }
+            if (!exclude) {
+                return arrAllHave;
+            } else {
+                return arrDiffHave;
+            }
         }
 
         /**
@@ -5906,6 +6024,9 @@ export module lwg {
                 Laya.LocalStorage.setItem('Backpack_prop2', val.toString());
             }
         }
+
+        /***
+         * / 
         /**
          * 道具数组,对象数组的数组
          * */

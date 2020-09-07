@@ -1,5 +1,6 @@
 import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
+import UIAdsHint from "./UIADSHint";
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
@@ -22,6 +23,8 @@ export default class GameScene extends Admin.Scene {
         this.self['BtnSCNum'].text = Backpack._prop1.num;
         this.self['BtnSXNum'].text = Backpack._prop2.num;
         this.self['SceneContent'].alpha = 0;
+
+
     }
 
     lwgBtnClick(): void {
@@ -29,11 +32,53 @@ export default class GameScene extends Admin.Scene {
             Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         });
+
+        /**刷新问题*/
+        var refreshQuestion = () => {
+            Animation2D.fadeOut(this.self['OptionParent'], 1, 0, 300, 0, () => {
+                this.createQuestion(Game3D.setRefrashAnswerForMe());
+                Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0);
+            });
+        }
+
         Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+            if (Backpack._prop1.num <= 0) {
+                Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
+                return;
+            }
+            // 小于2个则不会倒下，无意义
+            let numArr = Game3D.getNotFallCard(Game3D.MyCardParent);
+            if (numArr.length <= 2) {
+                Dialog.createHint_Middle(Dialog.HintContent["牌数太少，无法使用道具！"]);
+                return;
+            }
+            Backpack._prop1.num--;
+            this.self['BtnSCNum'].text = Tools.format_StrAddNum(this.self['BtnSCNum'].text, -1);
             //四个属性中随机一个属性，然后把我方牌中有这个属性的卡牌倒下，然后再刷新生成四个问题继续作答，此时问题随机选取，而不是中间四个
+            let arr = Tools.node_RandomChildren(this.self['OptionParent']);
+            let question = (arr[0].getChildByName('Content') as Laya.Label).text;
+            EventAdmin.notify(Game3D.EventType.BtnSC, [question]);
+
+            Laya.timer.once(3000, this, () => {
+                refreshQuestion();
+            })
         });
+
         Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+            if (Backpack._prop2.num <= 0) {
+                Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
+                return;
+            }
+            // 小于2个则不会倒下，无意义
+            let numArr = Game3D.getNotFallCard(Game3D.MyCardParent);
+            if (numArr.length <= 2) {
+                Dialog.createHint_Middle(Dialog.HintContent["牌数太少，无法使用道具！"]);
+                return;
+            }
+            Backpack._prop2.num--;
+            this.self['BtnSXNum'].text = Tools.format_StrAddNum(this.self['BtnSXNum'].text, -1);
             //刷新问题，此时问题随机选取，而不是中间四个
+            refreshQuestion();
         });
     }
 
@@ -41,17 +86,14 @@ export default class GameScene extends Admin.Scene {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
             Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
-                Tools.node_RemoveAllChildren(this.self['OptionParent']);
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
             });
         })
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
-
             this.createQuestion(questionArr);
-            Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0, () => {
-            });
+            Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0);
         })
 
         // 胜利
@@ -66,12 +108,12 @@ export default class GameScene extends Admin.Scene {
 
         // 复活
         EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-            Tools.node_RemoveAllChildren(this.self['OptionParent']);
+            Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100)
         })
 
         //隐藏选项卡
         EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-            Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100, () => { })
+            Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100)
         })
 
         // 干得漂亮提示
@@ -91,10 +133,12 @@ export default class GameScene extends Admin.Scene {
                 Animation2D.bombs_Vanish(DoWell, 0, 1, 1.1, Tools.randomOneHalf() == 0 ? 15 : -15, 200);
             })
         })
+
     }
 
     /**创建问题*/
     createQuestion(questionArr): void {
+        Tools.node_RemoveAllChildren(this.self['OptionParent']);
         if (questionArr.length < 3) {
             this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, questionArr[0], false);
         } else {
@@ -158,6 +202,12 @@ export default class GameScene extends Admin.Scene {
         this.self.addChild(GuessCard);
         GuessCard.pos(0, 0);
 
+        let Bg = GuessCard.getChildByName('Bg') as Laya.Image;
+        Bg.alpha = 0;
+        Bg.height = Laya.stage.height;
+        Bg.width = Laya.stage.width;
+        Animation2D.fadeOut(Bg, 0, 0.3, 200, 300);
+
         let QuestionBaord = GuessCard.getChildByName('QuestionBaord') as Laya.Label;
         let Question = QuestionBaord.getChildByName('Question') as Laya.Label;
         Question.text = questionAndYesOrNo[0];
@@ -210,6 +260,7 @@ export default class GameScene extends Admin.Scene {
         Animation2D.scale_Alpha(BtnYes, 0, 0, 0, 1, 1, 1, 150, 600);
 
         EventAdmin.reg(Game3D.EventType.hideGuessCard, this, (func) => {
+            Animation2D.fadeOut(Bg, 0.3, 0, 200);
             Animation2D.bombs_Vanish(QuestionBaord, 0, 0, 0, 150, 500);
             Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
             Animation2D.cardRotateX_TowFace(Card, 180, null, 200);

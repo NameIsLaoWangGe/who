@@ -985,6 +985,8 @@
                 HintContent[HintContent["\u8BF7\u524D\u5F80\u76AE\u80A4\u754C\u9762\u8D2D\u4E70\uFF01"] = 27] = "\u8BF7\u524D\u5F80\u76AE\u80A4\u754C\u9762\u8D2D\u4E70\uFF01";
                 HintContent[HintContent["\u4ECA\u5929\u5DF2\u7ECF\u7B7E\u5230\u8FC7\u4E86\uFF01"] = 28] = "\u4ECA\u5929\u5DF2\u7ECF\u7B7E\u5230\u8FC7\u4E86\uFF01";
                 HintContent[HintContent["\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01"] = 29] = "\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01";
+                HintContent[HintContent["\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01"] = 30] = "\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01";
+                HintContent[HintContent["\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01"] = 31] = "\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01";
             })(HintContent = Dialog.HintContent || (Dialog.HintContent = {}));
             let Skin;
             (function (Skin) {
@@ -2898,13 +2900,13 @@
             Animation2D.goUp_Simple = goUp_Simple;
             function cardRotateX_TowFace(node, time, func1, delayed, func2) {
                 Laya.Tween.to(node, { scaleX: 0 }, time, null, Laya.Handler.create(this, function () {
-                    Tools.node_ChildrenVisible(node, false);
+                    Tools.node_2DChildrenVisible(node, false);
                     if (func1) {
                         func1();
                     }
                     Laya.Tween.to(node, { scaleX: 1 }, time * 0.9, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleX: 0 }, time * 0.8, null, Laya.Handler.create(this, function () {
-                            Tools.node_ChildrenVisible(node, true);
+                            Tools.node_2DChildrenVisible(node, true);
                             Laya.Tween.to(node, { scaleX: 1 }, time * 0.7, null, Laya.Handler.create(this, function () {
                                 if (func2) {
                                     func2();
@@ -2930,14 +2932,14 @@
             Animation2D.cardRotateX_OneFace = cardRotateX_OneFace;
             function cardRotateY_TowFace(node, time, func1, delayed, func2) {
                 Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
-                    Tools.node_ChildrenVisible(node, false);
+                    Tools.node_2DChildrenVisible(node, false);
                     if (func1) {
                         func1();
                     }
                     Laya.Tween.to(node, { scaleY: 1 }, time, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleY: 0 }, time, null, Laya.Handler.create(this, function () {
                             Laya.Tween.to(node, { scaleY: 1 }, time * 1 / 2, null, Laya.Handler.create(this, function () {
-                                Tools.node_ChildrenVisible(node, true);
+                                Tools.node_2DChildrenVisible(node, true);
                                 if (func2) {
                                     func2();
                                 }
@@ -3422,13 +3424,26 @@
                 return Number(str) + num;
             }
             Tools.format_NumAddStr = format_NumAddStr;
+            function node_RandomChildren(node, num) {
+                let childArr = [];
+                let indexArr = [];
+                for (let i = 0; i < node.numChildren; i++) {
+                    indexArr.push(i);
+                }
+                let randomIndex = Tools.arrayRandomGetOut(indexArr, num);
+                for (let j = 0; j < randomIndex.length; j++) {
+                    childArr.push(node.getChildAt(randomIndex[j]));
+                }
+                return childArr;
+            }
+            Tools.node_RandomChildren = node_RandomChildren;
             function node_RemoveAllChildren(node) {
                 if (node.numChildren > 0) {
                     node.removeChildren(0, node.numChildren - 1);
                 }
             }
             Tools.node_RemoveAllChildren = node_RemoveAllChildren;
-            function node_ShowExcludedChild(node, childNameArr, bool) {
+            function node_2DShowExcludedChild(node, childNameArr, bool) {
                 for (let i = 0; i < node.numChildren; i++) {
                     let Child = node.getChildAt(i);
                     for (let j = 0; j < childNameArr.length; j++) {
@@ -3451,8 +3466,32 @@
                     }
                 }
             }
-            Tools.node_ShowExcludedChild = node_ShowExcludedChild;
-            function node_ChildrenVisible(node, bool) {
+            Tools.node_2DShowExcludedChild = node_2DShowExcludedChild;
+            function node_3DShowExcludedChild(node, childNameArr, bool) {
+                for (let i = 0; i < node.numChildren; i++) {
+                    let Child = node.getChildAt(i);
+                    for (let j = 0; j < childNameArr.length; j++) {
+                        if (Child.name == childNameArr[j]) {
+                            if (bool) {
+                                Child.active = true;
+                            }
+                            else {
+                                Child.active = false;
+                            }
+                        }
+                        else {
+                            if (bool) {
+                                Child.active = false;
+                            }
+                            else {
+                                Child.active = true;
+                            }
+                        }
+                    }
+                }
+            }
+            Tools.node_3DShowExcludedChild = node_3DShowExcludedChild;
+            function node_2DChildrenVisible(node, bool) {
                 for (let index = 0; index < node.numChildren; index++) {
                     const element = node.getChildAt(index);
                     if (bool) {
@@ -3463,7 +3502,19 @@
                     }
                 }
             }
-            Tools.node_ChildrenVisible = node_ChildrenVisible;
+            Tools.node_2DChildrenVisible = node_2DChildrenVisible;
+            function node_3DChildrenVisible(node, bool) {
+                for (let index = 0; index < node.numChildren; index++) {
+                    const element = node.getChildAt(index);
+                    if (bool) {
+                        element.active = true;
+                    }
+                    else {
+                        element.active = false;
+                    }
+                }
+            }
+            Tools.node_3DChildrenVisible = node_3DChildrenVisible;
             function node_3dFindChild(parent, name) {
                 var item = null;
                 item = parent.getChildByName(name);
@@ -3882,15 +3933,16 @@
                 if (!num) {
                     num = 1;
                 }
+                let arrCopy = Tools.array_Copy(arr);
                 let arr0 = [];
-                if (num > arr.length) {
+                if (num > arrCopy.length) {
                     return '数组长度小于取出的数！';
                 }
                 else {
                     for (let index = 0; index < num; index++) {
-                        let ran = Math.round(Math.random() * (arr.length - 1));
-                        let a1 = arr[ran];
-                        arr.splice(ran, 1);
+                        let ran = Math.round(Math.random() * (arrCopy.length - 1));
+                        let a1 = arrCopy[ran];
+                        arrCopy.splice(ran, 1);
                         arr0.push(a1);
                     }
                     return arr0;
@@ -3947,6 +3999,47 @@
                 return arr1Capy;
             }
             Tools.array1ExcludeArray2 = array1ExcludeArray2;
+            function array_ExcludeArrays(arrays, exclude) {
+                let arr0 = [];
+                for (let i = 0; i < arrays.length; i++) {
+                    for (let j = 0; j < arrays[i].length; j++) {
+                        arr0.push(arrays[i][j]);
+                    }
+                }
+                let arr1 = Tools.array_Copy(arr0);
+                let arr2 = Tools.arrayUnique_01(arr1);
+                let arrNum = [];
+                for (let k = 0; k < arr2.length; k++) {
+                    arrNum.push({
+                        index: arr2[k],
+                        num: 0,
+                    });
+                }
+                for (let l = 0; l < arr0.length; l++) {
+                    for (let m = 0; m < arrNum.length; m++) {
+                        if (arr0[l] == arrNum[m]['index']) {
+                            arrNum[m]['num']++;
+                        }
+                    }
+                }
+                let arrAllHave = [];
+                let arrDiffHave = [];
+                for (let n = 0; n < arrNum.length; n++) {
+                    if (arrNum[n]['num'] == 4) {
+                        arrAllHave.push(arrNum[n]['index']);
+                    }
+                    else {
+                        arrDiffHave.push(arrNum[n]['index']);
+                    }
+                }
+                if (!exclude) {
+                    return arrAllHave;
+                }
+                else {
+                    return arrDiffHave;
+                }
+            }
+            Tools.array_ExcludeArrays = array_ExcludeArrays;
             function point_SpeedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
@@ -5473,6 +5566,8 @@
             EventType["hideOption"] = "hideOption";
             EventType["hideGuessCard"] = "hideGuessCard";
             EventType["doWell"] = "doWell";
+            EventType["BtnSC"] = "BtnSC";
+            EventType["BtnSX"] = "BtnSX";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let RoleName;
         (function (RoleName) {
@@ -5595,6 +5690,31 @@
             }
         }
         Game3D.setAnswerForMe = setAnswerForMe;
+        function setRefrashAnswerForMe() {
+            let cardArr = getNotFallCard(Game3D.MyCardParent);
+            let arr = [];
+            if (cardArr.length == 1) {
+                return ['是谁？'];
+            }
+            else if (cardArr.length == 2) {
+                return ['是谁？'];
+            }
+            else {
+                let cardArr0 = Tools.arrayRandomGetOut(cardArr, 4);
+                let diffIndexArr = Tools.array_ExcludeArrays([cardArr0[0][CardProperty.featureArr], cardArr0[1][CardProperty.featureArr], cardArr0[2][CardProperty.featureArr], cardArr0[3][CardProperty.featureArr]], true);
+                let diffIndexArr0 = Tools.arrayRandomGetOut(diffIndexArr, diffIndexArr.length);
+                let indexArr = [diffIndexArr0[0], diffIndexArr0[1], diffIndexArr0[2], diffIndexArr0[3]];
+                for (let i = 0; i < Game3D.featureData.length; i++) {
+                    for (let j = 0; j < indexArr.length; j++) {
+                        if (Game3D.featureData[i][featureProperty.index] == indexArr[j]) {
+                            arr.push(Game3D.featureData[i][featureProperty.question]);
+                        }
+                    }
+                }
+                return arr;
+            }
+        }
+        Game3D.setRefrashAnswerForMe = setRefrashAnswerForMe;
         function setAnswerForOpposite() {
             let arr = [];
             let question;
@@ -5626,6 +5746,7 @@
                     let indexArr = getTowCardNotFeatureArr(cardArr0[0], cardArr0[1]);
                     let index0 = Tools.arrayRandomGetOut(indexArr, 1)[0];
                     let question0 = getQuestionByIndex(index0);
+                    arr = [question0, checkAnswerForHand(question0, Game3D.OppositeCardParent)];
                 }
             }
             return arr;
@@ -5886,9 +6007,10 @@
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time * 3, this, null, () => {
-                        Laya.timer.once(time * 3, this, () => {
+                        Laya.timer.once(time * 2, this, () => {
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
                             Laya.timer.once(time * 4, this, () => {
+                                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                                 this.roundChange();
                                 EventAdmin.notify(EventType.nextRound);
                             });
@@ -5920,6 +6042,7 @@
                             console.log('我回答正确');
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.queding);
                             Laya.timer.once(time * 4, this, () => {
+                                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                                 Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
                                     Laya.timer.once(time * 1.5, this, () => {
                                         this.carFallAni(cardArr[1], Game3D.MyCardParent);
@@ -5934,6 +6057,7 @@
                             console.log('我回答错误');
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.fouren);
                             Laya.timer.once(time * 4, this, () => {
+                                Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                                 Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveMe, time, this, null, () => {
                                     Laya.timer.once(time * 1.5, this, () => {
                                         this.carFallAni(cardArr[0], Game3D.MyCardParent);
@@ -6014,12 +6138,14 @@
                                 else if (notFallLen == 1) {
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
                                     Laya.timer.once(time * 3, this, () => {
+                                        Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                                         EventAdmin.notify(EventAdmin.EventType.defeated);
                                     });
                                 }
                                 else {
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
                                     Laya.timer.once(time * 3, this, () => {
+                                        Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                                         this.carFallAni(cardArr[1], Game3D.OppositeCardParent);
                                         Laya.timer.once(time * 3, this, () => {
                                             EventAdmin.notify(EventType.nextRound);
@@ -6057,6 +6183,22 @@
                                     });
                                 }
                             });
+                        });
+                    }
+                });
+                EventAdmin.reg(EventType.BtnSC, this, (question) => {
+                    let matching = checkAnswerForHand(question, Game3D.MyCardParent);
+                    let cardArr = checkQuestion(question, Game3D.MyCardParent);
+                    if (matching) {
+                        console.log('我回答正确');
+                        Laya.timer.once(time * 2, this, () => {
+                            this.carFallAni(cardArr[1], Game3D.MyCardParent);
+                        });
+                    }
+                    else {
+                        console.log('我回答错误');
+                        Laya.timer.once(time * 2, this, () => {
+                            this.carFallAni(cardArr[0], Game3D.MyCardParent);
                         });
                     }
                 });
@@ -6173,22 +6315,55 @@
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
+            var refreshQuestion = () => {
+                Animation2D.fadeOut(this.self['OptionParent'], 1, 0, 300, 0, () => {
+                    this.createQuestion(Game3D.setRefrashAnswerForMe());
+                    Animation2D.fadeOut(this.self['OptionParent'], 0, 1, 300, 0);
+                });
+            };
             Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+                if (Backpack._prop1.num <= 0) {
+                    Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
+                    return;
+                }
+                let numArr = Game3D.getNotFallCard(Game3D.MyCardParent);
+                if (numArr.length <= 2) {
+                    Dialog.createHint_Middle(Dialog.HintContent["牌数太少，无法使用道具！"]);
+                    return;
+                }
+                Backpack._prop1.num--;
+                this.self['BtnSCNum'].text = Tools.format_StrAddNum(this.self['BtnSCNum'].text, -1);
+                let arr = Tools.node_RandomChildren(this.self['OptionParent']);
+                let question = arr[0].getChildByName('Content').text;
+                EventAdmin.notify(Game3D.EventType.BtnSC, [question]);
+                Laya.timer.once(3000, this, () => {
+                    refreshQuestion();
+                });
             });
             Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+                if (Backpack._prop2.num <= 0) {
+                    Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
+                    return;
+                }
+                let numArr = Game3D.getNotFallCard(Game3D.MyCardParent);
+                if (numArr.length <= 2) {
+                    Dialog.createHint_Middle(Dialog.HintContent["牌数太少，无法使用道具！"]);
+                    return;
+                }
+                Backpack._prop2.num--;
+                this.self['BtnSXNum'].text = Tools.format_StrAddNum(this.self['BtnSXNum'].text, -1);
+                refreshQuestion();
             });
         }
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
                 Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
-                    Tools.node_RemoveAllChildren(this.self['OptionParent']);
                     this.createOppositeQuestion(questionAndYesOrNo, cardName);
                 });
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
                 this.createQuestion(questionArr);
-                Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0, () => {
-                });
+                Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0);
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory; });
@@ -6197,10 +6372,10 @@
                 Admin._openScene(Admin.SceneName.UIResurgence);
             });
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                Tools.node_RemoveAllChildren(this.self['OptionParent']);
+                Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100);
             });
             EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
-                Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100, () => { });
+                Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100);
             });
             EventAdmin.reg(Game3D.EventType.doWell, this, () => {
                 let DoWell = Laya.Pool.getItemByCreateFun('DoWell', this.DoWell.create, this.DoWell);
@@ -6219,6 +6394,7 @@
             });
         }
         createQuestion(questionArr) {
+            Tools.node_RemoveAllChildren(this.self['OptionParent']);
             if (questionArr.length < 3) {
                 this.createOption(this.self['OptionParent'], this.self['OptionParent'].width / 2, this.self['OptionParent'].height / 2, questionArr[0], false);
             }
@@ -6281,6 +6457,11 @@
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
             GuessCard.pos(0, 0);
+            let Bg = GuessCard.getChildByName('Bg');
+            Bg.alpha = 0;
+            Bg.height = Laya.stage.height;
+            Bg.width = Laya.stage.width;
+            Animation2D.fadeOut(Bg, 0, 0.3, 200, 300);
             let QuestionBaord = GuessCard.getChildByName('QuestionBaord');
             let Question = QuestionBaord.getChildByName('Question');
             Question.text = questionAndYesOrNo[0];
@@ -6326,6 +6507,7 @@
             Animation2D.scale_Alpha(BtnNo, 0, 0, 0, 1, 1, 1, 150, 600);
             Animation2D.scale_Alpha(BtnYes, 0, 0, 0, 1, 1, 1, 150, 600);
             EventAdmin.reg(Game3D.EventType.hideGuessCard, this, (func) => {
+                Animation2D.fadeOut(Bg, 0.3, 0, 200);
                 Animation2D.bombs_Vanish(QuestionBaord, 0, 0, 0, 150, 500);
                 Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
                 Animation2D.cardRotateX_TowFace(Card, 180, null, 200);
@@ -7071,7 +7253,7 @@
 
     class UIPropTry extends PropTry.PropTryScene {
         lwgOnAwake() {
-            Tools.node_ShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform], true);
         }
         lwgOnEnable() {
             this.self['BtnClose'].visible = false;
@@ -7087,9 +7269,11 @@
                 this.self['Bytedance_Low_BtnGet'].visible = this.self['Bytedance_Low_Dot'].visible = this.self['Bytedance_Low_Dot'].visible ? false : true;
             });
             Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, () => {
-                Backpack._prop1.num++;
-                Backpack._prop2.num++;
-                Admin._openScene(Admin.SceneName.GameScene, this.self);
+                ADManager.ShowReward(() => {
+                    Backpack._prop1.num++;
+                    Backpack._prop2.num++;
+                    Admin._openScene(Admin.SceneName.GameScene, this.self);
+                });
             });
         }
     }
@@ -7428,6 +7612,14 @@
                     });
                     break;
                 }
+            }
+            if (Admin._gameLevel.value % 4 == 0) {
+                this.self['ProgressBar'].mask.x = 0;
+                this.self['Percent'].text = '100 %';
+            }
+            else {
+                this.self['ProgressBar'].mask.x = -460 + Admin._gameLevel.value % 4 * (460 / 4);
+                this.self['Percent'].text = Admin._gameLevel.value % 4 * 25 + '%';
             }
         }
         lwgBtnClick() {
