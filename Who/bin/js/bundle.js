@@ -5163,6 +5163,35 @@
                     Laya.LocalStorage.setItem('Backpack_prop2', val.toString());
                 }
             };
+            Backpack._haveCardArray = {
+                get arr() {
+                    return Laya.LocalStorage.getJSON('Backpack_haveCardArray') ? JSON.parse(Laya.LocalStorage.getJSON('Backpack_haveCardArray')) : [];
+                },
+                set arr(array) {
+                    Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(array));
+                },
+                add(arr1) {
+                    let arr0 = Backpack._haveCardArray.arr;
+                    for (let index = 0; index < arr1.length; index++) {
+                        arr0.push(arr1[index]);
+                    }
+                    Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr0));
+                    return arr0;
+                },
+                sub(arr1) {
+                    let arr0 = Backpack._haveCardArray.arr;
+                    for (let i = 0; i < arr0.length; i++) {
+                        for (let j = 0; j < arr1.length; j++) {
+                            if (arr0[i] == arr1[j]) {
+                                arr0.splice(i, 1);
+                                i--;
+                            }
+                        }
+                    }
+                    Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr0));
+                    return arr0;
+                }
+            };
             Backpack._backpackArray = [];
             class BackpackScene extends Admin.Scene {
                 moduleOnAwake() {
@@ -5636,7 +5665,7 @@
                 let index = Game3D.featureData[i][featureProperty.index];
                 weightArr.push({
                     index: index,
-                    value: 0
+                    value: 0,
                 });
             }
             for (let i = 0; i < CardParent.numChildren; i++) {
@@ -7583,6 +7612,10 @@
             Laya.timer.once(200, this, () => {
                 CheckIn.openCheckIn();
             });
+            Backpack._haveCardArray.add(['name', 'name1']);
+            console.log(Backpack._haveCardArray.arr);
+            Backpack._haveCardArray.sub(['name']);
+            console.log(Backpack._haveCardArray.arr);
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;

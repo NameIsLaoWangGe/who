@@ -19,6 +19,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     }
 
     lwgEventReg(): void {
+
         let Img = this.self['Surface'] as Laya.Sprite;
         let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
 

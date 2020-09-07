@@ -120,6 +120,7 @@ export module Game3D {
         queding = 'queding',
         zhuhetingliu = 'zhuhetingliu'
     }
+
     /**卡牌动画*/
     export enum CardAni {
         standMe = 'standMe',
@@ -129,6 +130,19 @@ export module Game3D {
         blinkMe = 'blinkMe',
         blinkOpposite = 'blinkOpposite',
         clickMe = 'clickMe',
+    }
+
+
+    /**
+     * 获取所有卡牌名称
+     */
+    export function getAllCardName(): Array<string> {
+        let cardNameArr = [];
+        for (let i = 0; i < CardData.length; i++) {
+            const element = CardData[i];
+            cardNameArr.push(element[CardProperty.name]);
+        }
+        return cardNameArr;
     }
 
     /**
@@ -177,6 +191,7 @@ export module Game3D {
         }
     }
 
+
     /**
      * 获取剩余属性的权重值,对所有没有倒下的卡牌的属性数量排序
      * @param CardParent 是我的卡牌还是对方的卡牌
@@ -188,7 +203,7 @@ export module Game3D {
             let index = featureData[i][featureProperty.index];
             weightArr.push({
                 index: index,
-                value: 0
+                value: 0,
             });
         }
         // 剩余可选择的卡牌数量，排除已经倒下的卡牌，已经对剩余卡牌进行数量标记

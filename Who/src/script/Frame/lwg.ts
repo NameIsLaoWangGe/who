@@ -6025,8 +6025,44 @@ export module lwg {
             }
         }
 
-        /***
-         * / 
+        /**
+         * 当前拥有的卡牌
+         */
+        export let _haveCardArray = {
+            get arr(): Array<string> {
+                return Laya.LocalStorage.getJSON('Backpack_haveCardArray') ? JSON.parse(Laya.LocalStorage.getJSON('Backpack_haveCardArray')) : [];
+            },
+
+            set arr(array: Array<string>) {
+                Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(array));
+            },
+
+            /**增加,数组形式，可添加多个,会自动除去重复的卡牌*/
+            add(arr1: Array<string>): Array<string> {
+                let arr0 = _haveCardArray.arr;
+                for (let index = 0; index < arr1.length; index++) {
+                    arr0.push(arr1[index]);
+                }
+                let arr00 = Tools.arrayUnique_01(arr0);
+                Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr00));
+                return arr00;
+            },
+            /**减少,数组形式，可减少多个*/
+            sub(arr1: Array<string>): Array<string> {
+                let arr0 = _haveCardArray.arr;
+                for (let i = 0; i < arr0.length; i++) {
+                    for (let j = 0; j < arr1.length; j++) {
+                        if (arr0[i] == arr1[j]) {
+                            arr0.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
+                Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr0));
+                return arr0;
+            }
+        }
+
         /**
          * 道具数组,对象数组的数组
          * */
@@ -6034,16 +6070,12 @@ export module lwg {
 
         export class BackpackScene extends Admin.Scene {
             moduleOnAwake(): void {
-
             };
             moduleEventReg(): void {
-
             };
             moduleOnEnable(): void {
-
             };
         }
-
     }
 
     export module Loding {

@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 
 export default class UIStart extends Start.StartScene {
