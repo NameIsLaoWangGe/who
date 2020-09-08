@@ -13,9 +13,17 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnEnable(): void {
         this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
         this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
-        TimerAdmin.frameLoop(10, this, () => {
 
-        })
+
+        TimerAdmin.frameLoop(320, this, () => {
+            Animation2D.move_Simple(this.self['ReflectMask'], -263, -271, 399, 71, 800, 0, () => {
+                Animation2D.fadeOut(this.self['Reflect2'], 0, 1, 200, 0, () => {
+                    Animation2D.fadeOut(this.self['Reflect2'], 1, 0, 300, 0, () => {
+                        Effects.light_Infinite(this.self['Mirror'], this, 360, 318, 800, 800, 0, null, 0.01, 1);
+                    });
+                });
+            }, Laya.Ease.cubicInOut);
+        }, true)
     }
 
     lwgEventReg(): void {
@@ -120,15 +128,15 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
-            ADManager.ShowReward(() => {
-                DrawCard._freeAds.num++;
-                if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
-                    DrawCard._freeAds.num = 0;
-                    DrawCard._residueDraw.num++;
-                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
-                }
-                this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
-            })
+            // ADManager.ShowReward(() => {
+            DrawCard._freeAds.num++;
+            if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                DrawCard._freeAds.num = 0;
+                DrawCard._residueDraw.num++;
+                this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+            }
+            this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
+            // })
         });
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {

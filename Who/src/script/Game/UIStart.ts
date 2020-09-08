@@ -47,6 +47,10 @@ export default class UIStart extends Start.StartScene {
             this.self['ProgressBar'].mask.x = -460 + Admin._gameLevel.value % 4 * (460 / 4);
             this.self['Percent'].text = Admin._gameLevel.value % 4 * 25 + '%';
         }
+
+        TimerAdmin.loop(2000, this, () => {
+            Animation2D.bomb_LeftRight(this.self['BtnStart'], 1.22, 250);
+        }, true);
     }
 
     lwgBtnClick(): void {

@@ -1607,7 +1607,7 @@
                 }, args, coverBefore);
             }
             TimerAdmin.frameRandomLoop = frameRandomLoop;
-            function loop(delay, caller, method, count, immediately, args, coverBefore) {
+            function loop(delay, caller, method, immediately, args, coverBefore) {
                 if (immediately) {
                     method();
                 }
@@ -2065,6 +2065,7 @@
                 SkinUrl[SkinUrl["Frame/Effects/star_red.png"] = 21] = "Frame/Effects/star_red.png";
                 SkinUrl[SkinUrl["Frame/Effects/star_white.png"] = 22] = "Frame/Effects/star_white.png";
                 SkinUrl[SkinUrl["Frame/Effects/star_yellow.png"] = 23] = "Frame/Effects/star_yellow.png";
+                SkinUrl[SkinUrl["Frame/Effects/ui_Circular_l_yellow.png"] = 24] = "Frame/Effects/ui_Circular_l_yellow.png";
             })(SkinUrl = Effects.SkinUrl || (Effects.SkinUrl = {}));
             let SkinStyle;
             (function (SkinStyle) {
@@ -2116,6 +2117,43 @@
                 }
             }
             Effects.EffectsBase = EffectsBase;
+            function light_Infinite(parent, caller, x, y, width, height, zOder, url, speed, count) {
+                let img = new Laya.Image();
+                parent.addChild(img);
+                img.pos(x, y);
+                img.width = width;
+                img.height = height;
+                img.pivotX = width / 2;
+                img.pivotY = height / 2;
+                url ? img.skin = url : img.skin = SkinUrl[24];
+                img.alpha = 0;
+                img.zOrder = zOder;
+                let add = true;
+                let count0 = 0;
+                let func = () => {
+                    if (count && count0 > count && img.alpha <= 0.01) {
+                        img.removeSelf();
+                        Laya.timer.clear(caller, func);
+                        return;
+                    }
+                    if (!add) {
+                        img.alpha -= speed ? speed : 0.01;
+                        if (img.alpha <= 0) {
+                            add = true;
+                            count0 += 0.5;
+                        }
+                    }
+                    else {
+                        img.alpha += speed ? speed * 2 : 0.01 * 2;
+                        if (img.alpha >= 1) {
+                            add = false;
+                            count0 += 0.5;
+                        }
+                    }
+                };
+                Laya.timer.frameLoop(1, caller, func);
+            }
+            Effects.light_Infinite = light_Infinite;
             function star_Blink(parent, centerPos, radiusX, radiusY, skinUrl, width, height, rotationSpeed) {
                 if (!rotationSpeed) {
                     rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
@@ -2974,12 +3012,24 @@
                 }), 0);
             }
             Animation2D.move_changeRotate = move_changeRotate;
-            function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed, func, audioType) {
+            function bomb_LeftRight(node, MaxScale, time, func, delayed) {
+                Laya.Tween.to(node, { scaleX: MaxScale }, time, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
+                    Laya.Tween.to(node, { scaleX: 0.85 }, time * 0.5, null, Laya.Handler.create(this, function () {
+                        Laya.Tween.to(node, { scaleX: MaxScale * 0.9 }, time * 0.55, null, Laya.Handler.create(this, function () {
+                            Laya.Tween.to(node, { scaleX: 0.95 }, time * 0.6, null, Laya.Handler.create(this, function () {
+                                Laya.Tween.to(node, { scaleX: 1 }, time * 0.65, null, Laya.Handler.create(this, function () {
+                                    if (func)
+                                        func();
+                                }), 0);
+                            }), 0);
+                        }), 0);
+                    }), 0);
+                }), delayed);
+            }
+            Animation2D.bomb_LeftRight = bomb_LeftRight;
+            function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed, func) {
                 node.scale(0, 0);
                 node.alpha = firstAlpha;
-                if (!delayed) {
-                    delayed = 0;
-                }
                 Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation1 }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
                         Laya.Tween.to(node, { scaleX: endScale + (scale1 - endScale) * 0.2, scaleY: endScale + (scale1 - endScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
@@ -2990,7 +3040,7 @@
                             }), 0);
                         }), 0);
                     }), 0);
-                }), delayed);
+                }), delayed ? delayed : 0);
             }
             Animation2D.bombs_Appear = bombs_Appear;
             function bombs_AppearAllChild(node, firstAlpha, endScale, scale1, rotation1, time1, time2, interval, func, audioType) {
@@ -5175,8 +5225,9 @@
                     for (let index = 0; index < arr1.length; index++) {
                         arr0.push(arr1[index]);
                     }
-                    Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr0));
-                    return arr0;
+                    let arr00 = Tools.arrayUnique_01(arr0);
+                    Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr00));
+                    return arr00;
                 },
                 sub(arr1) {
                     let arr0 = Backpack._haveCardArray.arr;
@@ -5623,6 +5674,15 @@
             CardAni["blinkOpposite"] = "blinkOpposite";
             CardAni["clickMe"] = "clickMe";
         })(CardAni = Game3D.CardAni || (Game3D.CardAni = {}));
+        function getAllCardName() {
+            let cardNameArr = [];
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                const element = Game3D.CardData[i];
+                cardNameArr.push(element[CardProperty.name]);
+            }
+            return cardNameArr;
+        }
+        Game3D.getAllCardName = getAllCardName;
         function set16InitialCards(type) {
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
@@ -7084,8 +7144,15 @@
         lwgOnEnable() {
             this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
             this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
-            TimerAdmin.frameLoop(10, this, () => {
-            });
+            TimerAdmin.frameLoop(320, this, () => {
+                Animation2D.move_Simple(this.self['ReflectMask'], -263, -271, 399, 71, 800, 0, () => {
+                    Animation2D.fadeOut(this.self['Reflect2'], 0, 1, 200, 0, () => {
+                        Animation2D.fadeOut(this.self['Reflect2'], 1, 0, 300, 0, () => {
+                            Effects.light_Infinite(this.self['Mirror'], this, 360, 318, 800, 800, 0, null, 0.01, 1);
+                        });
+                    });
+                }, Laya.Ease.cubicInOut);
+            }, true);
         }
         lwgEventReg() {
             let Img = this.self['Surface'];
@@ -7180,15 +7247,13 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
-                ADManager.ShowReward(() => {
-                    DrawCard._freeAds.num++;
-                    if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
-                        DrawCard._freeAds.num = 0;
-                        DrawCard._residueDraw.num++;
-                        this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
-                    }
-                    this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
-                });
+                DrawCard._freeAds.num++;
+                if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                    DrawCard._freeAds.num = 0;
+                    DrawCard._residueDraw.num++;
+                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+                }
+                this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 Admin._closeScene(this.self);
@@ -7612,10 +7677,6 @@
             Laya.timer.once(200, this, () => {
                 CheckIn.openCheckIn();
             });
-            Backpack._haveCardArray.add(['name', 'name1']);
-            console.log(Backpack._haveCardArray.arr);
-            Backpack._haveCardArray.sub(['name']);
-            console.log(Backpack._haveCardArray.arr);
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;
@@ -7654,6 +7715,9 @@
                 this.self['ProgressBar'].mask.x = -460 + Admin._gameLevel.value % 4 * (460 / 4);
                 this.self['Percent'].text = Admin._gameLevel.value % 4 * 25 + '%';
             }
+            TimerAdmin.loop(2000, this, () => {
+                Animation2D.bomb_LeftRight(this.self['BtnStart'], 1.22, 250);
+            }, true);
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {

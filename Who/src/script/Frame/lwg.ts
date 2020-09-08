@@ -975,7 +975,7 @@ export module lwg {
        * @param args 
        * @param coverBefore 
        */
-        export function loop(delay: number, caller: any, method: Function, count?: number, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
+        export function loop(delay: number, caller: any, method: Function, immediately?: boolean, args?: any[], coverBefore?: boolean): void {
             if (immediately) {
                 method();
             }
@@ -1563,6 +1563,9 @@ export module lwg {
             "Frame/Effects/star_red.png",
             "Frame/Effects/star_white.png",
             "Frame/Effects/star_yellow.png",
+
+            "Frame/Effects/ui_Circular_l_yellow.png",
+
         }
 
         /**表示需要什么样的图片样式*/
@@ -1661,6 +1664,55 @@ export module lwg {
                 Laya.Tween.clearAll(this);
                 Laya.timer.clearAll(this);
             }
+        }
+        /**
+         * 循环闪光
+         * @param parent 父节点
+         * @param caller 执行域，一般是当前执行的脚本，最后一并清理
+         * @param x x位置
+         * @param y y位置
+         * @param width 宽
+         * @param height 高
+         * @param zOder 层级
+         * @param url 图片地址
+         * @param speed 闪烁速度
+         * @param count 默认不限次数
+         */
+        export function light_Infinite(parent, caller, x: number, y: number, width: number, height: number, zOder: number, url?: string, speed?: number, count?: number): void {
+            let img = new Laya.Image();
+            parent.addChild(img);
+            img.pos(x, y);
+            img.width = width;
+            img.height = height;
+            img.pivotX = width / 2;
+            img.pivotY = height / 2;
+            url ? img.skin = url : img.skin = SkinUrl[24];
+            img.alpha = 0;
+            img.zOrder = zOder;
+            let add = true;
+            let count0 = 0;
+
+            let func = () => {
+                if (count && count0 > count && img.alpha <= 0.01) {
+                    img.removeSelf();
+                    Laya.timer.clear(caller, func);
+                    return;
+                }
+                if (!add) {
+                    img.alpha -= speed ? speed : 0.01;
+                    if (img.alpha <= 0) {
+                        add = true;
+                        count0 += 0.5;
+                    }
+                } else {
+                    img.alpha += speed ? speed * 2 : 0.01 * 2;
+                    if (img.alpha >= 1) {
+                        add = false;
+                        count0 += 0.5;
+                    }
+                }
+            }
+            Laya.timer.frameLoop(1, caller, func)
         }
 
         /**
@@ -2454,6 +2506,9 @@ export module lwg {
 
     /**动画模块*/
     export module Animation2D {
+
+
+
         /**
           * 按中心点旋转动画
           * @param node 节点
@@ -2947,6 +3002,28 @@ export module lwg {
         }
 
         /**
+         * 左右拉伸的Q弹动画
+         * @param node 节点
+         * @param MaxScale 最大拉伸
+         * @param time 拉伸需要的时间，然后持续衰减
+         * @param delayed 延时
+         * @param func 回调函数
+         */
+        export function bomb_LeftRight(node, MaxScale, time, func?: Function, delayed?: number): void {
+            Laya.Tween.to(node, { scaleX: MaxScale }, time, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
+                Laya.Tween.to(node, { scaleX: 0.85 }, time * 0.5, null, Laya.Handler.create(this, function () {
+                    Laya.Tween.to(node, { scaleX: MaxScale * 0.9 }, time * 0.55, null, Laya.Handler.create(this, function () {
+                        Laya.Tween.to(node, { scaleX: 0.95 }, time * 0.6, null, Laya.Handler.create(this, function () {
+                            Laya.Tween.to(node, { scaleX: 1 }, time * 0.65, null, Laya.Handler.create(this, function () {
+                                if (func) func();
+                            }), 0);
+                        }), 0);
+                    }), 0);
+                }), 0);
+            }), delayed);
+        }
+
+        /**
          * 类似气球弹出并且回弹，第一个阶段弹到空中，这个阶段可以给个角度，第二阶段落下变为原始状态，第三阶段再次放大一次，这次放大小一点，第四阶段回到原始状态，三、四个阶段是回弹一次，根据第一个阶段参数进行调整
          * @param node 节点
          * @param firstAlpha 初始透明度
@@ -2959,23 +3036,10 @@ export module lwg {
          * @param audioType 音效类型
          * @param func 完成后的回调
          */
-        export function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed?: number, func?: Function, audioType?: String): void {
+        export function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed?: number, func?: Function): void {
             node.scale(0, 0);
             node.alpha = firstAlpha;
-            if (!delayed) {
-                delayed = 0;
-            }
             Laya.Tween.to(node, { scaleX: scale1, scaleY: scale1, alpha: 1, rotation: rotation1 }, time1, Laya.Ease.cubicInOut, Laya.Handler.create(this, function () {
-                switch (audioType) {
-                    case 'balloon':
-                        // PalyAudio.playSound(Enum.AudioName.commonPopup, 1);
-                        break;
-                    case 'common':
-                        // PalyAudio.playSound(Enum.AudioName.commonPopup, 1);
-                        break;
-                    default:
-                        break;
-                }
                 Laya.Tween.to(node, { scaleX: endScale, scaleY: endScale, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
                     Laya.Tween.to(node, { scaleX: endScale + (scale1 - endScale) * 0.2, scaleY: endScale + (scale1 - endScale) * 0.2, rotation: 0 }, time2, null, Laya.Handler.create(this, function () {
 
@@ -2986,7 +3050,7 @@ export module lwg {
                         }), 0);
                     }), 0);
                 }), 0);
-            }), delayed);
+            }), delayed ? delayed : 0);
         }
 
         /**
@@ -3015,7 +3079,7 @@ export module lwg {
                     if (index !== node.numChildren - 1) {
                         func == null;
                     }
-                    bombs_Appear(Child, firstAlpha, endScale, scale1, rotation1, time1, time2, null, func, audioType);
+                    bombs_Appear(Child, firstAlpha, endScale, scale1, rotation1, time1, time2, null, func);
                 })
                 de1 += interval;
             }

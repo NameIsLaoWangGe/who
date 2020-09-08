@@ -66,6 +66,15 @@ P 4C5EE1E0 star_purple.png
 P 80759C24 star_red.png
 P 2A688C74 star_white.png
 P C87E74F5 star_yellow.png
+P 58E86704 ui_Circular_l_blue.png
+P E2DD3178 ui_Circular_l_cyan.png
+P 7646FA41 ui_Circular_l_green.png
+P 514137D2 ui_Circular_l_orange.png
+P 6BD468BC ui_Circular_l_pink.png
+P C13AF3C2 ui_Circular_l_red.png
+P A9665D25 ui_Circular_l_violet.png
+P 064ED689 ui_Circular_l_white.png
+P FEDDF281 ui_Circular_l_yellow.png
 D Frame/UI
 P C36AA67B icon_execution.png
 P A5763191 icon_gold.png
@@ -102,15 +111,6 @@ P 96604B1E ui_circle_c_009.png
 P 316A475D ui_circle_c_010.png
 P FE444F46 ui_circle_c_011.png
 P 6AABC0D1 ui_circle_c_012.png
-P 58E86704 ui_Circular_l_blue.png
-P E2DD3178 ui_Circular_l_cyan.png
-P 7646FA41 ui_Circular_l_green.png
-P 514137D2 ui_Circular_l_orange.png
-P 6BD468BC ui_Circular_l_pink.png
-P C13AF3C2 ui_Circular_l_red.png
-P A9665D25 ui_Circular_l_violet.png
-P 064ED689 ui_Circular_l_white.png
-P FEDDF281 ui_Circular_l_yellow.png
 P BF8DFFF1 ui_l_orthogon_purple.png
 P 4A839BCB ui_orthogon_black.png
 P 9D61148C ui_orthogon_blue.png
@@ -217,7 +217,7 @@ D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
-R 4BC25796 guang.png
+R 35396491 guang.png
 R CE53F713 jinzi.png
 P 9FC4A4E0 mianfei.png
 P D1B89093 mojing.png
@@ -225,6 +225,7 @@ P 63402EB5 qidong.png
 P E251178C shenyu.png
 P 1E6EB0DD shuzi4.png
 R A630413C yuan.png
+R 7892BB4E yuan2.png
 D Game/UI/UILoding
 R B3AA2A09 bj.png
 R BC36AD45 jiankan.png
