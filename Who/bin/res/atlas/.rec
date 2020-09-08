@@ -120,6 +120,7 @@ P 1518D67A ui_orthogon_magenta.png
 P 2FAF870C ui_orthogon_orange.png
 P B8F7D4BC ui_orthogon_purple.png
 P 9D87EFFF ui_orthogon_red.png
+P 45556BDA ui_orthogon_wihet.png
 P 55B586A8 ui_orthogon_yellow.png
 P 88399698 ui_square_001.png
 P 1BDF6103 ui_square_002.png
@@ -218,6 +219,8 @@ P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
 R 35396491 guang.png
+R F96B9B41 guang2.png
+R EE88D7EC guang3.png
 R CE53F713 jinzi.png
 P 9FC4A4E0 mianfei.png
 P D1B89093 mojing.png

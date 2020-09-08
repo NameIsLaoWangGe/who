@@ -1,5 +1,3 @@
-import UIPropTry from "../Game/UIPropTry";
-
 // import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
@@ -1298,6 +1296,7 @@ export module lwg {
             if (cloesSceneScript) {
                 if (cloesSceneScript) {
                     _clickLock.switch = true;
+                    cloesSceneScript.lwgBeforeVanishAni();
                     let time0 = cloesSceneScript.lwgVanishAni();
                     if (time0 !== null) {
                         Laya.timer.once(time0, this, () => {
@@ -1305,12 +1304,45 @@ export module lwg {
                             _clickLock.switch = false;
                         })
                     } else {
+                        cloesSceneScript.lwgBeforeVanishAni();
                         vanishAni();
                     }
                 }
             } else {
                 console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
             }
+        }
+
+        /**通用场景进场动画*/
+        export function commonOpenAni(scene: Laya.Scene): number {
+            let time = 0;
+            let delay = 0;
+            var afterAni = () => {
+                if (scene[scene.name]) {
+                    scene[scene.name].lwgOpenAniAfter();
+                    scene[scene.name].lwgBtnClick();
+                }
+            }
+            switch (_commonOpenAni) {
+                case OpenAniType.fadeOut:
+                    time = 400;
+                    delay = 300;
+                    if (scene['Background']) {
+                        Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
+                    }
+                    Animation2D.fadeOut(scene, 0, 1, time, 0);
+                    Laya.timer.once(600, this, () => {
+                        afterAni();
+                    })
+                    break;
+                case OpenAniType.leftMove:
+
+                    break;
+
+                default:
+                    break;
+            }
+            return time;
         }
 
         /**游戏当前处于什么状态中，并非是当前打开的场景*/
@@ -1347,29 +1379,6 @@ export module lwg {
                     break;
             }
         }
-        /**通用场景进场动画*/
-        export function commonOpenAni(scene: Laya.Scene): number {
-            let time = 0;
-            let delay = 0;
-            switch (_commonOpenAni) {
-                case OpenAniType.fadeOut:
-                    time = 400;
-                    delay = 300;
-                    if (scene['Background']) {
-                        Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
-                    }
-                    Animation2D.fadeOut(scene, 0, 1, time);
-                    break;
-                case OpenAniType.leftMove:
-
-                    break;
-
-                default:
-                    break;
-            }
-            return time;
-        }
-
         /**2D场景通用父类*/
         export class Scene extends Laya.Script {
             /**挂载当前脚本的节点*/
@@ -1421,17 +1430,22 @@ export module lwg {
                 if (!time) {
                     time = commonOpenAni(this.self);
                     time = 0;
+                } else {
+                    Laya.timer.once(time, this, f => {
+                        this.lwgOpenAniAfter();
+                        this.lwgBtnClick();
+                    });
                 }
-                Laya.timer.once(time, this, f => {
-                    this.lwgBtnClick();
-                });
             }
+
             /**开场或者离场动画单位时间,默认为100*/
             aniTime: number = 100;
             /**开场或者离场动画单位延迟时间,默认为100*/
             aniDelayde: number = 100;
             /**开场动画,返回的数字为时间倒计时，倒计时结束后开启点击事件*/
             lwgOpenAni(): number { return null };
+            /**开场动画之后执行*/
+            lwgOpenAniAfter(): void { };
             /**按钮点击事件注册*/
             lwgBtnClick(): void { };
             /**一些节点的自适应*/
@@ -1439,6 +1453,8 @@ export module lwg {
             onUpdate(): void { this.lwgOnUpdate() };
             /**每帧执行*/
             lwgOnUpdate(): void { };
+            /**离场动画前执行*/
+            lwgBeforeVanishAni(): void { }
             /**离场动画*/
             lwgVanishAni(): number { return null };
             onDisable(): void {
@@ -1665,6 +1681,106 @@ export module lwg {
                 Laya.timer.clearAll(this);
             }
         }
+
+        /**
+         * 从中心点发出一个光圈，类似波浪，根据光圈不同的样式和节奏,通过控制宽高来
+         * @param parent 父节点
+         * @param centerPoint 发出位置
+         * @param width 宽度，默认100
+         * @param height 高度，默认100
+         * @param rotation 角度区间,默认为随机
+         * @param urlArr 图片数组，默认为框架中的位置
+         * @param speed 速度，默认0.025，也表示了消失位置，和波浪的大小
+         * @param accelerated 加速度,默认为0.0005
+         */
+        export function aureole_Continuous(parent, centerPoint: Laya.Point, width?: number, height?: number, rotation?: Array<number>, urlArr?: Array<string>, speed?: number, accelerated?: number): void {
+            let Img = new Laya.Image();
+            Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+            parent.addChild(Img);
+            Img.pos(centerPoint.x, centerPoint.y);
+            Img.width = width ? width : 100;
+            Img.height = height ? height : 100;
+            Img.pivotX = Img.width / 2;
+            Img.pivotY = Img.height / 2;
+            Img.alpha = 0;
+            speed = speed ? speed : 0.025;
+            let angle = Tools.randomCountNumer(0, 360)[0];
+            let caller = {};
+            let acc = 0;
+            accelerated = accelerated ? accelerated : 0.0005;
+            let firstOff = false;
+            TimerAdmin.frameLoop(1, caller, () => {
+                if (Img.alpha < 1 && !firstOff) {
+                    Img.alpha += 0.05;
+                    acc += (accelerated / 5);
+                    Img.scaleX += (speed / 2 + acc);
+                    Img.scaleY += (speed / 2 + acc);
+                } else {
+                    firstOff = true;
+                    acc += accelerated;
+                    Img.scaleX += (speed + acc);
+                    Img.scaleY += (speed + acc);
+                    if (Img.scaleX > 1.8) {
+                        acc -= accelerated;
+                        if (Img.scaleX > 2.2) {
+                            Img.alpha -= 0.01;
+                            if (Img.alpha <= 0.01) {
+                                Img.removeSelf();
+                                Laya.timer.clearAll(caller);
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        /**
+         * 环形粒子吸入到中心点,这里只生成1个
+         * @param parent 父节点
+         * @param caller 执行域
+         * @param centerPoint 中心点
+         * @param radius 半径区间[a,b]
+         * @param width 粒子的宽度区间[a,b]
+         * @param height 粒子的高度区间[a,b],如果为空，这高度和宽度一样
+         * @param zOder 层级，默认为0
+         * @param urlArr 图片地址集合，默认为框架中随机的样式
+         * @param speed 吸入速度,默认为5
+         * @param accelerated 加速度，默认为0.35
+         */
+        export function particle_AnnularInhalation(parent, centerPoint: Laya.Point, radius: Array<number>, width?: Array<number>, height?: Array<number>, zOder?: number, urlArr?: Array<string>, speed?: number, accelerated?: number): void {
+            let Img = new Laya.Image();
+            parent.addChild(Img);
+            width = width ? width : [25, 50];
+            Img.width = Tools.randomCountNumer(width[0], width[1])[0];
+            Img.height = height ? Tools.randomCountNumer(height[0], height[1])[0] : Img.width;
+            Img.pivotX = Img.width / 2;
+            Img.pivotY = Img.height / 2;
+            Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+            let radius0 = Tools.randomCountNumer(radius[0], radius[1])[0];
+            Img.alpha = 0;
+            speed = speed ? speed : 5;
+            let angle = Tools.randomCountNumer(0, 360)[0];
+            let caller = {};
+            let acc = 0;
+            accelerated = accelerated ? accelerated : 0.35;
+            TimerAdmin.frameLoop(1, caller, () => {
+                if (Img.alpha < 1) {
+                    Img.alpha += 0.05;
+                    acc += (accelerated / 5);
+                    radius0 -= (speed / 2 + acc);
+                } else {
+                    acc += accelerated;
+                    radius0 -= (speed + acc);
+                }
+                let point = Tools.point_GetRoundPos(angle, radius0, centerPoint);
+                Img.pos(point.x, point.y);
+                if (point.distance(centerPoint.x, centerPoint.y) <= 20 || point.distance(centerPoint.x, centerPoint.y) >= 1000) {
+                    Img.removeSelf();
+                    Laya.timer.clearAll(caller);
+                }
+            })
+        }
+
         /**
          * 循环闪光
          * @param parent 父节点
@@ -1678,35 +1794,37 @@ export module lwg {
          * @param speed 闪烁速度
          * @param count 默认不限次数
          */
-        export function light_Infinite(parent, caller, x: number, y: number, width: number, height: number, zOder: number, url?: string, speed?: number, count?: number): void {
-            let img = new Laya.Image();
-            parent.addChild(img);
-            img.pos(x, y);
-            img.width = width;
-            img.height = height;
-            img.pivotX = width / 2;
-            img.pivotY = height / 2;
-            url ? img.skin = url : img.skin = SkinUrl[24];
-            img.alpha = 0;
-            img.zOrder = zOder;
+        export function light_SimpleInfinite(parent, caller, x: number, y: number, width: number, height: number, zOder: number, url?: string, speed?: number, count?: number): void {
+            let Img = new Laya.Image();
+            parent.addChild(Img);
+            Img.pos(x, y);
+            Img.width = width;
+            Img.height = height;
+            Img.pivotX = width / 2;
+            Img.pivotY = height / 2;
+            Img.skin = url ? url : SkinUrl[24];
+            Img.alpha = 0;
+            Img.zOrder = zOder ? zOder : 0;
             let add = true;
             let count0 = 0;
 
             let func = () => {
-                if (count && count0 > count && img.alpha <= 0.01) {
-                    img.removeSelf();
+                if (count && count0 > count && Img.alpha <= 0.01) {
+                    Img.removeSelf();
                     Laya.timer.clear(caller, func);
                     return;
                 }
+                if (!Img.parent) return;
+
                 if (!add) {
-                    img.alpha -= speed ? speed : 0.01;
-                    if (img.alpha <= 0) {
+                    Img.alpha -= speed ? speed : 0.01;
+                    if (Img.alpha <= 0) {
                         add = true;
                         count0 += 0.5;
                     }
                 } else {
-                    img.alpha += speed ? speed * 2 : 0.01 * 2;
-                    if (img.alpha >= 1) {
+                    Img.alpha += speed ? speed * 2 : 0.01 * 2;
+                    if (Img.alpha >= 1) {
                         add = false;
                         count0 += 0.5;
                     }
@@ -3885,7 +4003,7 @@ export module lwg {
          * 返回一个数值区间内的数个随机数
          * @param section1 区间1
          * @param section2 区间2,不输入则是0~section1
-         * @param count 数量默认是1
+         * @param count 数量默认是1个
          * @param intSet 是否是整数,默认是整数，为true
          */
         export function randomCountNumer(section1: number, section2?: number, count?: number, intSet?: boolean): Array<number> {
@@ -3955,19 +4073,7 @@ export module lwg {
             }
         }
 
-        /**
-         * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点
-         * @param x0 原点X
-         * @param y0 原点Y
-         * @param x1 旋转点X
-         * @param y1 旋转点Y
-         * @param angle 角度
-         */
-        export function d2_dotRotateXY(x0, y0, x1, y1, angle): Laya.Point {
-            let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
-            let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
-            return new Laya.Point(x2, y2);
-        }
+
 
         /**返回两个二维物体的距离*/
         export function d2_twoObjectsLen(obj1: Laya.Sprite, obj2: Laya.Sprite): number {
@@ -4567,6 +4673,20 @@ export module lwg {
         }
 
         /**
+         * 二维坐标中一个点按照另一个点旋转一定的角度后，得到的点
+         * @param x0 原点X
+         * @param y0 原点Y
+         * @param x1 旋转点X
+         * @param y1 旋转点Y
+         * @param angle 角度
+         */
+        export function point_DotRotatePoint(x0, y0, x1, y1, angle): Laya.Point {
+            let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
+            let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
+            return new Laya.Point(x2, y2);
+        }
+
+        /**
          * 根据不同的角度和速度计算坐标,从而产生位移
          * @param angle 角度
          * @param speed 移动速度
@@ -4586,7 +4706,7 @@ export module lwg {
         * @param radius 半径
         * @param centerPos 原点
         */
-        export function point_GetRoundPos(angle: number, radius: number, centerPos: any): Laya.Point {
+        export function point_GetRoundPos(angle: number, radius: number, centerPos: Laya.Point): Laya.Point {
             var center = centerPos; //圆心坐标
             var radius = radius; //半径
             var hudu = (2 * Math.PI / 360) * angle; //90度角的弧度

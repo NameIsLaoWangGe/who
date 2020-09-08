@@ -1,5 +1,6 @@
 import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
+import { Game3D } from "./Game3D";
 
 export default class UIDrawCard extends DrawCard.DrawCardScene {
     /** @prop {name:Card, tips:"选项卡预制体", type:Prefab}*/
@@ -14,16 +15,47 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
         this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
 
-
+        // 镜面效果
         TimerAdmin.frameLoop(320, this, () => {
             Animation2D.move_Simple(this.self['ReflectMask'], -263, -271, 399, 71, 800, 0, () => {
                 Animation2D.fadeOut(this.self['Reflect2'], 0, 1, 200, 0, () => {
                     Animation2D.fadeOut(this.self['Reflect2'], 1, 0, 300, 0, () => {
-                        Effects.light_Infinite(this.self['Mirror'], this, 360, 318, 800, 800, 0, null, 0.01, 1);
+                        // Effects.light_SimpleInfinite(this.self['Mirror'], this, 360, 318, 800, 800, 0, null, 0.01, 1);
                     });
                 });
             }, Laya.Ease.cubicInOut);
+        }, true);
+
+        Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+
+        TimerAdmin.frameLoop(10, this, () => {
+            if (!this['middleOff']) {
+                Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
+            }
+        })
+
+        TimerAdmin.loop(2000, this, () => {
+            Animation2D.bomb_LeftRight(this.self['BtnFree'], 1.1, 250);
+        }, true);
+
+        TimerAdmin.loop(3000, this, () => {
+            Animation2D.fadeOut(this.self['Logo2'], 1, 0.5, 200, 0, () => {
+                Animation2D.fadeOut(this.self['Logo2'], 0.5, 1, 100, 0, () => {
+                })
+            })
+        })
+
+        TimerAdmin.frameLoop(240, this, () => {
+            for (let index = 0; index < 3; index++) {
+                Laya.timer.once(index * 180, this, () => {
+                    Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 150, 150, null, ['Game/UI/UIDrawCard/guang3.png']);
+                })
+            }
         }, true)
+    }
+
+    lwgOpenAniAfter(): void {
+        Game3D.Scene3D.active = false;
     }
 
     lwgEventReg(): void {
@@ -64,7 +96,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                         x = (spcing + Card.width / 2) + (Card.width + spcing) * (index - 5);
                         y = globalPos.y + 150;
                     }
-                    Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200);
+                    Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
 
                     if (index == 8) {
                         Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 300);
@@ -101,8 +133,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     Card.zOrder = 4 * 10;
                     let x = Card.x;
                     let y = Card.y;
+                    let ReflectPic = Card.getChildByName('Reflect') as Laya.Image;
                     Animation2D.leftRight_Shake(Card, 20, 100, 200, () => {
                         Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
+                            Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 500, 200);
                             for (let index = 0; index < 5; index++) {
                                 let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
                                 Laya.timer.once(300 * index, this, () => {
@@ -171,6 +205,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 }
                 // 初始化初始位置
                 this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                this['middleOff'] = true;
             },
             // 移动
             (e: Laya.Event) => {
@@ -196,12 +231,21 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 this.self.getChildByName('DrawSp').removeSelf();
                 EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
+                this['middleOff'] = false;
             },
             // 出图片
             () => {
+                if (this.self.getChildByName('DrawSp')) {
+                    this.self.getChildByName('DrawSp').removeSelf();
+                    EventAdmin.notify('drawCardEvent');
+                }
                 this.self['DrawPosArr'] = null;
+                this['middleOff'] = false;
             });
     }
+    lwgBeforeVanishAni() {
+        Game3D.Scene3D.active = true;
+    };
     lwgOnDisable(): void {
         Setting.setBtnAppear();
     }

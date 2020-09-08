@@ -1848,6 +1848,7 @@
                 if (cloesSceneScript) {
                     if (cloesSceneScript) {
                         Admin._clickLock.switch = true;
+                        cloesSceneScript.lwgBeforeVanishAni();
                         let time0 = cloesSceneScript.lwgVanishAni();
                         if (time0 !== null) {
                             Laya.timer.once(time0, this, () => {
@@ -1856,6 +1857,7 @@
                             });
                         }
                         else {
+                            cloesSceneScript.lwgBeforeVanishAni();
                             vanishAni();
                         }
                     }
@@ -1865,6 +1867,35 @@
                 }
             }
             Admin._closeScene = _closeScene;
+            function commonOpenAni(scene) {
+                let time = 0;
+                let delay = 0;
+                var afterAni = () => {
+                    if (scene[scene.name]) {
+                        scene[scene.name].lwgOpenAniAfter();
+                        scene[scene.name].lwgBtnClick();
+                    }
+                };
+                switch (Admin._commonOpenAni) {
+                    case OpenAniType.fadeOut:
+                        time = 400;
+                        delay = 300;
+                        if (scene['Background']) {
+                            Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
+                        }
+                        Animation2D.fadeOut(scene, 0, 1, time, 0);
+                        Laya.timer.once(600, this, () => {
+                            afterAni();
+                        });
+                        break;
+                    case OpenAniType.leftMove:
+                        break;
+                    default:
+                        break;
+                }
+                return time;
+            }
+            Admin.commonOpenAni = commonOpenAni;
             let GameState;
             (function (GameState) {
                 GameState["Start"] = "Start";
@@ -1892,26 +1923,6 @@
                 }
             }
             Admin.gameState = gameState;
-            function commonOpenAni(scene) {
-                let time = 0;
-                let delay = 0;
-                switch (Admin._commonOpenAni) {
-                    case OpenAniType.fadeOut:
-                        time = 400;
-                        delay = 300;
-                        if (scene['Background']) {
-                            Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
-                        }
-                        Animation2D.fadeOut(scene, 0, 1, time);
-                        break;
-                    case OpenAniType.leftMove:
-                        break;
-                    default:
-                        break;
-                }
-                return time;
-            }
-            Admin.commonOpenAni = commonOpenAni;
             class Scene extends Laya.Script {
                 constructor() {
                     super();
@@ -1953,11 +1964,16 @@
                         time = commonOpenAni(this.self);
                         time = 0;
                     }
-                    Laya.timer.once(time, this, f => {
-                        this.lwgBtnClick();
-                    });
+                    else {
+                        Laya.timer.once(time, this, f => {
+                            this.lwgOpenAniAfter();
+                            this.lwgBtnClick();
+                        });
+                    }
                 }
                 lwgOpenAni() { return null; }
+                ;
+                lwgOpenAniAfter() { }
                 ;
                 lwgBtnClick() { }
                 ;
@@ -1967,6 +1983,7 @@
                 ;
                 lwgOnUpdate() { }
                 ;
+                lwgBeforeVanishAni() { }
                 lwgVanishAni() { return null; }
                 ;
                 onDisable() {
@@ -2117,35 +2134,114 @@
                 }
             }
             Effects.EffectsBase = EffectsBase;
-            function light_Infinite(parent, caller, x, y, width, height, zOder, url, speed, count) {
-                let img = new Laya.Image();
-                parent.addChild(img);
-                img.pos(x, y);
-                img.width = width;
-                img.height = height;
-                img.pivotX = width / 2;
-                img.pivotY = height / 2;
-                url ? img.skin = url : img.skin = SkinUrl[24];
-                img.alpha = 0;
-                img.zOrder = zOder;
+            function aureole_Continuous(parent, centerPoint, width, height, rotation, urlArr, speed, accelerated) {
+                let Img = new Laya.Image();
+                Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+                parent.addChild(Img);
+                Img.pos(centerPoint.x, centerPoint.y);
+                Img.width = width ? width : 100;
+                Img.height = height ? height : 100;
+                Img.pivotX = Img.width / 2;
+                Img.pivotY = Img.height / 2;
+                Img.alpha = 0;
+                speed = speed ? speed : 0.025;
+                let angle = Tools.randomCountNumer(0, 360)[0];
+                let caller = {};
+                let acc = 0;
+                accelerated = accelerated ? accelerated : 0.0005;
+                let firstOff = false;
+                TimerAdmin.frameLoop(1, caller, () => {
+                    if (Img.alpha < 1 && !firstOff) {
+                        Img.alpha += 0.05;
+                        acc += (accelerated / 5);
+                        Img.scaleX += (speed / 2 + acc);
+                        Img.scaleY += (speed / 2 + acc);
+                    }
+                    else {
+                        firstOff = true;
+                        acc += accelerated;
+                        Img.scaleX += (speed + acc);
+                        Img.scaleY += (speed + acc);
+                        if (Img.scaleX > 1.8) {
+                            acc -= accelerated;
+                            if (Img.scaleX > 2.2) {
+                                Img.alpha -= 0.01;
+                                if (Img.alpha <= 0.01) {
+                                    Img.removeSelf();
+                                    Laya.timer.clearAll(caller);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            Effects.aureole_Continuous = aureole_Continuous;
+            function particle_AnnularInhalation(parent, centerPoint, radius, width, height, zOder, urlArr, speed, accelerated) {
+                let Img = new Laya.Image();
+                parent.addChild(Img);
+                width = width ? width : [25, 50];
+                Img.width = Tools.randomCountNumer(width[0], width[1])[0];
+                Img.height = height ? Tools.randomCountNumer(height[0], height[1])[0] : Img.width;
+                Img.pivotX = Img.width / 2;
+                Img.pivotY = Img.height / 2;
+                Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+                let radius0 = Tools.randomCountNumer(radius[0], radius[1])[0];
+                Img.alpha = 0;
+                speed = speed ? speed : 5;
+                let angle = Tools.randomCountNumer(0, 360)[0];
+                let caller = {};
+                let acc = 0;
+                accelerated = accelerated ? accelerated : 0.35;
+                TimerAdmin.frameLoop(1, caller, () => {
+                    if (Img.alpha < 1) {
+                        Img.alpha += 0.05;
+                        acc += (accelerated / 5);
+                        radius0 -= (speed / 2 + acc);
+                    }
+                    else {
+                        acc += accelerated;
+                        radius0 -= (speed + acc);
+                    }
+                    let point = Tools.point_GetRoundPos(angle, radius0, centerPoint);
+                    Img.pos(point.x, point.y);
+                    if (point.distance(centerPoint.x, centerPoint.y) <= 20 || point.distance(centerPoint.x, centerPoint.y) >= 1000) {
+                        Img.removeSelf();
+                        Laya.timer.clearAll(caller);
+                    }
+                });
+            }
+            Effects.particle_AnnularInhalation = particle_AnnularInhalation;
+            function light_SimpleInfinite(parent, caller, x, y, width, height, zOder, url, speed, count) {
+                let Img = new Laya.Image();
+                parent.addChild(Img);
+                Img.pos(x, y);
+                Img.width = width;
+                Img.height = height;
+                Img.pivotX = width / 2;
+                Img.pivotY = height / 2;
+                Img.skin = url ? url : SkinUrl[24];
+                Img.alpha = 0;
+                Img.zOrder = zOder ? zOder : 0;
                 let add = true;
                 let count0 = 0;
                 let func = () => {
-                    if (count && count0 > count && img.alpha <= 0.01) {
-                        img.removeSelf();
+                    if (count && count0 > count && Img.alpha <= 0.01) {
+                        Img.removeSelf();
                         Laya.timer.clear(caller, func);
                         return;
                     }
+                    if (!Img.parent)
+                        return;
                     if (!add) {
-                        img.alpha -= speed ? speed : 0.01;
-                        if (img.alpha <= 0) {
+                        Img.alpha -= speed ? speed : 0.01;
+                        if (Img.alpha <= 0) {
                             add = true;
                             count0 += 0.5;
                         }
                     }
                     else {
-                        img.alpha += speed ? speed * 2 : 0.01 * 2;
-                        if (img.alpha >= 1) {
+                        Img.alpha += speed ? speed * 2 : 0.01 * 2;
+                        if (Img.alpha >= 1) {
                             add = false;
                             count0 += 0.5;
                         }
@@ -2153,7 +2249,7 @@
                 };
                 Laya.timer.frameLoop(1, caller, func);
             }
-            Effects.light_Infinite = light_Infinite;
+            Effects.light_SimpleInfinite = light_SimpleInfinite;
             function star_Blink(parent, centerPos, radiusX, radiusY, skinUrl, width, height, rotationSpeed) {
                 if (!rotationSpeed) {
                     rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
@@ -3666,12 +3762,6 @@
                 }
             }
             Tools.color_Filter = color_Filter;
-            function d2_dotRotateXY(x0, y0, x1, y1, angle) {
-                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
-                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
-                return new Laya.Point(x2, y2);
-            }
-            Tools.d2_dotRotateXY = d2_dotRotateXY;
             function d2_twoObjectsLen(obj1, obj2) {
                 let point = new Laya.Point(obj1.x, obj1.y);
                 let len = point.distance(obj2.x, obj2.y);
@@ -4090,6 +4180,12 @@
                 }
             }
             Tools.array_ExcludeArrays = array_ExcludeArrays;
+            function point_DotRotatePoint(x0, y0, x1, y1, angle) {
+                let x2 = x0 + (x1 - x0) * Math.cos(angle * Math.PI / 180) - (y1 - y0) * Math.sin(angle * Math.PI / 180);
+                let y2 = y0 + (x1 - x0) * Math.sin(angle * Math.PI / 180) + (y1 - y0) * Math.cos(angle * Math.PI / 180);
+                return new Laya.Point(x2, y2);
+            }
+            Tools.point_DotRotatePoint = point_DotRotatePoint;
             function point_SpeedXYByAngle(angle, speed) {
                 const speedXY = { x: 0, y: 0 };
                 speedXY.x = speed * Math.cos(angle * Math.PI / 180);
@@ -7148,11 +7244,35 @@
                 Animation2D.move_Simple(this.self['ReflectMask'], -263, -271, 399, 71, 800, 0, () => {
                     Animation2D.fadeOut(this.self['Reflect2'], 0, 1, 200, 0, () => {
                         Animation2D.fadeOut(this.self['Reflect2'], 1, 0, 300, 0, () => {
-                            Effects.light_Infinite(this.self['Mirror'], this, 360, 318, 800, 800, 0, null, 0.01, 1);
                         });
                     });
                 }, Laya.Ease.cubicInOut);
             }, true);
+            Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+            TimerAdmin.frameLoop(10, this, () => {
+                if (!this['middleOff']) {
+                    Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
+                }
+            });
+            TimerAdmin.loop(2000, this, () => {
+                Animation2D.bomb_LeftRight(this.self['BtnFree'], 1.1, 250);
+            }, true);
+            TimerAdmin.loop(3000, this, () => {
+                Animation2D.fadeOut(this.self['Logo2'], 1, 0.5, 200, 0, () => {
+                    Animation2D.fadeOut(this.self['Logo2'], 0.5, 1, 100, 0, () => {
+                    });
+                });
+            });
+            TimerAdmin.frameLoop(240, this, () => {
+                for (let index = 0; index < 3; index++) {
+                    Laya.timer.once(index * 180, this, () => {
+                        Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 150, 150, null, ['Game/UI/UIDrawCard/guang3.png']);
+                    });
+                }
+            }, true);
+        }
+        lwgOpenAniAfter() {
+            Game3D.Scene3D.active = false;
         }
         lwgEventReg() {
             let Img = this.self['Surface'];
@@ -7187,7 +7307,7 @@
                             x = (spcing + Card.width / 2) + (Card.width + spcing) * (index - 5);
                             y = globalPos.y + 150;
                         }
-                        Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200);
+                        Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
                         if (index == 8) {
                             Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 300);
                         }
@@ -7221,8 +7341,10 @@
                         Card.zOrder = 4 * 10;
                         let x = Card.x;
                         let y = Card.y;
+                        let ReflectPic = Card.getChildByName('Reflect');
                         Animation2D.leftRight_Shake(Card, 20, 100, 200, () => {
                             Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
+                                Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 500, 200);
                                 for (let index = 0; index < 5; index++) {
                                     let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
                                     Laya.timer.once(300 * index, this, () => {
@@ -7279,6 +7401,7 @@
                     this.self['DrawSp'] = DrawSp;
                 }
                 this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
+                this['middleOff'] = true;
             }, (e) => {
                 let Img = this.self['Surface'];
                 let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
@@ -7296,10 +7419,20 @@
                 this.self.getChildByName('DrawSp').removeSelf();
                 EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
+                this['middleOff'] = false;
             }, () => {
+                if (this.self.getChildByName('DrawSp')) {
+                    this.self.getChildByName('DrawSp').removeSelf();
+                    EventAdmin.notify('drawCardEvent');
+                }
                 this.self['DrawPosArr'] = null;
+                this['middleOff'] = false;
             });
         }
+        lwgBeforeVanishAni() {
+            Game3D.Scene3D.active = true;
+        }
+        ;
         lwgOnDisable() {
             Setting.setBtnAppear();
         }

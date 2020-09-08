@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":46,
+    "selectedBox":19,
+    "selecteID":47,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":47,
+    "maxID":48,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -62,8 +62,8 @@
         {
             "x":15,
             "type":"Sprite",
-            "searchKey":"Sprite,Logo2",
-            "props":{"y":234,"x":153,"texture":"Game/UI/UIDrawCard/qidong.png","name":"Logo2"},
+            "searchKey":"Sprite,Logo2,Logo2",
+            "props":{"y":252,"x":359,"width":411,"var":"Logo2","texture":"Game/UI/UIDrawCard/qidong.png","pivotY":18,"pivotX":206,"name":"Logo2","height":36},
             "nodeParent":2,
             "label":"Logo2",
             "isDirectory":false,
@@ -90,7 +90,7 @@
                     "x":30,
                     "type":"Image",
                     "searchKey":"Image,Mirror,Mirror",
-                    "props":{"y":298,"x":0,"width":720,"var":"Mirror","skin":"Game/UI/UIDrawCard/jinzi.png","sizeGrid":"733,0,86,0","name":"Mirror","height":1350},
+                    "props":{"y":603,"x":360,"width":720,"var":"Mirror","skin":"Game/UI/UIDrawCard/jinzi.png","sizeGrid":"733,0,86,0","pivotY":305,"pivotX":360,"name":"Mirror","height":1350},
                     "nodeParent":19,
                     "label":"Mirror",
                     "isOpen":true,
@@ -103,7 +103,7 @@
                             "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Surface,Surface",
-                            "props":{"zOrder":1,"y":25,"x":87,"width":551,"var":"Surface","texture":"Game/UI/UIDrawCard/yuan.png","name":"Surface","height":551},
+                            "props":{"zOrder":1,"y":301,"x":363,"width":551,"var":"Surface","texture":"Game/UI/UIDrawCard/yuan.png","pivotY":276,"pivotX":276,"name":"Surface","height":551},
                             "nodeParent":12,
                             "label":"Surface",
                             "isOpen":true,
@@ -118,7 +118,7 @@
                             "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Reflect2,Reflect2",
-                            "props":{"zOrder":2,"y":25,"x":87,"var":"Reflect2","texture":"Game/UI/UIDrawCard/yuan2.png","name":"Reflect2","alpha":0},
+                            "props":{"zOrder":2,"y":25,"x":87,"var":"Reflect2","texture":"Game/UI/UIDrawCard/yuan2.png","skewX":0,"name":"Reflect2","alpha":0},
                             "nodeParent":12,
                             "label":"Reflect2",
                             "isDirectory":false,
@@ -132,17 +132,16 @@
                             "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Reflect,Reflect",
-                            "props":{"zOrder":3,"y":25,"x":87,"var":"Reflect","texture":"Game/UI/UIDrawCard/yuan2.png","name":"Reflect"},
+                            "props":{"zOrder":3,"y":301,"x":372,"width":551,"var":"Reflect","texture":"Game/UI/UIDrawCard/yuan2.png","pivotY":276,"pivotX":285,"name":"Reflect","height":551},
                             "nodeParent":12,
                             "label":"Reflect",
-                            "isOpen":true,
+                            "isOpen":false,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":43,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Sprite",
                                     "searchKey":"Sprite,ReflectMask,ReflectMask",
                                     "props":{"y":71,"x":399,"var":"ReflectMask","texture":"Game/UI/UIDrawCard/guang.png","renderType":"mask","name":"ReflectMask"},
@@ -156,6 +155,20 @@
                                         ]
                                 }]
                         }]
+                },
+                {
+                    "x":30,
+                    "type":"Sprite",
+                    "searchKey":"Sprite,Guang3,Guang3",
+                    "props":{"y":337,"x":110,"width":500,"var":"Guang3","name":"Guang3","height":500},
+                    "nodeParent":19,
+                    "label":"Guang3",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":47,
+                    "child":[
+                        ]
                 },
                 {
                     "x":30,
@@ -316,22 +329,8 @@
         {
             "x":15,
             "type":"Sprite",
-            "searchKey":"Sprite,Guang2,Guang2",
-            "props":{"y":0,"x":0,"var":"Guang2","texture":"Game/UI/UIDrawCard/guang2.png","name":"Guang2"},
-            "nodeParent":2,
-            "label":"Guang2",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":46,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
             "searchKey":"Sprite,BtnBack,BtnBack",
-            "props":{"y":106,"x":73,"width":82,"var":"BtnBack","texture":"Game/UI/Common/fanhui.png","pivotY":41,"pivotX":41,"name":"BtnBack","height":82},
+            "props":{"zOrder":10,"y":106,"x":73,"width":82,"var":"BtnBack","texture":"Game/UI/Common/fanhui.png","pivotY":41,"pivotX":41,"name":"BtnBack","height":82},
             "nodeParent":2,
             "label":"BtnBack",
             "isDirectory":false,
