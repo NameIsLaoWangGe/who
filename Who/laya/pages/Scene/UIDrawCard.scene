@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":19,
-    "selecteID":47,
+    "selectedBox":2,
+    "selecteID":19,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
@@ -88,6 +88,20 @@
             "child":[
                 {
                     "x":30,
+                    "type":"Sprite",
+                    "searchKey":"Sprite,Guang3,Guang3",
+                    "props":{"y":337,"x":110,"width":500,"var":"Guang3","name":"Guang3","height":500},
+                    "nodeParent":19,
+                    "label":"Guang3",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":47,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
                     "type":"Image",
                     "searchKey":"Image,Mirror,Mirror",
                     "props":{"y":603,"x":360,"width":720,"var":"Mirror","skin":"Game/UI/UIDrawCard/jinzi.png","sizeGrid":"733,0,86,0","pivotY":305,"pivotX":360,"name":"Mirror","height":1350},
@@ -155,20 +169,6 @@
                                         ]
                                 }]
                         }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,Guang3,Guang3",
-                    "props":{"y":337,"x":110,"width":500,"var":"Guang3","name":"Guang3","height":500},
-                    "nodeParent":19,
-                    "label":"Guang3",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":47,
-                    "child":[
-                        ]
                 },
                 {
                     "x":30,

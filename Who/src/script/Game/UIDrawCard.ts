@@ -1,4 +1,4 @@
-import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog } from "../Frame/lwg";
+import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog, Backpack } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 
@@ -9,6 +9,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
+        // console.log(Backpack._noHaveCard.arr);
+        // console.log(Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr));
     }
 
     lwgOnEnable(): void {
@@ -28,7 +30,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
 
-        TimerAdmin.frameLoop(10, this, () => {
+        TimerAdmin.frameLoop(9, this, () => {
             if (!this['middleOff']) {
                 Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
             }
@@ -45,10 +47,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             })
         })
 
-        TimerAdmin.frameLoop(240, this, () => {
+        TimerAdmin.frameLoop(170, this, () => {
             for (let index = 0; index < 3; index++) {
                 Laya.timer.once(index * 180, this, () => {
-                    Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 150, 150, null, ['Game/UI/UIDrawCard/guang3.png']);
+                    Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 160, 160, null, ['Game/UI/UIDrawCard/guang3.png']);
                 })
             }
         }, true)
@@ -65,6 +67,24 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
+            let cardObjArr = [];
+            if (Backpack._noHaveCard.arr.length >= 10) {
+                let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
+                cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
+                Backpack._haveCardArray.add(randomCardArr);
+            } else {
+                cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
+                Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
+                let length = 10 - Backpack._noHaveCard.arr.length;
+                for (let index = 0; index < length; index++) {
+                    let obj = {
+                        name: 'gold'
+                    }
+                    cardObjArr.push(obj);
+                }
+            }
+            cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
+
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                 return;
@@ -72,10 +92,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 DrawCard._residueDraw.num--;
                 this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
             }
-
+            Admin._clickLock.switch = true;
             this.self['DrawDisPlay'].x = 0;
             this.self['BtnTake'].visible = false;
-
+            this.self['DrawDisPlayBg'].alpha = 0;
             for (let index = 0; index < 10; index++) {
                 Laya.timer.once(index * 100, this, () => {
                     let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card) as Laya.Sprite;
@@ -84,6 +104,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     Card.pos(globalPos.x, globalPos.y);
                     Card.scale(0, 0);
                     Card.name = 'Card' + index;
+                    Card.zOrder = 0;
+                    Card['objData'] = cardObjArr[index];
 
                     let Pic = Card.getChildByName('Pic') as Laya.Image;
                     Pic.visible = false;
@@ -98,10 +120,11 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     }
                     Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
 
-                    if (index == 8) {
-                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 300);
+                    if (index == 3) {
+                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0);
                     } else if (index == 9) {
                         EventAdmin.notify('flop');
+                        Admin._clickLock.switch = false;
                     }
                 })
             }
@@ -124,19 +147,28 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 this.self['cardIndex']++;
                 EventAdmin.notify('flop');
             }
-
             Animation2D.cardRotateX_OneFace(Card, () => {
                 let Pic = Card.getChildByName('Pic') as Laya.Image;
                 Pic.visible = true;
             }, 100, 50, () => {
-                if (this.self['cardIndex'] == 4 || this.self['cardIndex'] == 8) {
-                    Card.zOrder = 4 * 10;
+                if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.UR) {
+
+                    Card.zOrder = (this.self['cardIndex'] + 1) * 10;
                     let x = Card.x;
                     let y = Card.y;
                     let ReflectPic = Card.getChildByName('Reflect') as Laya.Image;
-                    Animation2D.leftRight_Shake(Card, 20, 100, 200, () => {
+
+                    TimerAdmin.frameLoop(70, this, () => {
+                        for (let index = 0; index < 3; index++) {
+                            Laya.timer.once(index * 200, this, () => {
+                                Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/UI/ui_square_guang.png'], 0.1, 0.002);
+                            })
+                        }
+
+                    }, true)
+                    Animation2D.leftRight_Shake(Card, 20, 100, 300, () => {
                         Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
-                            Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 500, 200);
+                            Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 600, 400, Laya.Ease.expoIn);
                             for (let index = 0; index < 5; index++) {
                                 let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
                                 Laya.timer.once(300 * index, this, () => {
@@ -149,6 +181,11 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                         });
                         Animation2D.move_Simple(Card, x, y, globalPos.x, globalPos.y, 250, 100);
                     });
+                } else if (Card['objData']['name'] == 'gold') {
+                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                        // Gold.addGold(rewardNum);
+                    });
+                    func();
                 } else {
                     func();
                 }

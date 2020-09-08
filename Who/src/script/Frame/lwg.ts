@@ -1,3 +1,5 @@
+import { Game3D } from "../Game/Game3D";
+
 // import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
@@ -1582,6 +1584,8 @@ export module lwg {
 
             "Frame/Effects/ui_Circular_l_yellow.png",
 
+            "Frame/UI/ui_square_guang.png",
+
         }
 
         /**表示需要什么样的图片样式*/
@@ -1683,17 +1687,18 @@ export module lwg {
         }
 
         /**
-         * 从中心点发出一个光圈，类似波浪，根据光圈不同的样式和节奏,通过控制宽高来
+         * 从中心点发出一个光圈，类似波浪，根据光圈不同的样式和节奏,通过控制宽高来控制放大多少
          * @param parent 父节点
          * @param centerPoint 发出位置
          * @param width 宽度，默认100
          * @param height 高度，默认100
          * @param rotation 角度区间,默认为随机
-         * @param urlArr 图片数组，默认为框架中的位置
+         * @param urlArr 图片数组，默认为框架中的图片
+         * @param zOder 层级，默认为0
          * @param speed 速度，默认0.025，也表示了消失位置，和波浪的大小
          * @param accelerated 加速度,默认为0.0005
          */
-        export function aureole_Continuous(parent, centerPoint: Laya.Point, width?: number, height?: number, rotation?: Array<number>, urlArr?: Array<string>, speed?: number, accelerated?: number): void {
+        export function aureole_Continuous(parent, centerPoint: Laya.Point, width?: number, height?: number, rotation?: Array<number>, urlArr?: Array<string>, zOder?: number, speed?: number, accelerated?: number): void {
             let Img = new Laya.Image();
             Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
             parent.addChild(Img);
@@ -1703,6 +1708,7 @@ export module lwg {
             Img.pivotX = Img.width / 2;
             Img.pivotY = Img.height / 2;
             Img.alpha = 0;
+            Img.zOrder = zOder ? zOder : 0;
             speed = speed ? speed : 0.025;
             let angle = Tools.randomCountNumer(0, 360)[0];
             let caller = {};
@@ -1720,11 +1726,11 @@ export module lwg {
                     acc += accelerated;
                     Img.scaleX += (speed + acc);
                     Img.scaleY += (speed + acc);
-                    if (Img.scaleX > 1.8) {
+                    if (Img.scaleX > 2.4) {
                         acc -= accelerated;
-                        if (Img.scaleX > 2.2) {
-                            Img.alpha -= 0.01;
-                            if (Img.alpha <= 0.01) {
+                        if (Img.scaleX > 3.2) {
+                            Img.alpha -= 0.015;
+                            if (Img.alpha <= 0.005) {
                                 Img.removeSelf();
                                 Laya.timer.clearAll(caller);
                             }
@@ -3294,14 +3300,11 @@ export module lwg {
         export function move_Simple(node, fX, fY, targetX, targetY, time, delayed?: number, func?: Function, ease?: Function, ): void {
             node.x = fX;
             node.y = fY;
-            if (!delayed) {
-                delayed = 0;
-            }
             Laya.Tween.to(node, { x: targetX, y: targetY }, time, ease ? ease : null, Laya.Handler.create(this, function () {
                 if (func) {
                     func()
                 }
-            }), delayed);
+            }), delayed ? delayed : 0);
         }
 
         /**
@@ -6245,6 +6248,15 @@ export module lwg {
                 Laya.LocalStorage.setJSON('Backpack_haveCardArray', JSON.stringify(arr0));
                 return arr0;
             }
+        }
+
+        /**当前还没有获得的卡牌*/
+        export let _noHaveCard = {
+            get arr(): Array<string> {
+                let arr0 = _haveCardArray.arr;
+                let arr = Tools.array1ExcludeArray2(Game3D.getAllCardName(), arr0);
+                return arr;
+            },
         }
 
         /**

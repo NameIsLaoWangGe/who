@@ -55,7 +55,7 @@ export module Game3D {
         question = 'question',
     }
 
-    /**卡牌表和需要付给卡牌的属性*/
+    /**卡牌表以及需要付给卡牌的属性*/
     export enum CardProperty {
         /**属性数组*/
         featureArr = 'featureArr',
@@ -64,7 +64,17 @@ export module Game3D {
         /**英文名*/
         name = 'name',
         /**是否被选过了，数据表中没有这个属性，需要我们赋值*/
-        fall = 'fall'
+        fall = 'fall',
+        /**品质*/
+        quality = 'quality',
+    }
+
+    /**品质顺序依次为*/
+    export enum Quality {
+        R = 'R',
+        SR = 'SR',
+        SSR = 'SSR',
+        UR = 'UR',
     }
 
     /**轮到谁了*/
@@ -132,7 +142,6 @@ export module Game3D {
         clickMe = 'clickMe',
     }
 
-
     /**
      * 获取所有卡牌名称
      */
@@ -143,6 +152,22 @@ export module Game3D {
             cardNameArr.push(element[CardProperty.name]);
         }
         return cardNameArr;
+    }
+
+    /**
+     * 通过一组卡牌名称，获取卡牌对象
+     * */
+    export function getCardObjByNameArr(nameArr): Array<any> {
+        let objArr = [];
+        let data = Tools.objArray_Copy(CardData);
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < nameArr.length; j++) {
+                if (data[i][CardProperty.name] == nameArr[j]) {
+                    objArr.push(data[i]);
+                }
+            }
+        }
+        return objArr;
     }
 
     /**
@@ -393,6 +418,18 @@ export module Game3D {
             }
         }
         return arr;
+    }
+
+    /**通过英文名称查找卡牌品级*/
+    export function getQualityName(name): string {
+        let quality: string;
+        for (let i = 0; i < CardData.length; i++) {
+            if (name == CardData[i][CardProperty.name]) {
+                quality = CardData[i][CardProperty.quality];
+                break;
+            }
+        }
+        return quality;
     }
 
     /**通过卡牌英文名查找卡牌中文名*/
