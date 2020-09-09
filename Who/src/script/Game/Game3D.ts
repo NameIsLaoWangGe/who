@@ -155,9 +155,38 @@ export module Game3D {
     }
 
     /**
+     * 获取不同品质的卡牌对象
+     */
+    export function getCardObjByQuality(quality: string): Array<any> {
+        let arr = [];
+        for (let i = 0; i < CardData.length; i++) {
+            const element = CardData[i];
+            if (element[CardProperty.quality] == quality) {
+                arr.push(element);
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * 通过一组卡牌名称获取指定品质的卡牌对象
+     */
+    export function getQualityArrByNameArr(nameArr: Array<string>, quality: string): Array<any> {
+        let arr = [];
+        for (let i = 0; i < CardData.length; i++) {
+            for (let j = 0; j < nameArr.length; j++) {
+                const element = nameArr[j];
+
+            }
+
+        }
+        return arr
+    }
+
+    /**
      * 通过一组卡牌名称，获取卡牌对象
      * */
-    export function getCardObjByNameArr(nameArr): Array<any> {
+    export function getCardObjByNameArr(nameArr: Array<string>): Array<any> {
         let objArr = [];
         let data = Tools.objArray_Copy(CardData);
         for (let i = 0; i < data.length; i++) {
@@ -168,6 +197,18 @@ export module Game3D {
             }
         }
         return objArr;
+    }
+
+    /**
+     * 通过一组卡牌对象，返回这些卡牌对象的名字
+     * */
+    export function getNameArrByObjArr(objArr: Array<any>): Array<string> {
+        let arr = [];
+        for (let index = 0; index < objArr.length; index++) {
+            const CardObj = objArr[index];
+            arr.push(CardObj[CardProperty.name])
+        }
+        return arr;
     }
 
     /**

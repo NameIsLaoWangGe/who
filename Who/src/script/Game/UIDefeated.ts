@@ -8,6 +8,8 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
         ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
 
+        Admin._gameLevel.value = 0;
+
         switch (Admin._platform) {
             case Admin._platformTpye.OPPO:
                 this.self['OPPO'].visible = true;

@@ -21,11 +21,11 @@
 		"textures":[
 			{
 				"name":"albedoTexture",
-				"path":"test.jpg",
+				"path":"../../NewM/7.png",
 				"constructParams":[
-					256,
-					256,
-					0,
+					512,
+					512,
+					1,
 					true
 				],
 				"propertyParams":{

@@ -14,7 +14,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "zds2",
@@ -28,7 +30,9 @@
       22,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "zds3",
@@ -42,7 +46,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "zds4",
@@ -55,7 +61,9 @@
       20,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "zds5",
@@ -69,7 +77,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "lyy1",
@@ -81,7 +91,9 @@
       22,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "lyy2",
@@ -95,7 +107,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "lyy3",
@@ -107,7 +121,9 @@
       22,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "lyy4",
@@ -121,7 +137,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "lyy5",
@@ -132,7 +150,9 @@
       14,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxk1",
@@ -147,7 +167,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxk2",
@@ -160,7 +182,9 @@
       19,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxk3",
@@ -175,7 +199,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxk4",
@@ -188,7 +214,9 @@
       19,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxk5",
@@ -203,7 +231,9 @@
       23,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxy1",
@@ -215,7 +245,9 @@
       16,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxy2",
@@ -230,7 +262,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxy3",
@@ -243,7 +277,9 @@
       22,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxy4",
@@ -258,7 +294,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "cxy5",
@@ -270,7 +308,9 @@
       16,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "xxs1",
@@ -284,7 +324,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "xxs2",
@@ -295,7 +337,9 @@
       17,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "xxs3",
@@ -309,7 +353,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "xxs4",
@@ -320,7 +366,9 @@
       17,
       25
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "xxs5",
@@ -335,7 +383,9 @@
       23,
       26
     ],
-    "quality": "R"
+    "quality": "R",
+    "price": 300,
+    "repetition": 25
   },
   {
     "name": "scp1",
@@ -348,7 +398,9 @@
       19,
       20
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
   },
   {
     "name": "scp2",
@@ -362,7 +414,9 @@
       21,
       26
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
   },
   {
     "name": "scp3",
@@ -375,7 +429,9 @@
       19,
       20
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
   },
   {
     "name": "scp4",
@@ -390,7 +446,9 @@
       21,
       26
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
   },
   {
     "name": "wzry1",
@@ -406,7 +464,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry2",
@@ -422,7 +482,9 @@
       24,
       26
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry3",
@@ -437,7 +499,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry4",
@@ -453,7 +517,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry5",
@@ -468,7 +534,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry6",
@@ -484,7 +552,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wzry7",
@@ -499,7 +569,9 @@
       24,
       25
     ],
-    "quality": "UR"
+    "quality": "UR",
+    "price": -1,
+    "repetition": 300
   },
   {
     "name": "wdsj1",
@@ -515,7 +587,9 @@
       23,
       26
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj2",
@@ -529,7 +603,9 @@
       21,
       25
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj3",
@@ -544,7 +620,9 @@
       23,
       26
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj4",
@@ -558,7 +636,9 @@
       21,
       25
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj5",
@@ -573,7 +653,9 @@
       23,
       26
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj6",
@@ -586,7 +668,9 @@
       21,
       26
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj7",
@@ -601,7 +685,9 @@
       23,
       25
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj8",
@@ -616,7 +702,9 @@
       21,
       26
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "wdsj9",
@@ -631,7 +719,9 @@
       23,
       25
     ],
-    "quality": "SSR"
+    "quality": "SSR",
+    "price": -1,
+    "repetition": 150
   },
   {
     "name": "atm1",
@@ -645,7 +735,9 @@
       24,
       25
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 100
   },
   {
     "name": "atm2",
@@ -660,7 +752,9 @@
       24,
       25
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 100
   },
   {
     "name": "atm3",
@@ -674,7 +768,9 @@
       24,
       25
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 100
   },
   {
     "name": "atm4",
@@ -689,7 +785,9 @@
       24,
       25
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 100
   },
   {
     "name": "atm5",
@@ -702,7 +800,9 @@
       24,
       25
     ],
-    "quality": "SR"
+    "quality": "SR",
+    "price": -1,
+    "repetition": 100
   }
 ]
 }

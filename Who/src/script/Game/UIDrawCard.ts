@@ -47,10 +47,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             })
         })
 
-        TimerAdmin.frameLoop(170, this, () => {
-            for (let index = 0; index < 3; index++) {
+        TimerAdmin.frameRandomLoop(30, 100, this, () => {
+            for (let index = 0; index < 1; index++) {
                 Laya.timer.once(index * 180, this, () => {
-                    Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 160, 160, null, ['Game/UI/UIDrawCard/guang3.png']);
+                    Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 150, 150, null, ['Game/UI/UIDrawCard/guang3.png'], 0, 0.02);
                 })
             }
         }, true)
@@ -67,24 +67,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
-            let cardObjArr = [];
-            if (Backpack._noHaveCard.arr.length >= 10) {
-                let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
-                cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
-                Backpack._haveCardArray.add(randomCardArr);
-            } else {
-                cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
-                Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
-                let length = 10 - Backpack._noHaveCard.arr.length;
-                for (let index = 0; index < length; index++) {
-                    let obj = {
-                        name: 'gold'
-                    }
-                    cardObjArr.push(obj);
-                }
-            }
-            cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
 
+            // 抽卡表现
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                 return;
@@ -92,6 +76,45 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 DrawCard._residueDraw.num--;
                 this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
             }
+
+            // 前两次固定抽卡,后面随机抽卡
+            DrawCard._drawCount.num++;
+            let cardObjArr = [];
+            if (DrawCard._drawCount.num == 1) {
+                cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
+                let SROrSSR;
+                let probability = Tools.randomNumber(10);
+                if (probability >= 8) {
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
+                } else {
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
+                }
+                cardObjArr.push(SROrSSR);
+                Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
+            } else if (DrawCard._drawCount.num == 2) {
+                let repetitionArr = Tools.array1ExcludeArray2(Backpack)
+
+
+            } else {
+                if (Backpack._noHaveCard.arr.length >= 10) {
+                    let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
+                    cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
+                    Backpack._haveCardArray.add(randomCardArr);
+                } else {
+                    cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
+                    Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
+                    let length = 10 - Backpack._noHaveCard.arr.length;
+                    for (let index = 0; index < length; index++) {
+                        let obj = {
+                            name: 'gold'
+                        }
+                        cardObjArr.push(obj);
+                    }
+                }
+                cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
+            }
+
+            // 开始动画表现
             Admin._clickLock.switch = true;
             this.self['DrawDisPlay'].x = 0;
             this.self['BtnTake'].visible = false;
@@ -158,8 +181,8 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     let y = Card.y;
                     let ReflectPic = Card.getChildByName('Reflect') as Laya.Image;
 
-                    TimerAdmin.frameLoop(70, this, () => {
-                        for (let index = 0; index < 3; index++) {
+                    TimerAdmin.frameRandomLoop(15, 35, this, () => {
+                        for (let index = 0; index < 1; index++) {
                             Laya.timer.once(index * 200, this, () => {
                                 Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/UI/ui_square_guang.png'], 0.1, 0.002);
                             })
@@ -192,6 +215,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             });
         })
 
+        // 关闭分享界面，我都要按钮出现
         EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
             this.self['BtnTake'].visible = true;
         })

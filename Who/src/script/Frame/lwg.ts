@@ -4530,7 +4530,7 @@ export module lwg {
         }
 
         /**
-         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序,不改变原数组
+         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序,此方法不改变原数组
          * @param arr 数组
          * @param num 取出几个元素默认为1个
          */
@@ -6141,7 +6141,19 @@ export module lwg {
             }
         };
 
-        /**抽奖场景*/
+        /**
+         * 总共抽了几次卡牌
+         * */
+        export let _drawCount = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('DrawCard_drawCount') ? Number(Laya.LocalStorage.getItem('DrawCard_drawCount')) : 0;
+            },
+            set num(val) {
+                Laya.LocalStorage.setItem('DrawCard_drawCount', val.toString());
+            }
+        }
+
+        /**抽奖通用场景*/
         export class DrawCardScene extends Admin.Scene {
             moduleOnAwake(): void {
 

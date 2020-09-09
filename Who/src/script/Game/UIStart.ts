@@ -1,5 +1,6 @@
 import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
+import { Game3D } from "./Game3D";
 
 export default class UIStart extends Start.StartScene {
 

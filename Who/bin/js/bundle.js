@@ -1097,6 +1097,17 @@
             return cardNameArr;
         }
         Game3D.getAllCardName = getAllCardName;
+        function getCardObjByQuality(quality) {
+            let arr = [];
+            for (let i = 0; i < Game3D.CardData.length; i++) {
+                const element = Game3D.CardData[i];
+                if (element[CardProperty.quality] == quality) {
+                    arr.push(element);
+                }
+            }
+            return arr;
+        }
+        Game3D.getCardObjByQuality = getCardObjByQuality;
         function getCardObjByNameArr(nameArr) {
             let objArr = [];
             let data = Tools.objArray_Copy(Game3D.CardData);
@@ -1110,6 +1121,15 @@
             return objArr;
         }
         Game3D.getCardObjByNameArr = getCardObjByNameArr;
+        function getNameArrByObjArr(objArr) {
+            let arr = [];
+            for (let index = 0; index < objArr.length; index++) {
+                const CardObj = objArr[index];
+                arr.push(CardObj[CardProperty.name]);
+            }
+            return arr;
+        }
+        Game3D.getNameArrByObjArr = getNameArrByObjArr;
         function set16InitialCards(type) {
             let CardData1 = Tools.objArray_Copy(Game3D.CardData);
             let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
@@ -6160,6 +6180,14 @@
                     Laya.LocalStorage.setItem('DrawCard_residueDraw', val.toString());
                 }
             };
+            DrawCard._drawCount = {
+                get num() {
+                    return Laya.LocalStorage.getItem('DrawCard_drawCount') ? Number(Laya.LocalStorage.getItem('DrawCard_drawCount')) : 0;
+                },
+                set num(val) {
+                    Laya.LocalStorage.setItem('DrawCard_drawCount', val.toString());
+                }
+            };
             class DrawCardScene extends Admin.Scene {
                 moduleOnAwake() {
                 }
@@ -7193,6 +7221,7 @@
             ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
             ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
             ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
+            Admin._gameLevel.value = 0;
             switch (Admin._platform) {
                 case Admin._platformTpye.OPPO:
                     this.self['OPPO'].visible = true;
@@ -7301,10 +7330,10 @@
                     });
                 });
             });
-            TimerAdmin.frameLoop(170, this, () => {
-                for (let index = 0; index < 3; index++) {
+            TimerAdmin.frameRandomLoop(30, 100, this, () => {
+                for (let index = 0; index < 1; index++) {
                     Laya.timer.once(index * 180, this, () => {
-                        Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 160, 160, null, ['Game/UI/UIDrawCard/guang3.png']);
+                        Effects.aureole_Continuous(this.self['Guang3'], new Laya.Point(this.self['Guang3'].width / 2, this.self['Guang3'].height / 2), 150, 150, null, ['Game/UI/UIDrawCard/guang3.png'], 0, 0.02);
                     });
                 }
             }, true);
@@ -7316,24 +7345,42 @@
             let Img = this.self['Surface'];
             let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
             EventAdmin.reg('drawCardEvent', this, () => {
+                DrawCard._drawCount.num++;
                 let cardObjArr = [];
-                if (Backpack._noHaveCard.arr.length >= 10) {
-                    let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
-                    cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
-                    Backpack._haveCardArray.add(randomCardArr);
-                }
-                else {
-                    cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
-                    Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
-                    let length = 10 - Backpack._noHaveCard.arr.length;
-                    for (let index = 0; index < length; index++) {
-                        let obj = {
-                            name: 'gold'
-                        };
-                        cardObjArr.push(obj);
+                if (DrawCard._drawCount.num == 1) {
+                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
+                    let SROrSSR;
+                    let probability = Tools.randomNumber(10);
+                    if (probability >= 8) {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
                     }
+                    else {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
+                    }
+                    cardObjArr.push(SROrSSR);
+                    Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
+                    console.log(Backpack._haveCardArray.arr);
                 }
-                cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
+                else if (DrawCard._drawCount.num == 2) ;
+                else {
+                    if (Backpack._noHaveCard.arr.length >= 10) {
+                        let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
+                        cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
+                        Backpack._haveCardArray.add(randomCardArr);
+                    }
+                    else {
+                        cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
+                        Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
+                        let length = 10 - Backpack._noHaveCard.arr.length;
+                        for (let index = 0; index < length; index++) {
+                            let obj = {
+                                name: 'gold'
+                            };
+                            cardObjArr.push(obj);
+                        }
+                    }
+                    cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
+                }
                 if (DrawCard._residueDraw.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                     return;
@@ -7403,8 +7450,8 @@
                         let x = Card.x;
                         let y = Card.y;
                         let ReflectPic = Card.getChildByName('Reflect');
-                        TimerAdmin.frameLoop(70, this, () => {
-                            for (let index = 0; index < 3; index++) {
+                        TimerAdmin.frameRandomLoop(15, 35, this, () => {
+                            for (let index = 0; index < 1; index++) {
                                 Laya.timer.once(index * 200, this, () => {
                                     Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/UI/ui_square_guang.png'], 0.1, 0.002);
                                 });
