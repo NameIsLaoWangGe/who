@@ -7,9 +7,9 @@ export default class UIStart extends Start.StartScene {
     lwgOnAwake(): void {
         Setting.setBtnAppear();
         Gold.createGoldNode(629, 174);
-        Laya.timer.once(200, this, () => {
-            CheckIn.openCheckIn();
-        })
+    }
+    lwgOpenAniAfter(): void {
+        CheckIn.openCheckIn();
     }
 
     lwgAdaptive(): void {
@@ -65,6 +65,9 @@ export default class UIStart extends Start.StartScene {
 
         Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UICheckIn);
+        });
+        Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
+            Admin._openScene(Admin.SceneName.UISkinQualified);
         });
     }
 

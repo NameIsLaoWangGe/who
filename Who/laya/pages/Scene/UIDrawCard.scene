@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":22,
+    "selectedBox":22,
+    "selecteID":23,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
@@ -276,13 +276,14 @@
             "props":{"zOrder":15,"y":0,"x":-720,"width":720,"var":"DrawDisPlay","name":"DrawDisPlay","height":1650,"alpha":1},
             "nodeParent":2,
             "label":"DrawDisPlay",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":22,
             "child":[
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,DrawDisPlayBg,DrawDisPlayBg",
                     "props":{"y":0,"x":0,"width":720,"var":"DrawDisPlayBg","texture":"Frame/UI/ui_orthogon_black.png","name":"DrawDisPlayBg","height":1650,"alpha":0},
@@ -296,6 +297,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,CardParent,CardParent",
                     "props":{"var":"CardParent","name":"CardParent"},
@@ -310,6 +312,7 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,BtnTake,BtnTake",
                     "props":{"y":1161,"x":360,"width":288,"var":"BtnTake","texture":"Game/UI/Common/anniu.png","pivotY":60,"pivotX":144,"name":"BtnTake","height":120},
@@ -322,6 +325,7 @@
                     "compId":36,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Dis",
                             "props":{"y":38,"x":85,"texture":"Game/UI/Common/douyao.png","name":"Dis"},

@@ -223,13 +223,14 @@ export default class GameScene extends Admin.Scene {
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
 
         var btnYesUp = () => {
+            Admin._clickLock.switch = true;
             if (questionAndYesOrNo[1]) {
-                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
                 Tools.color_Filter(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                    Admin._clickLock.switch = false;
                     console.log('回答错误！');
                 }, false);
             }
@@ -240,13 +241,14 @@ export default class GameScene extends Admin.Scene {
         let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
 
         var btnNoUp = () => {
+            Admin._clickLock.switch = true;
             if (!questionAndYesOrNo[1]) {
-                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
                 Tools.color_Filter(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                    Admin._clickLock.switch = false;
                     console.log('回答错误！');
                 }, false);
             }
@@ -279,7 +281,7 @@ export default class GameScene extends Admin.Scene {
         let MainCamera = Game3D.MainCamera.getChildAt(0) as Laya.Camera;
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
         let Sp3D;
-        if (hitResult) {
+        if (hitResult && !Admin._clickLock.switch) {
             Sp3D = hitResult.collider.owner;
             EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
         }

@@ -381,14 +381,14 @@ export module lwg {
                 sp.y = Laya.stage.height / 2;
                 sp.zOrder = 50;
                 if (ExecutionNumNode) {
-                    Animation2D.move_Simple_01(sp, sp.x, sp.y, ExecutionNumNode.x, ExecutionNumNode.y, 800, null, 100, f => {
+                    Animation2D.move_Simple(sp, sp.x, sp.y, ExecutionNumNode.x, ExecutionNumNode.y, 800, 100, f => {
                         Animation2D.fadeOut(sp, 1, 0, 200, 0, f => {
                             lwg.Animation2D.upDwon_Shake(ExecutionNumNode, 10, 80, 0, null);
                             if (func) {
                                 func();
                             }
                         });
-                    });
+                    }, Laya.Ease.expoIn);
                 }
             }));
         }
@@ -1098,7 +1098,7 @@ export module lwg {
                         let __stageClickLock__ = new Laya.Sprite();
                         __stageClickLock__.name = '__stageClickLock__';
                         Laya.stage.addChild(__stageClickLock__);
-                        __stageClickLock__.zOrder = 1000;
+                        __stageClickLock__.zOrder = 3000;
                         __stageClickLock__.width = Laya.stage.width;
                         __stageClickLock__.height = Laya.stage.height;
                         __stageClickLock__.pos(0, 0);
@@ -1191,7 +1191,7 @@ export module lwg {
             UIVictory = 'UIVictory',
             UIDefeated = 'UIDefeated',
             UIPassHint = 'UIPassHint',
-            UISkinXD = 'UISkinXD',
+            UISkinQualified = 'UISkinQualified',
             UISkinTry = 'UISkinTry',
             UIRedeem = 'UIRedeem',
             UIAnchorXD = 'UIAnchorXD',
@@ -3294,8 +3294,8 @@ export module lwg {
          * @param targetY 目标y位置
          * @param time 花费时间
          * @param delayed 延时时间
-         * @param ease 动画类型
          * @param func 完成后的回调
+         * @param ease 动画类型
          */
         export function move_Simple(node, fX, fY, targetX, targetY, time, delayed?: number, func?: Function, ease?: Function, ): void {
             node.x = fX;
@@ -3305,34 +3305,6 @@ export module lwg {
                     func()
                 }
             }), delayed ? delayed : 0);
-        }
-
-        /**
-         * expoIn简单移动,初始位置可以为null
-         * @param node 节点
-         * @param firstX 初始x位置
-         * @param firstY 初始y位置
-         * @param targetX 目标x位置
-         * @param targetY 目标y位置
-         * @param time 花费时间
-         * @param ease 动画类型
-         * @param delayed 延时时间
-         * @param func 完成后的回调
-         */
-        export function move_Simple_01(node, firstX, firstY, targetX, targetY, time, ease?: Function, delayed?: number, func?: Function): void {
-            if (!delayed) {
-                delayed = 0;
-            }
-            if (!ease) {
-                ease = null;
-            }
-            node.x = firstX;
-            node.y = firstY;
-            Laya.Tween.to(node, { x: targetX, y: targetY }, time, ease, Laya.Handler.create(this, function () {
-                if (func) {
-                    func()
-                }
-            }), delayed);
         }
 
         /**
@@ -3831,6 +3803,23 @@ export module lwg {
          * */
         export function format_NumAddStr(num: number, str: string): number {
             return Number(str) + num;
+        }
+
+        /**
+         * 根据子节点的某个属性，获取相同属性的数组
+         * @param node 节点
+         * @param property 属性值
+         * @param value 值
+         * */
+        export function node_GetChildArrByProperty(node: Laya.Node, property: string, value: any): Array<Laya.Node> {
+            let childArr = [];
+            for (let index = 0; index < node.numChildren; index++) {
+                const element = node.getChildAt(index);
+                if (element[property] == value) {
+                    childArr.push(element);
+                }
+            }
+            return childArr;
         }
 
         /**
@@ -4530,7 +4519,7 @@ export module lwg {
         }
 
         /**
-         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序,此方法不改变原数组
+         * 从一个数组中随机取出几个元素，如果刚好是数组长度，则等于是乱序,此方法不会改变原数组
          * @param arr 数组
          * @param num 取出几个元素默认为1个
          */
@@ -4622,13 +4611,13 @@ export module lwg {
 
         /**
          * 找出几个数组中都有的元素，或者相互没有的元素，
-         * 如果某个元素的个数等于数组个数，这说明他们都有
+         * 查找方法如下：如果某个元素的个数等于数组个数，这说明他们都有；
          * @param arrays 数组组成的数组
          * @param exclude 默认为false,false为返回都有的元素，true为返回排除这些相同元素，也就是相互没有的元素
          */
         export function array_ExcludeArrays(arrays: Array<Array<any>>, exclude?: boolean): Array<any> {
-
             // 避免三重for循环嵌套，一步一步做
+            // 取出所有元素
             let arr0 = [];
             for (let i = 0; i < arrays.length; i++) {
                 for (let j = 0; j < arrays[i].length; j++) {
@@ -4644,7 +4633,7 @@ export module lwg {
             let arrNum = [];
             for (let k = 0; k < arr2.length; k++) {
                 arrNum.push({
-                    index: arr2[k],
+                    name: arr2[k],
                     num: 0,
                 });
             }
@@ -4652,20 +4641,20 @@ export module lwg {
             // 记录数量
             for (let l = 0; l < arr0.length; l++) {
                 for (let m = 0; m < arrNum.length; m++) {
-                    if (arr0[l] == arrNum[m]['index']) {
+                    if (arr0[l] == arrNum[m]['name']) {
                         arrNum[m]['num']++;
                     }
                 }
             }
-            // 找出四个或者不是四个的数组
+            // 找出数量和arrays长度相同或者不相同的数组
             let arrAllHave = [];
             let arrDiffHave = [];
             for (let n = 0; n < arrNum.length; n++) {
                 const element = arrNum[n];
-                if (arrNum[n]['num'] == 4) {
-                    arrAllHave.push(arrNum[n]['index']);
+                if (arrNum[n]['num'] == arrays.length) {
+                    arrAllHave.push(arrNum[n]['name']);
                 } else {
-                    arrDiffHave.push(arrNum[n]['index']);
+                    arrDiffHave.push(arrNum[n]['name']);
                 }
             }
             if (!exclude) {
@@ -5744,23 +5733,22 @@ export module lwg {
         /**已经几次看广告*/
         export let _adsNum = {
             get value(): number {
-                return Laya.LocalStorage.getItem('XDSKin_adsNum') ? Number(Laya.LocalStorage.getItem('XDSKin_adsNum')) : 0;
+                return Laya.LocalStorage.getItem('SkinQualified_adsNum') ? Number(Laya.LocalStorage.getItem('SkinQualified_adsNum')) : 0;
             },
             /**次数写数字*/
             set value(value: number) {
-                Laya.LocalStorage.setItem('XDSKin_adsNum', value.toString());
+                Laya.LocalStorage.setItem('SkinQualified_adsNum', value.toString());
             }
         }
-
         /**
          * 是否弹出限定皮肤界面
          * @param fromScene 从哪个界面进来的
         */
-        export function openXDSkin(fromScene): void {
+        export function openUISkinQualified(fromScene): void {
             if (_adsNum.value >= _needAdsNum) {
                 return;
             } else {
-                Admin._openScene(Admin.SceneName.UISkinXD);
+                Admin._openScene(Admin.SceneName.UISkinQualified);
                 _fromScene = fromScene;
             }
         }

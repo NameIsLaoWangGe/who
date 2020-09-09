@@ -1033,6 +1033,8 @@
             CardProperty["name"] = "name";
             CardProperty["fall"] = "fall";
             CardProperty["quality"] = "quality";
+            CardProperty["price"] = "price";
+            CardProperty["repetition"] = "repetition";
         })(CardProperty = Game3D.CardProperty || (Game3D.CardProperty = {}));
         let Quality;
         (function (Quality) {
@@ -1091,23 +1093,35 @@
         function getAllCardName() {
             let cardNameArr = [];
             for (let i = 0; i < Game3D.CardData.length; i++) {
-                const element = Game3D.CardData[i];
-                cardNameArr.push(element[CardProperty.name]);
+                cardNameArr.push(Game3D.CardData[i][CardProperty.name]);
             }
             return cardNameArr;
         }
         Game3D.getAllCardName = getAllCardName;
         function getCardObjByQuality(quality) {
             let arr = [];
-            for (let i = 0; i < Game3D.CardData.length; i++) {
-                const element = Game3D.CardData[i];
-                if (element[CardProperty.quality] == quality) {
-                    arr.push(element);
+            let data = Tools.objArray_Copy(Game3D.CardData);
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][CardProperty.quality] == quality) {
+                    arr.push(data[i]);
                 }
             }
             return arr;
         }
         Game3D.getCardObjByQuality = getCardObjByQuality;
+        function getQualityArrByNameArr(nameArr, quality) {
+            let arr = [];
+            let data = Tools.objArray_Copy(Game3D.CardData);
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < nameArr.length; j++) {
+                    if (data[i][CardProperty.name] == nameArr[j] && data[i][CardProperty.quality] == quality) {
+                        arr.push(data[j]);
+                    }
+                }
+            }
+            return arr;
+        }
+        Game3D.getQualityArrByNameArr = getQualityArrByNameArr;
         function getCardObjByNameArr(nameArr) {
             let objArr = [];
             let data = Tools.objArray_Copy(Game3D.CardData);
@@ -1123,9 +1137,8 @@
         Game3D.getCardObjByNameArr = getCardObjByNameArr;
         function getNameArrByObjArr(objArr) {
             let arr = [];
-            for (let index = 0; index < objArr.length; index++) {
-                const CardObj = objArr[index];
-                arr.push(CardObj[CardProperty.name]);
+            for (let i = 0; i < objArr.length; i++) {
+                arr.push(objArr[i][CardProperty.name]);
             }
             return arr;
         }
@@ -2144,14 +2157,14 @@
                     sp.y = Laya.stage.height / 2;
                     sp.zOrder = 50;
                     if (Execution.ExecutionNumNode) {
-                        Animation2D.move_Simple_01(sp, sp.x, sp.y, Execution.ExecutionNumNode.x, Execution.ExecutionNumNode.y, 800, null, 100, f => {
+                        Animation2D.move_Simple(sp, sp.x, sp.y, Execution.ExecutionNumNode.x, Execution.ExecutionNumNode.y, 800, 100, f => {
                             Animation2D.fadeOut(sp, 1, 0, 200, 0, f => {
                                 lwg.Animation2D.upDwon_Shake(Execution.ExecutionNumNode, 10, 80, 0, null);
                                 if (func) {
                                     func();
                                 }
                             });
-                        });
+                        }, Laya.Ease.expoIn);
                     }
                 }));
             }
@@ -2631,7 +2644,7 @@
                             let __stageClickLock__ = new Laya.Sprite();
                             __stageClickLock__.name = '__stageClickLock__';
                             Laya.stage.addChild(__stageClickLock__);
-                            __stageClickLock__.zOrder = 1000;
+                            __stageClickLock__.zOrder = 3000;
                             __stageClickLock__.width = Laya.stage.width;
                             __stageClickLock__.height = Laya.stage.height;
                             __stageClickLock__.pos(0, 0);
@@ -2695,7 +2708,7 @@
                 SceneName["UIVictory"] = "UIVictory";
                 SceneName["UIDefeated"] = "UIDefeated";
                 SceneName["UIPassHint"] = "UIPassHint";
-                SceneName["UISkinXD"] = "UISkinXD";
+                SceneName["UISkinQualified"] = "UISkinQualified";
                 SceneName["UISkinTry"] = "UISkinTry";
                 SceneName["UIRedeem"] = "UIRedeem";
                 SceneName["UIAnchorXD"] = "UIAnchorXD";
@@ -4142,22 +4155,6 @@
                 }), delayed ? delayed : 0);
             }
             Animation2D.move_Simple = move_Simple;
-            function move_Simple_01(node, firstX, firstY, targetX, targetY, time, ease, delayed, func) {
-                if (!delayed) {
-                    delayed = 0;
-                }
-                if (!ease) {
-                    ease = null;
-                }
-                node.x = firstX;
-                node.y = firstY;
-                Laya.Tween.to(node, { x: targetX, y: targetY }, time, ease, Laya.Handler.create(this, function () {
-                    if (func) {
-                        func();
-                    }
-                }), delayed);
-            }
-            Animation2D.move_Simple_01 = move_Simple_01;
             function move_Deform_X(node, firstX, firstR, targetX, scaleX, scaleY, time, delayed, func) {
                 node.alpha = 0;
                 node.x = firstX;
@@ -4503,6 +4500,17 @@
                 return Number(str) + num;
             }
             Tools.format_NumAddStr = format_NumAddStr;
+            function node_GetChildArrByProperty(node, property, value) {
+                let childArr = [];
+                for (let index = 0; index < node.numChildren; index++) {
+                    const element = node.getChildAt(index);
+                    if (element[property] == value) {
+                        childArr.push(element);
+                    }
+                }
+                return childArr;
+            }
+            Tools.node_GetChildArrByProperty = node_GetChildArrByProperty;
             function node_RandomChildren(node, num) {
                 let childArr = [];
                 let indexArr = [];
@@ -5084,13 +5092,13 @@
                 let arrNum = [];
                 for (let k = 0; k < arr2.length; k++) {
                     arrNum.push({
-                        index: arr2[k],
+                        name: arr2[k],
                         num: 0,
                     });
                 }
                 for (let l = 0; l < arr0.length; l++) {
                     for (let m = 0; m < arrNum.length; m++) {
-                        if (arr0[l] == arrNum[m]['index']) {
+                        if (arr0[l] == arrNum[m]['name']) {
                             arrNum[m]['num']++;
                         }
                     }
@@ -5098,11 +5106,11 @@
                 let arrAllHave = [];
                 let arrDiffHave = [];
                 for (let n = 0; n < arrNum.length; n++) {
-                    if (arrNum[n]['num'] == 4) {
-                        arrAllHave.push(arrNum[n]['index']);
+                    if (arrNum[n]['num'] == arrays.length) {
+                        arrAllHave.push(arrNum[n]['name']);
                     }
                     else {
-                        arrDiffHave.push(arrNum[n]['index']);
+                        arrDiffHave.push(arrNum[n]['name']);
                     }
                 }
                 if (!exclude) {
@@ -5877,22 +5885,22 @@
         (function (SkinQualified) {
             SkinQualified._adsNum = {
                 get value() {
-                    return Laya.LocalStorage.getItem('XDSKin_adsNum') ? Number(Laya.LocalStorage.getItem('XDSKin_adsNum')) : 0;
+                    return Laya.LocalStorage.getItem('SkinQualified_adsNum') ? Number(Laya.LocalStorage.getItem('SkinQualified_adsNum')) : 0;
                 },
                 set value(value) {
-                    Laya.LocalStorage.setItem('XDSKin_adsNum', value.toString());
+                    Laya.LocalStorage.setItem('SkinQualified_adsNum', value.toString());
                 }
             };
-            function openXDSkin(fromScene) {
+            function openUISkinQualified(fromScene) {
                 if (SkinQualified._adsNum.value >= SkinQualified._needAdsNum) {
                     return;
                 }
                 else {
-                    Admin._openScene(Admin.SceneName.UISkinXD);
+                    Admin._openScene(Admin.SceneName.UISkinQualified);
                     SkinQualified._fromScene = fromScene;
                 }
             }
-            SkinQualified.openXDSkin = openXDSkin;
+            SkinQualified.openUISkinQualified = openUISkinQualified;
             let EventType;
             (function (EventType) {
                 EventType["acquisition"] = "acquisition";
@@ -6725,14 +6733,15 @@
             Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
             let BtnYes = GuessCard.getChildByName('BtnYes');
             var btnYesUp = () => {
+                Admin._clickLock.switch = true;
                 if (questionAndYesOrNo[1]) {
-                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
                 }
                 else {
                     Tools.color_Filter(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        Admin._clickLock.switch = false;
                         console.log('回答错误！');
                     }, false);
                 }
@@ -6740,14 +6749,15 @@
             Click.on(Click.Type.largen, BtnYes, this, null, null, btnYesUp);
             let BtnNo = GuessCard.getChildByName('BtnNo');
             var btnNoUp = () => {
+                Admin._clickLock.switch = true;
                 if (!questionAndYesOrNo[1]) {
-                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
                 }
                 else {
                     Tools.color_Filter(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
+                        Admin._clickLock.switch = false;
                         console.log('回答错误！');
                     }, false);
                 }
@@ -6775,7 +6785,7 @@
             let MainCamera = Game3D.MainCamera.getChildAt(0);
             let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
             let Sp3D;
-            if (hitResult) {
+            if (hitResult && !Admin._clickLock.switch) {
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
@@ -7211,7 +7221,7 @@
         }
         lwgOnDisable() {
             Setting.setBtnAppear();
-            Gold.goldAppear();
+            Gold.createGoldNode(629, 174);
             Admin._clickLock.switch = false;
         }
     }
@@ -7316,7 +7326,7 @@
                 }, Laya.Ease.cubicInOut);
             }, true);
             Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
-            TimerAdmin.frameLoop(9, this, () => {
+            TimerAdmin.frameLoop(8, this, () => {
                 if (!this['middleOff']) {
                     Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
                 }
@@ -7345,42 +7355,6 @@
             let Img = this.self['Surface'];
             let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
             EventAdmin.reg('drawCardEvent', this, () => {
-                DrawCard._drawCount.num++;
-                let cardObjArr = [];
-                if (DrawCard._drawCount.num == 1) {
-                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
-                    let SROrSSR;
-                    let probability = Tools.randomNumber(10);
-                    if (probability >= 8) {
-                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
-                    }
-                    else {
-                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
-                    }
-                    cardObjArr.push(SROrSSR);
-                    Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
-                    console.log(Backpack._haveCardArray.arr);
-                }
-                else if (DrawCard._drawCount.num == 2) ;
-                else {
-                    if (Backpack._noHaveCard.arr.length >= 10) {
-                        let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
-                        cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
-                        Backpack._haveCardArray.add(randomCardArr);
-                    }
-                    else {
-                        cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
-                        Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
-                        let length = 10 - Backpack._noHaveCard.arr.length;
-                        for (let index = 0; index < length; index++) {
-                            let obj = {
-                                name: 'gold'
-                            };
-                            cardObjArr.push(obj);
-                        }
-                    }
-                    cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
-                }
                 if (DrawCard._residueDraw.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                     return;
@@ -7389,6 +7363,50 @@
                     DrawCard._residueDraw.num--;
                     this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
                 }
+                DrawCard._drawCount.num++;
+                let cardObjArr = [];
+                let SROrSSR;
+                if (DrawCard._drawCount.num == 1) {
+                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
+                    if (Tools.randomNumber(10) >= 8) {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
+                    }
+                    else {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
+                    }
+                    cardObjArr.push(SROrSSR);
+                }
+                else if (DrawCard._drawCount.num == 2) {
+                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
+                    if (Tools.randomNumber(10) >= 8) {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
+                    }
+                    else {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
+                    }
+                    cardObjArr.push(SROrSSR);
+                }
+                else {
+                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
+                    if (Tools.randomNumber(10) >= 8) {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
+                    }
+                    else {
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
+                    }
+                    cardObjArr.push(SROrSSR);
+                    let equalNameArr = Tools.array_ExcludeArrays([Game3D.getNameArrByObjArr(cardObjArr), Backpack._haveCardArray.arr]);
+                    this['repetitionCardNum'] = equalNameArr.length;
+                    for (let i = 0; i < cardObjArr.length; i++) {
+                        for (let j = 0; j < equalNameArr.length; j++) {
+                            if (cardObjArr[i][Game3D.CardProperty.name] == equalNameArr[j]) {
+                                cardObjArr[i]['repetitionCard'] = true;
+                            }
+                        }
+                    }
+                }
+                Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
+                cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
                 Admin._clickLock.switch = true;
                 this.self['DrawDisPlay'].x = 0;
                 this.self['BtnTake'].visible = false;
@@ -7442,10 +7460,12 @@
                     EventAdmin.notify('flop');
                 };
                 Animation2D.cardRotateX_OneFace(Card, () => {
-                    let Pic = Card.getChildByName('Pic');
-                    Pic.visible = true;
+                    Card.getChildByName('Pic').visible = true;
+                    if (!Card['objData']['repetitionCard']) {
+                        Card.getChildByName('New').visible = true;
+                    }
                 }, 100, 50, () => {
-                    if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.UR) {
+                    if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR) {
                         Card.zOrder = (this.self['cardIndex'] + 1) * 10;
                         let x = Card.x;
                         let y = Card.y;
@@ -7473,11 +7493,6 @@
                             Animation2D.move_Simple(Card, x, y, globalPos.x, globalPos.y, 250, 100);
                         });
                     }
-                    else if (Card['objData']['name'] == 'gold') {
-                        Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                        });
-                        func();
-                    }
                     else {
                         func();
                     }
@@ -7502,15 +7517,69 @@
             });
             Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e) => {
                 e.stopPropagation();
-            }, null, null);
-            Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e) => {
-                this.self['DrawDisPlay'].x = -800;
-                Tools.node_RemoveAllChildren(this.self['CardParent']);
-            }, null, null);
-            Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e) => {
-                this.self['DrawDisPlay'].x = -800;
-                Tools.node_RemoveAllChildren(this.self['CardParent']);
-            }, null, null);
+            });
+            Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e) => {
+                Admin._clickLock.switch = true;
+                let arrRepetitionCard = [];
+                let arrCard = [];
+                for (let index = 0; index < this.self['CardParent'].numChildren; index++) {
+                    let Card = this.self['CardParent'].getChildAt(index);
+                    if (Card['objData']['repetitionCard']) {
+                        arrRepetitionCard.push(Card);
+                    }
+                    else {
+                        arrCard.push(Card);
+                    }
+                }
+                var anifunc = () => {
+                    Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
+                        this.self['DrawDisPlay'].x = -800;
+                        this.self['DrawDisPlay'].alpha = 1;
+                        Admin._clickLock.switch = false;
+                    });
+                    Tools.node_RemoveAllChildren(this.self['CardParent']);
+                };
+                var arrCardAni = () => {
+                    for (let i = 0; i < arrCard.length; i++) {
+                        const Card = arrCard[i];
+                        let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
+                        Laya.timer.once(i * 150, this, () => {
+                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -200, 800, 0, () => {
+                                if (i == arrCard.length - 1) {
+                                    anifunc();
+                                }
+                            }, Laya.Ease.cubicInOut);
+                        });
+                    }
+                };
+                var arrRepetitionCardAni = () => {
+                    for (let j = 0; j < arrRepetitionCard.length; j++) {
+                        const Card = arrRepetitionCard[j];
+                        let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
+                        Laya.timer.once((j + 1) * 150, this, () => {
+                            Effects.createExplosion_Rotate(this.self['CardParent'], 25, globalPos.x, globalPos.y, Effects.SkinStyle.dot, 10, 10);
+                            Card.visible = false;
+                            Gold.getGoldAni_Heap(Laya.stage, 8, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(globalPos.x, globalPos.y), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                                Gold.addGold(Card['objData'][Game3D.CardProperty.repetition]);
+                                if (j == arrRepetitionCard.length - 1) {
+                                    if (j == 9) {
+                                        anifunc();
+                                    }
+                                    else {
+                                        arrCardAni();
+                                    }
+                                }
+                            });
+                        });
+                    }
+                };
+                if (arrRepetitionCard.length == 0) {
+                    arrCardAni();
+                }
+                else {
+                    arrRepetitionCardAni();
+                }
+            });
             Click.on(Click.Type.noEffect, this.self['Surface'], this, (e) => {
                 if (!this.self.getChildByName('DrawSp')) {
                     this.self['Drawlength'] = 0;
@@ -7536,15 +7605,23 @@
                     this.self['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
                 }
             }, () => {
-                this.self.getChildByName('DrawSp').removeSelf();
+                if (this.self.getChildByName('DrawSp')) {
+                    this.self.getChildByName('DrawSp').removeSelf();
+                }
+                else {
+                    return;
+                }
                 EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
                 this['middleOff'] = false;
             }, () => {
                 if (this.self.getChildByName('DrawSp')) {
                     this.self.getChildByName('DrawSp').removeSelf();
-                    EventAdmin.notify('drawCardEvent');
                 }
+                else {
+                    return;
+                }
+                EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
                 this['middleOff'] = false;
             });
@@ -7563,6 +7640,7 @@
             Loding.list_2DPic = [
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
+                "res/atlas/Game/UI/UISkinQualified.png",
             ];
             Loding.list_2DScene = [
                 "Scene/LwgInit.json",
@@ -7866,6 +7944,48 @@
         }
     }
 
+    class UISkinQualified extends SkinQualified.SkinQualifiedScene {
+        lwgOnAwake() {
+            ADManager.TAPoint(TaT.BtnShow, 'Adlimmitget');
+            Gold.goldVinish();
+            Setting.setBtnVinish();
+            if (SkinQualified._adsNum.value >= 7) {
+                this.self['BtnGet'].visible = false;
+                this.self['AlreadyGet'].visible = true;
+            }
+            else {
+                this.self['AlreadyGet'].visible = false;
+                this.self['BtnGet'].visible = true;
+                this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
+            }
+        }
+        lwgAdaptive() {
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {
+                ADManager.ShowReward(() => {
+                    ADManager.TAPoint(TaT.BtnClick, 'Adlimmitget');
+                    SkinQualified._adsNum.value++;
+                    if (SkinQualified._adsNum.value >= 7) {
+                        Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
+                        Dialog.createHint_Middle(Dialog.HintContent["限定皮肤已经获得，请前往皮肤界面查看。"]);
+                        Animation2D.fadeOut(this.self, 1, 0, 500, 500, () => {
+                            Admin._closeScene(this.self);
+                        });
+                    }
+                    this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
+                });
+            });
+            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+                Admin._closeScene(this.self);
+            });
+        }
+        lwgOnDisable() {
+            Setting.setBtnAppear();
+            Gold.goldAppear();
+        }
+    }
+
     class UISkinTry extends Admin.Scene {
         lwgOnAwake() {
             this.randomNoHave();
@@ -7927,9 +8047,9 @@
         lwgOnAwake() {
             Setting.setBtnAppear();
             Gold.createGoldNode(629, 174);
-            Laya.timer.once(200, this, () => {
-                CheckIn.openCheckIn();
-            });
+        }
+        lwgOpenAniAfter() {
+            CheckIn.openCheckIn();
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;
@@ -7981,6 +8101,9 @@
             });
             Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UICheckIn);
+            });
+            Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UISkinQualified);
             });
         }
         lwgOnDisable() {
@@ -8370,6 +8493,7 @@
             reg("script/Game/UIResurgence.ts", UIResurgence);
             reg("script/Game/UISet.ts", UISet);
             reg("script/Game/UIShare.ts", UIShare);
+            reg("script/Game/UISkinQualified.ts", UISkinQualified);
             reg("script/Game/UISkinTry.ts", UISkinTry);
             reg("script/Game/UIStart.ts", UIStart);
             reg("script/Game/UIVictory.ts", UIVictory);

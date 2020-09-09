@@ -30,7 +30,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
 
-        TimerAdmin.frameLoop(9, this, () => {
+        TimerAdmin.frameLoop(8, this, () => {
             if (!this['middleOff']) {
                 Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
             }
@@ -68,7 +68,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
 
-            // 抽卡表现
+            // 抽卡限制
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                 return;
@@ -80,39 +80,47 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             // 前两次固定抽卡,后面随机抽卡
             DrawCard._drawCount.num++;
             let cardObjArr = [];
+            let SROrSSR;
             if (DrawCard._drawCount.num == 1) {
                 cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
-                let SROrSSR;
-                let probability = Tools.randomNumber(10);
-                if (probability >= 8) {
+                if (Tools.randomNumber(10) >= 8) {
                     SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
                 } else {
                     SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
                 }
                 cardObjArr.push(SROrSSR);
-                Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
-            } else if (DrawCard._drawCount.num == 2) {
-                let repetitionArr = Tools.array1ExcludeArray2(Backpack)
 
+            } else if (DrawCard._drawCount.num == 2) {
+                // 从还没有获得的卡牌中随机
+                cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
+                if (Tools.randomNumber(10) >= 8) {
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
+                } else {
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
+                }
+                cardObjArr.push(SROrSSR);
 
             } else {
-                if (Backpack._noHaveCard.arr.length >= 10) {
-                    let randomCardArr = Tools.arrayRandomGetOut(Backpack._noHaveCard.arr, 10);
-                    cardObjArr = Game3D.getCardObjByNameArr(randomCardArr);
-                    Backpack._haveCardArray.add(randomCardArr);
+                cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
+                if (Tools.randomNumber(10) >= 8) {
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SSR))[0];
                 } else {
-                    cardObjArr = Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr);
-                    Backpack._haveCardArray.add(Backpack._noHaveCard.arr);
-                    let length = 10 - Backpack._noHaveCard.arr.length;
-                    for (let index = 0; index < length; index++) {
-                        let obj = {
-                            name: 'gold'
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.SR))[0];
+                }
+                cardObjArr.push(SROrSSR);
+                // 给重复的卡牌添加标记
+                let equalNameArr = Tools.array_ExcludeArrays([Game3D.getNameArrByObjArr(cardObjArr), Backpack._haveCardArray.arr]);
+                this['repetitionCardNum'] = equalNameArr.length;
+                for (let i = 0; i < cardObjArr.length; i++) {
+                    for (let j = 0; j < equalNameArr.length; j++) {
+                        if (cardObjArr[i][Game3D.CardProperty.name] == equalNameArr[j]) {
+                            cardObjArr[i]['repetitionCard'] = true;
                         }
-                        cardObjArr.push(obj);
                     }
                 }
-                cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
             }
+            Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
+            cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
 
             // 开始动画表现
             Admin._clickLock.switch = true;
@@ -171,10 +179,13 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 EventAdmin.notify('flop');
             }
             Animation2D.cardRotateX_OneFace(Card, () => {
-                let Pic = Card.getChildByName('Pic') as Laya.Image;
-                Pic.visible = true;
+                (Card.getChildByName('Pic') as Laya.Image).visible = true;
+                if (!Card['objData']['repetitionCard']) {
+                    (Card.getChildByName('New') as Laya.Sprite).visible = true;
+                }
             }, 100, 50, () => {
-                if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.UR) {
+
+                if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR) {
 
                     Card.zOrder = (this.self['cardIndex'] + 1) * 10;
                     let x = Card.x;
@@ -204,11 +215,6 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                         });
                         Animation2D.move_Simple(Card, x, y, globalPos.x, globalPos.y, 250, 100);
                     });
-                } else if (Card['objData']['name'] == 'gold') {
-                    Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                        // Gold.addGold(rewardNum);
-                    });
-                    func();
                 } else {
                     func();
                 }
@@ -240,17 +246,68 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e: Laya.Event) => {
             e.stopPropagation();
-        }, null, null);
+        });
 
-        Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e: Laya.Event) => {
-            this.self['DrawDisPlay'].x = -800;
-            Tools.node_RemoveAllChildren(this.self['CardParent']);
-        }, null, null);
+        Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e: Laya.Event) => {
+            Admin._clickLock.switch = true;
+            let arrRepetitionCard = [];
+            let arrCard = [];
+            for (let index = 0; index < this.self['CardParent'].numChildren; index++) {
+                let Card = this.self['CardParent'].getChildAt(index) as Laya.Sprite;
+                if (Card['objData']['repetitionCard']) {
+                    arrRepetitionCard.push(Card);
+                } else {
+                    arrCard.push(Card);
+                }
+            }
+            var anifunc = () => {
+                Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
+                    this.self['DrawDisPlay'].x = -800;
+                    this.self['DrawDisPlay'].alpha = 1;
+                    Admin._clickLock.switch = false;
+                })
+                Tools.node_RemoveAllChildren(this.self['CardParent']);
+            }
+            var arrCardAni = () => {
+                for (let i = 0; i < arrCard.length; i++) {
+                    const Card = arrCard[i];
+                    let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
+                    Laya.timer.once(i * 150, this, () => {
+                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -200, 800, 0, () => {
+                            if (i == arrCard.length - 1) {
+                                anifunc();
+                            }
+                        }, Laya.Ease.cubicInOut)
+                    })
+                }
+            }
+            var arrRepetitionCardAni = () => {
+                for (let j = 0; j < arrRepetitionCard.length; j++) {
+                    const Card = arrRepetitionCard[j];
+                    let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
+                    Laya.timer.once((j + 1) * 150, this, () => {
+                        Effects.createExplosion_Rotate(this.self['CardParent'], 25, globalPos.x, globalPos.y, Effects.SkinStyle.dot, 10, 10);
+                        Card.visible = false;
+                        Gold.getGoldAni_Heap(Laya.stage, 8, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(globalPos.x, globalPos.y), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                            Gold.addGold(Card['objData'][Game3D.CardProperty.repetition]);
+                            if (j == arrRepetitionCard.length - 1) {
+                                if (j == 9) {
+                                    anifunc();
+                                } else {
+                                    arrCardAni();
+                                }
+                            }
+                        });
+                    })
+                }
+            }
+            if (arrRepetitionCard.length == 0) {
+                arrCardAni();
+            } else {
+                arrRepetitionCardAni();
+            }
+        });
 
-        Click.on(Click.Type.noEffect, this.self['BtnTake'], this, (e: Laya.Event) => {
-            this.self['DrawDisPlay'].x = -800;
-            Tools.node_RemoveAllChildren(this.self['CardParent']);
-        }, null, null);
 
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
@@ -289,7 +346,11 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             },
             // 抬起
             () => {
-                this.self.getChildByName('DrawSp').removeSelf();
+                if (this.self.getChildByName('DrawSp')) {
+                    this.self.getChildByName('DrawSp').removeSelf();
+                } else {
+                    return;
+                }
                 EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
                 this['middleOff'] = false;
@@ -298,8 +359,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             () => {
                 if (this.self.getChildByName('DrawSp')) {
                     this.self.getChildByName('DrawSp').removeSelf();
-                    EventAdmin.notify('drawCardEvent');
+                } else {
+                    return;
                 }
+                EventAdmin.notify('drawCardEvent');
                 this.self['DrawPosArr'] = null;
                 this['middleOff'] = false;
             });

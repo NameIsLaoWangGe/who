@@ -67,6 +67,10 @@ export module Game3D {
         fall = 'fall',
         /**品质*/
         quality = 'quality',
+        /**价值多少金币，-1为不可金币购买*/
+        price = 'price',
+        /**重复获得后折算成金币的数量*/
+        repetition = 'repetition'
     }
 
     /**品质顺序依次为*/
@@ -148,39 +152,39 @@ export module Game3D {
     export function getAllCardName(): Array<string> {
         let cardNameArr = [];
         for (let i = 0; i < CardData.length; i++) {
-            const element = CardData[i];
-            cardNameArr.push(element[CardProperty.name]);
+            cardNameArr.push(CardData[i][CardProperty.name]);
         }
         return cardNameArr;
     }
 
     /**
-     * 获取不同品质的卡牌对象
+     * 获取所有卡牌中不同品质的卡牌对象
      */
     export function getCardObjByQuality(quality: string): Array<any> {
         let arr = [];
-        for (let i = 0; i < CardData.length; i++) {
-            const element = CardData[i];
-            if (element[CardProperty.quality] == quality) {
-                arr.push(element);
+        let data = Tools.objArray_Copy(CardData);
+        for (let i = 0; i < data.length; i++) {
+            if (data[i][CardProperty.quality] == quality) {
+                arr.push(data[i]);
             }
         }
         return arr;
     }
 
     /**
-     * 通过一组卡牌名称获取指定品质的卡牌对象
+     * 通过一组卡牌名称，获取指定品质的卡牌对象
      */
     export function getQualityArrByNameArr(nameArr: Array<string>, quality: string): Array<any> {
         let arr = [];
-        for (let i = 0; i < CardData.length; i++) {
+        let data = Tools.objArray_Copy(CardData);
+        for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < nameArr.length; j++) {
-                const element = nameArr[j];
-
+                if (data[i][CardProperty.name] == nameArr[j] && data[i][CardProperty.quality] == quality) {
+                    arr.push(data[j]);
+                }
             }
-
         }
-        return arr
+        return arr;
     }
 
     /**
@@ -204,9 +208,8 @@ export module Game3D {
      * */
     export function getNameArrByObjArr(objArr: Array<any>): Array<string> {
         let arr = [];
-        for (let index = 0; index < objArr.length; index++) {
-            const CardObj = objArr[index];
-            arr.push(CardObj[CardProperty.name])
+        for (let i = 0; i < objArr.length; i++) {
+            arr.push(objArr[i][CardProperty.name])
         }
         return arr;
     }

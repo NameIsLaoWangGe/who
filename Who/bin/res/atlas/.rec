@@ -168,6 +168,8 @@ P 70FF211F douyao.png
 P DBDF552F fanhui.png
 P C35F448E jinbi.png
 P 289D58A5 kanshipin.png
+P 716E31B7 kuohao.png
+P 08D54593 lingqu.png
 P 127255F4 qiandao.png
 P 1618EA35 sanbei.png
 P E3CCA8E7 x.png
@@ -186,10 +188,12 @@ R 7AA57674 huigu.png
 R 8B4561FE jiesuan1.png
 R D10A0CEA jiesuan2.png
 R 79A24CC5 jingzi.png
+R A674EB24 jingzi2.png
 R 92EC7C65 loading.png
 R F9C56D24 paihangbang2.png
 R 076F9B79 qiandao.png
 R E58DC15A tishi.png
+R D806BEF6 xianding.png
 R 2666E7CB xuanliwu.png
 R 70EC95D4 youxi2.png
 R 58ABE2D1 yoxui1.png
@@ -219,15 +223,19 @@ D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
+P 1F98456A gongxi.png
 R 35396491 guang.png
 R F96B9B41 guang2.png
 R EE88D7EC guang3.png
+R A9FE76D9 guang5.png
 R CE53F713 jinzi.png
+P 11051805 kuang.png
 P 9FC4A4E0 mianfei.png
 P D1B89093 mojing.png
 P 63402EB5 qidong.png
 P E251178C shenyu.png
 P 1E6EB0DD shuzi4.png
+P 634DDB5B xin.png
 R A630413C yuan.png
 R 7892BB4E yuan2.png
 D Game/UI/UILoding
@@ -260,7 +268,24 @@ R F8E1839A tu.png
 P 4E3D8AB9 x.png
 D Game/UI/UIShop
 D Game/UI/UISkin
-D Game/UI/UISkinLimit
+D Game/UI/UISkinQualified
+P B423CB56 1.png
+P BC0F20E4 2.png
+P 66B4795A 3.png
+P 4F6EB567 4.png
+P 1569E64A 5.png
+P 16B19119 6.png
+P F6751C35 7.png
+R CD9A6E46 guang.png
+R A042749E kuang.png
+R 9F8A9362 kuang2.png
+R 8686AD68 mask.png
+P 35CE9928 shipin.png
+P CDF4C116 shuzi-1.png
+P D2718B1C shuzi.png
+P 7E04FF5C taoka.png
+P E7939A49 zi.png
+P 6A836EB8 提示2.png
 D Game/UI/UIStart
 R 069A849B bj.png
 P 4B08819D gengduo.png
@@ -273,7 +298,7 @@ P 6475ECB1 jindu-1.png
 P 3DD115F0 jindu-2.png
 P 1256540C kaishi.png
 P E66F5D5E kapai.png
-P CD21971D katao.png
+P 5EE2DE30 katao.png
 P B6AA2556 paihang.png
 P 8BD65952 qiandao.png
 P 53AD6FA0 shezhi.png

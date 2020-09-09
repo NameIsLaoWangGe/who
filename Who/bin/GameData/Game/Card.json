@@ -451,6 +451,87 @@
     "repetition": 50
   },
   {
+    "name": "atm1",
+    "ChName": "奥特曼之王",
+    "featureArr": [
+      1,
+      4,
+      14,
+      20,
+      22,
+      24,
+      25
+    ],
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
+  },
+  {
+    "name": "atm2",
+    "ChName": "奥特曼2",
+    "featureArr": [
+      2,
+      5,
+      9,
+      15,
+      20,
+      23,
+      24,
+      25
+    ],
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
+  },
+  {
+    "name": "atm3",
+    "ChName": "奥特曼3",
+    "featureArr": [
+      3,
+      6,
+      16,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
+  },
+  {
+    "name": "atm4",
+    "ChName": "奥特曼4",
+    "featureArr": [
+      2,
+      7,
+      9,
+      17,
+      20,
+      23,
+      24,
+      25
+    ],
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
+  },
+  {
+    "name": "atm5",
+    "ChName": "奥特曼5",
+    "featureArr": [
+      1,
+      8,
+      19,
+      20,
+      24,
+      25
+    ],
+    "quality": "SR",
+    "price": -1,
+    "repetition": 50
+  },
+  {
     "name": "wzry1",
     "ChName": "鲁班",
     "featureArr": [
@@ -458,15 +539,13 @@
       4,
       10,
       17,
-      19,
       20,
-      23,
       24,
       25
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry2",
@@ -484,7 +563,7 @@
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry3",
@@ -494,14 +573,13 @@
       7,
       10,
       15,
-      19,
       20,
       24,
       25
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry4",
@@ -519,7 +597,7 @@
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry5",
@@ -529,14 +607,13 @@
       8,
       10,
       16,
-      19,
       20,
       24,
       25
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry6",
@@ -548,13 +625,12 @@
       10,
       16,
       20,
-      21,
       24,
       25
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wzry7",
@@ -564,14 +640,13 @@
       5,
       10,
       15,
-      19,
       20,
       24,
       25
     ],
     "quality": "UR",
     "price": -1,
-    "repetition": 300
+    "repetition": -1
   },
   {
     "name": "wdsj1",
@@ -589,7 +664,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj2",
@@ -605,7 +680,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj3",
@@ -622,7 +697,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj4",
@@ -638,7 +713,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj5",
@@ -655,7 +730,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj6",
@@ -670,7 +745,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj7",
@@ -687,7 +762,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj8",
@@ -704,7 +779,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
+    "repetition": 300
   },
   {
     "name": "wdsj9",
@@ -721,88 +796,7 @@
     ],
     "quality": "SSR",
     "price": -1,
-    "repetition": 150
-  },
-  {
-    "name": "atm1",
-    "ChName": "奥特曼之王",
-    "featureArr": [
-      1,
-      4,
-      14,
-      20,
-      22,
-      24,
-      25
-    ],
-    "quality": "SR",
-    "price": -1,
-    "repetition": 100
-  },
-  {
-    "name": "atm2",
-    "ChName": "奥特曼2",
-    "featureArr": [
-      2,
-      5,
-      9,
-      15,
-      20,
-      23,
-      24,
-      25
-    ],
-    "quality": "SR",
-    "price": -1,
-    "repetition": 100
-  },
-  {
-    "name": "atm3",
-    "ChName": "奥特曼3",
-    "featureArr": [
-      3,
-      6,
-      16,
-      19,
-      20,
-      24,
-      25
-    ],
-    "quality": "SR",
-    "price": -1,
-    "repetition": 100
-  },
-  {
-    "name": "atm4",
-    "ChName": "奥特曼4",
-    "featureArr": [
-      2,
-      7,
-      9,
-      17,
-      20,
-      23,
-      24,
-      25
-    ],
-    "quality": "SR",
-    "price": -1,
-    "repetition": 100
-  },
-  {
-    "name": "atm5",
-    "ChName": "奥特曼5",
-    "featureArr": [
-      1,
-      8,
-      19,
-      20,
-      24,
-      25
-    ],
-    "quality": "SR",
-    "price": -1,
-    "repetition": 100
+    "repetition": 300
   }
 ]
 }

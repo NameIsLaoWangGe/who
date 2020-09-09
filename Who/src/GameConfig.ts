@@ -18,6 +18,7 @@ import UIPropTry from "./script/Game/UIPropTry"
 import UIResurgence from "./script/Game/UIResurgence"
 import UISet from "./script/Game/UISet"
 import UIShare from "./script/Game/UIShare"
+import UISkinQualified from "./script/Game/UISkinQualified"
 import UISkinTry from "./script/Game/UISkinTry"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
@@ -62,6 +63,7 @@ export default class GameConfig{
         reg("script/Game/UIResurgence.ts",UIResurgence);
         reg("script/Game/UISet.ts",UISet);
         reg("script/Game/UIShare.ts",UIShare);
+        reg("script/Game/UISkinQualified.ts",UISkinQualified);
         reg("script/Game/UISkinTry.ts",UISkinTry);
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);

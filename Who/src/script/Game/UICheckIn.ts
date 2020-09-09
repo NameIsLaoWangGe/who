@@ -204,10 +204,9 @@ export default class UICheckIn extends CheckIn.CheckInScene {
             }
         }
     }
-
     lwgOnDisable(): void {
         Setting.setBtnAppear();
-        Gold.goldAppear();
+        Gold.createGoldNode(629, 174);
         Admin._clickLock.switch = false;
     }
 }

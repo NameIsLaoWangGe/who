@@ -5,6 +5,7 @@ export default class UILoding extends Loding.LodingScene {
         Loding.list_2DPic = [
             "res/atlas/Frame/Effects.png",
             "res/atlas/Frame/UI.png",
+            "res/atlas/Game/UI/UISkinQualified.png",
         ];
         Loding.list_2DScene = [
             "Scene/LwgInit.json",
