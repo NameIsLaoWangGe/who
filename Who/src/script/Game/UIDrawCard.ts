@@ -9,8 +9,6 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
-        // console.log(Backpack._noHaveCard.arr);
-        // console.log(Game3D.getCardObjByNameArr(Backpack._noHaveCard.arr));
     }
 
     lwgOnEnable(): void {
@@ -28,7 +26,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }, Laya.Ease.cubicInOut);
         }, true);
 
-        Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+
+        TimerAdmin.frameRandomLoop(100, 160, this, () => {
+            Effects.light_SimpleInfinite(this.self, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+        }, true)
 
         TimerAdmin.frameLoop(8, this, () => {
             if (!this['middleOff']) {
@@ -54,6 +55,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 })
             }
         }, true)
+
+
+        // 抽卡界面光效，直接闪烁
     }
 
     lwgOpenAniAfter(): void {
@@ -127,20 +131,23 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             this.self['DrawDisPlay'].x = 0;
             this.self['BtnTake'].visible = false;
             this.self['DrawDisPlayBg'].alpha = 0;
+            this.self['Guang5'].alpha = 0;
+            this.self['Guang6'].alpha = 0;
             for (let index = 0; index < 10; index++) {
                 Laya.timer.once(index * 100, this, () => {
-                    let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card) as Laya.Sprite;
+                    let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card) as Laya.Image;
+                    Card['objData'] = cardObjArr[index];
+                    let Back = Card.getChildByName('Back') as Laya.Image;
+                    Back.skin = 'Game/UI/UIDrawCard/' + Card['objData'][Game3D.CardProperty.quality] + '.png';
                     this.self['CardParent'].addChild(Card);
                     let spcing = (Laya.stage.width - 5 * Card.width) / 6;
                     Card.pos(globalPos.x, globalPos.y);
                     Card.scale(0, 0);
                     Card.name = 'Card' + index;
                     Card.zOrder = 0;
-                    Card['objData'] = cardObjArr[index];
-
                     let Pic = Card.getChildByName('Pic') as Laya.Image;
+                    Pic.skin = 'Game/UI/UIDrawCard/Card/' + Card['objData'][Game3D.CardProperty.name] + '.jpg';
                     Pic.visible = false;
-
                     let x, y;
                     if (index <= 4) {
                         x = (spcing + Card.width / 2) + (Card.width + spcing) * index;
@@ -152,10 +159,14 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
 
                     if (index == 3) {
-                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0);
+                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0, () => {
+                            Animation2D.fadeOut(this.self['Guang5'], 0, 1, 500);
+                            Animation2D.fadeOut(this.self['Guang6'], 0, 1, 500);
+                        });
                     } else if (index == 9) {
                         EventAdmin.notify('flop');
                         Admin._clickLock.switch = false;
+
                     }
                 })
             }
@@ -181,7 +192,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             Animation2D.cardRotateX_OneFace(Card, () => {
                 (Card.getChildByName('Pic') as Laya.Image).visible = true;
                 if (!Card['objData']['repetitionCard']) {
-                    (Card.getChildByName('New') as Laya.Sprite).visible = true;
+                    let New = Card.getChildByName('New') as Laya.Sprite;
+                    New.visible = true;
+                    Animation2D.bombs_Appear(New, 0, 1, 1.1, 5, 100, 200, 250);
                 }
             }, 100, 50, () => {
 
@@ -273,11 +286,11 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     const Card = arrCard[i];
                     let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                     Laya.timer.once(i * 150, this, () => {
-                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -200, 800, 0, () => {
+                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -500, 800, 0, () => {
                             if (i == arrCard.length - 1) {
                                 anifunc();
                             }
-                        }, Laya.Ease.cubicInOut)
+                        }, Laya.Ease.cubicOut)
                     })
                 }
             }

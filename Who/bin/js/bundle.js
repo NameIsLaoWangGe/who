@@ -3160,7 +3160,7 @@
                 });
             }
             Effects.particle_AnnularInhalation = particle_AnnularInhalation;
-            function light_SimpleInfinite(parent, caller, x, y, width, height, zOder, url, speed, count) {
+            function light_SimpleInfinite(parent, x, y, width, height, zOder, url, speed) {
                 let Img = new Laya.Image();
                 parent.addChild(Img);
                 Img.pos(x, y);
@@ -3172,34 +3172,32 @@
                 Img.alpha = 0;
                 Img.zOrder = zOder ? zOder : 0;
                 let add = true;
-                let count0 = 0;
+                let caller = {};
                 let func = () => {
-                    if (count && count0 > count && Img.alpha <= 0.01) {
-                        Img.removeSelf();
-                        Laya.timer.clear(caller, func);
-                        return;
-                    }
-                    if (!Img.parent)
-                        return;
                     if (!add) {
                         Img.alpha -= speed ? speed : 0.01;
                         if (Img.alpha <= 0) {
-                            add = true;
-                            count0 += 0.5;
+                            if (caller['end']) {
+                                Laya.timer.clearAll(caller);
+                                Img.removeSelf();
+                            }
+                            else {
+                                add = true;
+                            }
                         }
                     }
                     else {
                         Img.alpha += speed ? speed * 2 : 0.01 * 2;
                         if (Img.alpha >= 1) {
                             add = false;
-                            count0 += 0.5;
+                            caller['end'] = true;
                         }
                     }
                 };
                 Laya.timer.frameLoop(1, caller, func);
             }
             Effects.light_SimpleInfinite = light_SimpleInfinite;
-            function star_Blink(parent, centerPos, radiusX, radiusY, skinUrl, width, height, rotationSpeed) {
+            function blink_Star(parent, centerPos, radiusX, radiusY, skinUrl, width, height, speed, rotationSpeed) {
                 if (!rotationSpeed) {
                     rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
                 }
@@ -3232,13 +3230,13 @@
                 let caller = {};
                 var ani = () => {
                     timer++;
-                    if (timer > 0 && timer <= 15) {
+                    if (timer > 0 && timer <= 20) {
                         star.alpha += 0.1;
                         star.rotation += rotationSpeed;
-                        star.scaleX += 0.015;
-                        star.scaleY += 0.015;
+                        star.scaleX += 0.011;
+                        star.scaleY += 0.011;
                     }
-                    else if (timer > 15) {
+                    else if (timer > 20) {
                         if (!star['reduce']) {
                             if (star.scaleX > maxScale) {
                                 star['reduce'] = true;
@@ -3263,7 +3261,7 @@
                 };
                 Laya.timer.frameLoop(1, caller, ani);
             }
-            Effects.star_Blink = star_Blink;
+            Effects.blink_Star = blink_Star;
             function createCommonExplosion(parent, quantity, x, y, style, speed, continueTime) {
                 for (let index = 0; index < quantity; index++) {
                     let ele = Laya.Pool.getItemByClass('ele', Laya.Image);
@@ -4364,6 +4362,9 @@
             }
             Setting.createSetBtn = createSetBtn;
             function setBtnAppear(delayed, x, y) {
+                if (!Setting.BtnSetNode) {
+                    return;
+                }
                 if (delayed) {
                     Animation2D.scale_Alpha(Setting.BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                         Setting.BtnSetNode.visible = true;
@@ -4381,6 +4382,9 @@
             }
             Setting.setBtnAppear = setBtnAppear;
             function setBtnVinish(delayed) {
+                if (!Setting.BtnSetNode) {
+                    return;
+                }
                 if (delayed) {
                     Animation2D.scale_Alpha(Setting.BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                         Setting.BtnSetNode.visible = false;
@@ -6956,9 +6960,15 @@
             }
         }
         static VibrateShort() {
+            if (!Setting._shake.switch) {
+                return;
+            }
             TJ.API.Vibrate.Short();
         }
         static Vibratelong() {
+            if (!Setting._shake.switch) {
+                return;
+            }
             TJ.API.Vibrate.Long();
         }
         static TAPoint(type, name) {
@@ -7325,7 +7335,9 @@
                     });
                 }, Laya.Ease.cubicInOut);
             }, true);
-            Effects.light_SimpleInfinite(this.self, this, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+            TimerAdmin.frameRandomLoop(100, 160, this, () => {
+                Effects.light_SimpleInfinite(this.self, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
+            }, true);
             TimerAdmin.frameLoop(8, this, () => {
                 if (!this['middleOff']) {
                     Effects.particle_AnnularInhalation(this.self['SceneContent'], new Laya.Point(this.self['Mirror'].x, this.self['Mirror'].y), [400, 500]);
@@ -7414,14 +7426,17 @@
                 for (let index = 0; index < 10; index++) {
                     Laya.timer.once(index * 100, this, () => {
                         let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card);
+                        Card['objData'] = cardObjArr[index];
+                        let Back = Card.getChildByName('Back');
+                        Back.skin = 'Game/UI/UIDrawCard/' + Card['objData'][Game3D.CardProperty.quality] + '.png';
                         this.self['CardParent'].addChild(Card);
                         let spcing = (Laya.stage.width - 5 * Card.width) / 6;
                         Card.pos(globalPos.x, globalPos.y);
                         Card.scale(0, 0);
                         Card.name = 'Card' + index;
                         Card.zOrder = 0;
-                        Card['objData'] = cardObjArr[index];
                         let Pic = Card.getChildByName('Pic');
+                        Pic.skin = 'Game/UI/UIDrawCard/Card/' + Card['objData'][Game3D.CardProperty.name] + '.jpg';
                         Pic.visible = false;
                         let x, y;
                         if (index <= 4) {
@@ -7434,7 +7449,10 @@
                         }
                         Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
                         if (index == 3) {
-                            Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0);
+                            Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0, () => {
+                                Animation2D.fadeOut(this.self['Guang5'], 0, 1, 300);
+                                Animation2D.fadeOut(this.self['Guang6'], 0, 1, 300);
+                            });
                         }
                         else if (index == 9) {
                             EventAdmin.notify('flop');
@@ -7462,7 +7480,9 @@
                 Animation2D.cardRotateX_OneFace(Card, () => {
                     Card.getChildByName('Pic').visible = true;
                     if (!Card['objData']['repetitionCard']) {
-                        Card.getChildByName('New').visible = true;
+                        let New = Card.getChildByName('New');
+                        New.visible = true;
+                        Animation2D.bombs_Appear(New, 0, 1, 1.1, 5, 100, 200, 250);
                     }
                 }, 100, 50, () => {
                     if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR) {
@@ -7544,11 +7564,11 @@
                         const Card = arrCard[i];
                         let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                         Laya.timer.once(i * 150, this, () => {
-                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -200, 800, 0, () => {
+                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -500, 800, 0, () => {
                                 if (i == arrCard.length - 1) {
                                     anifunc();
                                 }
-                            }, Laya.Ease.cubicInOut);
+                            }, Laya.Ease.cubicOut);
                         });
                     }
                 };
@@ -7746,51 +7766,80 @@
     class UISet extends Admin.Scene {
         lwgOnAwake() {
             Setting.setBtnVinish();
-            this.audioOnOff();
-            this.bgmOnOff();
             ADManager.TAPoint(TaT.BtnClick, 'setbt_main');
         }
-        audioOnOff() {
-            if (Setting._sound.switch) {
-                this.self['AudioOff'].visible = false;
-            }
-            else {
-                this.self['AudioOff'].visible = true;
-            }
+        lwgOnEnable() {
+            EventAdmin.notify('soundOnOff');
+            EventAdmin.notify('bgMusicOnOff');
+            EventAdmin.notify('shakeOnOff');
         }
-        bgmOnOff() {
-            if (Setting._bgMusic.switch) {
-                this.self['BgmOff'].visible = false;
-            }
-            else {
-                this.self['BgmOff'].visible = true;
-            }
+        lwgEventReg() {
+            let onX = 102;
+            let offX = 0;
+            let onUrl = 'Game/UI/UISet/di2.png';
+            let offUrl = 'Game/UI/UISet/di1.png';
+            EventAdmin.reg('soundOnOff', this, () => {
+                if (Setting._sound.switch) {
+                    this.self['SoundOff'].x = onX;
+                    this.self['BtnSound'].skin = onUrl;
+                }
+                else {
+                    this.self['SoundOff'].x = offX;
+                    this.self['BtnSound'].skin = offUrl;
+                }
+            });
+            EventAdmin.reg('bgMusicOnOff', this, () => {
+                if (Setting._bgMusic.switch) {
+                    this.self['BgMusicOff'].x = onX;
+                    this.self['BtnBgMusic'].skin = onUrl;
+                }
+                else {
+                    this.self['BgMusicOff'].x = offX;
+                    this.self['BtnBgMusic'].skin = offUrl;
+                }
+            });
+            EventAdmin.reg('shakeOnOff', this, () => {
+                if (Setting._shake.switch) {
+                    this.self['ShakeOff'].x = onX;
+                    this.self['BtnShake'].skin = onUrl;
+                }
+                else {
+                    this.self['ShakeOff'].x = offX;
+                    this.self['BtnShake'].skin = offUrl;
+                }
+            });
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnAudio'], this, null, null, this.btnAudioUp, null);
-            Click.on(Click.Type.largen, this.self['BtnBgm'], this, null, null, this.btnBgmUp, null);
-            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp, null);
-        }
-        btnAudioUp() {
-            if (Setting._sound.switch) {
-                Setting._sound.switch = false;
-            }
-            else {
-                Setting._sound.switch = true;
-            }
-            this.audioOnOff();
-        }
-        btnBgmUp() {
-            if (Setting._bgMusic.switch) {
-                Setting._bgMusic.switch = false;
-            }
-            else {
-                Setting._bgMusic.switch = true;
-            }
-            this.bgmOnOff();
-        }
-        btnCloseUp() {
-            this.self.close();
+            Click.on(Click.Type.largen, this.self['BtnSound'], this, null, null, () => {
+                if (Setting._sound.switch) {
+                    Setting._sound.switch = false;
+                }
+                else {
+                    Setting._sound.switch = true;
+                }
+                EventAdmin.notify('soundOnOff');
+            });
+            Click.on(Click.Type.largen, this.self['BtnBgMusic'], this, null, null, () => {
+                if (Setting._bgMusic.switch) {
+                    Setting._bgMusic.switch = false;
+                }
+                else {
+                    Setting._bgMusic.switch = true;
+                }
+                EventAdmin.notify('bgMusicOnOff');
+            });
+            Click.on(Click.Type.largen, this.self['BtnShake'], this, null, null, () => {
+                if (Setting._shake.switch) {
+                    Setting._shake.switch = false;
+                }
+                else {
+                    Setting._shake.switch = true;
+                }
+                EventAdmin.notify('shakeOnOff');
+            });
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
+                Admin._closeScene(this.self);
+            });
         }
         lwgOnDisable() {
             Setting.setBtnAppear();
@@ -7958,6 +8007,24 @@
                 this.self['BtnGet'].visible = true;
                 this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
             }
+        }
+        lwgOnEnable() {
+            TimerAdmin.frameLoop(1, this, () => {
+                this.self['Guang2'].rotation += 0.7;
+                this.self['Guang1'].rotation -= 0.3;
+            });
+            TimerAdmin.loop(2000, this, () => {
+                Animation2D.bomb_LeftRight(this.self['BtnGet'], 1.1, 250);
+            }, true);
+            TimerAdmin.frameRandomLoop(40, 60, this, () => {
+                Effects.blink_Star(this.self['StarParent1'], new Laya.Point(0, 0), 80, 100, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+            }, true);
+            TimerAdmin.frameRandomLoop(40, 60, this, () => {
+                Effects.blink_Star(this.self['StarParent2'], new Laya.Point(0, 0), 80, 100, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+            }, true);
+            TimerAdmin.frameRandomLoop(50, 80, this, () => {
+                Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+            }, true);
         }
         lwgAdaptive() {
         }
@@ -8259,6 +8326,8 @@
                 default:
                     break;
             }
+        }
+        lwgOnEnable() {
             for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
                 let name = VictoryBox._BoxArray[index][VictoryBox.BoxProperty.name];
                 let arr = VictoryBox.getProperty(name, VictoryBox.BoxProperty.rewardNum);
@@ -8271,11 +8340,11 @@
             });
             TimerAdmin.frameRandomLoop(30, 50, this, () => {
                 let x = this.self['SceneContent'].width / 2 - 160;
-                Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+                Effects.blink_Star(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
             }, true);
             TimerAdmin.frameRandomLoop(30, 50, this, () => {
                 let x = this.self['SceneContent'].width / 2 + 160;
-                Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+                Effects.blink_Star(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
             }, true);
         }
         lwgEventReg() {

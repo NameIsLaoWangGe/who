@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":22,
-    "selecteID":23,
+    "selectedBox":2,
+    "selecteID":22,
     "searchKey":"View",
-    "props":{"width":720,"sceneColor":"#000000","height":1280},
+    "props":{"width":720,"sceneColor":"#000000","height":1280,"alpha":0},
     "nodeParent":-1,
-    "maxID":48,
+    "maxID":50,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -293,6 +293,34 @@
                     "isAniNode":true,
                     "hasChild":false,
                     "compId":23,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Sprite",
+                    "searchKey":"Sprite,Guang5,Guang5",
+                    "props":{"y":569,"x":360,"width":954,"var":"Guang5","texture":"Game/UI/UISkinQualified/guang.png","pivotY":587,"pivotX":477,"name":"Guang5","height":1128,"alpha":0},
+                    "nodeParent":22,
+                    "label":"Guang5",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":48,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Sprite",
+                    "searchKey":"Sprite,Guang6,Guang6",
+                    "props":{"y":569,"x":360,"width":954,"var":"Guang6","texture":"Game/UI/UISkinQualified/guang.png","pivotY":587,"pivotX":477,"name":"Guang6","height":1128,"alpha":0},
+                    "nodeParent":22,
+                    "label":"Guang6",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":49,
                     "child":[
                         ]
                 },

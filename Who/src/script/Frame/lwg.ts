@@ -1788,7 +1788,7 @@ export module lwg {
         }
 
         /**
-         * 循环闪光
+         * 渐隐渐出循环闪光
          * @param parent 父节点
          * @param caller 执行域，一般是当前执行的脚本，最后一并清理
          * @param x x位置
@@ -1800,7 +1800,7 @@ export module lwg {
          * @param speed 闪烁速度
          * @param count 默认不限次数
          */
-        export function light_SimpleInfinite(parent, caller, x: number, y: number, width: number, height: number, zOder: number, url?: string, speed?: number, count?: number): void {
+        export function light_SimpleInfinite(parent, x: number, y: number, width: number, height: number, zOder: number, url?: string, speed?: number): void {
             let Img = new Laya.Image();
             parent.addChild(Img);
             Img.pos(x, y);
@@ -1812,27 +1812,23 @@ export module lwg {
             Img.alpha = 0;
             Img.zOrder = zOder ? zOder : 0;
             let add = true;
-            let count0 = 0;
-
+            let caller = {};
             let func = () => {
-                if (count && count0 > count && Img.alpha <= 0.01) {
-                    Img.removeSelf();
-                    Laya.timer.clear(caller, func);
-                    return;
-                }
-                if (!Img.parent) return;
-
                 if (!add) {
                     Img.alpha -= speed ? speed : 0.01;
                     if (Img.alpha <= 0) {
-                        add = true;
-                        count0 += 0.5;
+                        if (caller['end']) {
+                            Laya.timer.clearAll(caller);
+                            Img.removeSelf();
+                        } else {
+                            add = true;
+                        }
                     }
                 } else {
                     Img.alpha += speed ? speed * 2 : 0.01 * 2;
                     if (Img.alpha >= 1) {
                         add = false;
-                        count0 += 0.5;
+                        caller['end'] = true;
                     }
                 }
             }
@@ -1850,7 +1846,7 @@ export module lwg {
          * @param height 图片宽度，默认为50;
          * @param rotationSpeed 角度变化速率,默认为正负5度
          */
-        export function star_Blink(parent, centerPos: Laya.Point, radiusX?: number, radiusY?: number, skinUrl?: string, width?: number, height?: number, rotationSpeed?: number): void {
+        export function blink_Star(parent, centerPos: Laya.Point, radiusX?: number, radiusY?: number, skinUrl?: string, width?: number, height?: number, speed?: number, rotationSpeed?: number): void {
             if (!rotationSpeed) {
                 rotationSpeed = Tools.randomOneHalf() == 0 ? -5 : 5;
             }
@@ -1884,12 +1880,12 @@ export module lwg {
             let caller = {};
             var ani = () => {
                 timer++;
-                if (timer > 0 && timer <= 15) {
+                if (timer > 0 && timer <= 20) {
                     star.alpha += 0.1;
                     star.rotation += rotationSpeed;
-                    star.scaleX += 0.015;
-                    star.scaleY += 0.015;
-                } else if (timer > 15) {
+                    star.scaleX += 0.011;
+                    star.scaleY += 0.011;
+                } else if (timer > 20) {
                     if (!star['reduce']) {
                         if (star.scaleX > maxScale) {
                             star['reduce'] = true;
@@ -3635,6 +3631,9 @@ export module lwg {
          * @param y 改变一次Y轴位置
         */
         export function setBtnAppear(delayed?: number, x?: number, y?: number): void {
+            if (!BtnSetNode) {
+                return;
+            }
             if (delayed) {
                 Animation2D.scale_Alpha(BtnSetNode, 0, 1, 1, 1, 1, 1, delayed, 0, f => {
                     BtnSetNode.visible = true;
@@ -3655,6 +3654,9 @@ export module lwg {
          * @param delayed 延时时间
         */
         export function setBtnVinish(delayed?: number): void {
+            if (!BtnSetNode) {
+                return;
+            }
             if (delayed) {
                 Animation2D.scale_Alpha(BtnSetNode, 1, 1, 1, 1, 1, 0, delayed, 0, f => {
                     BtnSetNode.visible = false;

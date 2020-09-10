@@ -1,4 +1,4 @@
-import { Admin, EventAdmin, Task, EasterEgg, PalyAudio, Dialog } from "../script/Frame/lwg";
+import { Admin, EventAdmin, Task, EasterEgg, PalyAudio, Dialog, Setting } from "../script/Frame/lwg";
 import UIAdsHint from "../script/Game/UIADSHint";
 
 export default class ADManager {
@@ -136,9 +136,15 @@ export default class ADManager {
     }
 
     static VibrateShort() {
+        if (!Setting._shake.switch) {
+            return;
+        }
         TJ.API.Vibrate.Short();
     }
     static Vibratelong() {
+        if (!Setting._shake.switch) {
+            return;
+        }
         TJ.API.Vibrate.Long();
     }
 

@@ -38,6 +38,9 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
             default:
                 break;
         }
+    }
+
+    lwgOnEnable(): void {
         // 如果是随机金币，初始则设置好
         for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
             let name = VictoryBox._BoxArray[index][VictoryBox.BoxProperty.name];
@@ -53,13 +56,14 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         // 星星闪烁动画左边
         TimerAdmin.frameRandomLoop(30, 50, this, () => {
             let x = this.self['SceneContent'].width / 2 - 160;
-            Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+            Effects.blink_Star(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
         }, true)
         // 星星闪烁动画右边
         TimerAdmin.frameRandomLoop(30, 50, this, () => {
             let x = this.self['SceneContent'].width / 2 + 160;
-            Effects.star_Blink(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
+            Effects.blink_Star(this.self['SceneContent'], new Laya.Point(x, this.self['TopPic'].height / 2 + 80), 90, 70, 'Game/UI/UIVictoryBox/xingxing.png', 53, 52);
         }, true)
+
     }
 
     lwgEventReg(): void {

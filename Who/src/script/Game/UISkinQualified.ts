@@ -1,5 +1,5 @@
 import UIStart from "./UIStart";
-import { SkinQualified, Gold, Setting, Shop, Click, Dialog, EventAdmin, Animation2D, Admin, Tools, Backpack } from "../Frame/lwg";
+import { SkinQualified, Gold, Setting, Shop, Click, Dialog, EventAdmin, Animation2D, Admin, Tools, Backpack, TimerAdmin, Effects } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 
@@ -20,6 +20,31 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
             this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
         }
     }
+
+    lwgOnEnable(): void {
+        TimerAdmin.frameLoop(1, this, () => {
+            this.self['Guang2'].rotation += 0.7;
+            this.self['Guang1'].rotation -= 0.3;
+        })
+
+        TimerAdmin.loop(2000, this, () => {
+            Animation2D.bomb_LeftRight(this.self['BtnGet'], 1.1, 250);
+        }, true);
+
+        // 星星闪烁动画左边
+        TimerAdmin.frameRandomLoop(40, 60, this, () => {
+            Effects.blink_Star(this.self['StarParent1'], new Laya.Point(0, 0), 80, 100, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+        }, true)
+        // 星星闪烁动画右边
+        TimerAdmin.frameRandomLoop(40, 60, this, () => {
+            Effects.blink_Star(this.self['StarParent2'], new Laya.Point(0, 0), 80, 100, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+        }, true)
+        // 星星闪烁动画右边
+        TimerAdmin.frameRandomLoop(50, 80, this, () => {
+            Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+        }, true)
+    }
+
     lwgAdaptive(): void {
         // this.self['SceneContent'].y = Laya.stage.height / 2;
     }

@@ -159,7 +159,6 @@ D Game/Voice
 D TJ/Promo
 D Game/UI/Common
 P B1A0E4F9 3ci.png
-P 0B541EBF ads3word.png
 P 2234FD38 anniu.png
 P 2A39B90F anniu1.png
 P 79B07BD5 congxin.png
@@ -198,6 +197,7 @@ R 2666E7CB xuanliwu.png
 R 70EC95D4 youxi2.png
 R 58ABE2D1 yoxui1.png
 R AA355D9A zhujiemian.png
+R BE1BDAD8 设置.png
 D Game/UI/GameScene
 P 94FDDFDD baidi.png
 P 1095C8EC baidi2.png
@@ -217,24 +217,30 @@ P E11347E3 tishi.png
 P 32BD1DD1 zi.png
 D Game/UI/UICheckIn
 P 5FCD294C 3bei.png
-P 3215322F biaoti.png
+P 5BB8F32E biaoti.png
 P 7AF4590C jitian.png
 D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
 P 1F98456A gongxi.png
+P AE16EA3B guang-1.png
+P 89985C7B guang-2.png
+P DCF4D9D7 guang-3.png
 R 35396491 guang.png
 R F96B9B41 guang2.png
 R EE88D7EC guang3.png
-R A9FE76D9 guang5.png
 R CE53F713 jinzi.png
-P 11051805 kuang.png
+P 6FB73D6C kuang.png
 P 9FC4A4E0 mianfei.png
 P D1B89093 mojing.png
 P 63402EB5 qidong.png
+P 53411222 R.png
 P E251178C shenyu.png
 P 1E6EB0DD shuzi4.png
+P CA230A12 SR.png
+P 3D04C73F SSR.png
+P FB036BB5 UR.png
 P 634DDB5B xin.png
 R A630413C yuan.png
 R 7892BB4E yuan2.png
@@ -262,6 +268,14 @@ P 207E6009 jujue2.png
 R 9BACB081 shuzi5.png
 P F15BFCAD xin.png
 D Game/UI/UISet
+P A7A6D598 di1.png
+P 4B6DCFBD di2.png
+P 156EDBC6 guan.png
+P 86A8855F kai.png
+P B3373FD9 shehzi.png
+P 59203D00 yinxiao.png
+P 0DF2AC23 yinyue.png
+P 7023981F zhendong.png
 D Game/UI/UIShare
 P DC61CD59 tioaguo.png
 R F8E1839A tu.png
@@ -276,7 +290,7 @@ P 4F6EB567 4.png
 P 1569E64A 5.png
 P 16B19119 6.png
 P F6751C35 7.png
-R CD9A6E46 guang.png
+R E9E243E8 guang.png
 R A042749E kuang.png
 R 9F8A9362 kuang2.png
 R 8686AD68 mask.png
@@ -284,8 +298,8 @@ P 35CE9928 shipin.png
 P CDF4C116 shuzi-1.png
 P D2718B1C shuzi.png
 P 7E04FF5C taoka.png
+P 6A836EB8 xingxing.png
 P E7939A49 zi.png
-P 6A836EB8 提示2.png
 D Game/UI/UIStart
 R 069A849B bj.png
 P 4B08819D gengduo.png
@@ -366,4 +380,53 @@ P BCCD0083 y1.png
 P 3ECD784B yjjx14.png
 P BBB689A3 zt_1_10.png
 D Game/UI/UIDrawCard/Card
-P C9867BC2 01.png
+P 500E5626 atm1.jpg
+P 4CECD0C4 atm2.jpg
+P 984C4A2C atm3.jpg
+P 25EED0BD atm4.jpg
+P 1C8757D0 atm5.jpg
+P 1F118BC9 cxk1.jpg
+P 0D0B7086 cxk2.jpg
+P DD712216 cxk3.jpg
+P 84017CEE cxk4.jpg
+P 8110C3D3 cxk5.jpg
+P 1B107672 cxy1.jpg
+P 5EFAB9DC cxy2.jpg
+P FC31CFDD cxy3.jpg
+P C2891B29 cxy4.jpg
+P C0C0185A cxy5.jpg
+P AC6A3802 lyy1.jpg
+P 8162BD54 lyy2.jpg
+P 6BF1029D lyy3.jpg
+P 0B0CA5BA lyy4.jpg
+P 89C4A2C0 lyy5.jpg
+P C49614E8 scp1.jpg
+P 179B0306 scp2.jpg
+P 8FCF5BE1 scp3.jpg
+P 4045B909 scp4.jpg
+P 3C0FEC97 wdsj1.jpg
+P 9921EDEA wdsj2.jpg
+P 94ADD963 wdsj3.jpg
+P 3C12E8AD wdsj4.jpg
+P 80A845D0 wdsj5.jpg
+P 85BB1DF9 wdsj6.jpg
+P A5CB758C wdsj7.jpg
+P 55A3CA7C wdsj8.jpg
+P C6C22462 wdsj9.jpg
+P 4408D482 wzry1.jpg
+P C810E01C wzry2.jpg
+P C3038A3B wzry3.jpg
+P 695DFF28 wzry4.jpg
+P 6A85D356 wzry5.jpg
+P 7642F548 wzry6.jpg
+P 4FC6E983 wzry7.jpg
+P 318E506B xxs1.jpg
+P D652B9B6 xxs2.jpg
+P 8D1B3931 xxs3.jpg
+P 96EF78D1 xxs4.jpg
+P 37A69894 xxs5.jpg
+P D5206CFF zds1.jpg
+P AC50E541 zds2.jpg
+P A78BE79C zds3.jpg
+P 788D8DF0 zds4.jpg
+P 91837B24 zds5.jpg
