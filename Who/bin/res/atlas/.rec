@@ -75,10 +75,13 @@ P C13AF3C2 ui_Circular_l_red.png
 P A9665D25 ui_Circular_l_violet.png
 P 064ED689 ui_Circular_l_white.png
 P FEDDF281 ui_Circular_l_yellow.png
+P 93B21079 ui_square_guang1.png
+P 891DB0D6 ui_square_guang2.png
 D Frame/UI
 P C36AA67B icon_execution.png
 P A5763191 icon_gold.png
 P BF63B6AC icon_set.png
+P CD257D00 reverseMask.png
 P 9BF3B9B8 ui__l_orthogon_blue.png
 P C13CE94A ui__l_orthogon_cycn.png
 P 7D04FB62 ui__l_orthogon_green.png
@@ -146,7 +149,6 @@ P D6262B24 ui_square_c_009.png
 P 7331617A ui_square_c_010.png
 P 87918B79 ui_square_c_011.png
 P B253D6A3 ui_square_c_012.png
-P 93B21079 ui_square_guang.png
 D Frame/Voice
 R 285FF3DD bgm.mp3
 R 626CADAF btn.wav

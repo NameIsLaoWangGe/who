@@ -26,7 +26,6 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }, Laya.Ease.cubicInOut);
         }, true);
 
-
         TimerAdmin.frameRandomLoop(100, 160, this, () => {
             Effects.light_SimpleInfinite(this.self, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
         }, true)
@@ -56,8 +55,11 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
         }, true)
 
-
         // 抽卡界面光效，直接闪烁
+        TimerAdmin.frameLoop(1, this, () => {
+            this.self['Guang5'].rotation += 0.7;
+            this.self['Guang6'].rotation -= 0.3;
+        })
     }
 
     lwgOpenAniAfter(): void {
@@ -208,19 +210,22 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     TimerAdmin.frameRandomLoop(15, 35, this, () => {
                         for (let index = 0; index < 1; index++) {
                             Laya.timer.once(index * 200, this, () => {
-                                Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/UI/ui_square_guang.png'], 0.1, 0.002);
+                                Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/Effects/ui_square_guang2.png'], 0.1, 0.002);
                             })
                         }
-
                     }, true)
                     Animation2D.leftRight_Shake(Card, 20, 100, 300, () => {
                         Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
-                            Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 600, 400, Laya.Ease.expoIn);
+                            Animation2D.move_Simple(ReflectPic.getChildByName('LiuGuang'), -21, -9, 131, 180, 500, 400, () => {
+                                Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 0, 1, 250, 0, () => {
+                                    Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 1, 0, 200, 0);
+                                });
+                            }, Laya.Ease.expoIn);
                             for (let index = 0; index < 5; index++) {
                                 let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
                                 Laya.timer.once(300 * index, this, () => {
                                     Effects.createExplosion_Rotate(this.self['CardParent'], 25, pointAarr[0].x, pointAarr[0].y, 'star', 10, 10);
-                                })
+                                });
                             }
                             Animation2D.move_Scale(Card, 3, Card.x, Card.y, x, y, 1, 200, 2000, null, () => {
                                 func();
@@ -286,7 +291,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     const Card = arrCard[i];
                     let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                     Laya.timer.once(i * 150, this, () => {
-                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -500, 800, 0, () => {
+                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -300, 800, 0, () => {
                             if (i == arrCard.length - 1) {
                                 anifunc();
                             }

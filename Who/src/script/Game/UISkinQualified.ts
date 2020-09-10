@@ -43,6 +43,66 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         TimerAdmin.frameRandomLoop(50, 80, this, () => {
             Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
         }, true)
+
+        let CardParent = this.self['CardParent'] as Laya.Sprite;
+
+        TimerAdmin.frameLoop(150, this, () => {
+            for (let i = 1; i < 8; i++) {
+                const Card = CardParent.getChildByName("Card" + i) as Laya.Image;
+                let index0 = (i + 1) > 7 ? 1 : (i + 1);
+                const Card0 = CardParent.getChildByName("Card" + index0) as Laya.Image;
+                let time = 500;
+                // 加个缩放
+                Animation2D.move_Simple(Card, Card.x, Card.y, Card0.x, Card0.y, time, 0, () => {
+                });
+                let alpha0 = 0.6;
+                switch (i) {
+                    case 1:
+                        alpha0 = 0;
+                        break;
+                    case 7:
+                        alpha0 = 1;
+                        break;
+                    default:
+                        break;
+                }
+                Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
+                    Card.name = 'Card' + index0;
+                    if (i == 7) {
+                        for (let j = 1; j < 8; j++) {
+                            const Card1 = CardParent.getChildByName("Card" + j) as Laya.Image;
+                            switch (j) {
+                                case 1:
+                                    Card1.zOrder = 7;
+                                    break;
+                                case 2:
+                                    Card1.zOrder = 5;
+                                    break;
+                                case 3:
+                                    Card1.zOrder = 3;
+                                    break;
+                                case 4:
+                                    Card1.zOrder = 1;
+                                    break;
+                                case 5:
+                                    Card1.zOrder = 2;
+                                    break;
+                                case 6:
+                                    Card1.zOrder = 4;
+                                    break;
+                                case 7:
+                                    Card1.zOrder = 6;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    Animation2D.fadeOut(Card, alpha0, 1, time, 0, () => {
+                    })
+                })
+            }
+        }, true);
     }
 
     lwgAdaptive(): void {

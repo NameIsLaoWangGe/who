@@ -7359,6 +7359,10 @@
                     });
                 }
             }, true);
+            TimerAdmin.frameLoop(1, this, () => {
+                this.self['Guang5'].rotation += 0.7;
+                this.self['Guang6'].rotation -= 0.3;
+            });
         }
         lwgOpenAniAfter() {
             Game3D.Scene3D.active = false;
@@ -7423,6 +7427,8 @@
                 this.self['DrawDisPlay'].x = 0;
                 this.self['BtnTake'].visible = false;
                 this.self['DrawDisPlayBg'].alpha = 0;
+                this.self['Guang5'].alpha = 0;
+                this.self['Guang6'].alpha = 0;
                 for (let index = 0; index < 10; index++) {
                     Laya.timer.once(index * 100, this, () => {
                         let Card = Laya.Pool.getItemByCreateFun('Card', this.Card.create, this.Card);
@@ -7450,8 +7456,8 @@
                         Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
                         if (index == 3) {
                             Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0, () => {
-                                Animation2D.fadeOut(this.self['Guang5'], 0, 1, 300);
-                                Animation2D.fadeOut(this.self['Guang6'], 0, 1, 300);
+                                Animation2D.fadeOut(this.self['Guang5'], 0, 1, 500);
+                                Animation2D.fadeOut(this.self['Guang6'], 0, 1, 500);
                             });
                         }
                         else if (index == 9) {
@@ -7493,13 +7499,17 @@
                         TimerAdmin.frameRandomLoop(15, 35, this, () => {
                             for (let index = 0; index < 1; index++) {
                                 Laya.timer.once(index * 200, this, () => {
-                                    Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/UI/ui_square_guang.png'], 0.1, 0.002);
+                                    Effects.aureole_Continuous(Card, new Laya.Point(Card.width / 2, Card.height / 2), 41.5, 55, null, ['Frame/Effects/ui_square_guang2.png'], 0.1, 0.002);
                                 });
                             }
                         }, true);
                         Animation2D.leftRight_Shake(Card, 20, 100, 300, () => {
                             Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
-                                Animation2D.move_Simple(ReflectPic.mask, -29, -18, 154, 180, 600, 400, Laya.Ease.expoIn);
+                                Animation2D.move_Simple(ReflectPic.getChildByName('LiuGuang'), -21, -9, 131, 180, 500, 400, () => {
+                                    Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 0, 1, 250, 0, () => {
+                                        Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 1, 0, 200, 0);
+                                    });
+                                }, Laya.Ease.expoIn);
                                 for (let index = 0; index < 5; index++) {
                                     let pointAarr = Tools.point_RandomPointByCenter(new Laya.Point(globalPos.x, globalPos.y), 200, 100);
                                     Laya.timer.once(300 * index, this, () => {
@@ -7564,7 +7574,7 @@
                         const Card = arrCard[i];
                         let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                         Laya.timer.once(i * 150, this, () => {
-                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -500, 800, 0, () => {
+                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -300, 800, 0, () => {
                                 if (i == arrCard.length - 1) {
                                     anifunc();
                                 }
@@ -8024,6 +8034,63 @@
             }, true);
             TimerAdmin.frameRandomLoop(50, 80, this, () => {
                 Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
+            }, true);
+            let CardParent = this.self['CardParent'];
+            TimerAdmin.frameLoop(150, this, () => {
+                for (let i = 1; i < 8; i++) {
+                    const Card = CardParent.getChildByName("Card" + i);
+                    let index0 = (i + 1) > 7 ? 1 : (i + 1);
+                    const Card0 = CardParent.getChildByName("Card" + index0);
+                    let time = 500;
+                    Animation2D.move_Simple(Card, Card.x, Card.y, Card0.x, Card0.y, time, 0, () => {
+                    });
+                    let alpha0 = 0.6;
+                    switch (i) {
+                        case 1:
+                            alpha0 = 0;
+                            break;
+                        case 7:
+                            alpha0 = 1;
+                            break;
+                        default:
+                            break;
+                    }
+                    Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
+                        Card.name = 'Card' + index0;
+                        if (i == 7) {
+                            for (let j = 1; j < 8; j++) {
+                                const Card1 = CardParent.getChildByName("Card" + j);
+                                switch (j) {
+                                    case 1:
+                                        Card1.zOrder = 7;
+                                        break;
+                                    case 2:
+                                        Card1.zOrder = 5;
+                                        break;
+                                    case 3:
+                                        Card1.zOrder = 3;
+                                        break;
+                                    case 4:
+                                        Card1.zOrder = 1;
+                                        break;
+                                    case 5:
+                                        Card1.zOrder = 2;
+                                        break;
+                                    case 6:
+                                        Card1.zOrder = 4;
+                                        break;
+                                    case 7:
+                                        Card1.zOrder = 6;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        Animation2D.fadeOut(Card, alpha0, 1, time, 0, () => {
+                        });
+                    });
+                }
             }, true);
         }
         lwgAdaptive() {
