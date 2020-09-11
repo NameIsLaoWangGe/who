@@ -1553,6 +1553,90 @@ export module lwg {
         }
     }
 
+    /**滤镜模块,主要是为节点和场景等进行颜色变化设置*/
+    export module Color {
+        /**
+         * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
+         * @param r 
+         * @param g
+         * @param b
+          */
+        export function RGBtoHexString(r, g, b) {
+            return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+        }
+        /**
+         * 给一张图片染色,包括其子节点,也可以设置一个消失时间
+         * @param node 节点
+         * @param RGBA [R,G,B,A]
+         * @param vanishtime 默认没有消失时间，一旦设置后，将会在这个时间延时后消失
+         */
+        export function colour(node: Laya.Sprite, RGBA?: Array<number>, vanishtime?: number): Laya.ColorFilter {
+            let cf = new Laya.ColorFilter();
+            if (!RGBA) {
+                cf.color(255, 0, 0, 1)
+            } else {
+                cf.color(RGBA[0], RGBA[1], RGBA[2], RGBA[3])
+            }
+            node.filters = [cf];
+            if (vanishtime) {
+                Laya.timer.once(vanishtime, this, () => {
+                    for (let index = 0; index < node.filters.length; index++) {
+                        if (node.filters[index] == cf) {
+                            node.filters = [];
+                            break;
+                        }
+                    }
+                })
+            }
+            return cf;
+        }
+
+        /**
+         * 颜色变化生命周期，在时间内改进行一次颜色渐变，之后回到原来的颜色，RGB颜色为匀速增加
+         * @param node 节点
+         * @param RGBA  [R,G,B,A],A可以不输入
+         * @param time time为帧数， time*2为一个周期
+         */
+        export function spinmap(node, RGBA: Array<number>, time: number): void {
+            let cf = new Laya.ColorFilter();
+            cf.color(0, 0, 0, 0);
+            let speedR = RGBA[0] / time;
+            let speedG = RGBA[1] / time;
+            let speedB = RGBA[2] / time;
+            let speedA = 0;
+            if (RGBA[3]) {
+                speedA = RGBA[3] / time;
+            }
+            let caller = {
+                add: true,
+            };
+            let R = 0, G = 0, B = 0, A = 0;
+            TimerAdmin.frameLoop(1, caller, () => {
+                if (R < RGBA[0] && caller.add) {
+                    R += speedR;
+                    G += speedG;
+                    B += speedB;
+                    if (speedA !== 0) A += speedA;
+                    if (R >= RGBA[0]) {
+                        caller.add = false;
+                    }
+                } else {
+                    R -= speedR;
+                    G -= speedG;
+                    B -= speedB;
+                    if (speedA !== 0) A -= speedA;
+                    if (R <= 0) {
+                        Laya.timer.clearAll(caller);
+                    }
+                }
+                cf.color(R, G, B, A);
+                node.filters = [cf];
+            })
+        }
+
+    }
+
+    /**特效模块*/
     export module Effects {
         /**特效元素的图片地址，所有项目都可用*/
         export enum SkinUrl {
@@ -3773,6 +3857,15 @@ export module lwg {
     /**工具模块*/
     export module Tools {
         /**
+        * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
+        * @param r 
+        * @param g
+        * @param b
+         */
+        export function color_RGBtoHexString(r, g, b) {
+            return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+        }
+        /**
        * 将数字格式化，例如1000 = 1k；
        * @param number 数字
        */
@@ -4005,7 +4098,7 @@ export module lwg {
             if (!count) {
                 count = 1;
             }
-            if (!intSet) {
+            if (intSet == undefined) {
                 intSet = true;
             }
             if (section2) {
@@ -4024,9 +4117,9 @@ export module lwg {
                 while (count > arr.length) {
                     let num;
                     if (intSet) {
-                        num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                        num = Math.floor(Math.random() * section1);
                     } else {
-                        num = Math.random() * (section2 - section1) + section1;
+                        num = Math.random() * section1;
                     }
                     arr.push(num);
                     Tools.arrayUnique_01(arr);
@@ -4034,39 +4127,6 @@ export module lwg {
                 return arr;
             }
         }
-
-        /**
-          * RGB三个颜色值转换成16进制的字符串‘000000’，需要加上‘#’；
-          * @param r 
-          * @param g
-          * @param b
-          */
-        export function color_ToHexString(r, g, b) {
-            return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
-        }
-
-        /**
-         * 给一张图片加入一个色滤镜,包括其子节点,也可以设置一个消失时间
-         * @param node 节点
-         * @param arr [R,G,B,A]
-         * @param vanishtime 默认没有消失时间，一旦设置后，将会在这个时间延时后消失
-         */
-        export function color_Filter(node: Laya.Sprite, arr: Array<number>, vanishtime?: number): void {
-            let cf = new Laya.ColorFilter();
-            cf.color(255, 0, 0, 1);
-            node.filters = [cf];
-            if (vanishtime) {
-                Laya.timer.once(vanishtime, this, () => {
-                    for (let index = 0; index < node.filters.length; index++) {
-                        if (node.filters[index] == cf) {
-                            node.filters = [];
-                            break;
-                        }
-                    }
-                })
-            }
-        }
-
 
 
         /**返回两个二维物体的距离*/
@@ -6586,6 +6646,7 @@ export let Gold = lwg.Gold;
 export let Setting = lwg.Setting;
 export let PalyAudio = lwg.PalyAudio;
 export let Click = lwg.Click;
+export let Color = lwg.Color;
 export let Effects = lwg.Effects;
 export let Dialog = lwg.Dialog;
 export let Animation2D = lwg.Animation2D;

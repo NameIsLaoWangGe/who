@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":8,
-    "selecteID":9,
+    "selectedBox":2,
+    "selecteID":57,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":54,
+    "maxID":60,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -25,20 +25,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":27,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite,Logo1,Logo1",
-            "props":{"y":202,"x":360,"width":380,"var":"Logo1","texture":"Game/UI/UISkinQualified/taoka.png","pivotY":45,"pivotX":190,"name":"Logo1","height":90},
-            "nodeParent":2,
-            "label":"Logo1",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":4,
             "child":[
                 ]
         },
@@ -423,6 +409,49 @@
             "compId":31,
             "child":[
                 ]
+        },
+        {
+            "x":15,
+            "type":"Sprite",
+            "searchKey":"Sprite,Logo1,Logo1",
+            "props":{"y":202,"x":360,"width":380,"var":"Logo1","texture":"Game/UI/UISkinQualified/taoka.png","pivotY":45,"pivotX":190,"name":"Logo1","height":90},
+            "nodeParent":2,
+            "label":"Logo1",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":57,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Image",
+                    "searchKey":"Image,Mask",
+                    "props":{"y":45,"x":190,"width":380,"skin":"Game/UI/UISkinQualified/taoka.png","renderType":"mask","pivotY":45,"pivotX":190,"name":"Mask","height":90},
+                    "nodeParent":57,
+                    "label":"Mask",
+                    "isOpen":true,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":58,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "searchKey":"Image,Logo1Liuguang,Logo1Liuguang",
+                    "props":{"y":0,"x":-53,"width":304,"var":"Logo1Liuguang","skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"10,11,11,15","rotation":-64,"pivotY":25,"pivotX":152,"name":"Logo1Liuguang","height":50},
+                    "nodeParent":57,
+                    "label":"Logo1Liuguang",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":59,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {

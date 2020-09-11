@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":496,
+    "selectedBox":37,
+    "selecteID":40,
     "searchKey":"View",
     "props":{"width":720,"top":0,"sceneColor":"#000000","right":0,"left":0,"height":1280,"bottom":0},
     "nodeParent":-1,
@@ -108,13 +108,14 @@
             "props":{"y":1310,"x":360,"width":341,"var":"WeChat","name":"WeChat","height":207},
             "nodeParent":2,
             "label":"WeChat",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":25,
             "child":[
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,BtnNormal_WeChat,BtnNormal_WeChat",
                     "props":{"y":122,"x":171,"width":288,"var":"BtnNormal_WeChat","texture":"Game/UI/Common/anniu1.png","pivotY":64,"pivotX":144,"name":"BtnNormal_WeChat","height":128},
@@ -127,6 +128,7 @@
                     "compId":21,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Dis",
                             "props":{"y":44.5,"x":65,"texture":"Game/UI/Common/congxin.png","name":"Dis"},
@@ -141,6 +143,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,Select",
                     "props":{"y":0,"x":18,"width":306,"name":"Select","height":42},
@@ -153,6 +156,7 @@
                     "compId":7,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,BtnSelect_Wechat,BtnSelect_Wechat",
                             "props":{"y":2,"x":21,"var":"BtnSelect_Wechat","texture":"Game/UI/Common/yuan.png","name":"BtnSelect_Wechat"},
@@ -165,6 +169,7 @@
                             "compId":12,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Sprite",
                                     "searchKey":"Sprite,Dot_WeChat,Dot_WeChat",
                                     "props":{"y":8.75,"x":7.75,"var":"Dot_WeChat","texture":"Game/UI/Common/yuan2.png","name":"Dot_WeChat"},
@@ -179,9 +184,10 @@
                                 }]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Dis,Dis",
-                            "props":{"y":3,"x":57,"var":"Dis","texture":"Game/UI/Common/ads3word.png","name":"Dis"},
+                            "props":{"y":3,"x":57,"var":"Dis","texture":"Game/UI/Common/sanbei.png","name":"Dis"},
                             "nodeParent":7,
                             "label":"Dis",
                             "isDirectory":false,
@@ -193,6 +199,7 @@
                         }]
                 },
                 {
+                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,BtnAdv_Wechat,BtnAdv_WeChat",
                     "props":{"y":122,"x":171,"width":288,"var":"BtnAdv_WeChat","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnAdv_Wechat","height":128},
@@ -205,6 +212,7 @@
                     "compId":6,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,AdvPic",
                             "props":{"y":12.5,"x":205,"texture":"Game/UI/Common/jinbi.png","name":"AdvPic"},
@@ -218,6 +226,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,Dis",
                             "props":{"y":44.5,"x":33,"texture":"Game/UI/Common/xiayiguan.png","name":"Dis"},
@@ -343,7 +352,7 @@
                     "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,Select",
-                    "props":{"y":12,"x":1,"width":306,"name":"Select","height":42},
+                    "props":{"y":8,"x":-22,"width":362,"name":"Select","height":42},
                     "nodeParent":37,
                     "label":"Select",
                     "isOpen":true,
@@ -384,7 +393,7 @@
                             "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":5,"x":57,"texture":"Game/UI/Common/ads3word.png"},
+                            "props":{"y":2,"x":61,"texture":"Game/UI/Common/sanbei.png"},
                             "nodeParent":40,
                             "label":"Sprite",
                             "isDirectory":false,

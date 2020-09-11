@@ -32,10 +32,11 @@ export default class UIResurgence extends Admin.Scene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
-            ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-                EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
-            })
+            // ADManager.ShowReward(() => {
+            Admin._gameSwitch = true;
+            ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
+            EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
+            // })
         });
 
         Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
@@ -45,6 +46,5 @@ export default class UIResurgence extends Admin.Scene {
     }
 
     lwgOnDisable(): void {
-        Admin._gameSwitch = true;
     }
 }

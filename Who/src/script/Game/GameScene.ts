@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack, Color } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 import UIAdsHint from "./UIADSHint";
 
@@ -227,7 +227,7 @@ export default class GameScene extends Admin.Scene {
             if (questionAndYesOrNo[1]) {
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
-                Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                Color.colour(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
                     Admin._clickLock.switch = false;
@@ -245,7 +245,7 @@ export default class GameScene extends Admin.Scene {
             if (!questionAndYesOrNo[1]) {
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
-                Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                Color.colour(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
                     Admin._clickLock.switch = false;

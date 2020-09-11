@@ -1,5 +1,5 @@
 import UIStart from "./UIStart";
-import { SkinQualified, Gold, Setting, Shop, Click, Dialog, EventAdmin, Animation2D, Admin, Tools, Backpack, TimerAdmin, Effects } from "../Frame/lwg";
+import { SkinQualified, Gold, Setting, Shop, Click, Dialog, EventAdmin, Animation2D, Admin, Tools, Backpack, TimerAdmin, Effects, Color } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 
@@ -44,8 +44,8 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
             Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
         }, true)
 
+        // 轮盘
         let CardParent = this.self['CardParent'] as Laya.Sprite;
-
         TimerAdmin.frameLoop(150, this, () => {
             for (let i = 1; i < 8; i++) {
                 const Card = CardParent.getChildByName("Card" + i) as Laya.Image;
@@ -58,7 +58,7 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
                 let alpha0 = 0.6;
                 switch (i) {
                     case 1:
-                        alpha0 = 0;
+                        alpha0 = 0.1;
                         break;
                     case 7:
                         alpha0 = 1;
@@ -102,7 +102,20 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
                     })
                 })
             }
+        });
+
+        // logo流光
+        TimerAdmin.frameLoop(60, this, () => {
+            Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 418, 90, 500, 200);
         }, true);
+        let fc = new Laya.ColorFilter();
+        TimerAdmin.frameLoop(150, this, () => {
+            let R = Tools.randomCountNumer(255)[0];
+            let G = Tools.randomCountNumer(255)[0];
+            let B = Tools.randomCountNumer(255)[0];
+            console.log(R, G, B);
+            Color.spinmap(this.self['Logo1'], [R, G, B], 60);
+        }, true)
     }
 
     lwgAdaptive(): void {

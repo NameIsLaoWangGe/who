@@ -3001,6 +3001,75 @@
             }
             Admin.Object = Object;
         })(Admin = lwg.Admin || (lwg.Admin = {}));
+        let Color;
+        (function (Color) {
+            function RGBtoHexString(r, g, b) {
+                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+            }
+            Color.RGBtoHexString = RGBtoHexString;
+            function colour(node, RGBA, vanishtime) {
+                let cf = new Laya.ColorFilter();
+                if (!RGBA) {
+                    cf.color(255, 0, 0, 1);
+                }
+                else {
+                    cf.color(RGBA[0], RGBA[1], RGBA[2], RGBA[3]);
+                }
+                node.filters = [cf];
+                if (vanishtime) {
+                    Laya.timer.once(vanishtime, this, () => {
+                        for (let index = 0; index < node.filters.length; index++) {
+                            if (node.filters[index] == cf) {
+                                node.filters = [];
+                                break;
+                            }
+                        }
+                    });
+                }
+                return cf;
+            }
+            Color.colour = colour;
+            function spinmap(node, RGBA, time) {
+                let cf = new Laya.ColorFilter();
+                cf.color(0, 0, 0, 0);
+                let speedR = RGBA[0] / time;
+                let speedG = RGBA[1] / time;
+                let speedB = RGBA[2] / time;
+                let speedA = 0;
+                if (RGBA[3]) {
+                    speedA = RGBA[3] / time;
+                }
+                let caller = {
+                    add: true,
+                };
+                let R = 0, G = 0, B = 0, A = 0;
+                TimerAdmin.frameLoop(1, caller, () => {
+                    if (R < RGBA[0] && caller.add) {
+                        R += speedR;
+                        G += speedG;
+                        B += speedB;
+                        if (speedA !== 0)
+                            A += speedA;
+                        if (R >= RGBA[0]) {
+                            caller.add = false;
+                        }
+                    }
+                    else {
+                        R -= speedR;
+                        G -= speedG;
+                        B -= speedB;
+                        if (speedA !== 0)
+                            A -= speedA;
+                        if (R <= 0) {
+                            Laya.timer.clearAll(caller);
+                        }
+                    }
+                    cf.color(R, G, B, A);
+                    node.filters = [cf];
+                });
+            }
+            Color.spinmap = spinmap;
+        })(Color = lwg.Color || (lwg.Color = {}));
         let Effects;
         (function (Effects) {
             let SkinUrl;
@@ -4475,6 +4544,10 @@
         })(PalyAudio = lwg.PalyAudio || (lwg.PalyAudio = {}));
         let Tools;
         (function (Tools) {
+            function color_RGBtoHexString(r, g, b) {
+                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
+            }
+            Tools.color_RGBtoHexString = color_RGBtoHexString;
             function format_FormatNumber(number) {
                 if (typeof (number) !== "number") {
                     console.warn("要转化的数字并不为number");
@@ -4654,7 +4727,7 @@
                 if (!count) {
                     count = 1;
                 }
-                if (!intSet) {
+                if (intSet == undefined) {
                     intSet = true;
                 }
                 if (section2) {
@@ -4675,10 +4748,10 @@
                     while (count > arr.length) {
                         let num;
                         if (intSet) {
-                            num = Math.floor(Math.random() * (section2 - section1)) + section1;
+                            num = Math.floor(Math.random() * section1);
                         }
                         else {
-                            num = Math.random() * (section2 - section1) + section1;
+                            num = Math.random() * section1;
                         }
                         arr.push(num);
                         Tools.arrayUnique_01(arr);
@@ -4687,26 +4760,6 @@
                 }
             }
             Tools.randomCountNumer = randomCountNumer;
-            function color_ToHexString(r, g, b) {
-                return '#' + ("00000" + (r << 16 | g << 8 | b).toString(16)).slice(-6);
-            }
-            Tools.color_ToHexString = color_ToHexString;
-            function color_Filter(node, arr, vanishtime) {
-                let cf = new Laya.ColorFilter();
-                cf.color(255, 0, 0, 1);
-                node.filters = [cf];
-                if (vanishtime) {
-                    Laya.timer.once(vanishtime, this, () => {
-                        for (let index = 0; index < node.filters.length; index++) {
-                            if (node.filters[index] == cf) {
-                                node.filters = [];
-                                break;
-                            }
-                        }
-                    });
-                }
-            }
-            Tools.color_Filter = color_Filter;
             function d2_twoObjectsLen(obj1, obj2) {
                 let point = new Laya.Point(obj1.x, obj1.y);
                 let len = point.distance(obj2.x, obj2.y);
@@ -6523,6 +6576,7 @@
     let Setting = lwg.Setting;
     let PalyAudio = lwg.PalyAudio;
     let Click = lwg.Click;
+    let Color = lwg.Color;
     let Effects = lwg.Effects;
     let Dialog = lwg.Dialog;
     let Animation2D = lwg.Animation2D;
@@ -6742,7 +6796,7 @@
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
                 }
                 else {
-                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Color.colour(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
                         Admin._clickLock.switch = false;
@@ -6758,7 +6812,7 @@
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
                 }
                 else {
-                    Tools.color_Filter(Card, [255, 0, 0, 1], 100);
+                    Color.colour(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
                         Admin._clickLock.switch = false;
@@ -7758,10 +7812,9 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
-                ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-                    EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
-                });
+                Admin._gameSwitch = true;
+                ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
+                EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
                 ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
@@ -7769,7 +7822,6 @@
             });
         }
         lwgOnDisable() {
-            Admin._gameSwitch = true;
         }
     }
 
@@ -8047,7 +8099,7 @@
                     let alpha0 = 0.6;
                     switch (i) {
                         case 1:
-                            alpha0 = 0;
+                            alpha0 = 0.1;
                             break;
                         case 7:
                             alpha0 = 1;
@@ -8091,6 +8143,17 @@
                         });
                     });
                 }
+            });
+            TimerAdmin.frameLoop(60, this, () => {
+                Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 418, 90, 500, 200);
+            }, true);
+            let fc = new Laya.ColorFilter();
+            TimerAdmin.frameLoop(150, this, () => {
+                let R = Tools.randomCountNumer(255)[0];
+                let G = Tools.randomCountNumer(255)[0];
+                let B = Tools.randomCountNumer(255)[0];
+                console.log(R, G, B);
+                Color.spinmap(this.self['Logo1'], [R, G, B], 60);
             }, true);
         }
         lwgAdaptive() {
