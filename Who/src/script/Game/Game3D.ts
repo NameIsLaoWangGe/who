@@ -15,8 +15,8 @@ export module Game3D {
     export let MyCardParent: Laya.MeshSprite3D;
     /**对方手上所有的牌的父节点*/
     export let OppositeCardParent: Laya.MeshSprite3D;
-    /**所有牌集合*/
-    export let AllCardTem: Laya.MeshSprite3D;
+    /**所有灰色背面的卡牌集合*/
+    export let AllCardGray: Laya.MeshSprite3D;
 
     /**本局我方手上对方的卡牌*/
     export let myHandName: any;
@@ -229,7 +229,7 @@ export module Game3D {
             myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
 
-        let AllCardParent = AllCardTem.clone() as Laya.MeshSprite3D;
+        let AllCardParent = AllCardGray.clone() as Laya.MeshSprite3D;
         let startX = 0.204;
         let spacingX = 0.3055;
         let startZ = -0.26;
@@ -716,7 +716,7 @@ export module Game3D {
             OppositeRoleParent = this.self.getChildByName('OppositeRoleParent') as Laya.MeshSprite3D;
             MyCardParent = this.self.getChildByName('MyCardParent') as Laya.MeshSprite3D;
             OppositeCardParent = this.self.getChildByName('OppositeCardParent') as Laya.MeshSprite3D;
-            AllCardTem = this.self.getChildByName('AllCard') as Laya.MeshSprite3D;
+            AllCardGray = this.self.getChildByName('AllCardGray') as Laya.MeshSprite3D;
             PerspectiveMe = this.self.getChildByName('PerspectiveMe') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite') as Laya.MeshSprite3D;
             PerspectiveAwait = this.self.getChildByName('PerspectiveAwait') as Laya.MeshSprite3D;

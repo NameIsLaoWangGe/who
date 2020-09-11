@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":8,
-    "selecteID":13,
+    "selectedBox":2,
+    "selecteID":28,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":77,
+    "maxID":84,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -135,22 +135,23 @@
                             "props":{"y":386,"x":449,"width":353,"var":"Card5","skin":"Game/UI/UISkinQualified/7.png","pivotY":252,"pivotX":177,"name":"Card5","height":504},
                             "nodeParent":8,
                             "label":"Card5",
-                            "isOpen":null,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":15,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":15,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":69,
+                                    "compId":83,
                                     "child":[
                                         ]
                                 }]
@@ -162,21 +163,23 @@
                             "props":{"y":346,"x":418,"var":"Card6","skin":"Game/UI/UISkinQualified/5.png","pivotY":252,"pivotX":177,"name":"Card6"},
                             "nodeParent":8,
                             "label":"Card6",
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":13,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":13,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":76,
+                                    "compId":82,
                                     "child":[
                                         ]
                                 }]
@@ -188,22 +191,23 @@
                             "props":{"y":309,"x":380,"var":"Card7","skin":"Game/UI/UISkinQualified/3.png","pivotY":252,"pivotX":177,"name":"Card7"},
                             "nodeParent":8,
                             "label":"Card7",
-                            "isOpen":null,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":11,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":11,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":74,
+                                    "compId":81,
                                     "child":[
                                         ]
                                 }]
@@ -215,22 +219,23 @@
                             "props":{"y":385,"x":214,"var":"Card4","skin":"Game/UI/UISkinQualified/6.png","pivotY":252,"pivotX":177,"name":"Card4"},
                             "nodeParent":8,
                             "label":"Card4",
-                            "isOpen":null,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":14,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":14,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":73,
+                                    "compId":80,
                                     "child":[
                                         ]
                                 }]
@@ -242,22 +247,23 @@
                             "props":{"y":346,"x":241,"var":"Card3","skin":"Game/UI/UISkinQualified/4.png","pivotY":252,"pivotX":177,"name":"Card3"},
                             "nodeParent":8,
                             "label":"Card3",
-                            "isOpen":null,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":12,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":12,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":72,
+                                    "compId":79,
                                     "child":[
                                         ]
                                 }]
@@ -269,22 +275,23 @@
                             "props":{"y":309,"x":282,"var":"Card2","skin":"Game/UI/UISkinQualified/2.png","pivotY":252,"pivotX":177,"name":"Card2"},
                             "nodeParent":8,
                             "label":"Card2",
-                            "isOpen":null,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":10,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":10,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":71,
+                                    "compId":78,
                                     "child":[
                                         ]
                                 }]
@@ -305,14 +312,14 @@
                                 {
                                     "x":60,
                                     "type":"Image",
-                                    "searchKey":"Image",
-                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "searchKey":"Image,Color",
+                                    "props":{"y":0,"x":0,"width":355,"skin":"Frame/UI/ui_orthogon_blue.png","sizeGrid":"19,6,15,7","name":"Color","height":504,"alpha":0.5},
                                     "nodeParent":9,
-                                    "label":"Image",
+                                    "label":"Color",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":70,
+                                    "compId":77,
                                     "child":[
                                         ]
                                 }]

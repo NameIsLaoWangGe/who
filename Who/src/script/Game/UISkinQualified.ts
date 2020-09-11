@@ -21,6 +21,11 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         }
     }
 
+    lwgAdaptive(): void {
+        this.self['SceneContent'].y = Laya.stage.height / 2;
+        this.self['Logo1Set'].y = Laya.stage.height * 0.096;
+    }
+
     lwgOnEnable(): void {
         // 背景旋转光
         TimerAdmin.frameLoop(1, this, () => {
@@ -71,14 +76,20 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         // 设置卡牌初始位置和大小
         for (let i = 1; i < 8; i++) {
             const Card = this.self['CardParent'].getChildByName("Card" + i) as Laya.Image;
+            let Color = Card.getChildByName('Color') as Laya.Image;
             EventAdmin.notify('cardZOder', [Card, i]);
             Card.y = -1000;
-            if (i == 2 || i == 7) {
+            if (i == 1) {
+                Color.alpha = 0;
+            } else if (i == 2 || i == 7) {
                 Card.scale(0.95, 0.95);
+                Color.alpha = 0.3;
             } else if (i == 3 || i == 6) {
                 Card.scale(0.9, 0.9);
+                Color.alpha = 0.3;
             } else if (i == 4 || i == 5) {
                 Card.scale(0.85, 0.85);
+                Color.alpha = 0.3;
             }
         }
 
@@ -125,16 +136,23 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
                     }
                     Animation2D.move_Scale(Card, Card.scaleX, Card.x, Card.y, Card0.x, Card0.y, scale0, time, 0);
                     let alpha0 = 0.6;
+                    let fColorAlpha = 1;
+                    let eColorAlpha = 0.5;
                     switch (i) {
                         case 1:
                             alpha0 = 0.1;
+                            fColorAlpha = 0;
+                            eColorAlpha = 0.3;
                             break;
                         case 7:
                             alpha0 = 1;
+                            fColorAlpha = 0.3;
+                            eColorAlpha = 0;
                             break;
                         default:
                             break;
                     }
+                    Animation2D.fadeOut(Card.getChildByName('Color'), fColorAlpha, eColorAlpha, time);
                     Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
                         Card.name = 'Card' + index0;
                         if (i == 7) {

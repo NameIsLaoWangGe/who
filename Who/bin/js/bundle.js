@@ -1152,7 +1152,7 @@
             else if (type == WhichScard.OppositeCardParent) {
                 Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
-            let AllCardParent = Game3D.AllCardTem.clone();
+            let AllCardParent = Game3D.AllCardGray.clone();
             let startX = 0.204;
             let spacingX = 0.3055;
             let startZ = -0.26;
@@ -1556,7 +1556,7 @@
                 Game3D.OppositeRoleParent = this.self.getChildByName('OppositeRoleParent');
                 Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
                 Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
-                Game3D.AllCardTem = this.self.getChildByName('AllCard');
+                Game3D.AllCardGray = this.self.getChildByName('AllCardGray');
                 Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
                 Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
                 Game3D.PerspectiveAwait = this.self.getChildByName('PerspectiveAwait');
@@ -8164,6 +8164,10 @@
                 this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
             }
         }
+        lwgAdaptive() {
+            this.self['SceneContent'].y = Laya.stage.height / 2;
+            this.self['Logo1Set'].y = Laya.stage.height * 0.096;
+        }
         lwgOnEnable() {
             TimerAdmin.frameLoop(1, this, () => {
                 this.self['Guang2'].rotation += 0.7;
@@ -8202,16 +8206,23 @@
             });
             for (let i = 1; i < 8; i++) {
                 const Card = this.self['CardParent'].getChildByName("Card" + i);
+                let Color = Card.getChildByName('Color');
                 EventAdmin.notify('cardZOder', [Card, i]);
                 Card.y = -1000;
-                if (i == 2 || i == 7) {
+                if (i == 1) {
+                    Color.alpha = 0;
+                }
+                else if (i == 2 || i == 7) {
                     Card.scale(0.95, 0.95);
+                    Color.alpha = 0.3;
                 }
                 else if (i == 3 || i == 6) {
                     Card.scale(0.9, 0.9);
+                    Color.alpha = 0.3;
                 }
                 else if (i == 4 || i == 5) {
                     Card.scale(0.85, 0.85);
+                    Color.alpha = 0.3;
                 }
             }
             for (let i = 1; i < 8; i++) {
@@ -8258,16 +8269,23 @@
                         }
                         Animation2D.move_Scale(Card, Card.scaleX, Card.x, Card.y, Card0.x, Card0.y, scale0, time, 0);
                         let alpha0 = 0.6;
+                        let fColorAlpha = 1;
+                        let eColorAlpha = 0.5;
                         switch (i) {
                             case 1:
                                 alpha0 = 0.1;
+                                fColorAlpha = 0;
+                                eColorAlpha = 0.3;
                                 break;
                             case 7:
                                 alpha0 = 1;
+                                fColorAlpha = 0.3;
+                                eColorAlpha = 0;
                                 break;
                             default:
                                 break;
                         }
+                        Animation2D.fadeOut(Card.getChildByName('Color'), fColorAlpha, eColorAlpha, time);
                         Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
                             Card.name = 'Card' + index0;
                             if (i == 7) {
