@@ -3029,7 +3029,10 @@
                 return cf;
             }
             Color.colour = colour;
-            function spinmap(node, RGBA, time) {
+            function changeOnce(node, RGBA, time) {
+                if (!node) {
+                    return;
+                }
                 let cf = new Laya.ColorFilter();
                 cf.color(0, 0, 0, 0);
                 let speedR = RGBA[0] / time;
@@ -3068,7 +3071,45 @@
                     node.filters = [cf];
                 });
             }
-            Color.spinmap = spinmap;
+            Color.changeOnce = changeOnce;
+            function changeConstant(node, RGBA1, RGBA2, time) {
+                let cf;
+                let RGBA0 = [];
+                if (!node.filters) {
+                    cf = new Laya.ColorFilter();
+                    cf.color(RGBA1[0], RGBA1[1], RGBA1[2], RGBA1[3] ? RGBA1[3] : 1);
+                    RGBA0 = [RGBA1[0], RGBA1[1], RGBA1[2], RGBA1[3] ? RGBA1[3] : 1];
+                    node.filters = [cf];
+                }
+                else {
+                    cf = node.filters[0];
+                    RGBA0 = [node.filters[0]['_alpha'][0], node.filters[0]['_alpha'][1], node.filters[0]['_alpha'][2], node.filters[0]['_alpha'][3] ? node.filters[0]['_alpha'][3] : 1];
+                }
+                let RGBA = [Tools.randomCountNumer(RGBA1[0], RGBA2[0])[0], Tools.randomCountNumer(RGBA1[1], RGBA2[1])[0], Tools.randomCountNumer(RGBA1[2], RGBA2[2])[0], Tools.randomCountNumer(RGBA1[3] ? RGBA1[3] : 1, RGBA2[3] ? RGBA2[3] : 1)[0]];
+                let speedR = (RGBA[0] - RGBA0[0]) / time;
+                let speedG = (RGBA[1] - RGBA0[1]) / time;
+                let speedB = (RGBA[2] - RGBA0[2]) / time;
+                let speedA = 0;
+                if (RGBA[3]) {
+                    speedA = (RGBA[3] - RGBA0[3]) / time;
+                }
+                let caller = {};
+                let time0 = 0;
+                TimerAdmin.frameLoop(1, caller, () => {
+                    time0++;
+                    if (time0 <= time) {
+                        RGBA0[0] += speedR;
+                        RGBA0[1] += speedG;
+                        RGBA0[2] += speedB;
+                    }
+                    else {
+                        Laya.timer.clearAll(caller);
+                    }
+                    cf.color(RGBA0[0], RGBA0[1], RGBA0[2], RGBA0[3]);
+                    node.filters = [cf];
+                });
+            }
+            Color.changeConstant = changeConstant;
         })(Color = lwg.Color || (lwg.Color = {}));
         let Effects;
         (function (Effects) {
@@ -3194,7 +3235,60 @@
                 });
             }
             Effects.aureole_Continuous = aureole_Continuous;
-            function particle_AnnularInhalation(parent, centerPoint, radius, width, height, zOder, urlArr, speed, accelerated) {
+            function particle_FallingVertical(parent, centerPoint, section, distance, width, height, urlArr, speed, accelerated, zOder) {
+                let Img = new Laya.Image();
+                parent.addChild(Img);
+                let sectionWidth = section ? Tools.randomCountNumer(section[0], section[1])[0] : Tools.randomCountNumer(-200, 200)[0];
+                let sectionHeight = section ? Tools.randomCountNumer(section[1], section[1])[0] : Tools.randomCountNumer(-25, 25)[0];
+                Img.x = centerPoint ? centerPoint.x + sectionWidth : sectionWidth;
+                Img.y = centerPoint ? centerPoint.y + sectionHeight : sectionHeight;
+                width = width ? width : [25, 50];
+                Img.width = Tools.randomCountNumer(width[0], width[1])[0];
+                Img.height = height ? Tools.randomCountNumer(height[0], height[1])[0] : Img.width;
+                Img.pivotX = Img.width / 2;
+                Img.pivotY = Img.height / 2;
+                Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+                Img.alpha = 0;
+                let speed0 = speed ? Tools.randomCountNumer(speed[0], speed[1])[0] : Tools.randomCountNumer(4, 8)[0];
+                let accelerated0 = accelerated ? Tools.randomCountNumer(accelerated[0], accelerated[1])[0] : Tools.randomCountNumer(0.25, 0.45)[0];
+                let acc = 0;
+                let caller = {
+                    alpha: true,
+                    move: false,
+                    vinish: false,
+                };
+                let distance0 = 0;
+                let distance1 = distance ? Tools.randomCountNumer(distance[0], distance[1])[0] : Tools.randomCountNumer(100, 300)[0];
+                TimerAdmin.frameLoop(1, caller, () => {
+                    if (Img.alpha < 1 && caller.alpha) {
+                        Img.alpha += 0.05;
+                        distance0 = Img.y++;
+                        if (Img.alpha >= 1) {
+                            caller.alpha = false;
+                            caller.move = true;
+                        }
+                    }
+                    if (distance0 < distance1 && caller.move) {
+                        acc += accelerated0;
+                        distance0 = Img.y += (speed0 + acc);
+                        if (distance0 >= distance1) {
+                            caller.move = false;
+                            caller.vinish = true;
+                        }
+                    }
+                    if (caller.vinish) {
+                        acc -= accelerated0 / 2;
+                        Img.alpha -= 0.03;
+                        Img.y += (speed0 + acc);
+                        if (Img.alpha <= 0 || (speed0 + acc) <= 0) {
+                            Img.removeSelf();
+                            Laya.timer.clearAll(caller);
+                        }
+                    }
+                });
+            }
+            Effects.particle_FallingVertical = particle_FallingVertical;
+            function particle_AnnularInhalation(parent, centerPoint, radius, rotation, width, height, urlArr, speed, accelerated, zOder) {
                 let Img = new Laya.Image();
                 parent.addChild(Img);
                 width = width ? width : [25, 50];
@@ -3205,8 +3299,8 @@
                 Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
                 let radius0 = Tools.randomCountNumer(radius[0], radius[1])[0];
                 Img.alpha = 0;
-                speed = speed ? speed : 5;
-                let angle = Tools.randomCountNumer(0, 360)[0];
+                let speed0 = speed ? Tools.randomCountNumer(speed[0], speed[1])[0] : Tools.randomCountNumer(5, 10)[0];
+                let angle = rotation ? Tools.randomCountNumer(rotation[0], rotation[1])[0] : Tools.randomCountNumer(0, 360)[0];
                 let caller = {};
                 let acc = 0;
                 accelerated = accelerated ? accelerated : 0.35;
@@ -3214,11 +3308,11 @@
                     if (Img.alpha < 1) {
                         Img.alpha += 0.05;
                         acc += (accelerated / 5);
-                        radius0 -= (speed / 2 + acc);
+                        radius0 -= (speed0 / 2 + acc);
                     }
                     else {
                         acc += accelerated;
-                        radius0 -= (speed + acc);
+                        radius0 -= (speed0 + acc);
                     }
                     let point = Tools.point_GetRoundPos(angle, radius0, centerPoint);
                     Img.pos(point.x, point.y);
@@ -8075,6 +8169,10 @@
                 this.self['Guang2'].rotation += 0.7;
                 this.self['Guang1'].rotation -= 0.3;
             });
+            this.self['Guang1'].alpha = 0;
+            this.self['Guang2'].alpha = 0;
+            Animation2D.fadeOut(this.self['Guang1'], 0, 1, 1000, 300);
+            Animation2D.fadeOut(this.self['Guang2'], 0, 1, 1000, 300);
             TimerAdmin.loop(2000, this, () => {
                 Animation2D.bomb_LeftRight(this.self['BtnGet'], 1.1, 250);
             }, true);
@@ -8087,76 +8185,136 @@
             TimerAdmin.frameRandomLoop(50, 80, this, () => {
                 Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
             }, true);
-            let CardParent = this.self['CardParent'];
-            TimerAdmin.frameLoop(150, this, () => {
-                for (let i = 1; i < 8; i++) {
-                    const Card = CardParent.getChildByName("Card" + i);
-                    let index0 = (i + 1) > 7 ? 1 : (i + 1);
-                    const Card0 = CardParent.getChildByName("Card" + index0);
-                    let time = 500;
-                    Animation2D.move_Simple(Card, Card.x, Card.y, Card0.x, Card0.y, time, 0, () => {
-                    });
-                    let alpha0 = 0.6;
-                    switch (i) {
-                        case 1:
-                            alpha0 = 0.1;
-                            break;
-                        case 7:
-                            alpha0 = 1;
-                            break;
-                        default:
-                            break;
-                    }
-                    Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
-                        Card.name = 'Card' + index0;
-                        if (i == 7) {
-                            for (let j = 1; j < 8; j++) {
-                                const Card1 = CardParent.getChildByName("Card" + j);
-                                switch (j) {
-                                    case 1:
-                                        Card1.zOrder = 7;
-                                        break;
-                                    case 2:
-                                        Card1.zOrder = 5;
-                                        break;
-                                    case 3:
-                                        Card1.zOrder = 3;
-                                        break;
-                                    case 4:
-                                        Card1.zOrder = 1;
-                                        break;
-                                    case 5:
-                                        Card1.zOrder = 2;
-                                        break;
-                                    case 6:
-                                        Card1.zOrder = 4;
-                                        break;
-                                    case 7:
-                                        Card1.zOrder = 6;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        Animation2D.fadeOut(Card, alpha0, 1, time, 0, () => {
-                        });
-                    });
-                }
-            });
             TimerAdmin.frameLoop(60, this, () => {
                 Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 418, 90, 500, 200);
             }, true);
-            let fc = new Laya.ColorFilter();
-            TimerAdmin.frameLoop(150, this, () => {
-                let R = Tools.randomCountNumer(255)[0];
-                let G = Tools.randomCountNumer(255)[0];
-                let B = Tools.randomCountNumer(255)[0];
-                console.log(R, G, B);
-                Color.spinmap(this.self['Logo1'], [R, G, B], 60);
+            TimerAdmin.frameLoop(130, this, () => {
+                Color.changeConstant(this.self['Logo1Set'], [0, 0, 0], [255, 255, 255], 120);
             }, true);
+            TimerAdmin.frameRandomLoop(10, 30, this, () => {
+                Effects.particle_FallingVertical(this.self['FallParent']);
+            }, true);
+            this.self['Logo2'].scale(0, 0);
+            Animation2D.bombs_Appear(this.self['Logo2'], 0, 1, 1.1, 0, 200, 100, 500, () => {
+                TimerAdmin.frameLoop(200, this, () => {
+                    Animation2D.swell_shrink(this.self['Logo2'], 1, 1.05, 200);
+                }, true);
+            });
+            for (let i = 1; i < 8; i++) {
+                const Card = this.self['CardParent'].getChildByName("Card" + i);
+                EventAdmin.notify('cardZOder', [Card, i]);
+                Card.y = -1000;
+                if (i == 2 || i == 7) {
+                    Card.scale(0.95, 0.95);
+                }
+                else if (i == 3 || i == 6) {
+                    Card.scale(0.9, 0.9);
+                }
+                else if (i == 4 || i == 5) {
+                    Card.scale(0.85, 0.85);
+                }
+            }
+            for (let i = 1; i < 8; i++) {
+                const Card = this.self['CardParent'].getChildByName("Card" + i);
+                let arr = [];
+                if (i == 1) {
+                    arr = [331, 262];
+                }
+                else if (i == 2 || i == 7) {
+                    arr = [282, 309];
+                }
+                else if (i == 3 || i == 6) {
+                    arr = [241, 346];
+                }
+                else if (i == 4 || i == 5) {
+                    arr = [214, 385];
+                }
+                Animation2D.move_Simple(Card, Card.x, Card.y, Card.x, arr[1], 500, (i - 1) * 200, () => {
+                    if (i == 7) {
+                        EventAdmin.notify('cardLight');
+                        EventAdmin.notify('zhuanpan');
+                    }
+                }, Laya.Ease.cubicInOut);
+            }
         }
-        lwgAdaptive() {
+        lwgEventReg() {
+            EventAdmin.reg('zhuanpan', this, () => {
+                TimerAdmin.frameLoop(150, this, () => {
+                    for (let i = 1; i < 8; i++) {
+                        const Card = this.self['CardParent'].getChildByName("Card" + i);
+                        let index0 = (i + 1) > 7 ? 1 : (i + 1);
+                        const Card0 = this.self['CardParent'].getChildByName("Card" + index0);
+                        let time = 500;
+                        let scale0 = 1;
+                        if (index0 == 1) ;
+                        else if (index0 == 2 || index0 == 7) {
+                            scale0 = 0.95;
+                        }
+                        else if (index0 == 3 || index0 == 6) {
+                            scale0 = 0.9;
+                        }
+                        else if (index0 == 4 || index0 == 5) {
+                            scale0 = 0.85;
+                        }
+                        Animation2D.move_Scale(Card, Card.scaleX, Card.x, Card.y, Card0.x, Card0.y, scale0, time, 0);
+                        let alpha0 = 0.6;
+                        switch (i) {
+                            case 1:
+                                alpha0 = 0.1;
+                                break;
+                            case 7:
+                                alpha0 = 1;
+                                break;
+                            default:
+                                break;
+                        }
+                        Animation2D.fadeOut(Card, 1, alpha0, time, 0, () => {
+                            Card.name = 'Card' + index0;
+                            if (i == 7) {
+                                for (let j = 1; j < 8; j++) {
+                                    const Card1 = this.self['CardParent'].getChildByName("Card" + j);
+                                    if (!Card1) {
+                                        return;
+                                    }
+                                    EventAdmin.notify('cardLight');
+                                    EventAdmin.notify('cardZOder', [Card1, j]);
+                                }
+                            }
+                            Animation2D.fadeOut(Card, alpha0, 1, time, 0);
+                        });
+                    }
+                });
+            });
+            EventAdmin.reg('cardLight', this, () => {
+                Color.changeOnce(this.self['CardParent'].getChildByName('Card1'), [90, 60, 0], 20);
+            });
+            EventAdmin.reg('cardZOder', this, (Card, index) => {
+                switch (index) {
+                    case 1:
+                        Card.zOrder = 7;
+                        break;
+                    case 2:
+                        Card.zOrder = 5;
+                        break;
+                    case 3:
+                        Card.zOrder = 3;
+                        break;
+                    case 4:
+                        Card.zOrder = 1;
+                        break;
+                    case 5:
+                        Card.zOrder = 2;
+                        break;
+                    case 6:
+                        Card.zOrder = 4;
+                        break;
+                    case 7:
+                        Card.zOrder = 6;
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {

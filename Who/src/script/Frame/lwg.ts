@@ -1568,7 +1568,7 @@ export module lwg {
          * 给一张图片染色,包括其子节点,也可以设置一个消失时间
          * @param node 节点
          * @param RGBA [R,G,B,A]
-         * @param vanishtime 默认没有消失时间，一旦设置后，将会在这个时间延时后消失
+         * @param vanishtime 默认不会消失，一旦设置后，将会在这个时间延时后消失
          */
         export function colour(node: Laya.Sprite, RGBA?: Array<number>, vanishtime?: number): Laya.ColorFilter {
             let cf = new Laya.ColorFilter();
@@ -1597,7 +1597,10 @@ export module lwg {
          * @param RGBA  [R,G,B,A],A可以不输入
          * @param time time为帧数， time*2为一个周期
          */
-        export function spinmap(node, RGBA: Array<number>, time: number): void {
+        export function changeOnce(node, RGBA: Array<number>, time: number): void {
+            if (!node) {
+                return ;
+            }
             let cf = new Laya.ColorFilter();
             cf.color(0, 0, 0, 0);
             let speedR = RGBA[0] / time;
@@ -1634,6 +1637,51 @@ export module lwg {
             })
         }
 
+        /**
+         * 颜色持续变化，不断的再一个颜色区间内变化，不会回到原来的颜色，除非手动清空其filters
+         * @param node 节点
+         * @param RGBA1 颜色区间1值[];A可以不输入
+         * @param RGBA2 颜色区间2值[];A可以不输入
+         * @param time 每次变化的时间
+         */
+        export function changeConstant(node: Laya.Sprite, RGBA1: Array<number>, RGBA2: Array<number>, time: number): void {
+            let cf: Laya.ColorFilter;
+            let RGBA0 = [];
+            if (!node.filters) {
+                cf = new Laya.ColorFilter();
+                cf.color(RGBA1[0], RGBA1[1], RGBA1[2], RGBA1[3] ? RGBA1[3] : 1);
+                RGBA0 = [RGBA1[0], RGBA1[1], RGBA1[2], RGBA1[3] ? RGBA1[3] : 1];
+                node.filters = [cf];
+            } else {
+                cf = node.filters[0];
+                RGBA0 = [node.filters[0]['_alpha'][0], node.filters[0]['_alpha'][1], node.filters[0]['_alpha'][2], node.filters[0]['_alpha'][3] ? node.filters[0]['_alpha'][3] : 1];
+            }
+            // 随机出一条颜色值
+            let RGBA = [Tools.randomCountNumer(RGBA1[0], RGBA2[0])[0], Tools.randomCountNumer(RGBA1[1], RGBA2[1])[0], Tools.randomCountNumer(RGBA1[2], RGBA2[2])[0], Tools.randomCountNumer(RGBA1[3] ? RGBA1[3] : 1, RGBA2[3] ? RGBA2[3] : 1)[0]];
+            let speedR = (RGBA[0] - RGBA0[0]) / time;
+            let speedG = (RGBA[1] - RGBA0[1]) / time;
+            let speedB = (RGBA[2] - RGBA0[2]) / time;
+            let speedA = 0;
+            if (RGBA[3]) {
+                speedA = (RGBA[3] - RGBA0[3]) / time;
+            }
+
+            let caller = {};
+            let time0 = 0;
+            TimerAdmin.frameLoop(1, caller, () => {
+                time0++;
+                if (time0 <= time) {
+                    RGBA0[0] += speedR;
+                    RGBA0[1] += speedG;
+                    RGBA0[2] += speedB;
+                } else {
+                    Laya.timer.clearAll(caller);
+                }
+                // console.log(RGBA0);
+                cf.color(RGBA0[0], RGBA0[1], RGBA0[2], RGBA0[3]);
+                node.filters = [cf];
+            })
+        }
     }
 
     /**特效模块*/
@@ -1825,19 +1873,87 @@ export module lwg {
         }
 
         /**
-         * 环形粒子吸入到中心点,这里只生成1个
+          * 发射一个垂直向下的粒子，类似于火星下落熄灭，水滴下落被蒸发,下雪，不是下雨状态
+          * @param parent 父节点
+          * @param caller 执行域
+          * @param centerPoint 中心点
+          * @param section 宽高延伸[a,b]
+          * @param distance 移动距离，区间[a,b]，随机移动一定的距离后消失;
+          * @param width 粒子的宽度区间[a,b]
+          * @param height 粒子的高度区间[a,b],如果为空，这高度和宽度一样
+          * @param urlArr 图片地址集合，默认为框架中随机的样式
+          * @param speed 吸入速度区间[a,b]
+          * @param accelerated 加速度区间[a,b]
+          * @param zOder 层级，默认为0
+          */
+        export function particle_FallingVertical(parent, centerPoint?: Laya.Point, section?: Array<number>, distance?: Array<number>, width?: Array<number>, height?: Array<number>, urlArr?: Array<string>, speed?: Array<number>, accelerated?: Array<number>, zOder?: number): void {
+            let Img = new Laya.Image();
+            parent.addChild(Img);
+            let sectionWidth = section ? Tools.randomCountNumer(section[0], section[1])[0] : Tools.randomCountNumer(-200, 200)[0];
+            let sectionHeight = section ? Tools.randomCountNumer(section[1], section[1])[0] : Tools.randomCountNumer(-25, 25)[0];
+            Img.x = centerPoint ? centerPoint.x + sectionWidth : sectionWidth;
+            Img.y = centerPoint ? centerPoint.y + sectionHeight : sectionHeight;
+            width = width ? width : [25, 50];
+            Img.width = Tools.randomCountNumer(width[0], width[1])[0];
+            Img.height = height ? Tools.randomCountNumer(height[0], height[1])[0] : Img.width;
+            Img.pivotX = Img.width / 2;
+            Img.pivotY = Img.height / 2;
+            Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
+            Img.alpha = 0;
+            let speed0 = speed ? Tools.randomCountNumer(speed[0], speed[1])[0] : Tools.randomCountNumer(4, 8)[0];
+            let accelerated0 = accelerated ? Tools.randomCountNumer(accelerated[0], accelerated[1])[0] : Tools.randomCountNumer(0.25, 0.45)[0];
+            let acc = 0;
+            let caller = {
+                alpha: true,
+                move: false,
+                vinish: false,
+            };
+            let distance0 = 0;
+            let distance1 = distance ? Tools.randomCountNumer(distance[0], distance[1])[0] : Tools.randomCountNumer(100, 300)[0];
+            TimerAdmin.frameLoop(1, caller, () => {
+                if (Img.alpha < 1 && caller.alpha) {
+                    Img.alpha += 0.05;
+                    distance0 = Img.y++;
+                    if (Img.alpha >= 1) {
+                        caller.alpha = false;
+                        caller.move = true;
+                    }
+                }
+                if (distance0 < distance1 && caller.move) {
+                    acc += accelerated0;
+                    distance0 = Img.y += (speed0 + acc);
+                    if (distance0 >= distance1) {
+                        caller.move = false;
+                        caller.vinish = true;
+                    }
+                }
+                if (caller.vinish) {
+                    acc -= accelerated0 / 2;
+                    Img.alpha -= 0.03;
+                    Img.y += (speed0 + acc);
+                    if (Img.alpha <= 0 || (speed0 + acc) <= 0) {
+                        Img.removeSelf();
+                        Laya.timer.clearAll(caller);
+                    }
+                }
+            })
+        }
+
+        /**
+         * 以同一个中心点，随机半径的圆形中，发射一个粒子，运动到中心点后消失
          * @param parent 父节点
          * @param caller 执行域
          * @param centerPoint 中心点
          * @param radius 半径区间[a,b]
+         * @param rotation 角度区间，默认为360
          * @param width 粒子的宽度区间[a,b]
          * @param height 粒子的高度区间[a,b],如果为空，这高度和宽度一样
-         * @param zOder 层级，默认为0
          * @param urlArr 图片地址集合，默认为框架中随机的样式
-         * @param speed 吸入速度,默认为5
-         * @param accelerated 加速度，默认为0.35
+         * @param speed 吸入速度区间[a,b]
+         * @param accelerated 加速度区间[a,b]
+         * @param zOder 层级，默认为0
          */
-        export function particle_AnnularInhalation(parent, centerPoint: Laya.Point, radius: Array<number>, width?: Array<number>, height?: Array<number>, zOder?: number, urlArr?: Array<string>, speed?: number, accelerated?: number): void {
+        export function particle_AnnularInhalation(parent, centerPoint: Laya.Point, radius: Array<number>, rotation?: Array<number>, width?: Array<number>, height?: Array<number>, urlArr?: Array<string>, speed?: Array<number>, accelerated?: number, zOder?: number): void {
             let Img = new Laya.Image();
             parent.addChild(Img);
             width = width ? width : [25, 50];
@@ -1848,8 +1964,8 @@ export module lwg {
             Img.skin = urlArr ? Tools.arrayRandomGetOut(urlArr)[0] : SkinUrl[Tools.randomCountNumer(0, 12)[0]];
             let radius0 = Tools.randomCountNumer(radius[0], radius[1])[0];
             Img.alpha = 0;
-            speed = speed ? speed : 5;
-            let angle = Tools.randomCountNumer(0, 360)[0];
+            let speed0 = speed ? Tools.randomCountNumer(speed[0], speed[1])[0] : Tools.randomCountNumer(5, 10)[0];
+            let angle = rotation ? Tools.randomCountNumer(rotation[0], rotation[1])[0] : Tools.randomCountNumer(0, 360)[0];
             let caller = {};
             let acc = 0;
             accelerated = accelerated ? accelerated : 0.35;
@@ -1857,10 +1973,10 @@ export module lwg {
                 if (Img.alpha < 1) {
                     Img.alpha += 0.05;
                     acc += (accelerated / 5);
-                    radius0 -= (speed / 2 + acc);
+                    radius0 -= (speed0 / 2 + acc);
                 } else {
                     acc += accelerated;
-                    radius0 -= (speed + acc);
+                    radius0 -= (speed0 + acc);
                 }
                 let point = Tools.point_GetRoundPos(angle, radius0, centerPoint);
                 Img.pos(point.x, point.y);
@@ -3237,7 +3353,6 @@ export module lwg {
          * @param time1 第一阶段花费时间
          * @param time2 第二阶段花费时间
          * @param delayed 延时时间
-         * @param audioType 音效类型
          * @param func 完成后的回调
          */
         export function bombs_Appear(node, firstAlpha, endScale, scale1, rotation1, time1, time2, delayed?: number, func?: Function): void {

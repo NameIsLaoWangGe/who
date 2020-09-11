@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":57,
+    "selectedBox":8,
+    "selecteID":13,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":60,
+    "maxID":77,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -25,6 +25,20 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":27,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Sprite",
+            "searchKey":"Sprite,FallParent,FallParent",
+            "props":{"y":808,"x":358,"width":22,"var":"FallParent","name":"FallParent","height":21},
+            "nodeParent":2,
+            "label":"FallParent",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":60,
             "child":[
                 ]
         },
@@ -121,12 +135,25 @@
                             "props":{"y":386,"x":449,"width":353,"var":"Card5","skin":"Game/UI/UISkinQualified/7.png","pivotY":252,"pivotX":177,"name":"Card5","height":504},
                             "nodeParent":8,
                             "label":"Card5",
-                            "isDirectory":false,
+                            "isOpen":null,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":15,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":15,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":69,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -135,12 +162,24 @@
                             "props":{"y":346,"x":418,"var":"Card6","skin":"Game/UI/UISkinQualified/5.png","pivotY":252,"pivotX":177,"name":"Card6"},
                             "nodeParent":8,
                             "label":"Card6",
-                            "isDirectory":false,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":13,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":13,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":76,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -149,12 +188,25 @@
                             "props":{"y":309,"x":380,"var":"Card7","skin":"Game/UI/UISkinQualified/3.png","pivotY":252,"pivotX":177,"name":"Card7"},
                             "nodeParent":8,
                             "label":"Card7",
-                            "isDirectory":false,
+                            "isOpen":null,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":11,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":11,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":74,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -163,12 +215,25 @@
                             "props":{"y":385,"x":214,"var":"Card4","skin":"Game/UI/UISkinQualified/6.png","pivotY":252,"pivotX":177,"name":"Card4"},
                             "nodeParent":8,
                             "label":"Card4",
-                            "isDirectory":false,
+                            "isOpen":null,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":14,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":14,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":73,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -177,12 +242,25 @@
                             "props":{"y":346,"x":241,"var":"Card3","skin":"Game/UI/UISkinQualified/4.png","pivotY":252,"pivotX":177,"name":"Card3"},
                             "nodeParent":8,
                             "label":"Card3",
-                            "isDirectory":false,
+                            "isOpen":null,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":12,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":12,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":72,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -191,12 +269,25 @@
                             "props":{"y":309,"x":282,"var":"Card2","skin":"Game/UI/UISkinQualified/2.png","pivotY":252,"pivotX":177,"name":"Card2"},
                             "nodeParent":8,
                             "label":"Card2",
-                            "isDirectory":false,
+                            "isOpen":null,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":10,
                             "child":[
-                                ]
+                                {
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":10,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":71,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
@@ -206,12 +297,25 @@
                             "nodeParent":8,
                             "label":"Card1",
                             "isOpen":true,
-                            "isDirectory":false,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
+                            "hasChild":true,
                             "compId":9,
                             "child":[
-                                ]
+                                {
+                                    "x":60,
+                                    "type":"Image",
+                                    "searchKey":"Image",
+                                    "props":{"y":0,"x":0,"width":353,"skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"11,9,10,20","renderType":"mask","height":504},
+                                    "nodeParent":9,
+                                    "label":"Image",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":70,
+                                    "child":[
+                                        ]
+                                }]
                         }]
                 },
                 {
@@ -413,44 +517,86 @@
         {
             "x":15,
             "type":"Sprite",
-            "searchKey":"Sprite,Logo1,Logo1",
-            "props":{"y":202,"x":360,"width":380,"var":"Logo1","texture":"Game/UI/UISkinQualified/taoka.png","pivotY":45,"pivotX":190,"name":"Logo1","height":90},
+            "searchKey":"Sprite,Logo1Set,Logo1Set",
+            "props":{"y":124,"x":103.5,"width":509,"var":"Logo1Set","name":"Logo1Set","height":170},
             "nodeParent":2,
-            "label":"Logo1",
+            "label":"Logo1Set",
             "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
-            "compId":57,
+            "compId":65,
             "child":[
                 {
                     "x":30,
                     "type":"Image",
-                    "searchKey":"Image,Mask",
-                    "props":{"y":45,"x":190,"width":380,"skin":"Game/UI/UISkinQualified/taoka.png","renderType":"mask","pivotY":45,"pivotX":190,"name":"Mask","height":90},
-                    "nodeParent":57,
-                    "label":"Mask",
+                    "searchKey":"Image",
+                    "props":{"y":31,"x":61.5,"width":391,"skin":"Frame/UI/ui_orthogon_black.png","height":102},
+                    "nodeParent":65,
+                    "label":"Image",
                     "isOpen":true,
-                    "isDirectory":false,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
-                    "compId":58,
+                    "hasChild":true,
+                    "compId":64,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "searchKey":"Image",
+                            "props":{"y":6,"x":5.5,"skin":"Game/UI/UISkinQualified/taoka.png","renderType":"mask"},
+                            "nodeParent":64,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":66,
+                            "child":[
+                                ]
+                        }]
                 },
                 {
                     "x":30,
                     "type":"Image",
-                    "searchKey":"Image,Logo1Liuguang,Logo1Liuguang",
-                    "props":{"y":0,"x":-53,"width":304,"var":"Logo1Liuguang","skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"10,11,11,15","rotation":-64,"pivotY":25,"pivotX":152,"name":"Logo1Liuguang","height":50},
-                    "nodeParent":57,
-                    "label":"Logo1Liuguang",
-                    "isDirectory":false,
+                    "searchKey":"Image,Logo1,Logo1",
+                    "props":{"y":78,"x":257,"width":380,"var":"Logo1","skin":"Frame/UI/ui_orthogon_gray.png","pivotY":45,"pivotX":190,"name":"Logo1","height":90},
+                    "nodeParent":65,
+                    "label":"Logo1",
+                    "isOpen":true,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
-                    "compId":59,
+                    "hasChild":true,
+                    "compId":57,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "searchKey":"Image,Mask",
+                            "props":{"y":45,"x":190,"width":380,"skin":"Game/UI/UISkinQualified/taoka.png","renderType":"mask","pivotY":45,"pivotX":190,"name":"Mask","height":90},
+                            "nodeParent":57,
+                            "label":"Mask",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":58,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "searchKey":"Image,Logo1Liuguang,Logo1Liuguang",
+                            "props":{"y":0,"x":-53,"width":304,"var":"Logo1Liuguang","skin":"Frame/UI/ui_orthogon_wihet.png","sizeGrid":"10,11,11,15","rotation":-64,"pivotY":25,"pivotX":152,"name":"Logo1Liuguang","height":50},
+                            "nodeParent":57,
+                            "label":"Logo1Liuguang",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":59,
+                            "child":[
+                                ]
+                        }]
                 }]
         }],
     "animations":[
