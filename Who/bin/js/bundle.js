@@ -1064,6 +1064,9 @@
             EventType["doWell"] = "doWell";
             EventType["BtnSC"] = "BtnSC";
             EventType["BtnSX"] = "BtnSX";
+            EventType["openUICard"] = "openUICard";
+            EventType["closeUICard"] = "closeUICard";
+            EventType["UICardBuy"] = "UICardBuy";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let RoleName;
         (function (RoleName) {
@@ -1557,9 +1560,15 @@
                 Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
                 Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
                 Game3D.AllCardGray = this.self.getChildByName('AllCardGray');
+                Game3D.AllCardColours = Laya.loader.getRes(Loding.list_3DPrefab[0]);
+                this.self.addChild(Game3D.AllCardColours);
+                Game3D.AllCardColours.active = false;
                 Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
                 Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
                 Game3D.PerspectiveAwait = this.self.getChildByName('PerspectiveAwait');
+                Game3D.PerspectiveUICard = this.self.getChildByName('PerspectiveUICard');
+                Game3D.MainCamera.transform.position = Game3D.PerspectiveAwait.transform.position;
+                Game3D.MainCamera.transform.localRotationEuler = Game3D.PerspectiveAwait.transform.localRotationEuler;
             }
             lwgOnEnable() {
                 this.init();
@@ -1766,8 +1775,23 @@
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this);
                     this.init();
                 });
-                EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                    this.init();
+                EventAdmin.reg(EventType.openUICard, this, () => {
+                    Game3D.AllCardColours.active = true;
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveUICard, 1500, this, null, () => {
+                        Game3D.OppositeRoleParent.active = false;
+                    });
+                });
+                EventAdmin.reg(EventType.closeUICard, this, () => {
+                    Game3D.OppositeRoleParent.active = true;
+                    Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this, null, () => {
+                        Game3D.AllCardColours.active = false;
+                        for (let index = 0; index < Game3D.AllCardColours.numChildren; index++) {
+                            const element = Game3D.AllCardColours.getChildAt(index);
+                            Tools.d3_animatorPlay(element, CardAni.standMe);
+                        }
+                    });
+                });
+                EventAdmin.reg(EventType.UICardBuy, this, () => {
                 });
             }
             roundChange() {
@@ -1776,7 +1800,6 @@
                         Game3D.whichBout = WhichBoutType.me;
                         break;
                     case WhichBoutType.me:
-                        EventAdmin.notify(Game3D.EventType.hideOption);
                         Game3D.whichBout = WhichBoutType.opposite;
                         break;
                     case WhichBoutType.opposite:
@@ -1837,6 +1860,7 @@
                 });
             }
             init() {
+                Game3D.AllCardGray.active = true;
                 Admin._gameSwitch = true;
                 Game3D.whichBout = WhichBoutType.stop;
                 Tools.node_RemoveAllChildren(Game3D.MyCardParent);
@@ -1845,6 +1869,7 @@
                 set16InitialCards(WhichScard.OppositeCardParent);
                 this.changeOpppsiteRole();
                 Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
+                Game3D.AllCardGray.active = false;
             }
             changeOpppsiteRole() {
                 Game3D.OppositeRole = Game3D.OppositeRoleParent.getChildByName('Girl');
@@ -2727,6 +2752,7 @@
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
                 SceneName["UIDrawCard"] = "UIDrawCard";
                 SceneName["UIPropTry"] = "UIPropTry";
+                SceneName["UICard"] = "UICard";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             function _openScene(openName, cloesScene, func, zOder) {
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
@@ -3936,8 +3962,8 @@
             }
             Animation3D.rock = rock;
             function moveRotateTo(Sp3d, Target, duration, caller, ease, complete, delay, coverBefore, update, frame) {
-                moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame);
-                rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, null, delay, coverBefore, null, frame);
+                moveTo(Sp3d, Target.transform.position, duration, caller, ease, null, delay, coverBefore, update, frame);
+                rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, complete, delay, coverBefore, null, frame);
             }
             Animation3D.moveRotateTo = moveRotateTo;
         })(Animation3D = lwg.Animation3D || (lwg.Animation3D = {}));
@@ -6783,7 +6809,9 @@
                 Admin._openScene(Admin.SceneName.UIResurgence);
             });
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100);
+                Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 500, 100, () => {
+                    EventAdmin.notify(Game3D.EventType.opening);
+                });
             });
             EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
                 Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100);
@@ -7197,6 +7225,26 @@
         }
     }
 
+    class UICard extends Admin.Scene {
+        lwgOnAwake() {
+        }
+        lwgAdaptive() {
+            this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height * 0.878;
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+                EventAdmin.notify(Game3D.EventType.closeUICard);
+            });
+            Click.on(Click.Type.largen, this.self['BtnAds'], this, null, null, () => {
+                ADManager.ShowReward(() => {
+                });
+            });
+            Click.on(Click.Type.largen, this.self['BtnGold'], this, null, null, () => {
+            });
+        }
+    }
+
     class UICheckIn extends CheckIn.CheckInScene {
         lwgOnAwake() {
             if (CheckIn._lastCheckDate.date == (new Date).getDate()) {
@@ -7584,7 +7632,7 @@
                         let Back = Card.getChildByName('Back');
                         Back.skin = 'Game/UI/UIDrawCard/' + Card['objData'][Game3D.CardProperty.quality] + '.png';
                         this.self['CardParent'].addChild(Card);
-                        let spcing = (Laya.stage.width - 5 * Card.width) / 6;
+                        let spcing = (this.self['CardParent'].width - 5 * Card.width) / 6;
                         Card.pos(globalPos.x, globalPos.y);
                         Card.scale(0, 0);
                         Card.name = 'Card' + index;
@@ -7595,15 +7643,15 @@
                         let x, y;
                         if (index <= 4) {
                             x = (spcing + Card.width / 2) + (Card.width + spcing) * index;
-                            y = globalPos.y - 150;
+                            y = globalPos.y - 100;
                         }
                         else {
                             x = (spcing + Card.width / 2) + (Card.width + spcing) * (index - 5);
-                            y = globalPos.y + 150;
+                            y = globalPos.y + 100;
                         }
                         Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
                         if (index == 3) {
-                            Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0, () => {
+                            Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.7, 500, 0, () => {
                                 Animation2D.fadeOut(this.self['Guang5'], 0, 1, 500);
                                 Animation2D.fadeOut(this.self['Guang6'], 0, 1, 500);
                             });
@@ -7828,7 +7876,9 @@
             Loding.list_3DScene = [
                 "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
-            Loding.list_3DPrefab = [];
+            Loding.list_3DPrefab = [
+                "3DPrefab/LayaScene_GameMain/Conventional/AllCardColours.lh"
+            ];
             Loding.list_JsonData = [
                 "GameData/VictoryBox/VictoryBox.json",
                 "GameData/CheckIn/CheckIn.json",
@@ -7885,18 +7935,21 @@
         lwgOnAwake() {
             Admin._gameSwitch = false;
             Admin._clickLock.switch = false;
+            this['CounDownSwitch'] = true;
         }
         lwgOnEnable() {
             console.log('打开复活界面！');
             ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');
             ADManager.TAPoint(TaT.BtnShow, 'ADrevivebt_revive');
             TimerAdmin.frameLoop(60, this, () => {
-                let Countdown = this.self['Countdown'];
-                Countdown.value = (Number(Countdown.value) - 1).toString();
-                if (Countdown.value == '-1') {
-                    Countdown.value = '0';
-                    Laya.timer.clearAll(this);
-                    Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+                if (this['CounDownSwitch']) {
+                    let Countdown = this.self['Countdown'];
+                    Countdown.value = (Number(Countdown.value) - 1).toString();
+                    if (Countdown.value == '-1') {
+                        Countdown.value = '0';
+                        Laya.timer.clearAll(this);
+                        Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+                    }
                 }
             });
         }
@@ -7906,12 +7959,16 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
+                this['CounDownSwitch'] = false;
                 Admin._gameSwitch = true;
                 ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-                EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
+                Admin._closeScene(this.self, () => {
+                    EventAdmin.notify(EventAdmin.EventType.resurgence);
+                });
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
                 ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
+                this['CounDownSwitch'] = false;
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated; });
             });
         }
@@ -8190,11 +8247,16 @@
                 Effects.blink_Star(this.self['StarParent3'], new Laya.Point(0, 0), 300, 50, 'Game/UI/UISkinQualified/xingxing.png', 80, 80);
             }, true);
             TimerAdmin.frameLoop(60, this, () => {
-                Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 418, 90, 500, 200);
+                Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 450, 65, 500, 200);
             }, true);
-            TimerAdmin.frameLoop(130, this, () => {
-                Color.changeConstant(this.self['Logo1Set'], [0, 0, 0], [255, 255, 255], 120);
-            }, true);
+            this.self['Logo1Set'].alpha = 0;
+            Laya.timer.frameOnce(80, this, () => {
+                Animation2D.fadeOut(this.self['Logo1Set'], 0, 1, 150, null, () => {
+                    TimerAdmin.frameLoop(130, this, () => {
+                        Color.changeConstant(this.self['Logo1Set'], [0, 0, 0], [255, 255, 255], 120);
+                    }, true);
+                });
+            });
             TimerAdmin.frameRandomLoop(10, 30, this, () => {
                 Effects.particle_FallingVertical(this.self['FallParent']);
             }, true);
@@ -8477,6 +8539,10 @@
             });
             Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UISkinQualified);
+            });
+            Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
+                EventAdmin.notify(Game3D.EventType.openUICard);
+                Admin._openScene(Admin.SceneName.UICard, this.self);
             });
         }
         lwgOnDisable() {
@@ -8860,6 +8926,7 @@
             reg("script/Game/GameScene.ts", GameScene);
             reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UIAdsHint.ts", UIAdsHint$1);
+            reg("script/Game/UICard.ts", UICard);
             reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);

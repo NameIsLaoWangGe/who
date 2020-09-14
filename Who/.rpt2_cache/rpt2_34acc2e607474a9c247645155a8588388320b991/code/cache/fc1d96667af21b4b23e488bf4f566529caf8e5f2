@@ -1,0 +1,8 @@
+{
+  "code": "import { Admin, Click, EventAdmin } from \"../Frame/lwg\";\r\nimport { Game3D } from \"./Game3D\";\r\nimport ADManager from \"../../TJ/Admanager\";\r\nexport default class UICard extends Admin.Scene {\r\n    lwgOnAwake() {\r\n    }\r\n    lwgAdaptive() {\r\n        this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height * 0.878;\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {\r\n            Admin._openScene(Admin.SceneName.UIStart, this.self);\r\n            EventAdmin.notify(Game3D.EventType.closeUICard);\r\n        });\r\n        var buy = () => {\r\n        };\r\n        Click.on(Click.Type.largen, this.self['BtnAds'], this, null, null, () => {\r\n            ADManager.ShowReward(() => {\r\n                buy();\r\n            });\r\n        });\r\n        Click.on(Click.Type.largen, this.self['BtnGold'], this, null, null, () => {\r\n            buy();\r\n        });\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/Game3D.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Admanager.ts"
+  ]
+}

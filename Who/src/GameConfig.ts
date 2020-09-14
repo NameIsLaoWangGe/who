@@ -10,6 +10,7 @@ import P106 from "./TJ/Promo/script/P106"
 import GameScene from "./script/Game/GameScene"
 import LwgInit from "./script/Frame/LwgInit"
 import UIAdsHint from "./script/Game/UIAdsHint"
+import UICard from "./script/Game/UICard"
 import UICheckIn from "./script/Game/UICheckIn"
 import UIDefeated from "./script/Game/UIDefeated"
 import UIDrawCard from "./script/Game/UIDrawCard"
@@ -55,6 +56,7 @@ export default class GameConfig{
         reg("script/Game/GameScene.ts",GameScene);
         reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UIAdsHint.ts",UIAdsHint);
+        reg("script/Game/UICard.ts",UICard);
         reg("script/Game/UICheckIn.ts",UICheckIn);
         reg("script/Game/UIDefeated.ts",UIDefeated);
         reg("script/Game/UIDrawCard.ts",UIDrawCard);

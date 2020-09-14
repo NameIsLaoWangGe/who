@@ -174,6 +174,7 @@ P 716E31B7 kuohao.png
 P 08D54593 lingqu.png
 P 127255F4 qiandao.png
 P 1618EA35 sanbei.png
+P BB48B820 shiping.png
 P E3CCA8E7 x.png
 P 5B1DB4EB xiayiguan.png
 P B045BD45 yuan-1.png
@@ -218,6 +219,9 @@ D Game/UI/UIAdsHint
 P 2861DD61 queding.png
 P E11347E3 tishi.png
 P 32BD1DD1 zi.png
+D Game/UI/UICard
+P 0E6E4A7E jiesuo1.png
+P D8B1D6D3 jiesuo2.png
 D Game/UI/UICheckIn
 P 5FCD294C 3bei.png
 P 5BB8F32E biaoti.png

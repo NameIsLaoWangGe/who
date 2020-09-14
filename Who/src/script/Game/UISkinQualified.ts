@@ -55,12 +55,18 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         }, true)
         // logo流光
         TimerAdmin.frameLoop(60, this, () => {
-            Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 418, 90, 500, 200);
+            Animation2D.move_Simple(this.self['Logo1Liuguang'], -53, 0, 450, 65, 500, 200);
         }, true);
-        // 标题变色
-        TimerAdmin.frameLoop(130, this, () => {
-            Color.changeConstant(this.self['Logo1Set'], [0, 0, 0], [255, 255, 255], 120);
-        }, true)
+        // 标题出现
+        this.self['Logo1Set'].alpha = 0;
+        Laya.timer.frameOnce(80, this, () => {
+            Animation2D.fadeOut(this.self['Logo1Set'], 0, 1, 150, null, () => {
+                // 标题变色
+                TimerAdmin.frameLoop(130, this, () => {
+                    Color.changeConstant(this.self['Logo1Set'], [0, 0, 0], [255, 255, 255], 120);
+                }, true)
+            });
+        })
         // 下落粒子
         TimerAdmin.frameRandomLoop(10, 30, this, () => {
             Effects.particle_FallingVertical(this.self['FallParent']);

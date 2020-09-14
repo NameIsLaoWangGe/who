@@ -7,6 +7,7 @@ export default class UIResurgence extends Admin.Scene {
     lwgOnAwake(): void {
         Admin._gameSwitch = false;
         Admin._clickLock.switch = false;
+        this['CounDownSwitch'] = true;
     }
 
     lwgOnEnable(): void {
@@ -15,12 +16,14 @@ export default class UIResurgence extends Admin.Scene {
         ADManager.TAPoint(TaT.BtnShow, 'ADrevivebt_revive');
 
         TimerAdmin.frameLoop(60, this, () => {
-            let Countdown = this.self['Countdown'] as Laya.FontClip;
-            Countdown.value = (Number(Countdown.value) - 1).toString();
-            if (Countdown.value == '-1') {
-                Countdown.value = '0';
-                Laya.timer.clearAll(this);
-                Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+            if (this['CounDownSwitch']) {
+                let Countdown = this.self['Countdown'] as Laya.FontClip;
+                Countdown.value = (Number(Countdown.value) - 1).toString();
+                if (Countdown.value == '-1') {
+                    Countdown.value = '0';
+                    Laya.timer.clearAll(this);
+                    Admin._openScene(Admin.SceneName.UIDefeated, this.self);
+                }
             }
         });
     }
@@ -33,14 +36,18 @@ export default class UIResurgence extends Admin.Scene {
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
             // ADManager.ShowReward(() => {
+            this['CounDownSwitch'] = false;
             Admin._gameSwitch = true;
             ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-            EventAdmin.notify(EventAdmin.EventType.resurgence, this.self);
+            Admin._closeScene(this.self, () => {
+                EventAdmin.notify(EventAdmin.EventType.resurgence);
+            });
             // })
         });
 
         Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
             ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
+            this['CounDownSwitch'] = false;
             Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated });
         });
     }

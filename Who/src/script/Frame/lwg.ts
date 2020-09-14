@@ -1210,6 +1210,7 @@ export module lwg {
             UIExecutionHint = 'UIExecutionHint',
             UIDrawCard = 'UIDrawCard',
             UIPropTry = 'UIPropTry',
+            UICard = 'UICard',
         }
 
         /**
@@ -2819,8 +2820,8 @@ export module lwg {
            */
         export function moveRotateTo(Sp3d: Laya.MeshSprite3D, Target: Laya.MeshSprite3D, duration: number, caller: any
             , ease?: Function, complete?: Function, delay?: number, coverBefore?: boolean, update?: Function, frame?: number): void {
-            moveTo(Sp3d, Target.transform.position, duration, caller, ease, complete, delay, coverBefore, update, frame)
-            rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, null, delay, coverBefore, null, frame);
+            moveTo(Sp3d, Target.transform.position, duration, caller, ease, null, delay, coverBefore, update, frame)
+            rotateTo(Sp3d, Target.transform.localRotationEuler, duration, caller, ease, complete, delay, coverBefore, null, frame);
         }
     }
 
@@ -4401,7 +4402,7 @@ export module lwg {
 
         /**
           * 播放动画。
-          * @param Sp3D 节点名称
+          * @param Sp3D 节点
           * @param name 如果为null则播放默认动画，否则按名字播放动画片段。
           * @param normalizedTime 归一化的播放起始时间。
           * @param layerIndex 层索引。

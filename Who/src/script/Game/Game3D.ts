@@ -1,5 +1,5 @@
 import { lwg3D } from "../Frame/lwg3D";
-import { Tools, EventAdmin, Animation3D, Admin } from "../Frame/lwg";
+import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack } from "../Frame/lwg";
 export module Game3D {
     /**场景节点枚举*/
     export let Scene3D: Laya.Scene3D;
@@ -17,6 +17,8 @@ export module Game3D {
     export let OppositeCardParent: Laya.MeshSprite3D;
     /**所有灰色背面的卡牌集合*/
     export let AllCardGray: Laya.MeshSprite3D;
+    /**所有彩色卡牌背面*/
+    export let AllCardColours: Laya.MeshSprite3D;
 
     /**本局我方手上对方的卡牌*/
     export let myHandName: any;
@@ -33,6 +35,8 @@ export module Game3D {
     export let PerspectiveOPPosite: Laya.MeshSprite3D;
     /**等待视角*/
     export let PerspectiveAwait: Laya.MeshSprite3D;
+    /**卡牌界面视角*/
+    export let PerspectiveUICard: Laya.MeshSprite3D;
 
     /**特征总表*/
     export let featureData = [];
@@ -116,6 +120,12 @@ export module Game3D {
         BtnSC = 'BtnSC',
         /**刷新道具*/
         BtnSX = 'BtnSX',
+        /**打开卡牌展示界面*/
+        openUICard = 'openUICard',
+        /**关闭卡牌展示界面*/
+        closeUICard = 'closeUICard',
+        /**卡牌展示界面买卡*/
+        UICardBuy = 'UICardBuy',
     }
 
     /**角色名称*/
@@ -717,9 +727,15 @@ export module Game3D {
             MyCardParent = this.self.getChildByName('MyCardParent') as Laya.MeshSprite3D;
             OppositeCardParent = this.self.getChildByName('OppositeCardParent') as Laya.MeshSprite3D;
             AllCardGray = this.self.getChildByName('AllCardGray') as Laya.MeshSprite3D;
+            AllCardColours = Laya.loader.getRes(Loding.list_3DPrefab[0]);
+            this.self.addChild(AllCardColours);
+            AllCardColours.active = false;
             PerspectiveMe = this.self.getChildByName('PerspectiveMe') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite') as Laya.MeshSprite3D;
             PerspectiveAwait = this.self.getChildByName('PerspectiveAwait') as Laya.MeshSprite3D;
+            PerspectiveUICard = this.self.getChildByName('PerspectiveUICard') as Laya.MeshSprite3D;
+            MainCamera.transform.position = PerspectiveAwait.transform.position;
+            MainCamera.transform.localRotationEuler = PerspectiveAwait.transform.localRotationEuler;
         }
 
         lwgOnEnable(): void {
@@ -941,9 +957,40 @@ export module Game3D {
                 Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
                 this.init();
             })
-            // 复活
-            EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-                this.init();
+
+            //前往卡牌界面
+            EventAdmin.reg(EventType.openUICard, this, () => {
+                AllCardColours.active = true;
+
+                for (let i = 0; i < Backpack._noHaveCard.arr.length; i++) {
+                    let haveCard = AllCardColours.getChildByName(Backpack._noHaveCard.arr[i]) as Laya.MeshSprite3D;
+                    // if (element.name == Backpack._noHaveCard.arr[j]) {
+                    //     Tools.d3_animatorPlay(element, CardAni.fallMe);
+                    //     break;
+                    // }
+                }
+                // for (let index = 0; index < array.length; index++) {
+                //     const element = array[index];
+
+                // }
+
+                Animation3D.moveRotateTo(MainCamera, PerspectiveUICard, 1500, this, null, () => {
+                    OppositeRoleParent.active = false;
+                });
+            })
+            //离开卡牌界面
+            EventAdmin.reg(EventType.closeUICard, this, () => {
+                OppositeRoleParent.active = true;
+                Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this, null, () => {
+                    AllCardColours.active = false;
+                });
+            })
+            // 在卡牌界面开始买卡
+            EventAdmin.reg(EventType.UICardBuy, this, () => {
+                for (let index = 0; index < AllCardColours.numChildren; index++) {
+                    const element = AllCardColours.getChildAt(index) as Laya.MeshSprite3D;
+                    Tools.d3_animatorPlay(element, CardAni.standMe);
+                }
             })
         }
         /**回合以及状态切换*/
@@ -953,7 +1000,6 @@ export module Game3D {
                     whichBout = WhichBoutType.me;
                     break;
                 case WhichBoutType.me:
-                    EventAdmin.notify(Game3D.EventType.hideOption);
                     whichBout = WhichBoutType.opposite;
                     break;
                 case WhichBoutType.opposite:
@@ -1025,6 +1071,7 @@ export module Game3D {
 
         /**开局*/
         init(): void {
+            AllCardGray.active = true;
             Admin._gameSwitch = true;
             whichBout = WhichBoutType.stop;
             Tools.node_RemoveAllChildren(MyCardParent);
@@ -1033,6 +1080,7 @@ export module Game3D {
             set16InitialCards(WhichScard.OppositeCardParent);
             this.changeOpppsiteRole();
             Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
+            AllCardGray.active = false;
         }
 
         /**变换角色和手上的牌*/

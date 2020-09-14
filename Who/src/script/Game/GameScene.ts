@@ -23,8 +23,6 @@ export default class GameScene extends Admin.Scene {
         this.self['BtnSCNum'].text = Backpack._prop1.num;
         this.self['BtnSXNum'].text = Backpack._prop2.num;
         this.self['SceneContent'].alpha = 0;
-
-
     }
 
     lwgBtnClick(): void {
@@ -108,7 +106,9 @@ export default class GameScene extends Admin.Scene {
 
         // 复活
         EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
-            Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100)
+            Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 500, 100, () => {
+                EventAdmin.notify(Game3D.EventType.opening);
+            });
         })
 
         //隐藏选项卡

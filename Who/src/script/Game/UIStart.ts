@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 import { Game3D } from "./Game3D";
 
@@ -69,6 +69,11 @@ export default class UIStart extends Start.StartScene {
         Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UISkinQualified);
         });
+        Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
+            EventAdmin.notify(Game3D.EventType.openUICard);
+            Admin._openScene(Admin.SceneName.UICard, this.self);
+        });
+
     }
 
     lwgOnDisable(): void {

@@ -28,7 +28,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         TimerAdmin.frameRandomLoop(100, 160, this, () => {
             Effects.light_SimpleInfinite(this.self, 360, 640, 720, 1280, 0, 'Game/UI/UIDrawCard/guang2.png', 0.01);
-        }, true)
+        }, true);
 
         TimerAdmin.frameLoop(8, this, () => {
             if (!this['middleOff']) {
@@ -142,7 +142,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     let Back = Card.getChildByName('Back') as Laya.Image;
                     Back.skin = 'Game/UI/UIDrawCard/' + Card['objData'][Game3D.CardProperty.quality] + '.png';
                     this.self['CardParent'].addChild(Card);
-                    let spcing = (Laya.stage.width - 5 * Card.width) / 6;
+                    let spcing = (this.self['CardParent'].width - 5 * Card.width) / 6;
                     Card.pos(globalPos.x, globalPos.y);
                     Card.scale(0, 0);
                     Card.name = 'Card' + index;
@@ -153,22 +153,21 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     let x, y;
                     if (index <= 4) {
                         x = (spcing + Card.width / 2) + (Card.width + spcing) * index;
-                        y = globalPos.y - 150;
+                        y = globalPos.y - 100;
                     } else {
                         x = (spcing + Card.width / 2) + (Card.width + spcing) * (index - 5);
-                        y = globalPos.y + 150;
+                        y = globalPos.y + 100;
                     }
                     Animation2D.move_Scale(Card, 0, globalPos.x, globalPos.y, x, y, 1, 200, 0, Laya.Ease.expoIn);
 
                     if (index == 3) {
-                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.5, 500, 0, () => {
+                        Animation2D.fadeOut(this.self['DrawDisPlayBg'], 0, 0.7, 500, 0, () => {
                             Animation2D.fadeOut(this.self['Guang5'], 0, 1, 500);
                             Animation2D.fadeOut(this.self['Guang6'], 0, 1, 500);
                         });
                     } else if (index == 9) {
                         EventAdmin.notify('flop');
                         Admin._clickLock.switch = false;
-
                     }
                 })
             }
