@@ -1,4 +1,4 @@
-import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click, Dialog } from "../Frame/lwg";
+import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click, Dialog, Backpack } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import RecordManager from "../../TJ/RecordManager";
 
@@ -26,7 +26,11 @@ export default class UIVictory extends VictoryScene {
             default:
                 break;
         }
-
+        if (Admin._gameLevel.value % 4 == 0) {
+            Backpack._trophy.num += 50;
+        } else {
+            Backpack._trophy.num += 5;
+        }
         Admin._gameLevel.value++;
     }
 

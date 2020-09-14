@@ -1827,16 +1827,14 @@
                         }
                     }
                 });
-                EventAdmin.reg(EventType.UICardBuy, this, () => {
-                    let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Quality.R);
-                    console.log();
-                    if (arr.length > 0) {
-                        let CardObj = Tools.arrayRandomGetOut(arr)[0];
-                        let Card = Game3D.AllCardColours.getChildByName(CardObj[CardProperty.name]);
-                        Animation3D.moveTo(Game3D.CardContainer, new Laya.Vector3(Game3D.CardContainer.transform.position.x, Game3D.CardContainer.transform.position.y, Game3D.CardContainer.transform.position.z - Card.transform.position.z), 1000, this, null, () => {
-                            Tools.d3_animatorPlay(Card, CardAni.flop);
-                        });
-                    }
+                EventAdmin.reg(EventType.UICardBuy, this, (arr) => {
+                    let CardObj = Tools.arrayRandomGetOut(arr)[0];
+                    let Card = Game3D.AllCardColours.getChildByName(CardObj[CardProperty.name]);
+                    let diff = Card.transform.position.z - Game3D.MainCamera.transform.position.z;
+                    Animation3D.moveTo(Game3D.CardContainer, new Laya.Vector3(Game3D.CardContainer.transform.position.x, Game3D.CardContainer.transform.position.y, Game3D.CardContainer.transform.position.z - diff), 1000, this, null, () => {
+                        Tools.d3_animatorPlay(Card, CardAni.flop);
+                        Backpack._haveCardArray.add([Card.name]);
+                    });
                 });
             }
             roundChange() {
@@ -2004,6 +2002,7 @@
                 HintContent[HintContent["\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01"] = 29] = "\u6CA1\u6709\u62BD\u5956\u6B21\u6570\u4E86\uFF0C\u8BF7\u901A\u8FC7\u89C2\u770B\u5E7F\u544A\u83B7\u53D6\uFF01";
                 HintContent[HintContent["\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01"] = 30] = "\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01";
                 HintContent[HintContent["\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01"] = 31] = "\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01";
+                HintContent[HintContent["\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01"] = 32] = "\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01";
             })(HintContent = Dialog.HintContent || (Dialog.HintContent = {}));
             let Skin;
             (function (Skin) {
@@ -7281,14 +7280,27 @@
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(Game3D.EventType.closeUICard);
             });
-            var buy = () => {
-                EventAdmin.notify(Game3D.EventType.UICardBuy);
+            var buy = (type) => {
+                let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R);
+                if (arr.length > 0) {
+                    if (type == 'ads') {
+                        ADManager.ShowReward(() => {
+                            EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                        });
+                    }
+                    else if (type == 'gold') {
+                        EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                    }
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["没有可以购买的卡牌了！"]);
+                }
             };
             Click.on(Click.Type.largen, this.self['BtnAds'], this, null, null, () => {
-                buy();
+                buy('ads');
             });
             Click.on(Click.Type.largen, this.self['BtnGold'], this, null, null, () => {
-                buy();
+                buy('gold');
             });
         }
         onStageMouseDown(e) {

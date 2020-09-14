@@ -88,6 +88,7 @@ export module lwg {
             '没有抽奖次数了，请通过观看广告获取！',
             '没有库存了！',
             '牌数太少，无法使用道具！',
+            '没有可以购买的卡牌了！'
         }
         enum Skin {
             blackBord = 'Frame/UI/ui_orthogon_black.png'
@@ -1600,7 +1601,7 @@ export module lwg {
          */
         export function changeOnce(node, RGBA: Array<number>, time: number): void {
             if (!node) {
-                return ;
+                return;
             }
             let cf = new Laya.ColorFilter();
             cf.color(0, 0, 0, 0);
@@ -2827,8 +2828,6 @@ export module lwg {
 
     /**动画模块*/
     export module Animation2D {
-
-
 
         /**
           * 按中心点旋转动画
@@ -6390,6 +6389,16 @@ export module lwg {
             }
         }
 
+        /**奖杯数量*/
+        export let _trophy = {
+            get num(): number {
+                return Laya.LocalStorage.getItem('Backpack_trophy') ? Number(Laya.LocalStorage.getItem('Backpack_trophy')) : 0;
+            },
+            set num(val) {
+                Laya.LocalStorage.setItem('Backpack_trophy', val.toString());
+            }
+        }
+
         /**
          * 当前拥有的卡牌
          */
@@ -6494,7 +6503,7 @@ export module lwg {
                 if (this.p >= sumProgress) {
                     console.log('当前进度条进度为:', currentProgress.value / sumProgress);
                     console.log('进度条停止！');
-                    console.log('所有资源加载完成！此时所有资源可通过例如 Laya.loader.getRes("Data/levelsData.json")获取')
+                    console.log('所有资源加载完成！此时所有资源可通过例如 Laya.loader.getRes("Data/levelsData.json")获取');
                     EventAdmin.notify(Loding.LodingType.complete);
                 } else {
                     // 当前进度达到当前长度节点时,去到下一个数组加载

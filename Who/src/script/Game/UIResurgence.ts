@@ -40,7 +40,7 @@ export default class UIResurgence extends Admin.Scene {
             Admin._gameSwitch = true;
             ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
             Admin._closeScene(this.self, () => {
-                EventAdmin.notify(EventAdmin.EventType.resurgence);
+                EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
             // })
         });

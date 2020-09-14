@@ -1,5 +1,5 @@
 import { lwg3D } from "../Frame/lwg3D";
-import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack } from "../Frame/lwg";
+import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack, Dialog } from "../Frame/lwg";
 export module Game3D {
     /**场景节点枚举*/
     export let Scene3D: Laya.Scene3D;
@@ -1019,16 +1019,15 @@ export module Game3D {
                 }
             });
             // 在卡牌界面随机买一张白色卡牌，其他卡牌买不到
-            EventAdmin.reg(EventType.UICardBuy, this, () => {
-                let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Quality.R);
-                console.log();
-                if (arr.length > 0) {
-                    let CardObj = Tools.arrayRandomGetOut(arr)[0];
-                    let Card = AllCardColours.getChildByName(CardObj[CardProperty.name]) as Laya.MeshSprite3D;
-                    Animation3D.moveTo(CardContainer, new Laya.Vector3(CardContainer.transform.position.x, CardContainer.transform.position.y, CardContainer.transform.position.z - Card.transform.position.z), 1000, this, null, () => {
-                        Tools.d3_animatorPlay(Card, CardAni.flop);
-                    })
-                }
+            EventAdmin.reg(EventType.UICardBuy, this, (arr) => {
+                let CardObj = Tools.arrayRandomGetOut(arr)[0];
+                let Card = AllCardColours.getChildByName(CardObj[CardProperty.name]) as Laya.MeshSprite3D;
+                let z;
+                let diff = Card.transform.position.z - MainCamera.transform.position.z;
+                Animation3D.moveTo(CardContainer, new Laya.Vector3(CardContainer.transform.position.x, CardContainer.transform.position.y, CardContainer.transform.position.z - diff), 1000, this, null, () => {
+                    Tools.d3_animatorPlay(Card, CardAni.flop);
+                    Backpack._haveCardArray.add([Card.name]);
+                })
             })
         }
         /**回合以及状态切换*/
