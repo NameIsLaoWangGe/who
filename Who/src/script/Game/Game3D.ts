@@ -19,6 +19,10 @@ export module Game3D {
     export let AllCardGray: Laya.MeshSprite3D;
     /**所有彩色卡牌背面*/
     export let AllCardColours: Laya.MeshSprite3D;
+    /**卡牌容器*/
+    export let CardContainer: Laya.MeshSprite3D;
+    /**卡牌容器初始坐标*/
+    export let CardContainerPos: Laya.Vector3;
 
     /**本局我方手上对方的卡牌*/
     export let myHandName: any;
@@ -126,6 +130,8 @@ export module Game3D {
         closeUICard = 'closeUICard',
         /**卡牌展示界面买卡*/
         UICardBuy = 'UICardBuy',
+        /**卡牌位移*/
+        UICardMove = 'UICardMove',
     }
 
     /**角色名称*/
@@ -154,6 +160,7 @@ export module Game3D {
         blinkMe = 'blinkMe',
         blinkOpposite = 'blinkOpposite',
         clickMe = 'clickMe',
+        flop = 'flop',
     }
 
     /**
@@ -184,13 +191,13 @@ export module Game3D {
     /**
      * 通过一组卡牌名称，获取指定品质的卡牌对象
      */
-    export function getQualityArrByNameArr(nameArr: Array<string>, quality: string): Array<any> {
+    export function getQualityObjArrByNameArr(nameArr: Array<string>, quality: string): Array<any> {
         let arr = [];
         let data = Tools.objArray_Copy(CardData);
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < nameArr.length; j++) {
                 if (data[i][CardProperty.name] == nameArr[j] && data[i][CardProperty.quality] == quality) {
-                    arr.push(data[j]);
+                    arr.push(data[i]);
                 }
             }
         }
@@ -727,9 +734,11 @@ export module Game3D {
             MyCardParent = this.self.getChildByName('MyCardParent') as Laya.MeshSprite3D;
             OppositeCardParent = this.self.getChildByName('OppositeCardParent') as Laya.MeshSprite3D;
             AllCardGray = this.self.getChildByName('AllCardGray') as Laya.MeshSprite3D;
-            AllCardColours = Laya.loader.getRes(Loding.list_3DPrefab[0]);
-            this.self.addChild(AllCardColours);
-            AllCardColours.active = false;
+            CardContainer = Laya.loader.getRes(Loding.list_3DPrefab[0]);
+            this.self.addChild(CardContainer);
+            CardContainerPos = new Laya.Vector3(CardContainer.transform.localPositionX, CardContainer.transform.localPositionY, CardContainer.transform.localPositionZ);
+            CardContainer.active = false;
+            AllCardColours = CardContainer.getChildByName('AllCardColours') as Laya.MeshSprite3D;
             PerspectiveMe = this.self.getChildByName('PerspectiveMe') as Laya.MeshSprite3D;
             PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite') as Laya.MeshSprite3D;
             PerspectiveAwait = this.self.getChildByName('PerspectiveAwait') as Laya.MeshSprite3D;
@@ -960,21 +969,32 @@ export module Game3D {
 
             //前往卡牌界面
             EventAdmin.reg(EventType.openUICard, this, () => {
-                AllCardColours.active = true;
-
-                for (let i = 0; i < Backpack._noHaveCard.arr.length; i++) {
-                    let haveCard = AllCardColours.getChildByName(Backpack._noHaveCard.arr[i]) as Laya.MeshSprite3D;
-                    // if (element.name == Backpack._noHaveCard.arr[j]) {
-                    //     Tools.d3_animatorPlay(element, CardAni.fallMe);
-                    //     break;
-                    // }
+                CardContainer.active = true;
+                CardContainer.transform.localPosition = CardContainerPos;
+                for (let i = 0; i < AllCardColours.numChildren; i++) {
+                    const element = AllCardColours.getChildAt(i) as Laya.MeshSprite3D;
+                    Tools.d3_animatorPlay(element, CardAni.fallMe);
                 }
-                // for (let index = 0; index < array.length; index++) {
-                //     const element = array[index];
-
-                // }
-
                 Animation3D.moveRotateTo(MainCamera, PerspectiveUICard, 1500, this, null, () => {
+                    Animation3D.moveTo(MainCamera, new Laya.Vector3(PerspectiveUICard.transform.localPositionX, PerspectiveUICard.transform.localPositionY, PerspectiveUICard.transform.localPositionZ + 3), 3000, this);
+                    // 根据z轴的顺序进行排序，如果z轴相同通过x轴进行排序
+                    let arr = [];
+                    for (let j = 0; j < Backpack._haveCardArray.arr.length; j++) {
+                        let haveCard = AllCardColours.getChildByName(Backpack._haveCardArray.arr[j]) as Laya.MeshSprite3D;
+                        let dataZ = {
+                            name: haveCard.name,
+                            x: haveCard.transform.localPositionX
+                        }
+                        arr.push(dataZ);
+                    }
+                    // 依次播放打开动画
+                    let arr0 = Tools.objArrPropertySort(arr, 'x');
+                    for (let k = 0; k < arr0.length; k++) {
+                        let haveCard0 = AllCardColours.getChildByName(arr0[k]['name']) as Laya.MeshSprite3D;
+                        Laya.timer.once(60 * k, this, () => {
+                            Tools.d3_animatorPlay(haveCard0, CardAni.flop);
+                        })
+                    }
                     OppositeRoleParent.active = false;
                 });
             })
@@ -982,14 +1002,32 @@ export module Game3D {
             EventAdmin.reg(EventType.closeUICard, this, () => {
                 OppositeRoleParent.active = true;
                 Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this, null, () => {
-                    AllCardColours.active = false;
+                    CardContainer.active = false;
                 });
             })
-            // 在卡牌界面开始买卡
+            EventAdmin.reg(EventType.UICardMove, this, (args) => {
+                let speed = 0.04;
+                let scope = 3;
+                if (args == 'add') {
+                    if (CardContainer.transform.localPositionZ < CardContainerPos.z + scope) {
+                        CardContainer.transform.localPositionZ += speed;
+                    }
+                } else if (args == 'sub') {
+                    if (CardContainer.transform.localPositionZ > CardContainerPos.z) {
+                        CardContainer.transform.localPositionZ -= speed;
+                    }
+                }
+            });
+            // 在卡牌界面随机买一张白色卡牌，其他卡牌买不到
             EventAdmin.reg(EventType.UICardBuy, this, () => {
-                for (let index = 0; index < AllCardColours.numChildren; index++) {
-                    const element = AllCardColours.getChildAt(index) as Laya.MeshSprite3D;
-                    Tools.d3_animatorPlay(element, CardAni.standMe);
+                let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Quality.R);
+                console.log();
+                if (arr.length > 0) {
+                    let CardObj = Tools.arrayRandomGetOut(arr)[0];
+                    let Card = AllCardColours.getChildByName(CardObj[CardProperty.name]) as Laya.MeshSprite3D;
+                    Animation3D.moveTo(CardContainer, new Laya.Vector3(CardContainer.transform.position.x, CardContainer.transform.position.y, CardContainer.transform.position.z - Card.transform.position.z), 1000, this, null, () => {
+                        Tools.d3_animatorPlay(Card, CardAni.flop);
+                    })
                 }
             })
         }
@@ -1061,13 +1099,10 @@ export module Game3D {
                 if (fallNum >= 2) {
                     if (CardParent == MyCardParent) {
                         EventAdmin.notify(EventType.doWell);
-                    } else {
-
                     }
                 }
             })
         }
-
 
         /**开局*/
         init(): void {

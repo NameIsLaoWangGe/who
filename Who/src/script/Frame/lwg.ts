@@ -2618,7 +2618,7 @@ export module lwg {
         /**
           * 移动物体
           * @param target 目标物体
-          * @param toPos 要去的目的地
+          * @param toPos 要去的目的地坐标
           * @param duration 间隔
           * @param caller 回调执行领域
           * @param ease 缓动函数

@@ -25,7 +25,7 @@ export default class UILoding extends Loding.LodingScene {
             "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
         ];
         Loding.list_3DPrefab = [
-            "3DPrefab/LayaScene_GameMain/Conventional/AllCardColours.lh"
+            "3DPrefab/LayaScene_GameMain/Conventional/CardContainer.lh"
         ];
         Loding.list_JsonData = [
             // "GameData/Shop/Other.json",

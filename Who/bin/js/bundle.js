@@ -1067,6 +1067,7 @@
             EventType["openUICard"] = "openUICard";
             EventType["closeUICard"] = "closeUICard";
             EventType["UICardBuy"] = "UICardBuy";
+            EventType["UICardMove"] = "UICardMove";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let RoleName;
         (function (RoleName) {
@@ -1092,6 +1093,7 @@
             CardAni["blinkMe"] = "blinkMe";
             CardAni["blinkOpposite"] = "blinkOpposite";
             CardAni["clickMe"] = "clickMe";
+            CardAni["flop"] = "flop";
         })(CardAni = Game3D.CardAni || (Game3D.CardAni = {}));
         function getAllCardName() {
             let cardNameArr = [];
@@ -1112,19 +1114,19 @@
             return arr;
         }
         Game3D.getCardObjByQuality = getCardObjByQuality;
-        function getQualityArrByNameArr(nameArr, quality) {
+        function getQualityObjArrByNameArr(nameArr, quality) {
             let arr = [];
             let data = Tools.objArray_Copy(Game3D.CardData);
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < nameArr.length; j++) {
                     if (data[i][CardProperty.name] == nameArr[j] && data[i][CardProperty.quality] == quality) {
-                        arr.push(data[j]);
+                        arr.push(data[i]);
                     }
                 }
             }
             return arr;
         }
-        Game3D.getQualityArrByNameArr = getQualityArrByNameArr;
+        Game3D.getQualityObjArrByNameArr = getQualityObjArrByNameArr;
         function getCardObjByNameArr(nameArr) {
             let objArr = [];
             let data = Tools.objArray_Copy(Game3D.CardData);
@@ -1560,9 +1562,11 @@
                 Game3D.MyCardParent = this.self.getChildByName('MyCardParent');
                 Game3D.OppositeCardParent = this.self.getChildByName('OppositeCardParent');
                 Game3D.AllCardGray = this.self.getChildByName('AllCardGray');
-                Game3D.AllCardColours = Laya.loader.getRes(Loding.list_3DPrefab[0]);
-                this.self.addChild(Game3D.AllCardColours);
-                Game3D.AllCardColours.active = false;
+                Game3D.CardContainer = Laya.loader.getRes(Loding.list_3DPrefab[0]);
+                this.self.addChild(Game3D.CardContainer);
+                Game3D.CardContainerPos = new Laya.Vector3(Game3D.CardContainer.transform.localPositionX, Game3D.CardContainer.transform.localPositionY, Game3D.CardContainer.transform.localPositionZ);
+                Game3D.CardContainer.active = false;
+                Game3D.AllCardColours = Game3D.CardContainer.getChildByName('AllCardColours');
                 Game3D.PerspectiveMe = this.self.getChildByName('PerspectiveMe');
                 Game3D.PerspectiveOPPosite = this.self.getChildByName('PerspectiveOPPosite');
                 Game3D.PerspectiveAwait = this.self.getChildByName('PerspectiveAwait');
@@ -1776,22 +1780,63 @@
                     this.init();
                 });
                 EventAdmin.reg(EventType.openUICard, this, () => {
-                    Game3D.AllCardColours.active = true;
+                    Game3D.CardContainer.active = true;
+                    Game3D.CardContainer.transform.localPosition = Game3D.CardContainerPos;
+                    for (let i = 0; i < Game3D.AllCardColours.numChildren; i++) {
+                        const element = Game3D.AllCardColours.getChildAt(i);
+                        Tools.d3_animatorPlay(element, CardAni.fallMe);
+                    }
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveUICard, 1500, this, null, () => {
+                        Animation3D.moveTo(Game3D.MainCamera, new Laya.Vector3(Game3D.PerspectiveUICard.transform.localPositionX, Game3D.PerspectiveUICard.transform.localPositionY, Game3D.PerspectiveUICard.transform.localPositionZ + 3), 3000, this);
+                        let arr = [];
+                        for (let j = 0; j < Backpack._haveCardArray.arr.length; j++) {
+                            let haveCard = Game3D.AllCardColours.getChildByName(Backpack._haveCardArray.arr[j]);
+                            let dataZ = {
+                                name: haveCard.name,
+                                x: haveCard.transform.localPositionX
+                            };
+                            arr.push(dataZ);
+                        }
+                        let arr0 = Tools.objArrPropertySort(arr, 'x');
+                        for (let k = 0; k < arr0.length; k++) {
+                            let haveCard0 = Game3D.AllCardColours.getChildByName(arr0[k]['name']);
+                            Laya.timer.once(60 * k, this, () => {
+                                Tools.d3_animatorPlay(haveCard0, CardAni.flop);
+                            });
+                        }
                         Game3D.OppositeRoleParent.active = false;
                     });
                 });
                 EventAdmin.reg(EventType.closeUICard, this, () => {
                     Game3D.OppositeRoleParent.active = true;
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this, null, () => {
-                        Game3D.AllCardColours.active = false;
-                        for (let index = 0; index < Game3D.AllCardColours.numChildren; index++) {
-                            const element = Game3D.AllCardColours.getChildAt(index);
-                            Tools.d3_animatorPlay(element, CardAni.standMe);
-                        }
+                        Game3D.CardContainer.active = false;
                     });
                 });
+                EventAdmin.reg(EventType.UICardMove, this, (args) => {
+                    let speed = 0.04;
+                    let scope = 3;
+                    if (args == 'add') {
+                        if (Game3D.CardContainer.transform.localPositionZ < Game3D.CardContainerPos.z + scope) {
+                            Game3D.CardContainer.transform.localPositionZ += speed;
+                        }
+                    }
+                    else if (args == 'sub') {
+                        if (Game3D.CardContainer.transform.localPositionZ > Game3D.CardContainerPos.z) {
+                            Game3D.CardContainer.transform.localPositionZ -= speed;
+                        }
+                    }
+                });
                 EventAdmin.reg(EventType.UICardBuy, this, () => {
+                    let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Quality.R);
+                    console.log();
+                    if (arr.length > 0) {
+                        let CardObj = Tools.arrayRandomGetOut(arr)[0];
+                        let Card = Game3D.AllCardColours.getChildByName(CardObj[CardProperty.name]);
+                        Animation3D.moveTo(Game3D.CardContainer, new Laya.Vector3(Game3D.CardContainer.transform.position.x, Game3D.CardContainer.transform.position.y, Game3D.CardContainer.transform.position.z - Card.transform.position.z), 1000, this, null, () => {
+                            Tools.d3_animatorPlay(Card, CardAni.flop);
+                        });
+                    }
                 });
             }
             roundChange() {
@@ -7229,19 +7274,43 @@
         lwgOnAwake() {
         }
         lwgAdaptive() {
-            this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height * 0.878;
+            this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height - 156;
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(Game3D.EventType.closeUICard);
             });
+            var buy = () => {
+                EventAdmin.notify(Game3D.EventType.UICardBuy);
+            };
             Click.on(Click.Type.largen, this.self['BtnAds'], this, null, null, () => {
-                ADManager.ShowReward(() => {
-                });
+                buy();
             });
             Click.on(Click.Type.largen, this.self['BtnGold'], this, null, null, () => {
+                buy();
             });
+        }
+        onStageMouseDown(e) {
+            if (!this['firstPos']) {
+                this['firstPos'] = new Laya.Point(Laya.stage.mouseX, Laya.stage.mouseX);
+            }
+        }
+        onStageMouseMove(e) {
+            if (this['firstPos']) {
+                let diffX = this['firstPos'].x - Laya.stage.mouseX;
+                if (diffX > 0) {
+                    EventAdmin.notify(Game3D.EventType.UICardMove, ['add']);
+                }
+                else {
+                    EventAdmin.notify(Game3D.EventType.UICardMove, ['sub']);
+                }
+            }
+        }
+        onStageMouseUp(e) {
+            if (this['firstPos']) {
+                this['firstPos'] = null;
+            }
         }
     }
 
@@ -7589,12 +7658,12 @@
                     cardObjArr.push(SROrSSR);
                 }
                 else if (DrawCard._drawCount.num == 2) {
-                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
+                    cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
                     if (Tools.randomNumber(10) >= 8) {
-                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
                     }
                     else {
-                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
+                        SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
                     }
                     cardObjArr.push(SROrSSR);
                 }
@@ -7770,7 +7839,7 @@
                         const Card = arrCard[i];
                         let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                         Laya.timer.once(i * 150, this, () => {
-                            Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -300, 800, 0, () => {
+                            Animation2D.move_Simple(Card, Card.x, globalPos.y, Card.x, -300, 800, 0, () => {
                                 if (i == arrCard.length - 1) {
                                     anifunc();
                                 }
@@ -7877,7 +7946,7 @@
                 "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
             ];
             Loding.list_3DPrefab = [
-                "3DPrefab/LayaScene_GameMain/Conventional/AllCardColours.lh"
+                "3DPrefab/LayaScene_GameMain/Conventional/CardContainer.lh"
             ];
             Loding.list_JsonData = [
                 "GameData/VictoryBox/VictoryBox.json",

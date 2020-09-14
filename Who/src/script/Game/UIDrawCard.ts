@@ -98,14 +98,16 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
             } else if (DrawCard._drawCount.num == 2) {
                 // 从还没有获得的卡牌中随机
-                cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
+                cardObjArr = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R), 9);
+
                 if (Tools.randomNumber(10) >= 8) {
-                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SR))[0];
                 } else {
-                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
+                    SROrSSR = Tools.arrayRandomGetOut(Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.SSR))[0];
                 }
                 cardObjArr.push(SROrSSR);
-
+                // console.log(Backpack._noHaveCard.arr);
+                // console.log(Backpack._noHaveCard.arr);
             } else {
                 cardObjArr = Tools.arrayRandomGetOut(Game3D.getCardObjByQuality(Game3D.Quality.R), 9);
                 if (Tools.randomNumber(10) >= 8) {
@@ -125,9 +127,10 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     }
                 }
             }
+            // console.log(cardObjArr);
             Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(cardObjArr));
             cardObjArr = Tools.arrayRandomGetOut(cardObjArr, cardObjArr.length);
-
+            // console.log(cardObjArr);
             // 开始动画表现
             Admin._clickLock.switch = true;
             this.self['DrawDisPlay'].x = 0;
@@ -198,7 +201,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     Animation2D.bombs_Appear(New, 0, 1, 1.1, 5, 100, 200, 250);
                 }
             }, 100, 50, () => {
-
+                // console.log(Card['objData'][Game3D.CardProperty.quality]);
                 if (Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SR || Card['objData'][Game3D.CardProperty.quality] == Game3D.Quality.SSR) {
 
                     Card.zOrder = (this.self['cardIndex'] + 1) * 10;
@@ -290,7 +293,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                     const Card = arrCard[i];
                     let globalPos = Card.localToGlobal(new Laya.Point(Card.width / 2, Card.height / 2));
                     Laya.timer.once(i * 150, this, () => {
-                        Animation2D.move_Simple(Card, globalPos.x, globalPos.y, globalPos.x, -300, 800, 0, () => {
+                        Animation2D.move_Simple(Card, Card.x, globalPos.y, Card.x, -300, 800, 0, () => {
                             if (i == arrCard.length - 1) {
                                 anifunc();
                             }
