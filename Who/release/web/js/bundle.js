@@ -1599,7 +1599,7 @@
                     }
                     else if (Game3D.whichBout == WhichBoutType.opposite) {
                         Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
-                            EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), getChNameByName(Game3D.myHandName)]);
+                            EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), Game3D.myHandName]);
                         });
                     }
                 });
@@ -2766,6 +2766,7 @@
             (function (SceneName) {
                 SceneName["UILoding"] = "UILoding";
                 SceneName["UIStart"] = "UIStart";
+                SceneName["UIGuide"] = "UIGuide";
                 SceneName["UISkin"] = "UISkin";
                 SceneName["UIShop"] = "UIShop";
                 SceneName["UITask"] = "UITask";
@@ -2790,7 +2791,7 @@
                 SceneName["UIResurgence"] = "UIResurgence";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
                 SceneName["UIAdsHint"] = "UIAdsHint";
-                SceneName["LwgInit"] = "LwgInit";
+                SceneName["UILwgInit"] = "UILwgInit";
                 SceneName["GameScene"] = "GameScene";
                 SceneName["UISmallHint"] = "UISmallHint";
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
@@ -5061,51 +5062,45 @@
                 sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
             }
             Tools.sk_indexControl = sk_indexControl;
-            function draw_drawPieMask(parent, startAngle, endAngle) {
-                parent.cacheAs = "bitmap";
-                let drawPieSpt = new Laya.Sprite();
-                drawPieSpt.blendMode = "destination-out";
-                parent.addChild(drawPieSpt);
-                let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
-                return drawPie;
+            class Draw {
+                static drawPieMask(parent, startAngle, endAngle) {
+                    parent.cacheAs = "bitmap";
+                    let drawPieSpt = new Laya.Sprite();
+                    drawPieSpt.blendMode = "destination-out";
+                    parent.addChild(drawPieSpt);
+                    let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
+                    return drawPie;
+                }
+                static reverseRoundMask(node, x, y, radius, eliminate) {
+                    if (eliminate == undefined || eliminate == true) {
+                        node_RemoveAllChildren(node);
+                    }
+                    let interactionArea = new Laya.Sprite();
+                    interactionArea.name = 'reverseRoundMask';
+                    interactionArea.blendMode = "destination-out";
+                    node.cacheAs = "bitmap";
+                    node.addChild(interactionArea);
+                    interactionArea.graphics.drawCircle(0, 0, radius, "#000000");
+                    interactionArea.pos(x, y);
+                }
+                static reverseRoundrectMask(node, x, y, width, height, round, eliminate) {
+                    if (eliminate == undefined || eliminate == true) {
+                        node_RemoveAllChildren(node);
+                    }
+                    let interactionArea = new Laya.Sprite();
+                    interactionArea.name = 'reverseRoundrectMask';
+                    interactionArea.blendMode = "destination-out";
+                    node.cacheAs = "bitmap";
+                    node.addChild(interactionArea);
+                    interactionArea.graphics.drawPath(0, 0, [["moveTo", 5, 0], ["lineTo", width - round, 0], ["arcTo", width, 0, width, round, round], ["lineTo", width, height - round], ["arcTo", width, height, width - round, height, round], ["lineTo", height - round, height], ["arcTo", 0, height, 0, height - round, round], ["lineTo", 0, round], ["arcTo", 0, 0, round, 0, round], ["closePath"]], { fillStyle: "#000000" });
+                    interactionArea.width = width;
+                    interactionArea.height = height;
+                    interactionArea.pivotX = width / 2;
+                    interactionArea.pivotY = height / 2;
+                    interactionArea.pos(x, y);
+                }
             }
-            Tools.draw_drawPieMask = draw_drawPieMask;
-            function draw_LineInScene(Scene, node, nodeForm, radius, color) {
-                let length;
-                Click.on(Click.Type.noEffect, node, this, (e) => {
-                    if (!this.self.getChildByName('DrawSp')) {
-                        length = 0;
-                        let DrawSp = new Laya.Sprite();
-                        Scene.addChild(DrawSp);
-                        DrawSp.name = 'DrawSp';
-                        DrawSp.pos(0, 0);
-                        Scene['DrawSp'] = DrawSp;
-                    }
-                    Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
-                }, (e) => {
-                    let Img = node;
-                    let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
-                    if (new Laya.Point(e.stageX, e.stageY).distance(globalPos.x, globalPos.y) > Img.width / 2) {
-                        Scene['DrawPosArr'] = null;
-                        return;
-                    }
-                    if (Scene['DrawPosArr']) {
-                        Scene['DrawSp'].graphics.drawLine(Scene['DrawPosArr'].x, Scene['DrawPosArr'].y, e.stageX, e.stageY, color, radius * 2);
-                        Scene['DrawSp'].graphics.drawCircle(e.stageX, e.stageY, radius, color);
-                        length += Scene['DrawPosArr'].distance(e.stageX, e.stageY);
-                        Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
-                    }
-                }, () => {
-                    if (length > 3000) {
-                        Scene.getChildByName('DrawSp').removeSelf();
-                    }
-                    Scene['DrawPosArr'] = null;
-                }, () => {
-                    Scene['DrawPosArr'] = null;
-                });
-                return length;
-            }
-            Tools.draw_LineInScene = draw_LineInScene;
+            Tools.Draw = Draw;
             function objArrPropertySort(array, property) {
                 var compare = function (obj1, obj2) {
                     var val1 = obj1[property];
@@ -6591,7 +6586,7 @@
                     EventAdmin.reg(LodingType.complete, this, () => {
                         let time = this.lodingComplete();
                         PalyAudio.playMusic();
-                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UILwgInit, this.self); });
                     });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
@@ -6958,8 +6953,8 @@
             Question.text = questionAndYesOrNo[0];
             Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
             let Card = GuessCard.getChildByName('Card');
-            let CardName = Card.getChildByName('CardName');
-            CardName.text = cardName;
+            let Pic = Card.getChildByName('Pic');
+            Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
             Card.y = Laya.stage.height * 0.483;
             Animation2D.cardRotateX_TowFace(Card, 180);
             Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
@@ -7021,44 +7016,6 @@
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
-        }
-    }
-
-    class LwgInit extends Admin.Scene {
-        lwgOnAwake() {
-            this.admin();
-            this.game3D();
-            this.checkIn();
-            this.shop();
-            this.skin();
-            this.task();
-            this.easterEgg();
-            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
-        }
-        admin() {
-            Admin._commonVanishAni = true;
-            Admin._platform = Admin._platformTpye.Bytedance;
-        }
-        game3D() {
-            Game3D.dataInit();
-            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-            Laya.stage.addChild(Game3D.Scene3D);
-            Game3D.Scene3D.addComponent(Game3D.MainScene);
-        }
-        checkIn() {
-            CheckIn.init();
-        }
-        skin() {
-        }
-        shop() {
-        }
-        task() {
-        }
-        easterEgg() {
-        }
-        lwgOnEnable() {
-            console.log('完成初始化');
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
         }
     }
 
@@ -7277,7 +7234,184 @@
         }
     }
 
+    var Guide;
+    (function (Guide) {
+        Guide._complete = {
+            get bool() {
+                if (Laya.LocalStorage.getItem('Guide_complete')) {
+                    if (Number(Laya.LocalStorage.getItem('Guide_complete')) == 0) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false;
+                }
+            },
+            set bool(bol) {
+                if (bol == true) {
+                    bol = 1;
+                }
+                Laya.LocalStorage.setItem('Guide_complete', bol.toString());
+            }
+        };
+        Guide._whichStepNum = 1;
+        let EventType;
+        (function (EventType) {
+            EventType["next"] = "Guide_next";
+            EventType["hint"] = "Guide_hint";
+            EventType["appear"] = "Guide_appear";
+            EventType["start"] = "Guide_start";
+            EventType["close"] = "Guide_close";
+        })(EventType = Guide.EventType || (Guide.EventType = {}));
+        class GuideScene extends Admin.Scene {
+        }
+        Guide.GuideScene = GuideScene;
+    })(Guide || (Guide = {}));
+    class UIGuide extends Guide.GuideScene {
+        lwgOnEnable() {
+            this.self['Background'].alpha = 0;
+            this.self['Hand'].alpha = 0;
+            EventAdmin.notify(Guide.EventType.next);
+            this.self["Draw"].on(Laya.Event.LABEL, this, (labal) => {
+                if (labal === 'start') {
+                    let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                    if (!DrawCanvas) {
+                        let DrawCanvas = new Laya.Sprite();
+                        DrawCanvas.name = 'DrawCanvas';
+                        this.self['Hand'].addChild(DrawCanvas);
+                        this.self['Handpic'].pos(0, 0);
+                        this.self['Handpic'].pivotX = 0;
+                        this.self['Handpic'].pivotY = 0;
+                        this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
+                    }
+                }
+                else if (labal === 'end') {
+                    let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                    if (this.self['Hand'].getChildByName('DrawCanvas')) {
+                        this['drawLinePos'] == false;
+                        DrawCanvas.removeSelf();
+                    }
+                }
+            });
+            TimerAdmin.frameLoop(1, this, () => {
+                let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                if (DrawCanvas) {
+                    if (this['drawLinePos']) {
+                        DrawCanvas.graphics.drawLine(this['drawLinePos'].x, this['drawLinePos'].y, this.self['Handpic'].x, this.self['Handpic'].y, "#000000", 8);
+                        DrawCanvas.graphics.drawCircle(this.self['Handpic'].x, this.self['Handpic'].y, 4, "#000000");
+                        this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
+                    }
+                }
+            });
+        }
+        lwgEventReg() {
+            var step1 = () => {
+                this.self["Draw"].play(0, true);
+                EventAdmin.notify(Guide.EventType.appear);
+                this.self['Hand'].pos(198, 523);
+                Tools.Draw.reverseRoundMask(this.self['Background'], 360, 598, 350, true);
+            };
+            var step2 = () => {
+                EventAdmin.notify(Guide.EventType.appear);
+                this.self['Hand'].pos(360, 1161);
+                this.self["Click"].play(0, true);
+                Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, 1161, 320, 150, 40, true);
+            };
+            var step3 = () => {
+                step1();
+            };
+            var step4 = () => {
+                step2();
+            };
+            var step5 = () => {
+                EventAdmin.notify(Guide.EventType.appear);
+                this.self['Hand'].pos(75, 102);
+                this.self["Click"].play(0, true);
+                Tools.Draw.reverseRoundMask(this.self['Background'], 68, 102, 60);
+            };
+            var step6 = () => {
+                EventAdmin.notify(Guide.EventType.appear);
+                this.self['Hand'].pos(656, 758);
+                this.self["Click"].play(0, true);
+                Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 380, 160, 20, true);
+            };
+            var step7 = () => {
+                step5();
+            };
+            var step8 = () => {
+                EventAdmin.notify(Guide.EventType.appear);
+                this.self['Hand'].pos(656, 758);
+                this.self["Click"].play(0, true);
+                Tools.Draw.reverseRoundrectMask(this.self['Background'], 656, 758, 130, 150, 20, true);
+            };
+            EventAdmin.reg(Guide.EventType.next, this, () => {
+                Laya.timer.once(500, this, () => {
+                    console.log('新手引导到了第：', Guide._whichStepNum + '步了');
+                    switch (Guide._whichStepNum) {
+                        case 1:
+                            step1();
+                            break;
+                        case 2:
+                            step2();
+                            break;
+                        case 3:
+                            step3();
+                            break;
+                        case 4:
+                            step4();
+                            break;
+                        case 5:
+                            step5();
+                            break;
+                        case 6:
+                            step6();
+                            break;
+                        case 7:
+                            step7();
+                            break;
+                        case 7:
+                            step8();
+                            break;
+                        default:
+                            break;
+                    }
+                    Guide._whichStepNum++;
+                });
+            });
+            EventAdmin.reg(Guide.EventType.appear, this, () => {
+                Animation2D.fadeOut(this.self['Hand'], 0, 1, 300);
+                Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
+            });
+            EventAdmin.reg(Guide.EventType.hint, this, () => {
+                let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                if (this.self['Hand'].getChildByName('DrawCanvas')) {
+                    this['drawLinePos'] == false;
+                    DrawCanvas.removeSelf();
+                }
+                Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+                Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
+                    this.self["Draw"].stop();
+                    this.self["Click"].stop();
+                });
+            });
+        }
+    }
+
     class UICard extends Admin.Scene {
+        lwgOnEnable() {
+            EventAdmin.notify(Guide.EventType.hint);
+            this.self['BtnBack'].alhpa = 0;
+            this.self['BtnBack'].visible = false;
+            Laya.timer.once(4500, this, () => {
+                Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
+                    this.self['BtnBack'].visible = true;
+                    EventAdmin.notify(Guide.EventType.next);
+                });
+            });
+        }
         lwgAdaptive() {
             this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height - 156;
         }
@@ -7285,8 +7419,12 @@
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(Game3D.EventType.closeUICard);
+                EventAdmin.notify(Guide.EventType.hint);
             });
             var buy = (type) => {
+                if (!Guide._complete.bool) {
+                    return;
+                }
                 let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R);
                 if (arr.length > 0) {
                     if (type == 'ads') {
@@ -7651,9 +7789,12 @@
             Game3D.Scene3D.active = false;
         }
         lwgEventReg() {
+            EventAdmin.reg(Guide.EventType.start, this, () => {
+            });
             let Img = this.self['Surface'];
             let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
             EventAdmin.reg('drawCardEvent', this, () => {
+                EventAdmin.notify(Guide.EventType.hint);
                 if (DrawCard._residueDraw.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                     return;
@@ -7813,10 +7954,14 @@
             });
             EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
                 this.self['BtnTake'].visible = true;
+                EventAdmin.notify(Guide.EventType.next);
             });
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
+                if (!Guide._complete.bool) {
+                    return;
+                }
                 DrawCard._freeAds.num++;
                 if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
                     DrawCard._freeAds.num = 0;
@@ -7826,12 +7971,22 @@
                 this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-                Admin._closeScene(this.self);
+                if (!Guide._complete.bool) {
+                    if (Guide._whichStepNum == 6) {
+                        Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
+                        EventAdmin.notify(Guide.EventType.hint);
+                    }
+                    return;
+                }
+                else {
+                    Admin._openScene(Admin.SceneName.UIStart, this.self);
+                }
             });
             Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e) => {
                 e.stopPropagation();
             });
             Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e) => {
+                EventAdmin.notify(Guide.EventType.hint);
                 Admin._clickLock.switch = true;
                 let arrRepetitionCard = [];
                 let arrCard = [];
@@ -7846,6 +8001,7 @@
                 }
                 var anifunc = () => {
                     Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
+                        EventAdmin.notify(Guide.EventType.next);
                         this.self['DrawDisPlay'].x = -800;
                         this.self['DrawDisPlay'].alpha = 1;
                         Admin._clickLock.switch = false;
@@ -7954,10 +8110,14 @@
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
                 "res/atlas/Game/UI/UISkinQualified.png",
+                "res/atlas/Game/UI/UIDrawCard/Card.png",
             ];
             Loding.list_2DScene = [
                 "Scene/LwgInit.json",
                 "Scene/UICheckIn.json",
+                "Scene/UISet.json",
+                "Scene/UISkinQualified.json",
+                "Scene/UIDrawCard.json",
             ];
             Loding.list_2DPrefab = [];
             Loding.list_3DScene = [
@@ -7988,6 +8148,71 @@
         lodingComplete() {
             this.self['Progress'].mask.x = 0;
             return 200;
+        }
+    }
+
+    var LwgInit;
+    (function (LwgInit) {
+        class LwgInitScene extends Admin.Scene {
+            moduleOnAwake() {
+                this.admin();
+                this.game3D();
+                this.checkIn();
+                this.shop();
+                this.skin();
+                this.task();
+                this.easterEgg();
+                Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+            }
+            moduleOnEnable() {
+            }
+            moduleEventReg() {
+            }
+            admin() {
+                Admin._commonVanishAni = true;
+                Admin._platform = Admin._platformTpye.Bytedance;
+            }
+            game3D() {
+                Game3D.dataInit();
+                Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+                Laya.stage.addChild(Game3D.Scene3D);
+                Game3D.Scene3D.addComponent(Game3D.MainScene);
+            }
+            checkIn() {
+                CheckIn.init();
+            }
+            skin() {
+            }
+            shop() {
+            }
+            task() {
+            }
+            easterEgg() {
+            }
+        }
+        LwgInit.LwgInitScene = LwgInitScene;
+    })(LwgInit || (LwgInit = {}));
+    class UILwgInit extends LwgInit.LwgInitScene {
+        lwgOnEnable() {
+            console.log('完成初始化');
+            console.log('是否进行过新手引导：', Guide._complete.bool);
+            if (Guide._complete.bool) {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            }
+            else {
+                Backpack._haveCardArray.arr = [];
+                DrawCard._drawCount.num = 0;
+                DrawCard._residueDraw.num = 2;
+                Admin._openScene(Admin.SceneName.UIDrawCard, this.self, () => {
+                    let caller = {};
+                    TimerAdmin.frameLoop(1, caller, () => {
+                        if (Laya.stage.getChildByName('UIDrawCard')) {
+                            Laya.timer.clearAll(caller);
+                            Admin._openScene(Admin.SceneName.UIGuide);
+                        }
+                    });
+                });
+            }
         }
     }
 
@@ -8569,9 +8794,13 @@
         lwgOnAwake() {
             Setting.setBtnAppear();
             Gold.createGoldNode(629, 174);
+            EventAdmin.notify(Guide.EventType.next);
+            console.log(Laya.stage);
         }
         lwgOpenAniAfter() {
-            CheckIn.openCheckIn();
+            if (Guide._complete.bool) {
+                CheckIn.openCheckIn();
+            }
         }
         lwgAdaptive() {
             this.self['BtnStart'].y = Laya.stage.height * 0.779;
@@ -8616,20 +8845,45 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.UIPropTry, this.self);
+                if (!Guide._complete.bool) {
+                    if (Guide._whichStepNum == 7) {
+                        Admin._openScene(Admin.SceneName.UIPropTry, this.self);
+                    }
+                    return;
+                }
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.UIDrawCard);
+                if (!Guide._complete.bool) {
+                    return;
+                }
+                Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
             });
             Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+                if (!Guide._complete.bool) {
+                    return;
+                }
                 Admin._openScene(Admin.SceneName.UICheckIn);
             });
             Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
+                if (!Guide._complete.bool) {
+                    return;
+                }
                 Admin._openScene(Admin.SceneName.UISkinQualified);
             });
             Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-                EventAdmin.notify(Game3D.EventType.openUICard);
-                Admin._openScene(Admin.SceneName.UICard, this.self);
+                var func = () => {
+                    EventAdmin.notify(Game3D.EventType.openUICard);
+                    Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
+                };
+                if (!Guide._complete.bool) {
+                    if (Guide._whichStepNum == 7) {
+                        func();
+                    }
+                    return;
+                }
+                else {
+                    func();
+                }
             });
         }
         lwgOnDisable() {
@@ -9017,13 +9271,14 @@
             reg("TJ/Promo/script/P205.ts", P205);
             reg("TJ/Promo/script/P106.ts", P106);
             reg("script/Game/GameScene.ts", GameScene);
-            reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UIAdsHint.ts", UIAdsHint$1);
             reg("script/Game/UICard.ts", UICard);
             reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
+            reg("script/Frame/Guide.ts", UIGuide);
             reg("script/Game/UILoding.ts", UILoding);
+            reg("script/Frame/LwgInit.ts", UILwgInit);
             reg("script/Game/UIPropTry.ts", UIPropTry);
             reg("script/Game/UIResurgence.ts", UIResurgence);
             reg("script/Game/UISet.ts", UISet);

@@ -1,15 +1,20 @@
 import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin, Loding } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 import { Game3D } from "./Game3D";
+import { Guide } from "../Frame/Guide";
 
 export default class UIStart extends Start.StartScene {
 
     lwgOnAwake(): void {
         Setting.setBtnAppear();
         Gold.createGoldNode(629, 174);
+        EventAdmin.notify(Guide.EventType.next);
+        console.log(Laya.stage);
     }
     lwgOpenAniAfter(): void {
-        CheckIn.openCheckIn();
+        if (Guide._complete.bool) {
+            CheckIn.openCheckIn();
+        }
     }
 
     lwgAdaptive(): void {
@@ -56,22 +61,46 @@ export default class UIStart extends Start.StartScene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-            Admin._openScene(Admin.SceneName.UIPropTry, this.self);
+            if (!Guide._complete.bool) {
+                if (Guide._whichStepNum == 7) {
+                    Admin._openScene(Admin.SceneName.UIPropTry, this.self);
+                }
+                return;
+            }
         });
 
         Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
-            Admin._openScene(Admin.SceneName.UIDrawCard,this.self);
+            if (!Guide._complete.bool) {
+                return;
+            }
+            Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
         });
 
         Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+            if (!Guide._complete.bool) {
+                return;
+            }
             Admin._openScene(Admin.SceneName.UICheckIn);
         });
         Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
+            if (!Guide._complete.bool) {
+                return;
+            }
             Admin._openScene(Admin.SceneName.UISkinQualified);
         });
         Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-            EventAdmin.notify(Game3D.EventType.openUICard);
-            Admin._openScene(Admin.SceneName.UICard, this.self);
+            var func = () => {
+                EventAdmin.notify(Game3D.EventType.openUICard);
+                Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
+            }
+            if (!Guide._complete.bool) {
+                if (Guide._whichStepNum == 7) {
+                    func();
+                }
+                return;
+            } else {
+                func();
+            }
         });
     }
 

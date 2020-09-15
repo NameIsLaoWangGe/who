@@ -1,4 +1,4 @@
-import { Admin, Click, EventAdmin, Tools, Animation2D, TimerAdmin } from "./lwg";
+import { Admin, Click, EventAdmin, Tools, Animation2D, TimerAdmin, Start } from "./lwg";
 /**测试模块,每个模块分开，默认导出一个类，这个类是默认挂载的脚本类，如果有多个脚本，
  * 那么在这个默认类中进行添加，或者在其他地方动态添加*/
 export module Guide {
@@ -67,37 +67,45 @@ export default class UIGuide extends Guide.GuideScene {
         this.self['Background'].alpha = 0;
         this.self['Hand'].alpha = 0;
         EventAdmin.notify(Guide.EventType.next);
+
+        this.self["Draw"].on(Laya.Event.LABEL, this, (labal) => {
+            if (labal === 'start') {
+                let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                if (!DrawCanvas) {
+                    let DrawCanvas = new Laya.Sprite();
+                    DrawCanvas.name = 'DrawCanvas';
+                    this.self['Hand'].addChild(DrawCanvas);
+                    this.self['Handpic'].pos(0, 0);
+                    this.self['Handpic'].pivotX = 0;
+                    this.self['Handpic'].pivotY = 0;
+                    this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
+                }
+            } else if (labal === 'end') {
+                let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+                if (this.self['Hand'].getChildByName('DrawCanvas')) {
+                    this['drawLinePos'] == false;
+                    DrawCanvas.removeSelf();
+                }
+            }
+        });
+
+        TimerAdmin.frameLoop(1, this, () => {
+            let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+            if (DrawCanvas) {
+                if (this['drawLinePos']) {
+                    DrawCanvas.graphics.drawLine(this['drawLinePos'].x, this['drawLinePos'].y, this.self['Handpic'].x, this.self['Handpic'].y, "#000000", 8);
+                    DrawCanvas.graphics.drawCircle(this.self['Handpic'].x, this.self['Handpic'].y, 4, "#000000");
+                    this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
+                }
+            }
+        })
     }
     lwgEventReg(): void {
         /**第一次十连抽*/
         var step1 = () => {
-            TimerAdmin.loop(10, this, () => {
-                if (!this['timeCount']) {
-                    let DrawCanvas = new Laya.Sprite();
-                    DrawCanvas.name = 'DrawCanvas';
-                    this.self['Hand'].addChild(DrawCanvas);
-                    this['timeCount'] = 1;
-                } else {
-                    let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
-                    this['timeCount']++;
-                    if (this['timeCount'] >= 260) {
-                        this['timeCount'] = false;
-                        this['drawLinePos'] = false;
-                        DrawCanvas.removeSelf();
-                    } else {
-                        if (!this['drawLinePos']) {
-                            this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
-                        } else {
-                            DrawCanvas.graphics.drawLine(this['drawLinePos'].x, this['drawLinePos'].y, this.self['Handpic'].x, this.self['Handpic'].y, "#000000", 8);
-                            DrawCanvas.graphics.drawCircle(this.self['Handpic'].x, this.self['Handpic'].y, 4, "#000000");
-                            this['drawLinePos'] = new Laya.Point(this.self['Handpic'].x, this.self['Handpic'].y);
-                        }
-                    }
-                }
-            })
-            EventAdmin.notify(Guide.EventType.appear);
-            this.self['Hand'].pos(175, 500);
             this.self["Draw"].play(0, true);
+            EventAdmin.notify(Guide.EventType.appear);
+            this.self['Hand'].pos(198, 523);
             Tools.Draw.reverseRoundMask(this.self['Background'], 360, 598, 350, true);
         }
         /**第一次收取卡牌*/
@@ -115,25 +123,30 @@ export default class UIGuide extends Guide.GuideScene {
         var step4 = () => {
             step2();
         }
-        /**关闭当前场景*/
+        /**关闭抽卡场景*/
         var step5 = () => {
-            Guide._complete.bool = true;
             EventAdmin.notify(Guide.EventType.appear);
-            this.self['Hand'].pos(68, 102);
+            this.self['Hand'].pos(75, 102);
             this.self["Click"].play(0, true);
             Tools.Draw.reverseRoundMask(this.self['Background'], 68, 102, 60);
         }
         // 点击卡牌展示界面
         var step6 = () => {
-
+            EventAdmin.notify(Guide.EventType.appear);
+            this.self['Hand'].pos(656, 758);
+            this.self["Click"].play(0, true);
+            Tools.Draw.reverseRoundrectMask(this.self['Background'], 656, 758, 130, 150, 20, true);
         }
-        // 点击签到
+        // 关闭卡牌界面
         var step7 = () => {
-
+            step5();
         }
         // 点击开始游戏
-        var step7 = () => {
-
+        var step8 = () => {
+            EventAdmin.notify(Guide.EventType.appear);
+            this.self['Hand'].pos(656, 758);
+            this.self["Click"].play(0, true);
+            Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 380, 160, 20, true);
         }
         EventAdmin.reg(Guide.EventType.next, this, () => {
             Laya.timer.once(500, this, () => {
@@ -154,6 +167,15 @@ export default class UIGuide extends Guide.GuideScene {
                     case 5:
                         step5();
                         break;
+                    case 6:
+                        step6();
+                        break;
+                    case 7:
+                        step7();
+                        break;
+                    case 7:
+                        step8();
+                        break;
                     default:
                         break;
                 }
@@ -165,16 +187,21 @@ export default class UIGuide extends Guide.GuideScene {
             Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
         })
         EventAdmin.reg(Guide.EventType.hint, this, () => {
+            let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
+            if (this.self['Hand'].getChildByName('DrawCanvas')) {
+                this['drawLinePos'] == false;
+                DrawCanvas.removeSelf();
+            }
             Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
             Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
                 (this.self["Draw"] as Laya.Animation).stop();
                 (this.self["Click"] as Laya.Animation).stop();
             });
         })
-        EventAdmin.reg(Guide.EventType.close, this, () => {
-            Admin._closeScene(this.self);
-            console.log('关闭引导场景！');
-        })
+        // EventAdmin.reg(Guide.EventType.close, this, () => {
+        //     Admin._closeScene(this.self);
+        //     console.log('关闭引导场景！');
+        // })
     }
 
 

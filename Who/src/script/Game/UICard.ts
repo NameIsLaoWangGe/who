@@ -1,14 +1,17 @@
 import { Admin, Click, EventAdmin, Backpack, Dialog, Animation2D } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 import ADManager from "../../TJ/Admanager";
+import { Guide } from "../Frame/Guide";
 export default class UICard extends Admin.Scene {
 
     lwgOnEnable(): void {
+        EventAdmin.notify(Guide.EventType.hint);
         this.self['BtnBack'].alhpa = 0;
         this.self['BtnBack'].visible = false;
         Laya.timer.once(4500, this, () => {
             Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
                 this.self['BtnBack'].visible = true;
+                EventAdmin.notify(Guide.EventType.next);
             });
         })
     }
@@ -19,8 +22,12 @@ export default class UICard extends Admin.Scene {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(Game3D.EventType.closeUICard);
+            EventAdmin.notify(Guide.EventType.hint);
         });
         var buy = (type) => {
+            if (!Guide._complete.bool) {
+                return;
+            }
             let arr = Game3D.getQualityObjArrByNameArr(Backpack._noHaveCard.arr, Game3D.Quality.R);
             if (arr.length > 0) {
                 if (type == 'ads') {

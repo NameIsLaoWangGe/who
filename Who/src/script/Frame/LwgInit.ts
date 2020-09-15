@@ -1,6 +1,7 @@
-import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold, CheckIn, TimerAdmin } from "./lwg";
+import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold, CheckIn, TimerAdmin, Backpack, DrawCard } from "./lwg";
 import { Game3D } from "../Game/Game3D";
 import { Guide } from "./Guide";
+import UIDrawCard from "../Game/UIDrawCard";
 
 export module LwgInit {
     export class LwgInitScene extends Admin.Scene {
@@ -57,6 +58,9 @@ export default class UILwgInit extends LwgInit.LwgInitScene {
         if (Guide._complete.bool) {
             Admin._openScene(Admin.SceneName.UIStart, this.self);
         } else {
+            Backpack._haveCardArray.arr = [];
+            DrawCard._drawCount.num = 0;
+            DrawCard._residueDraw.num = 2;
             Admin._openScene(Admin.SceneName.UIDrawCard, this.self, () => {
                 let caller = {};
                 TimerAdmin.frameLoop(1, caller, () => {

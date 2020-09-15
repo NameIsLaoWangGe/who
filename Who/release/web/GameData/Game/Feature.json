@@ -1,135 +1,134 @@
-{ 
-"RECORDS": 
-[
-  {
-    "index": 1,
-    "describe": "胖子",
-    "question": "胖子？"
-  },
-  {
-    "index": 2,
-    "describe": "瘦子",
-    "question": "瘦子？"
-  },
-  {
-    "index": 3,
-    "describe": "不胖不瘦",
-    "question": "不胖不瘦？"
-  },
-  {
-    "index": 4,
-    "describe": "滑稽",
-    "question": "滑稽？"
-  },
-  {
-    "index": 5,
-    "describe": "微笑",
-    "question": "微笑？"
-  },
-  {
-    "index": 6,
-    "describe": "笑哭",
-    "question": "笑哭？"
-  },
-  {
-    "index": 7,
-    "describe": "惊讶",
-    "question": "惊讶？"
-  },
-  {
-    "index": 8,
-    "describe": "生气",
-    "question": "生气？"
-  },
-  {
-    "index": 9,
-    "describe": "很爱财",
-    "question": "很爱财？"
-  },
-  {
-    "index": 10,
-    "describe": "有可能住在王者峡谷",
-    "question": "有可能住在王者峡谷？"
-  },
-  {
-    "index": 11,
-    "describe": "有可能是p城刚枪王",
-    "question": "有可能是p城刚枪王？"
-  },
-  {
-    "index": 12,
-    "describe": "有可能会自己造房子",
-    "question": "有可能会自己造房子？"
-  },
-  {
-    "index": 13,
-    "describe": "有可能来自scp",
-    "question": "有可能来自scp？"
-  },
-  {
-    "index": 14,
-    "describe": "有可能会是茶艺大师",
-    "question": "有可能会是茶艺大师？"
-  },
-  {
-    "index": 15,
-    "describe": "有可能喜欢爬山",
-    "question": "有可能喜欢爬山？"
-  },
-  {
-    "index": 16,
-    "describe": "有可能是程序员",
-    "question": "有可能是程序员？"
-  },
-  {
-    "index": 17,
-    "describe": "有可能是个小学生",
-    "question": "有可能是个小学生？"
-  },
-  {
-    "index": 18,
-    "describe": "有可能喜欢打篮球",
-    "question": "有可能喜欢打篮球？"
-  },
-  {
-    "index": 19,
-    "describe": "有可能是街溜子",
-    "question": "有可能是街溜子？"
-  },
-  {
-    "index": 20,
-    "describe": "年纪很大",
-    "question": "年纪很大？"
-  },
-  {
-    "index": 21,
-    "describe": "有点邋遢",
-    "question": "有点邋遢？"
-  },
-  {
-    "index": 22,
-    "describe": "有可能是个国王",
-    "question": "有可能是个国王？"
-  },
-  {
-    "index": 23,
-    "describe": "有可能经常挨打",
-    "question": "有可能经常挨打？"
-  },
-  {
-    "index": 24,
-    "describe": "有可能会变身",
-    "question": "有可能会变身？"
-  },
-  {
-    "index": 25,
-    "describe": "男",
-    "question": "男？"
-  },
-  {
-    "index": 26,
-    "describe": "女",
-    "question": "女？"
-  }
-]
+{
+  "RECORDS": [
+    {
+      "index": 1,
+      "describe": "胖子",
+      "question": "胖子？"
+    },
+    {
+      "index": 2,
+      "describe": "瘦子",
+      "question": "瘦子？"
+    },
+    {
+      "index": 3,
+      "describe": "不胖不瘦",
+      "question": "不胖不瘦？"
+    },
+    {
+      "index": 4,
+      "describe": "滑稽",
+      "question": "滑稽？"
+    },
+    {
+      "index": 5,
+      "describe": "微笑",
+      "question": "微笑？"
+    },
+    {
+      "index": 6,
+      "describe": "笑哭",
+      "question": "笑哭？"
+    },
+    {
+      "index": 7,
+      "describe": "惊讶",
+      "question": "惊讶？"
+    },
+    {
+      "index": 8,
+      "describe": "生气",
+      "question": "生气？"
+    },
+    {
+      "index": 9,
+      "describe": "很爱财",
+      "question": "很爱财？"
+    },
+    {
+      "index": 10,
+      "describe": "可能住王者峡谷",
+      "question": "可能住王者峡谷？"
+    },
+    {
+      "index": 11,
+      "describe": "可能是p城刚枪王",
+      "question": "可能是p城刚枪王？"
+    },
+    {
+      "index": 12,
+      "describe": "可能会造房子",
+      "question": "可能会造房子？"
+    },
+    {
+      "index": 13,
+      "describe": "可能来自scp",
+      "question": "可能来自scp？"
+    },
+    {
+      "index": 14,
+      "describe": "可能是茶艺大师",
+      "question": "可能是茶艺大师？"
+    },
+    {
+      "index": 15,
+      "describe": "可能喜欢爬山",
+      "question": "有可能喜欢爬山？"
+    },
+    {
+      "index": 16,
+      "describe": "可能是程序员",
+      "question": "有可能是程序员？"
+    },
+    {
+      "index": 17,
+      "describe": "可能是小学生",
+      "question": "可能是小学生？"
+    },
+    {
+      "index": 18,
+      "describe": "可能喜欢篮球",
+      "question": "可能喜欢篮球？"
+    },
+    {
+      "index": 19,
+      "describe": "是否留胡子",
+      "question": "是否留胡子？"
+    },
+    {
+      "index": 20,
+      "describe": "年纪很大",
+      "question": "年纪很大？"
+    },
+    {
+      "index": 21,
+      "describe": "有点邋遢",
+      "question": "有点邋遢？"
+    },
+    {
+      "index": 22,
+      "describe": "可能是国王",
+      "question": "可能是国王？"
+    },
+    {
+      "index": 23,
+      "describe": "可能常挨打",
+      "question": "可能常挨打？"
+    },
+    {
+      "index": 24,
+      "describe": "可能会变身",
+      "question": "可能会变身？"
+    },
+    {
+      "index": 25,
+      "describe": "男",
+      "question": "男？"
+    },
+    {
+      "index": 26,
+      "describe": "女",
+      "question": "女？"
+    }
+  ]
 }

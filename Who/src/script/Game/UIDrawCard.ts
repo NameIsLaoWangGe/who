@@ -269,9 +269,12 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             if (!Guide._complete.bool) {
+                if (Guide._whichStepNum == 6) {
+                    Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
+                    EventAdmin.notify(Guide.EventType.hint);
+                }
                 return;
             } else {
-                EventAdmin.notify(Guide.EventType.close);
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
             }
         });
