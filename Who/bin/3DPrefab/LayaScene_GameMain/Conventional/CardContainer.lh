@@ -190,7 +190,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/zds2.lmat"
+									"path":"Assets/Animator/Cardgray/zds2.lmat"
 								}
 							]
 						},
@@ -298,7 +298,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/zds3.lmat"
+									"path":"Assets/Animator/Cardgray/zds3.lmat"
 								}
 							]
 						},
@@ -406,7 +406,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/zds4.lmat"
+									"path":"Assets/Animator/Cardgray/zds4.lmat"
 								}
 							]
 						},
@@ -514,7 +514,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/zds5.lmat"
+									"path":"Assets/Animator/Cardgray/zds5.lmat"
 								}
 							]
 						},
@@ -730,7 +730,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/lyy2.lmat"
+									"path":"Assets/Animator/Cardgray/lyy2.lmat"
 								}
 							]
 						},
@@ -838,7 +838,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/lyy3.lmat"
+									"path":"Assets/Animator/Cardgray/lyy3.lmat"
 								}
 							]
 						},
@@ -946,7 +946,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/lyy4.lmat"
+									"path":"Assets/Animator/Cardgray/lyy4.lmat"
 								}
 							]
 						},
@@ -1054,7 +1054,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/lyy5.lmat"
+									"path":"Assets/Animator/Cardgray/lyy5.lmat"
 								}
 							]
 						},
@@ -1270,7 +1270,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxk2.lmat"
+									"path":"Assets/Animator/Cardgray/cxk2.lmat"
 								}
 							]
 						},
@@ -1378,7 +1378,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxk3.lmat"
+									"path":"Assets/Animator/Cardgray/cxk3.lmat"
 								}
 							]
 						},
@@ -1486,7 +1486,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxk4.lmat"
+									"path":"Assets/Animator/Cardgray/cxk4.lmat"
 								}
 							]
 						},
@@ -1594,7 +1594,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxk5.lmat"
+									"path":"Assets/Animator/Cardgray/cxk5.lmat"
 								}
 							]
 						},
@@ -1810,7 +1810,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxy2.lmat"
+									"path":"Assets/Animator/Cardgray/cxy2.lmat"
 								}
 							]
 						},
@@ -1918,7 +1918,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxy3.lmat"
+									"path":"Assets/Animator/Cardgray/cxk3.lmat"
 								}
 							]
 						},
@@ -2026,7 +2026,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxy4.lmat"
+									"path":"Assets/Animator/Cardgray/cxy4.lmat"
 								}
 							]
 						},
@@ -2134,7 +2134,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/cxy5.lmat"
+									"path":"Assets/Animator/Cardgray/cxy5.lmat"
 								}
 							]
 						},
@@ -2458,7 +2458,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/xxs3.lmat"
+									"path":"Assets/Animator/Cardgray/xxs3.lmat"
 								}
 							]
 						},
@@ -2566,7 +2566,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/xxs4.lmat"
+									"path":"Assets/Animator/Cardgray/xxs4.lmat"
 								}
 							]
 						},
@@ -2674,7 +2674,7 @@
 							"enableRender":true,
 							"materials":[
 								{
-									"path":"Assets/Animator/Cardcolor/xxs5.lmat"
+									"path":"Assets/Animator/Cardgray/xxs5.lmat"
 								}
 							]
 						},

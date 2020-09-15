@@ -214,8 +214,8 @@ export default class GameScene extends Admin.Scene {
         Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
 
         let Card = GuessCard.getChildByName('Card') as Laya.Sprite;
-        let CardName = Card.getChildByName('CardName') as Laya.Label;
-        CardName.text = cardName;
+        let Pic = Card.getChildByName('Pic') as Laya.Image;
+        Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
         Card.y = Laya.stage.height * 0.483;
         Animation2D.cardRotateX_TowFace(Card, 180);
         Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);

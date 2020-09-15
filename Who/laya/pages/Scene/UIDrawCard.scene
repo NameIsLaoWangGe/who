@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":2,
-    "selecteID":22,
+    "selecteID":3,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280,"alpha":0},
     "nodeParent":-1,
@@ -284,9 +284,9 @@
             "child":[
                 {
                     "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,DrawDisPlayBg,DrawDisPlayBg",
-                    "props":{"y":0,"x":0,"width":720,"var":"DrawDisPlayBg","texture":"Frame/UI/ui_orthogon_black.png","name":"DrawDisPlayBg","height":1650,"alpha":0},
+                    "type":"Image",
+                    "searchKey":"Image,DrawDisPlayBg,DrawDisPlayBg",
+                    "props":{"y":0,"x":0,"width":720,"var":"DrawDisPlayBg","skin":"Frame/UI/ui_orthogon_black.png","sizeGrid":"21,27,37,26","name":"DrawDisPlayBg","height":1650,"alpha":0},
                     "nodeParent":22,
                     "label":"DrawDisPlayBg",
                     "isDirectory":false,

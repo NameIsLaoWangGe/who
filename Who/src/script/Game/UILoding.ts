@@ -6,16 +6,19 @@ export default class UILoding extends Loding.LodingScene {
             "res/atlas/Frame/Effects.png",
             "res/atlas/Frame/UI.png",
             "res/atlas/Game/UI/UISkinQualified.png",
+            "res/atlas/Game/UI/UIDrawCard/Card.png",
         ];
         Loding.list_2DScene = [
             "Scene/LwgInit.json",
             "Scene/UICheckIn.json",
             // "Scene/UIEasterEgg.json",
             // "Scene/UIOperation.json",
-            // "Scene/UISet.json",
+            "Scene/UISet.json",
             // "Scene/UIShop.json",
             // "Scene/UISkinXD.json",
             // "Scene/UITask.json",
+            "Scene/UISkinQualified.json",
+            "Scene/UIDrawCard.json",
         ];
         Loding.list_2DPrefab = [
             // "Prefab/PreOption.json",

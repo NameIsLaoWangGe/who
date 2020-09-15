@@ -9,6 +9,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
+
     }
 
     lwgOnEnable(): void {

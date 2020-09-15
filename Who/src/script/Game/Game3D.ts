@@ -775,7 +775,7 @@ export module Game3D {
                     });
                 } else if (whichBout == WhichBoutType.opposite) {
                     Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time, this, null, () => {
-                        EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), getChNameByName(myHandName)]);
+                        EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), myHandName]);
                     });
                 }
             })

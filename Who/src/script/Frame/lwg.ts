@@ -1181,6 +1181,7 @@ export module lwg {
         export enum SceneName {
             UILoding = 'UILoding',
             UIStart = 'UIStart',
+            UIGuide = 'UIGuide',
             UISkin = 'UISkin',
             UIShop = 'UIShop',
             UITask = 'UITask',
@@ -1205,7 +1206,7 @@ export module lwg {
             UIResurgence = 'UIResurgence',
             UIEasterEgg = 'UIEasterEgg',
             UIAdsHint = 'UIAdsHint',
-            LwgInit = 'LwgInit',
+            UILwgInit = 'UILwgInit',
             GameScene = 'GameScene',
             UISmallHint = 'UISmallHint',
             UIExecutionHint = 'UIExecutionHint',
@@ -6537,7 +6538,7 @@ export module lwg {
                 EventAdmin.reg(LodingType.complete, this, () => {
                     let time = this.lodingComplete();
                     PalyAudio.playMusic();
-                    Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self) })
+                    Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UILwgInit, this.self) })
                 });
 
                 EventAdmin.reg(LodingType.progress, this, (skip) => {

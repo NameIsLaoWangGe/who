@@ -1599,7 +1599,7 @@
                     }
                     else if (Game3D.whichBout == WhichBoutType.opposite) {
                         Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time, this, null, () => {
-                            EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), getChNameByName(Game3D.myHandName)]);
+                            EventAdmin.notify(EventType.oppositeAnswer, [setAnswerForOpposite(), Game3D.myHandName]);
                         });
                     }
                 });
@@ -2766,6 +2766,7 @@
             (function (SceneName) {
                 SceneName["UILoding"] = "UILoding";
                 SceneName["UIStart"] = "UIStart";
+                SceneName["UIGuide"] = "UIGuide";
                 SceneName["UISkin"] = "UISkin";
                 SceneName["UIShop"] = "UIShop";
                 SceneName["UITask"] = "UITask";
@@ -2790,7 +2791,7 @@
                 SceneName["UIResurgence"] = "UIResurgence";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
                 SceneName["UIAdsHint"] = "UIAdsHint";
-                SceneName["LwgInit"] = "LwgInit";
+                SceneName["UILwgInit"] = "UILwgInit";
                 SceneName["GameScene"] = "GameScene";
                 SceneName["UISmallHint"] = "UISmallHint";
                 SceneName["UIExecutionHint"] = "UIExecutionHint";
@@ -6479,6 +6480,14 @@
                     Laya.LocalStorage.setItem('Backpack_prop2', val.toString());
                 }
             };
+            Backpack._trophy = {
+                get num() {
+                    return Laya.LocalStorage.getItem('Backpack_trophy') ? Number(Laya.LocalStorage.getItem('Backpack_trophy')) : 0;
+                },
+                set num(val) {
+                    Laya.LocalStorage.setItem('Backpack_trophy', val.toString());
+                }
+            };
             Backpack._haveCardArray = {
                 get arr() {
                     return Laya.LocalStorage.getJSON('Backpack_haveCardArray') ? JSON.parse(Laya.LocalStorage.getJSON('Backpack_haveCardArray')) : [];
@@ -6583,7 +6592,7 @@
                     EventAdmin.reg(LodingType.complete, this, () => {
                         let time = this.lodingComplete();
                         PalyAudio.playMusic();
-                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.LwgInit, this.self); });
+                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UILwgInit, this.self); });
                     });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
@@ -6950,8 +6959,8 @@
             Question.text = questionAndYesOrNo[0];
             Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
             let Card = GuessCard.getChildByName('Card');
-            let CardName = Card.getChildByName('CardName');
-            CardName.text = cardName;
+            let Pic = Card.getChildByName('Pic');
+            Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
             Card.y = Laya.stage.height * 0.483;
             Animation2D.cardRotateX_TowFace(Card, 180);
             Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
@@ -7013,44 +7022,6 @@
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
-        }
-    }
-
-    class LwgInit extends Admin.Scene {
-        lwgOnAwake() {
-            this.admin();
-            this.game3D();
-            this.checkIn();
-            this.shop();
-            this.skin();
-            this.task();
-            this.easterEgg();
-            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
-        }
-        admin() {
-            Admin._commonVanishAni = true;
-            Admin._platform = Admin._platformTpye.Bytedance;
-        }
-        game3D() {
-            Game3D.dataInit();
-            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-            Laya.stage.addChild(Game3D.Scene3D);
-            Game3D.Scene3D.addComponent(Game3D.MainScene);
-        }
-        checkIn() {
-            CheckIn.init();
-        }
-        skin() {
-        }
-        shop() {
-        }
-        task() {
-        }
-        easterEgg() {
-        }
-        lwgOnEnable() {
-            console.log('完成初始化');
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
         }
     }
 
@@ -7270,7 +7241,14 @@
     }
 
     class UICard extends Admin.Scene {
-        lwgOnAwake() {
+        lwgOnEnable() {
+            this.self['BtnBack'].alhpa = 0;
+            this.self['BtnBack'].visible = false;
+            Laya.timer.once(4500, this, () => {
+                Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
+                    this.self['BtnBack'].visible = true;
+                });
+            });
         }
         lwgAdaptive() {
             this.self['BtnGold'].y = this.self['BtnAds'].y = Laya.stage.height - 156;
@@ -7942,16 +7920,106 @@
         }
     }
 
+    var Guide;
+    (function (Guide) {
+        Guide.data = {
+            da: 'data',
+            get array() {
+                return [];
+            },
+            set array(arr) {
+            },
+            getFunc1: () => {
+                return '测试1';
+            },
+            getFunc2: (any) => {
+                return;
+            },
+            setFunc1: () => {
+            },
+            setFunc2: (any) => {
+                console.log(any);
+            },
+            checkFunc1: (bool) => {
+                return bool;
+            },
+            checkFunc2: (bool) => {
+                return bool;
+            },
+            getTemporaryVariable: () => {
+                if (!Guide.data['name']) {
+                    Guide.data['name'] = '王大哥';
+                }
+                else {
+                    return Guide.data['name'];
+                }
+            }
+        };
+        Guide._complete = {
+            get bool() {
+                return Laya.LocalStorage.getItem('Guide_complete') ? Number(Laya.LocalStorage.getItem('Guide_complete')) : 0;
+            },
+            set bool(date) {
+                Laya.LocalStorage.setItem('Guide_complete', date.toString());
+            }
+        };
+        let EventType;
+        (function (EventType) {
+            EventType["event1"] = "Example_Event1";
+            EventType["event2"] = "Example_Event2";
+        })(EventType = Guide.EventType || (Guide.EventType = {}));
+        let AnyVariableEnum;
+        (function (AnyVariableEnum) {
+            AnyVariableEnum["thisVariable1"] = "thisVariable1";
+            AnyVariableEnum["thisVariable2"] = "thisVariable2";
+        })(AnyVariableEnum = Guide.AnyVariableEnum || (Guide.AnyVariableEnum = {}));
+        class GuideScene extends Admin.Scene {
+            moduleOnAwake() {
+            }
+            moduleOnEnable() {
+            }
+            moduleEventReg() {
+            }
+        }
+        Guide.GuideScene = GuideScene;
+        class Singleton {
+        }
+        Guide.Singleton = Singleton;
+    })(Guide || (Guide = {}));
+    class UIExample extends Guide.GuideScene {
+        lwgOnAwake() {
+            Guide['name'] = '大王哥';
+            console.log(Guide, parent, Guide['name']);
+            this['name'] = '老王哥';
+            console.log(this, this['name']);
+            Guide.data.getFunc2('any');
+            Guide.data.setFunc2('测试设置');
+        }
+        lwgNodeDec() { }
+        lwgOnEnable() { }
+        lwgEventReg() { }
+        lwgAdaptive() { }
+        lwgOpenAni() { return 100; }
+        lwgBtnClick() { }
+        lwgVanishAni() { return 100; }
+        lwgOnUpdate() { }
+        lwgOnDisable() { }
+    }
+
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
             Loding.list_2DPic = [
                 "res/atlas/Frame/Effects.png",
                 "res/atlas/Frame/UI.png",
                 "res/atlas/Game/UI/UISkinQualified.png",
+                "res/atlas/Game/UI/UIDrawCard/Card.png",
             ];
             Loding.list_2DScene = [
                 "Scene/LwgInit.json",
                 "Scene/UICheckIn.json",
+                "Scene/UISet.json",
+                "Scene/UISkinQualified.json",
+                "Scene/UIDrawCard.json",
             ];
             Loding.list_2DPrefab = [];
             Loding.list_3DScene = [
@@ -7982,6 +8050,66 @@
         lodingComplete() {
             this.self['Progress'].mask.x = 0;
             return 200;
+        }
+    }
+
+    var LwgInit;
+    (function (LwgInit) {
+        class LwgInitScene extends Admin.Scene {
+        }
+        LwgInit.LwgInitScene = LwgInitScene;
+    })(LwgInit || (LwgInit = {}));
+    class UILwgInit extends LwgInit.LwgInitScene {
+        lwgOnAwake() {
+            this.admin();
+            this.game3D();
+            this.checkIn();
+            this.shop();
+            this.skin();
+            this.task();
+            this.easterEgg();
+            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+        }
+        admin() {
+            Admin._commonVanishAni = true;
+            Admin._platform = Admin._platformTpye.Bytedance;
+        }
+        game3D() {
+            Game3D.dataInit();
+            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+            Laya.stage.addChild(Game3D.Scene3D);
+            Game3D.Scene3D.addComponent(Game3D.MainScene);
+        }
+        checkIn() {
+            CheckIn.init();
+        }
+        skin() {
+        }
+        shop() {
+        }
+        task() {
+        }
+        easterEgg() {
+        }
+        lwgOnEnable() {
+            console.log('完成初始化');
+            console.log('是否进行过新手引导：', Guide._complete.bool);
+            if (Guide._complete.bool) {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            }
+            else {
+                Admin._openScene(Admin.SceneName.UIDrawCard, this.self, () => {
+                    let caller = {};
+                    TimerAdmin.frameLoop(1, caller, () => {
+                        if (Laya.stage.getChildByName('UIDrawCard')) {
+                            console.log(Laya.stage);
+                            Laya.timer.clearAll(caller);
+                            Admin._openScene(Admin.SceneName.UIGuide, null, () => {
+                            });
+                        }
+                    });
+                });
+            }
         }
     }
 
@@ -8044,7 +8172,7 @@
                 Admin._gameSwitch = true;
                 ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
                 Admin._closeScene(this.self, () => {
-                    EventAdmin.notify(EventAdmin.EventType.resurgence);
+                    EventAdmin.notify(EventAdmin.EventType.nextCustoms);
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
@@ -8653,6 +8781,12 @@
                 default:
                     break;
             }
+            if (Admin._gameLevel.value % 4 == 0) {
+                Backpack._trophy.num += 50;
+            }
+            else {
+                Backpack._trophy.num += 5;
+            }
             Admin._gameLevel.value++;
         }
         lwgOnEnable() {
@@ -9005,13 +9139,14 @@
             reg("TJ/Promo/script/P205.ts", P205);
             reg("TJ/Promo/script/P106.ts", P106);
             reg("script/Game/GameScene.ts", GameScene);
-            reg("script/Frame/LwgInit.ts", LwgInit);
             reg("script/Game/UIAdsHint.ts", UIAdsHint$1);
             reg("script/Game/UICard.ts", UICard);
             reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
+            reg("script/Frame/Guide.ts", UIExample);
             reg("script/Game/UILoding.ts", UILoding);
+            reg("script/Frame/LwgInit.ts", UILwgInit);
             reg("script/Game/UIPropTry.ts", UIPropTry);
             reg("script/Game/UIResurgence.ts", UIResurgence);
             reg("script/Game/UISet.ts", UISet);

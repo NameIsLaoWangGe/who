@@ -48,37 +48,48 @@ export module Example {
     /**本地存储变量格式*/
     export let variable = {
         get value(): number | any {
-            return Laya.LocalStorage.getItem('variable') ? Number(Laya.LocalStorage.getItem('variable')) : null;
+            return Laya.LocalStorage.getItem('Example_variable') ? Number(Laya.LocalStorage.getItem('Example_variable')) : null;
         },
         set value(date: number | any) {
-            Laya.LocalStorage.setItem('variable', date.toString());
+            Laya.LocalStorage.setItem('Example_variable', date.toString());
         }
+    }
+
+    /**
+      * 数组存储
+      */
+    export let _arrayData = {
+        get arr(): Array<string> {
+            return Laya.LocalStorage.getJSON('Example__array') ? JSON.parse(Laya.LocalStorage.getJSON('Example__array')) : [];
+        },
+
+        set arr(array: Array<string>) {
+            Laya.LocalStorage.setJSON('Example__array', JSON.stringify(array));
+        },
     }
 
     /**普通变量必须初始化*/
     export let anyVariable: any;
 
-    /**事件类型，必须枚举,因为有可能在全局使用*/
+    /**事件类型，必须枚举,因为有可能在全局使用,命名必须使用模块名称+事件名称*/
     export enum EventType {
-        event1 = 'event1',
-        event2 = 'event2',
+        event1 = 'Example_Event1',
+        event2 = 'Example_Event2',
     }
 
     /**全模块中的临时变量可能在其他地方使用，所以在必要的时候枚举*/
     export enum AnyVariableEnum {
-
+        thisVariable1 = 'thisVariable1',
+        thisVariable2 = 'thisVariable2',
     }
 
-    /**通用类，可在每个游戏中重复使用重复*/
+    /**通用类，进行通用初始化，可在每个游戏中重复使用重复*/
     export class ExampleScene extends Admin.Scene {
         moduleOnAwake(): void {
-
         }
         moduleOnEnable(): void {
-
         }
         moduleEventReg(): void {
-
         }
     }
     /**其他类*/
