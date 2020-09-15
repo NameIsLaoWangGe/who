@@ -1,4 +1,4 @@
-import { Admin } from "./lwg";
+import { Admin, EventAdmin, TimerAdmin } from "./lwg";
 
 /**测试模块,每个模块分开，默认导出一个类，这个类是默认挂载的脚本类，如果有多个脚本，
  * 那么在这个默认类中进行添加，或者在其他地方动态添加*/
@@ -85,17 +85,15 @@ export module Guide {
 
 }
 /**可以手动挂在脚本中的类，全脚本唯一的默认导出，也可动态添加，动态添加写在模块内更方便*/
-export default class UIExample extends Guide.GuideScene {
+export default class UIGuide extends Guide.GuideScene {
     lwgOnAwake(): void {
-        // 模块中临时变量赋值方法,这种赋值必须只用在当前脚本，否则必须枚举
-        Guide['name'] = '大王哥';
-        console.log(Guide, parent, Guide['name']);
-        // 类中
-        this['name'] = '老王哥';
-        console.log(this, this['name']);
-        // 数据表
-        Guide.data.getFunc2('any');
-        Guide.data.setFunc2('测试设置');
+        // let tl = (new Laya.Animation()).loadAnimation("Mirror.ui");
+        console.log(this.self);
+        // this.self('Mirror');
+        // TimerAdmin.frameLoop(10, this, () => {
+        //     console.log(this.self["Mirror"]);
+        // })
+        (this.self["Mirror"] as Laya.Animation).play(0, true);
     }
     lwgNodeDec(): void { }
     lwgOnEnable(): void { }

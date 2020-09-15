@@ -7986,14 +7986,10 @@
         }
         Guide.Singleton = Singleton;
     })(Guide || (Guide = {}));
-    class UIExample extends Guide.GuideScene {
+    class UIGuide extends Guide.GuideScene {
         lwgOnAwake() {
-            Guide['name'] = '大王哥';
-            console.log(Guide, parent, Guide['name']);
-            this['name'] = '老王哥';
-            console.log(this, this['name']);
-            Guide.data.getFunc2('any');
-            Guide.data.setFunc2('测试设置');
+            console.log(this.self);
+            this.self["Mirror"].play(0, true);
         }
         lwgNodeDec() { }
         lwgOnEnable() { }
@@ -8017,6 +8013,7 @@
             Loding.list_2DScene = [
                 "Scene/LwgInit.json",
                 "Scene/UICheckIn.json",
+                "Scene/UIGuide.json",
                 "Scene/UISet.json",
                 "Scene/UISkinQualified.json",
                 "Scene/UIDrawCard.json",
@@ -8056,41 +8053,45 @@
     var LwgInit;
     (function (LwgInit) {
         class LwgInitScene extends Admin.Scene {
+            moduleOnAwake() {
+                this.admin();
+                this.game3D();
+                this.checkIn();
+                this.shop();
+                this.skin();
+                this.task();
+                this.easterEgg();
+                Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+            }
+            moduleOnEnable() {
+            }
+            moduleEventReg() {
+            }
+            admin() {
+                Admin._commonVanishAni = true;
+                Admin._platform = Admin._platformTpye.Bytedance;
+            }
+            game3D() {
+                Game3D.dataInit();
+                Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+                Laya.stage.addChild(Game3D.Scene3D);
+                Game3D.Scene3D.addComponent(Game3D.MainScene);
+            }
+            checkIn() {
+                CheckIn.init();
+            }
+            skin() {
+            }
+            shop() {
+            }
+            task() {
+            }
+            easterEgg() {
+            }
         }
         LwgInit.LwgInitScene = LwgInitScene;
     })(LwgInit || (LwgInit = {}));
     class UILwgInit extends LwgInit.LwgInitScene {
-        lwgOnAwake() {
-            this.admin();
-            this.game3D();
-            this.checkIn();
-            this.shop();
-            this.skin();
-            this.task();
-            this.easterEgg();
-            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
-        }
-        admin() {
-            Admin._commonVanishAni = true;
-            Admin._platform = Admin._platformTpye.Bytedance;
-        }
-        game3D() {
-            Game3D.dataInit();
-            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-            Laya.stage.addChild(Game3D.Scene3D);
-            Game3D.Scene3D.addComponent(Game3D.MainScene);
-        }
-        checkIn() {
-            CheckIn.init();
-        }
-        skin() {
-        }
-        shop() {
-        }
-        task() {
-        }
-        easterEgg() {
-        }
         lwgOnEnable() {
             console.log('完成初始化');
             console.log('是否进行过新手引导：', Guide._complete.bool);
@@ -8102,10 +8103,8 @@
                     let caller = {};
                     TimerAdmin.frameLoop(1, caller, () => {
                         if (Laya.stage.getChildByName('UIDrawCard')) {
-                            console.log(Laya.stage);
                             Laya.timer.clearAll(caller);
-                            Admin._openScene(Admin.SceneName.UIGuide, null, () => {
-                            });
+                            Admin._openScene(Admin.SceneName.UIGuide);
                         }
                     });
                 });
@@ -9144,7 +9143,7 @@
             reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
-            reg("script/Frame/Guide.ts", UIExample);
+            reg("script/Frame/Guide.ts", UIGuide);
             reg("script/Game/UILoding.ts", UILoding);
             reg("script/Frame/LwgInit.ts", UILwgInit);
             reg("script/Game/UIPropTry.ts", UIPropTry);
