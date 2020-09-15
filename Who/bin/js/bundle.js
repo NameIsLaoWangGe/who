@@ -8067,6 +8067,91 @@
         }
     }
 
+<<<<<<< HEAD
+=======
+    var Guide;
+    (function (Guide) {
+        Guide.data = {
+            da: 'data',
+            get array() {
+                return [];
+            },
+            set array(arr) {
+            },
+            getFunc1: () => {
+                return '测试1';
+            },
+            getFunc2: (any) => {
+                return;
+            },
+            setFunc1: () => {
+            },
+            setFunc2: (any) => {
+                console.log(any);
+            },
+            checkFunc1: (bool) => {
+                return bool;
+            },
+            checkFunc2: (bool) => {
+                return bool;
+            },
+            getTemporaryVariable: () => {
+                if (!Guide.data['name']) {
+                    Guide.data['name'] = '王大哥';
+                }
+                else {
+                    return Guide.data['name'];
+                }
+            }
+        };
+        Guide._complete = {
+            get bool() {
+                return Laya.LocalStorage.getItem('Guide_complete') ? Number(Laya.LocalStorage.getItem('Guide_complete')) : 0;
+            },
+            set bool(date) {
+                Laya.LocalStorage.setItem('Guide_complete', date.toString());
+            }
+        };
+        let EventType;
+        (function (EventType) {
+            EventType["event1"] = "Example_Event1";
+            EventType["event2"] = "Example_Event2";
+        })(EventType = Guide.EventType || (Guide.EventType = {}));
+        let AnyVariableEnum;
+        (function (AnyVariableEnum) {
+            AnyVariableEnum["thisVariable1"] = "thisVariable1";
+            AnyVariableEnum["thisVariable2"] = "thisVariable2";
+        })(AnyVariableEnum = Guide.AnyVariableEnum || (Guide.AnyVariableEnum = {}));
+        class GuideScene extends Admin.Scene {
+            moduleOnAwake() {
+            }
+            moduleOnEnable() {
+            }
+            moduleEventReg() {
+            }
+        }
+        Guide.GuideScene = GuideScene;
+        class Singleton {
+        }
+        Guide.Singleton = Singleton;
+    })(Guide || (Guide = {}));
+    class UIGuide extends Guide.GuideScene {
+        lwgOnAwake() {
+            console.log(this.self);
+            this.self["Mirror"].play(0, true);
+        }
+        lwgNodeDec() { }
+        lwgOnEnable() { }
+        lwgEventReg() { }
+        lwgAdaptive() { }
+        lwgOpenAni() { return 100; }
+        lwgBtnClick() { }
+        lwgVanishAni() { return 100; }
+        lwgOnUpdate() { }
+        lwgOnDisable() { }
+    }
+
+>>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
             Loding.list_2DPic = [
@@ -8078,6 +8163,7 @@
             Loding.list_2DScene = [
                 "Scene/LwgInit.json",
                 "Scene/UICheckIn.json",
+                "Scene/UIGuide.json",
                 "Scene/UISet.json",
                 "Scene/UISkinQualified.json",
                 "Scene/UIDrawCard.json",

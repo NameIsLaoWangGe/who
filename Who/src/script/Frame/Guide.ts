@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { Admin, Click, EventAdmin, Tools, Animation2D, TimerAdmin } from "./lwg";
+=======
+import { Admin, EventAdmin, TimerAdmin } from "./lwg";
+
+>>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
 /**测试模块,每个模块分开，默认导出一个类，这个类是默认挂载的脚本类，如果有多个脚本，
  * 那么在这个默认类中进行添加，或者在其他地方动态添加*/
 export module Guide {
@@ -179,4 +184,28 @@ export default class UIGuide extends Guide.GuideScene {
 
 
 }
+<<<<<<< HEAD
+=======
+/**可以手动挂在脚本中的类，全脚本唯一的默认导出，也可动态添加，动态添加写在模块内更方便*/
+export default class UIGuide extends Guide.GuideScene {
+    lwgOnAwake(): void {
+        // let tl = (new Laya.Animation()).loadAnimation("Mirror.ui");
+        console.log(this.self);
+        // this.self('Mirror');
+        // TimerAdmin.frameLoop(10, this, () => {
+        //     console.log(this.self["Mirror"]);
+        // })
+        (this.self["Mirror"] as Laya.Animation).play(0, true);
+    }
+    lwgNodeDec(): void { }
+    lwgOnEnable(): void { }
+    lwgEventReg(): void { }
+    lwgAdaptive(): void { }
+    lwgOpenAni(): number { return 100; }
+    lwgBtnClick(): void { }
+    lwgVanishAni(): number { return 100; }
+    lwgOnUpdate(): void { }
+    lwgOnDisable(): void { }
+}
+>>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
 
