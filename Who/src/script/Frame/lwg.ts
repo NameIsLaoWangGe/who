@@ -4453,83 +4453,84 @@ export module lwg {
             sk.player.currentTime = 15 * 1000 / sk.player.cacheFrameRate;
         }
 
-        /**
-         * 为一个节点绘制一个扇形遮罩
-         * 想要遮罩的形状发生变化，必须先将父节点的cacheAs改回“none”，接着改变其角度，再次将cacheAs改为“bitmap”，必须在同一帧内进行，因为是同一帧，所以在当前帧最后或者下一帧前表现出来，帧内时间不会表现任何状态，这是个思路，帧内做任何变化都不会显示，只要帧结尾改回来就行。
-         * @param parent 被遮罩的节点，也是父节点
-         * @param startAngle 扇形的初始角度
-         * @param endAngle 扇形结束角度
-        */
-        export function draw_drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
-            // 父节点cacheAs模式必须为"bitmap"
-            parent.cacheAs = "bitmap";
-            //新建一个sprite作为绘制扇形节点
-            let drawPieSpt = new Laya.Sprite();
-            //设置叠加模式
-            drawPieSpt.blendMode = "destination-out";
-            // 加入父节点
-            parent.addChild(drawPieSpt);
-            // 绘制扇形，位置在中心位置，大小略大于父节点，保证完全遮住
-            let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
-            return drawPie;
-        }
+        /**绘制类*/
+        export class Draw {
 
-        /**
-         * 在一个场景中，在一个节点图片上画线，线画在场景里，目前支持方形和圆形
-         * @param Scene 场景
-         * @param node 节点，如果输入为null，则是清除当前事件
-         * @param nodeForm 图片是圆形还是方形,默认是圆形'r'，'s'为方形
-         * @param radius 线段的半径
-         * @param color 颜色
-         */
-        export function draw_LineInScene(Scene: Laya.Scene, node: Laya.Sprite, nodeForm: string, radius: number, color: string): number {
-            let length;
-            Click.on(Click.Type.noEffect, node, this,
-                // 按下
-                (e: Laya.Event) => {
-                    if (!this.self.getChildByName('DrawSp')) {
-                        length = 0;
-                        let DrawSp = new Laya.Sprite();
-                        Scene.addChild(DrawSp);
-                        DrawSp.name = 'DrawSp';
-                        DrawSp.pos(0, 0);
-                        Scene['DrawSp'] = DrawSp;
-                    }
-                    Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
-                },
-                // 移动
-                (e: Laya.Event) => {
-                    // 范围控制
-                    if (nodeForm == '') {
+            /**
+              * 为一个节点绘制一个扇形遮罩
+              * 想要遮罩的形状发生变化，必须先将父节点的cacheAs改回“none”，接着改变其角度，再次将cacheAs改为“bitmap”，必须在同一帧内进行，因为是同一帧，所以在当前帧最后或者下一帧前表现出来，帧内时间不会表现任何状态，这是个思路，帧内做任何变化都不会显示，只要帧结尾改回来就行。
+              * @param parent 被遮罩的节点，也是父节点
+              * @param startAngle 扇形的初始角度
+              * @param endAngle 扇形结束角度
+             */
+            static drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
+                // 父节点cacheAs模式必须为"bitmap"
+                parent.cacheAs = "bitmap";
+                //新建一个sprite作为绘制扇形节点
+                let drawPieSpt = new Laya.Sprite();
+                //设置叠加模式
+                drawPieSpt.blendMode = "destination-out";
+                // 加入父节点
+                parent.addChild(drawPieSpt);
+                // 绘制扇形，位置在中心位置，大小略大于父节点，保证完全遮住
+                let drawPie = drawPieSpt.graphics.drawPie(parent.width / 2, parent.height / 2, parent.width / 2 + 10, startAngle, endAngle, "#000000");
+                return drawPie;
+            }
 
-                    }
-                    let Img = node as Laya.Sprite;
-                    let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
-                    if (new Laya.Point(e.stageX, e.stageY).distance(globalPos.x, globalPos.y) > Img.width / 2) {
-                        Scene['DrawPosArr'] = null;
-                        return;
-                    }
-                    // 画线
-                    if (Scene['DrawPosArr']) {
-                        Scene['DrawSp'].graphics.drawLine(Scene['DrawPosArr'].x, Scene['DrawPosArr'].y, e.stageX, e.stageY, color, radius * 2);
+            /**
+             * 在一个节点上绘制一个圆形反向遮罩,可以绘制很多个，清除直接删除node中的子节点即可
+             * 圆角矩形的中心点在节点的中间
+             * @param node 节点
+             * @param x x位置
+             * @param y y位置
+             * @param radius 半径
+             * @param eliminate 是否清除其他遮罩，默认为true
+             */
+            static reverseRoundMask(node, x: number, y: number, radius: number, eliminate?: boolean): void {
+                if (eliminate == undefined || eliminate == true) {
+                    node_RemoveAllChildren(node);
+                }
+                let interactionArea = new Laya.Sprite();
+                interactionArea.name = 'reverseRoundMask';
+                //设置叠加模式
+                interactionArea.blendMode = "destination-out";//利用叠加模式创建反向遮罩
+                node.cacheAs = "bitmap";
+                node.addChild(interactionArea);
+                // 画出圆形，可以画很多个圆形
+                interactionArea.graphics.drawCircle(0, 0, radius, "#000000");
+                interactionArea.pos(x, y);
+            }
 
-                        Scene['DrawSp'].graphics.drawCircle(e.stageX, e.stageY, radius, color);
-                        length += (Scene['DrawPosArr'] as Laya.Point).distance(e.stageX, e.stageY);
-                        Scene['DrawPosArr'] = new Laya.Point(e.stageX, e.stageY);
-                    }
-                },
-                // 抬起
-                () => {
-                    if (length > 3000) {
-                        Scene.getChildByName('DrawSp').removeSelf();
-                    }
-                    Scene['DrawPosArr'] = null;
-                },
-                // 出图片
-                () => {
-                    Scene['DrawPosArr'] = null;
-                });
-            return length;
+
+            /**
+             * 在一个节点上绘制一个圆形反向遮罩,可以绘制很多个，清除直接删除node中的子节点即可
+             * 圆角矩形的中心点在节点的中间
+             * @param node 节点
+             * @param x x位置
+             * @param y y位置
+             * @param width 宽
+             * @param height 高
+             * @param round 圆角角度
+             * @param eliminate 是否清除其他遮罩，默认为true
+             */
+            static reverseRoundrectMask(node, x: number, y: number, width: number, height: number, round: number, eliminate?: boolean): void {
+                if (eliminate == undefined || eliminate == true) {
+                    node_RemoveAllChildren(node);
+                }
+                let interactionArea = new Laya.Sprite();
+                interactionArea.name = 'reverseRoundrectMask';
+                //设置叠加模式
+                interactionArea.blendMode = "destination-out";//利用叠加模式创建反向遮罩
+                node.cacheAs = "bitmap";
+                node.addChild(interactionArea);
+                // 画出圆形，可以画很多个圆形
+                interactionArea.graphics.drawPath(0, 0, [["moveTo", 5, 0], ["lineTo", width - round, 0], ["arcTo", width, 0, width, round, round], ["lineTo", width, height - round], ["arcTo", width, height, width - round, height, round], ["lineTo", height - round, height], ["arcTo", 0, height, 0, height - round, round], ["lineTo", 0, round], ["arcTo", 0, 0, round, 0, round], ["closePath"]], { fillStyle: "#000000" });
+                interactionArea.width = width;
+                interactionArea.height = height;
+                interactionArea.pivotX = width / 2;
+                interactionArea.pivotY = height / 2;
+                interactionArea.pos(x, y);
+            }
         }
 
         /**

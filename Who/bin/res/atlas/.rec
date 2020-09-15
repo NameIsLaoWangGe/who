@@ -80,6 +80,7 @@ P 891DB0D6 ui_square_guang2.png
 D Frame/UI
 P C36AA67B icon_execution.png
 P A5763191 icon_gold.png
+P 7A9D5B20 icon_hand.png
 P BF63B6AC icon_set.png
 P CD257D00 reverseMask.png
 P 9BF3B9B8 ui__l_orthogon_blue.png
@@ -230,6 +231,7 @@ D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
+P 5FEA9F5C drawline.png
 P 1F98456A gongxi.png
 P AE16EA3B guang-1.png
 P 89985C7B guang-2.png

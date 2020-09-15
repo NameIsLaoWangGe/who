@@ -1,6 +1,7 @@
 import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog, Backpack } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
+import { Guide } from "../Frame/Guide";
 
 export default class UIDrawCard extends DrawCard.DrawCardScene {
     /** @prop {name:Card, tips:"选项卡预制体", type:Prefab}*/
@@ -9,7 +10,6 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
-
     }
 
     lwgOnEnable(): void {
@@ -68,13 +68,15 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     }
 
     lwgEventReg(): void {
+        // 引导的时候，用两个遮罩盖住按钮的点击
+        EventAdmin.reg(Guide.EventType.start, this, () => {
+        })
 
         let Img = this.self['Surface'] as Laya.Sprite;
         let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
-
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
-
+            EventAdmin.notify(Guide.EventType.hint);
             // 抽卡限制
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
@@ -245,11 +247,15 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         // 关闭分享界面，我都要按钮出现
         EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
             this.self['BtnTake'].visible = true;
+            EventAdmin.notify(Guide.EventType.next);
         })
     }
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnFree'], this, null, null, () => {
+            if (!Guide._complete.bool) {
+                return;
+            }
             // ADManager.ShowReward(() => {
             DrawCard._freeAds.num++;
             if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
@@ -262,7 +268,12 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            Admin._closeScene(this.self);
+            if (!Guide._complete.bool) {
+                return;
+            } else {
+                EventAdmin.notify(Guide.EventType.close);
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            }
         });
 
         Click.on(Click.Type.noEffect, this.self['DrawDisPlay'], this, (e: Laya.Event) => {
@@ -270,6 +281,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e: Laya.Event) => {
+            EventAdmin.notify(Guide.EventType.hint);
             Admin._clickLock.switch = true;
             let arrRepetitionCard = [];
             let arrCard = [];
@@ -283,6 +295,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
             var anifunc = () => {
                 Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
+                    EventAdmin.notify(Guide.EventType.next);
                     this.self['DrawDisPlay'].x = -800;
                     this.self['DrawDisPlay'].alpha = 1;
                     Admin._clickLock.switch = false;
@@ -328,7 +341,6 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 arrRepetitionCardAni();
             }
         });
-
 
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
