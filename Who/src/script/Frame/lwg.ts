@@ -1,5 +1,4 @@
 import { Game3D } from "../Game/Game3D";
-
 // import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
@@ -1006,9 +1005,6 @@ export module lwg {
                 })
             }, args, coverBefore);
         }
-
-
-
     }
 
     /**游戏整体控制*/
@@ -1026,7 +1022,6 @@ export module lwg {
 
         /**游戏控制开关*/
         export let _gameSwitch: boolean = false;
-
 
         /**等级*/
         export let _gameLevel = {
@@ -1223,6 +1218,7 @@ export module lwg {
           * @param zOder 指定层级
          */
         export function _openScene(openName: string, cloesScene?: Laya.Scene, func?: Function, zOder?: number): void {
+            Admin._clickLock.switch = true;
             Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene: Laya.Scene) {
                 scene.width = Laya.stage.width;
                 scene.height = Laya.stage.height;
@@ -1323,6 +1319,7 @@ export module lwg {
             let time = 0;
             let delay = 0;
             var afterAni = () => {
+                _clickLock.switch = false;
                 if (scene[scene.name]) {
                     scene[scene.name].lwgOpenAniAfter();
                     scene[scene.name].lwgBtnClick();
@@ -1432,14 +1429,14 @@ export module lwg {
             /**通过openni返回的时间来延时开启点击事件*/
             private btnAndlwgOpenAni(): void {
                 let time = this.lwgOpenAni();
-                if (!time) {
-                    time = commonOpenAni(this.self);
-                    time = 0;
-                } else {
+                if (time) {
                     Laya.timer.once(time, this, f => {
+                        _clickLock.switch = false;
                         this.lwgOpenAniAfter();
                         this.lwgBtnClick();
                     });
+                } else {
+                    time = commonOpenAni(this.self);
                 }
             }
 

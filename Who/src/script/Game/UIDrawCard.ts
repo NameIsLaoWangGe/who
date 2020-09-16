@@ -76,7 +76,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
-            EventAdmin.notify(Guide.EventType.hint);
+        
             // 抽卡限制
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
@@ -247,7 +247,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         // 关闭分享界面，我都要按钮出现
         EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
             this.self['BtnTake'].visible = true;
-            EventAdmin.notify(Guide.EventType.next);
+            EventAdmin.notify(Guide.EventType.onStep);
         })
     }
 
@@ -269,9 +269,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             if (!Guide._complete.bool) {
-                if (Guide._whichStepNum == 6) {
+                if (Guide._whichStepNum == 5) {
                     Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
-                    EventAdmin.notify(Guide.EventType.hint);
+                    EventAdmin.notify(Guide.EventType.stepComplete);
                 }
                 return;
             } else {
@@ -284,7 +284,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e: Laya.Event) => {
-            EventAdmin.notify(Guide.EventType.hint);
+            EventAdmin.notify(Guide.EventType.stepComplete);
             Admin._clickLock.switch = true;
             let arrRepetitionCard = [];
             let arrCard = [];
@@ -298,7 +298,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
             var anifunc = () => {
                 Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
-                    EventAdmin.notify(Guide.EventType.next);
+                    EventAdmin.notify(Guide.EventType.onStep);
                     this.self['DrawDisPlay'].x = -800;
                     this.self['DrawDisPlay'].alpha = 1;
                     Admin._clickLock.switch = false;
@@ -348,6 +348,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
             (e: Laya.Event) => {
+                EventAdmin.notify(Guide.EventType.stepComplete);
                 // 初始化一个绘制节点
                 if (!this.self.getChildByName('DrawSp')) {
                     this.self['Drawlength'] = 0;

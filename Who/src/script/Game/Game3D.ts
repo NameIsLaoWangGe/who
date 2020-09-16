@@ -237,15 +237,19 @@ export module Game3D {
      * */
     export function set16InitialCards(type): void {
         /**复制对象数组，否则会修改原数组*/
-        let CardData1 = Tools.objArray_Copy(CardData);
-        let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
+        let CardDataArr;
+        let cardData16;
         if (type == WhichScard.MyCardParent) {
+            CardDataArr = getCardObjByNameArr(Backpack._haveCardArray.arr);
+            let CardData0 = Tools.objArray_Copy(CardDataArr);
+            cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
             oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
         else if (type == WhichScard.OppositeCardParent) {
             myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
+            let CardData0 = Tools.objArray_Copy(CardData);
+            cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
         }
-
         let AllCardParent = AllCardGray.clone() as Laya.MeshSprite3D;
         let startX = 0.204;
         let spacingX = 0.3055;
@@ -748,12 +752,13 @@ export module Game3D {
         }
 
         lwgOnEnable(): void {
-            this.init();
+            // this.init();
         }
 
         lwgEventReg(): void {
             //开始游戏
             EventAdmin.reg(EventType.opening, this, () => {
+                this.init();
                 Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time * 3, this, null, () => {
                     Laya.timer.once(time * 2, this, () => {
                         Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);

@@ -1149,13 +1149,18 @@
         }
         Game3D.getNameArrByObjArr = getNameArrByObjArr;
         function set16InitialCards(type) {
-            let CardData1 = Tools.objArray_Copy(Game3D.CardData);
-            let cardData16 = Tools.arrayRandomGetOut(CardData1, 16);
+            let CardDataArr;
+            let cardData16;
             if (type == WhichScard.MyCardParent) {
+                CardDataArr = getCardObjByNameArr(Backpack._haveCardArray.arr);
+                let CardData0 = Tools.objArray_Copy(CardDataArr);
+                cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
                 Game3D.oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             else if (type == WhichScard.OppositeCardParent) {
                 Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
+                let CardData0 = Tools.objArray_Copy(Game3D.CardData);
+                cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
             }
             let AllCardParent = Game3D.AllCardGray.clone();
             let startX = 0.204;
@@ -1575,10 +1580,10 @@
                 Game3D.MainCamera.transform.localRotationEuler = Game3D.PerspectiveAwait.transform.localRotationEuler;
             }
             lwgOnEnable() {
-                this.init();
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
+                    this.init();
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time * 3, this, null, () => {
                         Laya.timer.once(time * 2, this, () => {
                             Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
@@ -2800,6 +2805,7 @@
                 SceneName["UICard"] = "UICard";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             function _openScene(openName, cloesScene, func, zOder) {
+                Admin._clickLock.switch = true;
                 Laya.Scene.load('Scene/' + openName + '.json', Laya.Handler.create(this, function (scene) {
                     scene.width = Laya.stage.width;
                     scene.height = Laya.stage.height;
@@ -2889,6 +2895,7 @@
                 let time = 0;
                 let delay = 0;
                 var afterAni = () => {
+                    Admin._clickLock.switch = false;
                     if (scene[scene.name]) {
                         scene[scene.name].lwgOpenAniAfter();
                         scene[scene.name].lwgBtnClick();
@@ -2978,15 +2985,15 @@
                 lwgOnEnable() { }
                 btnAndlwgOpenAni() {
                     let time = this.lwgOpenAni();
-                    if (!time) {
-                        time = commonOpenAni(this.self);
-                        time = 0;
-                    }
-                    else {
+                    if (time) {
                         Laya.timer.once(time, this, f => {
+                            Admin._clickLock.switch = false;
                             this.lwgOpenAniAfter();
                             this.lwgBtnClick();
                         });
+                    }
+                    else {
+                        time = commonOpenAni(this.self);
                     }
                 }
                 lwgOpenAni() { return null; }
@@ -7260,11 +7267,11 @@
         Guide._whichStepNum = 1;
         let EventType;
         (function (EventType) {
-            EventType["next"] = "Guide_next";
-            EventType["hint"] = "Guide_hint";
+            EventType["onStep"] = "Guide_onStep";
+            EventType["stepComplete"] = "Guide_stepComplete";
             EventType["appear"] = "Guide_appear";
             EventType["start"] = "Guide_start";
-            EventType["close"] = "Guide_close";
+            EventType["complete"] = "Guide_complete";
         })(EventType = Guide.EventType || (Guide.EventType = {}));
         class GuideScene extends Admin.Scene {
         }
@@ -7274,7 +7281,7 @@
         lwgOnEnable() {
             this.self['Background'].alpha = 0;
             this.self['Hand'].alpha = 0;
-            EventAdmin.notify(Guide.EventType.next);
+            EventAdmin.notify(Guide.EventType.onStep);
             this.self["Draw"].on(Laya.Event.LABEL, this, (labal) => {
                 if (labal === 'start') {
                     let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
@@ -7330,24 +7337,24 @@
                 EventAdmin.notify(Guide.EventType.appear);
                 this.self['Hand'].pos(75, 102);
                 this.self["Click"].play(0, true);
-                Tools.Draw.reverseRoundMask(this.self['Background'], 68, 102, 60);
+                Tools.Draw.reverseRoundMask(this.self['Background'], 72, 105, 60);
             };
             var step6 = () => {
                 EventAdmin.notify(Guide.EventType.appear);
-                this.self['Hand'].pos(656, 758);
+                this.self['Hand'].pos(630, 790);
                 this.self["Click"].play(0, true);
-                Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 380, 160, 20, true);
+                Tools.Draw.reverseRoundrectMask(this.self['Background'], 653, 758, 130, 150, 20, true);
             };
             var step7 = () => {
                 step5();
             };
             var step8 = () => {
                 EventAdmin.notify(Guide.EventType.appear);
-                this.self['Hand'].pos(656, 758);
+                this.self['Hand'].pos(360, Laya.stage.height * 0.779);
                 this.self["Click"].play(0, true);
-                Tools.Draw.reverseRoundrectMask(this.self['Background'], 656, 758, 130, 150, 20, true);
+                Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 450, 180, 20, true);
             };
-            EventAdmin.reg(Guide.EventType.next, this, () => {
+            EventAdmin.reg(Guide.EventType.onStep, this, () => {
                 Laya.timer.once(500, this, () => {
                     console.log('新手引导到了第：', Guide._whichStepNum + '步了');
                     switch (Guide._whichStepNum) {
@@ -7372,20 +7379,20 @@
                         case 7:
                             step7();
                             break;
-                        case 7:
+                        case 8:
                             step8();
                             break;
                         default:
                             break;
                     }
-                    Guide._whichStepNum++;
                 });
             });
-            EventAdmin.reg(Guide.EventType.appear, this, () => {
+            EventAdmin.reg(Guide.EventType.appear, this, (func) => {
                 Animation2D.fadeOut(this.self['Hand'], 0, 1, 300);
                 Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
             });
-            EventAdmin.reg(Guide.EventType.hint, this, () => {
+            EventAdmin.reg(Guide.EventType.stepComplete, this, () => {
+                Guide._whichStepNum++;
                 let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
                 if (this.self['Hand'].getChildByName('DrawCanvas')) {
                     this['drawLinePos'] == false;
@@ -7397,18 +7404,24 @@
                     this.self["Click"].stop();
                 });
             });
+            EventAdmin.reg(Guide.EventType.complete, this, () => {
+                Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+                Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
+                    Guide._complete.bool = true;
+                    Admin._closeScene(this.self);
+                });
+            });
         }
     }
 
     class UICard extends Admin.Scene {
         lwgOnEnable() {
-            EventAdmin.notify(Guide.EventType.hint);
             this.self['BtnBack'].alhpa = 0;
             this.self['BtnBack'].visible = false;
             Laya.timer.once(4500, this, () => {
                 Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
                     this.self['BtnBack'].visible = true;
-                    EventAdmin.notify(Guide.EventType.next);
+                    EventAdmin.notify(Guide.EventType.onStep);
                 });
             });
         }
@@ -7417,9 +7430,14 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-                Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(Game3D.EventType.closeUICard);
-                EventAdmin.notify(Guide.EventType.hint);
+                if (Guide._whichStepNum == 7) {
+                    EventAdmin.notify(Guide.EventType.stepComplete);
+                    Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 4);
+                }
+                else {
+                    Admin._openScene(Admin.SceneName.UIStart, this.self);
+                }
             });
             var buy = (type) => {
                 if (!Guide._complete.bool) {
@@ -7794,7 +7812,6 @@
             let Img = this.self['Surface'];
             let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
             EventAdmin.reg('drawCardEvent', this, () => {
-                EventAdmin.notify(Guide.EventType.hint);
                 if (DrawCard._residueDraw.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
                     return;
@@ -7954,7 +7971,7 @@
             });
             EventAdmin.reg(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard, this, () => {
                 this.self['BtnTake'].visible = true;
-                EventAdmin.notify(Guide.EventType.next);
+                EventAdmin.notify(Guide.EventType.onStep);
             });
         }
         lwgBtnClick() {
@@ -7972,9 +7989,9 @@
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 if (!Guide._complete.bool) {
-                    if (Guide._whichStepNum == 6) {
+                    if (Guide._whichStepNum == 5) {
                         Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
-                        EventAdmin.notify(Guide.EventType.hint);
+                        EventAdmin.notify(Guide.EventType.stepComplete);
                     }
                     return;
                 }
@@ -7986,7 +8003,7 @@
                 e.stopPropagation();
             });
             Click.on(Click.Type.largen, this.self['BtnTake'], this, null, null, (e) => {
-                EventAdmin.notify(Guide.EventType.hint);
+                EventAdmin.notify(Guide.EventType.stepComplete);
                 Admin._clickLock.switch = true;
                 let arrRepetitionCard = [];
                 let arrCard = [];
@@ -8001,7 +8018,7 @@
                 }
                 var anifunc = () => {
                     Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
-                        EventAdmin.notify(Guide.EventType.next);
+                        EventAdmin.notify(Guide.EventType.onStep);
                         this.self['DrawDisPlay'].x = -800;
                         this.self['DrawDisPlay'].alpha = 1;
                         Admin._clickLock.switch = false;
@@ -8050,6 +8067,7 @@
                 }
             });
             Click.on(Click.Type.noEffect, this.self['Surface'], this, (e) => {
+                EventAdmin.notify(Guide.EventType.stepComplete);
                 if (!this.self.getChildByName('DrawSp')) {
                     this.self['Drawlength'] = 0;
                     let DrawSp = new Laya.Sprite();
@@ -8794,8 +8812,7 @@
         lwgOnAwake() {
             Setting.setBtnAppear();
             Gold.createGoldNode(629, 174);
-            EventAdmin.notify(Guide.EventType.next);
-            console.log(Laya.stage);
+            EventAdmin.notify(Guide.EventType.onStep);
         }
         lwgOpenAniAfter() {
             if (Guide._complete.bool) {
@@ -8846,10 +8863,14 @@
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
                 if (!Guide._complete.bool) {
-                    if (Guide._whichStepNum == 7) {
+                    if (Guide._whichStepNum == 8) {
+                        EventAdmin.notify(Guide.EventType.complete);
                         Admin._openScene(Admin.SceneName.UIPropTry, this.self);
                     }
                     return;
+                }
+                else {
+                    Admin._openScene(Admin.SceneName.UIPropTry, this.self);
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
@@ -8876,7 +8897,8 @@
                     Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
                 };
                 if (!Guide._complete.bool) {
-                    if (Guide._whichStepNum == 7) {
+                    if (Guide._whichStepNum == 6) {
+                        EventAdmin.notify(Guide.EventType.stepComplete);
                         func();
                     }
                     return;

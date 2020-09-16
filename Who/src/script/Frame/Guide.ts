@@ -39,16 +39,16 @@ export module Guide {
 
     /**事件类型，必须枚举,因为有可能在全局使用,命名必须使用模块名称+事件名称*/
     export enum EventType {
-        /**下一步*/
-        next = 'Guide_next',
-        /**隐藏*/
-        hint = 'Guide_hint',
+        /**执行中*/
+        onStep = 'Guide_onStep',
+        /**完成一步隐藏*/
+        stepComplete = 'Guide_stepComplete',
         /**出现*/
         appear = 'Guide_appear',
         /**开始引导*/
         start = 'Guide_start',
         /**关闭引导界面*/
-        close = 'Guide_close',
+        complete = 'Guide_complete',
     }
     /**通用类，进行通用初始化，可在每个游戏中重复使用重复*/
     export class GuideScene extends Admin.Scene {
@@ -66,7 +66,7 @@ export default class UIGuide extends Guide.GuideScene {
     lwgOnEnable(): void {
         this.self['Background'].alpha = 0;
         this.self['Hand'].alpha = 0;
-        EventAdmin.notify(Guide.EventType.next);
+        EventAdmin.notify(Guide.EventType.onStep);
 
         this.self["Draw"].on(Laya.Event.LABEL, this, (labal) => {
             if (labal === 'start') {
@@ -128,27 +128,28 @@ export default class UIGuide extends Guide.GuideScene {
             EventAdmin.notify(Guide.EventType.appear);
             this.self['Hand'].pos(75, 102);
             this.self["Click"].play(0, true);
-            Tools.Draw.reverseRoundMask(this.self['Background'], 68, 102, 60);
+            Tools.Draw.reverseRoundMask(this.self['Background'], 72, 105, 60);
         }
         // 点击卡牌展示界面
         var step6 = () => {
             EventAdmin.notify(Guide.EventType.appear);
-            this.self['Hand'].pos(656, 758);
+            this.self['Hand'].pos(630, 790);
             this.self["Click"].play(0, true);
-            Tools.Draw.reverseRoundrectMask(this.self['Background'], 656, 758, 130, 150, 20, true);
+            Tools.Draw.reverseRoundrectMask(this.self['Background'], 653, 758, 130, 150, 20, true);
         }
         // 关闭卡牌界面
         var step7 = () => {
             step5();
         }
-        // 点击开始游戏
+        // 点击开始游戏按钮
         var step8 = () => {
             EventAdmin.notify(Guide.EventType.appear);
-            this.self['Hand'].pos(656, 758);
+            this.self['Hand'].pos(360, Laya.stage.height * 0.779);
             this.self["Click"].play(0, true);
-            Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 380, 160, 20, true);
+            Tools.Draw.reverseRoundrectMask(this.self['Background'], 360, Laya.stage.height * 0.779, 450, 180, 20, true);
         }
-        EventAdmin.reg(Guide.EventType.next, this, () => {
+        // 执行
+        EventAdmin.reg(Guide.EventType.onStep, this, () => {
             Laya.timer.once(500, this, () => {
                 console.log('新手引导到了第：', Guide._whichStepNum + '步了');
                 switch (Guide._whichStepNum) {
@@ -173,20 +174,20 @@ export default class UIGuide extends Guide.GuideScene {
                     case 7:
                         step7();
                         break;
-                    case 7:
+                    case 8:
                         step8();
                         break;
                     default:
                         break;
                 }
-                Guide._whichStepNum++;
             })
         })
-        EventAdmin.reg(Guide.EventType.appear, this, () => {
+        EventAdmin.reg(Guide.EventType.appear, this, (func) => {
             Animation2D.fadeOut(this.self['Hand'], 0, 1, 300);
             Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
         })
-        EventAdmin.reg(Guide.EventType.hint, this, () => {
+        EventAdmin.reg(Guide.EventType.stepComplete, this, () => {
+            Guide._whichStepNum++;
             let DrawCanvas = this.self['Hand'].getChildByName('DrawCanvas');
             if (this.self['Hand'].getChildByName('DrawCanvas')) {
                 this['drawLinePos'] == false;
@@ -198,12 +199,13 @@ export default class UIGuide extends Guide.GuideScene {
                 (this.self["Click"] as Laya.Animation).stop();
             });
         })
-        // EventAdmin.reg(Guide.EventType.close, this, () => {
-        //     Admin._closeScene(this.self);
-        //     console.log('关闭引导场景！');
-        // })
+        EventAdmin.reg(Guide.EventType.complete, this, () => {
+            Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+            Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
+                Guide._complete.bool = true;
+                Admin._closeScene(this.self);
+            });
+        })
     }
-
-
 }
 

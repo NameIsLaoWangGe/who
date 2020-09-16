@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":57,
-    "selecteID":59,
+    "selectedBox":2,
+    "selecteID":28,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
@@ -343,19 +343,20 @@
                     "x":30,
                     "type":"Image",
                     "searchKey":"Image,BtnGet,BtnGet",
-                    "props":{"y":714,"x":364,"width":333,"var":"BtnGet","skin":"Game/UI/Common/anniu.png","sizeGrid":"0,79,0,103","pivotY":60,"pivotX":167,"name":"BtnGet","height":120,"alpha":1},
+                    "props":{"y":724,"x":362,"width":330,"var":"BtnGet","skin":"Game/UI/Common/anniu.png","sizeGrid":"0,79,0,103","pivotY":70,"pivotX":165,"name":"BtnGet","height":140,"alpha":1},
                     "nodeParent":28,
                     "label":"BtnGet",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":21,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":32,"x":51,"texture":"Game/UI/UISkinQualified/shipin.png"},
+                            "props":{"y":41,"x":51,"texture":"Game/UI/UISkinQualified/shipin.png"},
                             "nodeParent":21,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -366,9 +367,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":41,"x":225,"texture":"Game/UI/UISkinQualified/shuzi-1.png"},
+                            "props":{"y":50,"x":225,"texture":"Game/UI/UISkinQualified/shuzi-1.png"},
                             "nodeParent":21,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -379,9 +381,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip",
-                            "props":{"y":39,"x":239,"value":"7","skin":"Game/UI/UISkinQualified/shuzi.png","sheet":"0123456789"},
+                            "props":{"y":48,"x":239,"value":"7","skin":"Game/UI/UISkinQualified/shuzi.png","sheet":"0123456789"},
                             "nodeParent":21,
                             "label":"FontClip",
                             "isDirectory":false,
@@ -392,9 +395,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip,AdsNum,AdsNum",
-                            "props":{"y":39,"x":199,"var":"AdsNum","value":"0","skin":"Game/UI/UISkinQualified/shuzi.png","sheet":"0123456789","name":"AdsNum"},
+                            "props":{"y":48,"x":199,"var":"AdsNum","value":"0","skin":"Game/UI/UISkinQualified/shuzi.png","sheet":"0123456789","name":"AdsNum"},
                             "nodeParent":21,
                             "label":"AdsNum",
                             "isOpen":false,
@@ -406,9 +410,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":38,"x":188.5,"texture":"Game/UI/Common/kuohao.png"},
+                            "props":{"y":47,"x":189,"texture":"Game/UI/Common/kuohao.png"},
                             "nodeParent":21,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -419,9 +424,10 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":37,"x":107.5,"texture":"Game/UI/Common/lingqu.png"},
+                            "props":{"y":46,"x":108,"texture":"Game/UI/Common/lingqu.png"},
                             "nodeParent":21,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -436,7 +442,7 @@
                     "x":30,
                     "type":"Label",
                     "searchKey":"Label,AlreadyGet,AlreadyGet",
-                    "props":{"y":688,"x":105,"var":"AlreadyGet","text":"已经获得，请前往卡牌界面查看！","strokeColor":"#4d7529","stroke":3,"name":"AlreadyGet","fontSize":35,"color":"#ffffff","bold":true},
+                    "props":{"y":706.5,"x":103.373046875,"var":"AlreadyGet","text":"已经获得，请前往卡牌界面查看！","strokeColor":"#4d7529","stroke":3,"name":"AlreadyGet","fontSize":35,"color":"#ffffff","bold":true},
                     "nodeParent":28,
                     "label":"AlreadyGet",
                     "isDirectory":false,

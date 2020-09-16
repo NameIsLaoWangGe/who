@@ -1,17 +1,12 @@
-import { Admin, Shop, Click, EventAdmin } from "../Frame/lwg";
+import { Admin, Tools } from "../Frame/lwg";
 
 export default class UISkinTry extends Admin.Scene {
 
     lwgOnAwake(): void {
         this.randomNoHave();
-
-        if (Admin._platform == Admin._platformTpye.OPPO) {
-            this.self['BtnGet_OPPO'].visible = true;
-            this.self['BtnGet_WeChat'].visible = false;
-        } else {
-            this.self['BtnGet_OPPO'].visible = false;
-            this.self['BtnGet_WeChat'].visible = true;
-        }
+        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
+        Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+        console.log(ZJADMgr.ins.shieldLevel);
     }
 
     beforeTryOtherName: string;
@@ -23,15 +18,15 @@ export default class UISkinTry extends Admin.Scene {
         let ele;
         let hair;
         let beard;
-        // // 查看当前关卡状况
-        // for (let index = 0; index < GVariate._taskArr.length; index++) {
-        //     const element = GVariate._taskArr[index];
-        //     if (element === GEnum.TaskType.HairParent) {
-        //         hair = true;
-        //     } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
-        //         beard = true;
-        //     }
-        // }
+        // 查看当前关卡状况
+        for (let index = 0; index < GVariate._taskArr.length; index++) {
+            const element = GVariate._taskArr[index];
+            if (element === GEnum.TaskType.HairParent) {
+                hair = true;
+            } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
+                beard = true;
+            }
+        }
 
         if (hair) {
             console.log('本关有剃头任务！');
@@ -63,7 +58,7 @@ export default class UISkinTry extends Admin.Scene {
         Shop._currentOther.name = ele.name;
     }
 
-    /**随机剃头道具*/
+    /**随机剪刀道具*/
     randomProp(): void {
         let ele;
         let arrProp = Shop.getwayGoldArr(Shop.GoodsClass.Props, undefined, true);
@@ -74,24 +69,106 @@ export default class UISkinTry extends Admin.Scene {
     }
 
     lwgBtnClick(): void {
-        Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, this.btnNoUp);
-        Click.on(Click.Type.largen, this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
-        Click.on(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
+        Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, this.bytedanceSelectUp);
+        Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, this.bytedanceGetUp);
 
+        Click.on(Click.Type.noEffect, this.self['Bytedance_Mid_Select'], this, null, null, this.bytedanceSelectUp);
+        Click.on(Click.Type.largen, this.self['Bytedance_Mid_BtnGet'], this, null, null, this.bytedanceGetUp);
+
+        Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
+        Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.btnGetUp);
+        Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
+
+        Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
+        Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
+
+        // Click.on(Click.Type.largen, this.self['WeChat_BtnNo'], this, null, null, this.btnNoUp);
+        // Click.on(Click.Type.largen, this.self['WeChat_BtnGet'], this, null, null, this.btnGetUp);
     }
 
-    btnGetUp(event): void {
-        // if (Admin._platform == Admin._platformTpye.OPPO) {
-        //     Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-        //     EventAdmin.notify(GEnum.EventType.changeOther);
-        //     EventAdmin.notify(GEnum.EventType.changeProp);
-        // } else {
-        //     ADManager.ShowReward(() => {
-        //         Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-        //         EventAdmin.notify(GEnum.EventType.changeOther);
-        //         EventAdmin.notify(GEnum.EventType.changeProp);
-        //     })
-        // }
+    clickBgtUp(): void {
+        let Dot;
+        if (this.self['Low'].visible) {
+            Dot = this.self['Bytedance_Low_Dot'];
+        } else if (this.self['Mid'].visible) {
+            Dot = this.self['Bytedance_Mid_Dot'];
+        }
+        if (!Dot) {
+            return;
+        }
+        if (Dot.visible) {
+            this.advFunc();
+        } else {
+            if (this.beforeTryOtherName) {
+                Shop._currentOther.name = this.beforeTryOtherName;
+            }
+            if (this.beforeTryPropName) {
+                Shop._currentProp.name = this.beforeTryPropName;
+            }
+            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+            EventAdmin.notify(GEnum.EventType.changeOther);
+            EventAdmin.notify(GEnum.EventType.changeProp);
+        }
+    }
+
+    bytedanceGetUp(e: Laya.Event): void {
+        e.stopPropagation();
+        this.advFunc();
+    }
+
+    bytedanceSelectUp(e: Laya.Event): void {
+        e.stopPropagation();
+        if (this.self['Low'].visible) {
+            if (!this.self['Low']['count']) {
+                this.self['Low']['count'] = 0;
+            }
+            this.self['Low']['count']++;
+            if (this.self['Low']['count'] >= 4) {
+                if (this.self['Bytedance_Low_Dot'].visible) {
+                    this.self['Bytedance_Low_Dot'].visible = false;
+                } else {
+                    this.self['Bytedance_Low_Dot'].visible = true;
+                }
+            }
+            if (ZJADMgr.ins.CheckPlayVideo()) {
+                ADManager.ShowReward(null);
+            }
+        } else if (this.self['Mid'].visible) {
+            if (!this.self['Mid']['count']) {
+                this.self['Mid']['count'] = 0;
+            }
+            this.self['Mid']['count']++;
+            if (this.self['Mid']['count'] >= 4) {
+                if (this.self['Bytedance_Mid_Dot'].visible) {
+                    this.self['Bytedance_Mid_Dot'].visible = false;
+                } else {
+                    this.self['Bytedance_Mid_Dot'].visible = true;
+                }
+            }
+        }
+    }
+
+    advFunc(): void {
+        ADManager.ShowReward(() => {
+            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+            EventAdmin.notify(GEnum.EventType.changeOther);
+            EventAdmin.notify(GEnum.EventType.changeProp);
+        })
+    }
+
+    btnGetUp(e: Laya.Event): void {
+        e.stopPropagation();
+        if (Game._platform == Game._platformTpye.OPPO) {
+            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+            EventAdmin.notify(GEnum.EventType.changeOther);
+            EventAdmin.notify(GEnum.EventType.changeProp);
+        } else {
+            ADManager.ShowReward(() => {
+                Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+                EventAdmin.notify(GEnum.EventType.changeOther);
+                EventAdmin.notify(GEnum.EventType.changeProp);
+            })
+        }
     }
 
     btnNoUp(event): void {
@@ -101,9 +178,9 @@ export default class UISkinTry extends Admin.Scene {
         if (this.beforeTryPropName) {
             Shop._currentProp.name = this.beforeTryPropName;
         }
-        // Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-        // EventAdmin.notify(GEnum.EventType.changeOther);
-        // EventAdmin.notify(GEnum.EventType.changeProp);
+        Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+        EventAdmin.notify(GEnum.EventType.changeOther);
+        EventAdmin.notify(GEnum.EventType.changeProp);
     }
 
     lwgOnDisable(): void {

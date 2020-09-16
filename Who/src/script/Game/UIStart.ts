@@ -8,8 +8,7 @@ export default class UIStart extends Start.StartScene {
     lwgOnAwake(): void {
         Setting.setBtnAppear();
         Gold.createGoldNode(629, 174);
-        EventAdmin.notify(Guide.EventType.next);
-        console.log(Laya.stage);
+        EventAdmin.notify(Guide.EventType.onStep);
     }
     lwgOpenAniAfter(): void {
         if (Guide._complete.bool) {
@@ -62,10 +61,13 @@ export default class UIStart extends Start.StartScene {
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
             if (!Guide._complete.bool) {
-                if (Guide._whichStepNum == 7) {
+                if (Guide._whichStepNum == 8) {
+                    EventAdmin.notify(Guide.EventType.complete);
                     Admin._openScene(Admin.SceneName.UIPropTry, this.self);
                 }
                 return;
+            } else {
+                Admin._openScene(Admin.SceneName.UIPropTry, this.self);
             }
         });
 
@@ -94,7 +96,8 @@ export default class UIStart extends Start.StartScene {
                 Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
             }
             if (!Guide._complete.bool) {
-                if (Guide._whichStepNum == 7) {
+                if (Guide._whichStepNum == 6) {
+                    EventAdmin.notify(Guide.EventType.stepComplete);
                     func();
                 }
                 return;

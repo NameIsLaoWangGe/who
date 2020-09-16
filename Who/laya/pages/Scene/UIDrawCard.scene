@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":19,
-    "selecteID":12,
+    "selectedBox":2,
+    "selecteID":22,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280,"alpha":0},
     "nodeParent":-1,
@@ -202,7 +202,7 @@
                     "x":30,
                     "type":"Image",
                     "searchKey":"Image,BtnFree,BtnFree",
-                    "props":{"y":1166,"x":362,"width":371,"var":"BtnFree","skin":"Game/UI/Common/anniu.png","sizeGrid":"0,78,0,98","pivotY":60,"pivotX":193,"name":"BtnFree","height":120},
+                    "props":{"y":1172,"x":351,"width":366,"var":"BtnFree","skin":"Game/UI/Common/anniu.png","sizeGrid":"0,78,0,98","pivotY":78,"pivotX":183,"name":"BtnFree","height":146},
                     "nodeParent":19,
                     "label":"BtnFree",
                     "isOpen":true,
@@ -215,7 +215,7 @@
                             "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite",
-                            "props":{"y":37,"x":44.5,"texture":"Game/UI/UIDrawCard/mianfei.png"},
+                            "props":{"y":54,"x":44,"texture":"Game/UI/UIDrawCard/mianfei.png"},
                             "nodeParent":8,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -229,7 +229,7 @@
                             "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip,MaxNum,MaxNum",
-                            "props":{"y":37,"x":276,"var":"MaxNum","value":"3","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"MaxNum"},
+                            "props":{"y":54,"x":275,"var":"MaxNum","value":"3","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"MaxNum"},
                             "nodeParent":8,
                             "label":"MaxNum",
                             "isDirectory":false,
@@ -243,7 +243,7 @@
                             "x":45,
                             "type":"FontClip",
                             "searchKey":"FontClip,FreeAds,FreeAds",
-                            "props":{"y":37,"x":228,"var":"FreeAds","value":"0","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"FreeAds"},
+                            "props":{"y":54,"x":227,"var":"FreeAds","value":"0","skin":"Game/UI/UIDrawCard/shuzi4.png","sheet":"0123456789","name":"FreeAds"},
                             "nodeParent":8,
                             "label":"FreeAds",
                             "isDirectory":false,
@@ -367,20 +367,6 @@
                                 ]
                         }]
                 }]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite",
-            "props":{"y":598,"x":360,"width":551,"texture":"Game/UI/UIDrawCard/yuan.png","pivotY":276,"pivotX":276,"height":551},
-            "nodeParent":2,
-            "label":"Sprite",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":50,
-            "child":[
-                ]
         }],
     "animations":[
         {

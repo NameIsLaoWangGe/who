@@ -5,13 +5,12 @@ import { Guide } from "../Frame/Guide";
 export default class UICard extends Admin.Scene {
 
     lwgOnEnable(): void {
-        EventAdmin.notify(Guide.EventType.hint);
         this.self['BtnBack'].alhpa = 0;
         this.self['BtnBack'].visible = false;
         Laya.timer.once(4500, this, () => {
             Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
                 this.self['BtnBack'].visible = true;
-                EventAdmin.notify(Guide.EventType.next);
+                EventAdmin.notify(Guide.EventType.onStep);
             });
         })
     }
@@ -20,9 +19,13 @@ export default class UICard extends Admin.Scene {
     }
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(Game3D.EventType.closeUICard);
-            EventAdmin.notify(Guide.EventType.hint);
+            if (Guide._whichStepNum == 7) {
+                EventAdmin.notify(Guide.EventType.stepComplete);
+                Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 4);
+            } else {
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+            }
         });
         var buy = (type) => {
             if (!Guide._complete.bool) {
