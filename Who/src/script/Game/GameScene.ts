@@ -211,13 +211,21 @@ export default class GameScene extends Admin.Scene {
         let Question = QuestionBaord.getChildByName('Question') as Laya.Label;
         Question.text = questionAndYesOrNo[0];
         Animation2D.bombs_Appear(QuestionBaord, 0, 1, 1.1, 0, 150, 50, 600);
-
         let Card = GuessCard.getChildByName('Card') as Laya.Sprite;
         let Pic = Card.getChildByName('Pic') as Laya.Image;
         Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
         Card.y = Laya.stage.height * 0.483;
         Animation2D.cardRotateX_TowFace(Card, 180);
         Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
+        let Card1 = GuessCard.getChildByName('Card1') as Laya.Sprite;
+        Card1.visible = false;
+        if (questionAndYesOrNo[2]) {
+            Card1.visible = true;
+            let Pic = Card1.getChildByName('Pic') as Laya.Image;
+            Pic.skin = 'Game/UI/UIDrawCard/Card/' + questionAndYesOrNo[2] + '.jpg';
+            Animation2D.cardRotateX_TowFace(Card1, 180);
+            Animation2D.move_Simple(Card1, 800, Card1.y, Laya.stage.width / 2, Card1.y, 500);
+        }
 
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
 

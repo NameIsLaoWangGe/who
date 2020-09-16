@@ -1158,9 +1158,9 @@
                 Game3D.oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             else if (type == WhichScard.OppositeCardParent) {
-                Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
                 let CardData0 = Tools.objArray_Copy(Game3D.CardData);
                 cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
+                Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             }
             let AllCardParent = Game3D.AllCardGray.clone();
             let startX = 0.204;
@@ -1281,14 +1281,14 @@
             let residueArr = getNotFallCardNameOpposite();
             let medianIndex = Math.floor(weightArr.length / 2);
             if (residueArr.length == 1) {
-                question = '是' + getChNameByName(residueArr[0]) + '吗?';
+                question = '是他吗?';
                 arr = [question, true];
             }
             else if (residueArr.length == 2) {
                 let redio = Tools.randomOneHalf();
                 let name = getChNameByName(residueArr[redio]);
-                question = '是' + name + '吗?';
-                arr = [question, residueArr[redio] == Game3D.myHandName ? true : false];
+                question = '是他吗?';
+                arr = [question, residueArr[redio] == Game3D.myHandName ? true : false, residueArr[redio]];
             }
             else {
                 let featureIndex0;
@@ -1783,7 +1783,6 @@
                 });
                 EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this);
-                    EventAdmin.notify(EventType.opening);
                 });
                 EventAdmin.reg(EventType.openUICard, this, () => {
                     Game3D.CardContainer.active = true;
@@ -6971,6 +6970,15 @@
             Card.y = Laya.stage.height * 0.483;
             Animation2D.cardRotateX_TowFace(Card, 180);
             Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
+            let Card1 = GuessCard.getChildByName('Card1');
+            Card1.visible = false;
+            if (questionAndYesOrNo[2]) {
+                Card1.visible = true;
+                let Pic = Card1.getChildByName('Pic');
+                Pic.skin = 'Game/UI/UIDrawCard/Card/' + questionAndYesOrNo[2] + '.jpg';
+                Animation2D.cardRotateX_TowFace(Card1, 180);
+                Animation2D.move_Simple(Card1, 800, Card1.y, Laya.stage.width / 2, Card1.y, 500);
+            }
             let BtnYes = GuessCard.getChildByName('BtnYes');
             var btnYesUp = () => {
                 Admin._clickLock.switch = true;
@@ -8590,7 +8598,7 @@
                 Admin._gameSwitch = true;
                 ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
                 Admin._closeScene(this.self, () => {
-                    EventAdmin.notify(EventAdmin.EventType.nextCustoms);
+                    EventAdmin.notify(EventAdmin.EventType.resurgence);
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {

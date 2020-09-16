@@ -5,7 +5,6 @@ export module Game3D {
     export let Scene3D: Laya.Scene3D;
     /**摄像机*/
     export let MainCamera: Laya.MeshSprite3D;
-
     /**角色父节点*/
     export let OppositeRoleParent: Laya.MeshSprite3D;
     /**对面的角色*/
@@ -246,9 +245,9 @@ export module Game3D {
             oppositeHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
         else if (type == WhichScard.OppositeCardParent) {
-            myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
             let CardData0 = Tools.objArray_Copy(CardData);
             cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
+            myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
         }
         let AllCardParent = AllCardGray.clone() as Laya.MeshSprite3D;
         let startX = 0.204;
@@ -280,7 +279,6 @@ export module Game3D {
             // Card.transform.localRotationEulerZ = 180;
         }
     }
-
 
     /**
      * 获取剩余属性的权重值,对所有没有倒下的卡牌的属性数量排序
@@ -365,7 +363,6 @@ export module Game3D {
         } else if (cardArr.length == 2) {
             return ['是谁？'];
         } else {
-
             // 防止随机出来的四个属性问题，恰好剩余的牌都有
             let cardArr0 = Tools.arrayRandomGetOut(cardArr, 4);
             let diffIndexArr = Tools.array_ExcludeArrays([cardArr0[0][CardProperty.featureArr], cardArr0[1][CardProperty.featureArr], cardArr0[2][CardProperty.featureArr], cardArr0[3][CardProperty.featureArr]], true);
@@ -396,15 +393,14 @@ export module Game3D {
         let weightArr = getFeatureWeights(OppositeCardParent);
         let residueArr = getNotFallCardNameOpposite();
         let medianIndex = Math.floor(weightArr.length / 2);
-
         if (residueArr.length == 1) {
-            question = '是' + getChNameByName(residueArr[0]) + '吗?';
+            question = '是他吗?';
             arr = [question, true];
         } else if (residueArr.length == 2) {
             let redio = Tools.randomOneHalf();
             let name = getChNameByName(residueArr[redio]);
-            question = '是' + name + '吗?';
-            arr = [question, residueArr[redio] == myHandName ? true : false];
+            question = '是他吗?';
+            arr = [question, residueArr[redio] == myHandName ? true : false, residueArr[redio]];
         } else {
             let featureIndex0: number;
             // 如果这个属性问题其余的卡牌全都有，则重新随机问题
@@ -807,7 +803,6 @@ export module Game3D {
                                         EventAdmin.notify(EventType.nextRound);
                                     })
                                 })
-
                             })
                         })
                     } else {
