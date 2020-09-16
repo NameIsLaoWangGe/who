@@ -13,6 +13,7 @@ export default class UILoding extends Loding.LodingScene {
             "Scene/UICheckIn.json",
             // "Scene/UIEasterEgg.json",
             // "Scene/UIOperation.json",
+            "Scene/UIGuide.json",
             "Scene/UISet.json",
             // "Scene/UIShop.json",
             // "Scene/UISkinXD.json",
@@ -39,6 +40,7 @@ export default class UILoding extends Loding.LodingScene {
             "GameData/CheckIn/CheckIn.json",
             // "GameData/Dialog/Dialog.json",
             "GameData/Game/Feature.json",
+
             "GameData/Game/Card.json",
             // "GameData/EasterEgg/EasterEgg.json",
         ];
