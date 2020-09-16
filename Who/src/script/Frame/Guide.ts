@@ -23,7 +23,6 @@ export module Guide {
             Laya.LocalStorage.setItem('Guide_complete', bol.toString());
         }
     }
-
     /**新手引导进行到哪一步了*/
     // export let _whichStep = {
     //     get num(): number {
@@ -183,7 +182,7 @@ export default class UIGuide extends Guide.GuideScene {
             })
         })
         EventAdmin.reg(Guide.EventType.appear, this, (func) => {
-            Animation2D.fadeOut(this.self['Hand'], 0, 1, 300);
+            Animation2D.fadeOut(this.self['Hand'], 0, 1, 150);
             Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
         })
         EventAdmin.reg(Guide.EventType.stepComplete, this, () => {
@@ -193,14 +192,14 @@ export default class UIGuide extends Guide.GuideScene {
                 this['drawLinePos'] == false;
                 DrawCanvas.removeSelf();
             }
-            Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+            Animation2D.fadeOut(this.self['Hand'], 1, 0, 150);
             Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
                 (this.self["Draw"] as Laya.Animation).stop();
                 (this.self["Click"] as Laya.Animation).stop();
             });
         })
         EventAdmin.reg(Guide.EventType.complete, this, () => {
-            Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+            Animation2D.fadeOut(this.self['Hand'], 1, 0, 150);
             Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
                 Guide._complete.bool = true;
                 Admin._closeScene(this.self);

@@ -1,4 +1,4 @@
-import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog, Backpack } from "../Frame/lwg";
+import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share, Gold, TimerAdmin, Setting, Dialog, Backpack, PalyAudio } from "../Frame/lwg";
 import ADManager from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 import { Guide } from "../Frame/Guide";
@@ -196,6 +196,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                 this.self['cardIndex']++;
                 EventAdmin.notify('flop');
             }
+            PalyAudio.playSound('Game/Voice/fanpai.wav');
             Animation2D.cardRotateX_OneFace(Card, () => {
                 (Card.getChildByName('Pic') as Laya.Image).visible = true;
                 if (!Card['objData']['repetitionCard']) {
@@ -220,6 +221,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
                         }
                     }, true)
                     Animation2D.leftRight_Shake(Card, 20, 100, 300, () => {
+                        PalyAudio.playSound('Game/Voice/xiyoukazhanshi.wav');
                         Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
                             Animation2D.move_Simple(ReflectPic.getChildByName('LiuGuang'), -21, -9, 131, 180, 500, 400, () => {
                                 Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 0, 1, 250, 0, () => {

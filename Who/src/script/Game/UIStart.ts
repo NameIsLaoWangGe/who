@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin, Loding } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin, Loding, Dialog } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 import { Game3D } from "./Game3D";
 import { Guide } from "../Frame/Guide";
@@ -91,20 +91,23 @@ export default class UIStart extends Start.StartScene {
             Admin._openScene(Admin.SceneName.UISkinQualified);
         });
         Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-            var func = () => {
-                EventAdmin.notify(Game3D.EventType.openUICard);
-                Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
-            }
+
             if (!Guide._complete.bool) {
                 if (Guide._whichStepNum == 6) {
                     EventAdmin.notify(Guide.EventType.stepComplete);
-                    func();
+                    EventAdmin.notify(Game3D.EventType.openUICard);
+                    Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
                 }
                 return;
             } else {
-                func();
+                EventAdmin.notify(Game3D.EventType.openUICard);
+                Admin._openScene(Admin.SceneName.UICard, this.self);
             }
         });
+
+        Click.on(Click.Type.largen, this.self['BtnRanking'], this, null, null, () => { 
+            Dialog.createHint_Middle(Dialog.HintContent["尽请期待！"]);
+         });
     }
 
     lwgOnDisable(): void {

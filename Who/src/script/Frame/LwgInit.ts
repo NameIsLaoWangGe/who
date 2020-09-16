@@ -2,6 +2,7 @@ import { Skin, Shop, Task, Admin, EventAdmin, EasterEgg, Loding, Setting, Gold, 
 import { Game3D } from "../Game/Game3D";
 import { Guide } from "./Guide";
 import UIDrawCard from "../Game/UIDrawCard";
+import ZJADMgr from "../../TJ/ZJADMgr";
 
 export module LwgInit {
     export class LwgInitScene extends Admin.Scene {
@@ -53,6 +54,7 @@ export module LwgInit {
 }
 export default class UILwgInit extends LwgInit.LwgInitScene {
     lwgOnEnable(): void {
+        new ZJADMgr();
         console.log('完成初始化');
         console.log('是否进行过新手引导：', Guide._complete.bool);
         if (Guide._complete.bool) {

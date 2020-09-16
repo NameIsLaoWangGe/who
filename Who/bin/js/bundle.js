@@ -1703,6 +1703,7 @@
                             Laya.timer.once(time * 2.5, this, () => {
                                 if (notFallLen == 2) {
                                     console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
+                                    PalyAudio.playSound('Game/Voice/chaofeng.wav');
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
                                     let name = getNameByChName(question.substring(1, question.length - 2));
                                     console.log('即将倒下的牌是排除', name);
@@ -1782,7 +1783,7 @@
                 });
                 EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveAwait, 1500, this);
-                    this.init();
+                    EventAdmin.notify(EventType.opening);
                 });
                 EventAdmin.reg(EventType.openUICard, this, () => {
                     Game3D.CardContainer.active = true;
@@ -1900,7 +1901,8 @@
                     }
                 }
                 Laya.timer.once(400, this, () => {
-                    if (fallNum >= 2) {
+                    if (fallNum >= 4) {
+                        PalyAudio.playSound('Game/Voice/kuazan.wav');
                         if (CardParent == Game3D.MyCardParent) {
                             EventAdmin.notify(EventType.doWell);
                         }
@@ -2008,6 +2010,7 @@
                 HintContent[HintContent["\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01"] = 30] = "\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01";
                 HintContent[HintContent["\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01"] = 31] = "\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01";
                 HintContent[HintContent["\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01"] = 32] = "\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01";
+                HintContent[HintContent["\u5C3D\u8BF7\u671F\u5F85\uFF01"] = 33] = "\u5C3D\u8BF7\u671F\u5F85\uFF01";
             })(HintContent = Dialog.HintContent || (Dialog.HintContent = {}));
             let Skin;
             (function (Skin) {
@@ -2371,6 +2374,7 @@
                         let Gold = createOneGold(width, height, url);
                         parent.addChild(Gold);
                         Animation2D.move_Scale(Gold, 1, firstPoint.x, firstPoint.y, targetPoint.x, targetPoint.y, 1, 350, 0, null, () => {
+                            PalyAudio.playSound(PalyAudio.voiceUrl.huodejinbi);
                             if (index === number - 1) {
                                 Laya.timer.once(200, this, () => {
                                     if (func2) {
@@ -2403,6 +2407,7 @@
                     let y = Math.floor(Math.random() * 2) == 1 ? firstPoint.y + Math.random() * 100 : firstPoint.y - Math.random() * 100;
                     Animation2D.move_Scale(Gold, 0.5, firstPoint.x, firstPoint.y, x, y, 1, 300, Math.random() * 100 + 100, Laya.Ease.expoIn, () => {
                         Animation2D.move_Scale(Gold, 1, Gold.x, Gold.y, targetPoint.x, targetPoint.y, 1, 400, Math.random() * 200 + 100, Laya.Ease.cubicOut, () => {
+                            PalyAudio.playSound(PalyAudio.voiceUrl.huodejinbi);
                             if (index === number - 1) {
                                 Laya.timer.once(200, this, () => {
                                     if (func2) {
@@ -4645,6 +4650,7 @@
                 voiceUrl["bgm"] = "Frame/Voice/bgm.mp3";
                 voiceUrl["victory"] = "Frame/Voice/guoguan.wav";
                 voiceUrl["defeated"] = "Frame/Voice/wancheng.wav";
+                voiceUrl["huodejinbi"] = "Frame/Voice/huodejinbi.wav";
             })(voiceUrl = PalyAudio.voiceUrl || (PalyAudio.voiceUrl = {}));
             function playSound(url, number, func) {
                 if (!url) {
@@ -7388,7 +7394,7 @@
                 });
             });
             EventAdmin.reg(Guide.EventType.appear, this, (func) => {
-                Animation2D.fadeOut(this.self['Hand'], 0, 1, 300);
+                Animation2D.fadeOut(this.self['Hand'], 0, 1, 150);
                 Animation2D.fadeOut(this.self['Background'], 0, 0.5, 300);
             });
             EventAdmin.reg(Guide.EventType.stepComplete, this, () => {
@@ -7398,14 +7404,14 @@
                     this['drawLinePos'] == false;
                     DrawCanvas.removeSelf();
                 }
-                Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+                Animation2D.fadeOut(this.self['Hand'], 1, 0, 150);
                 Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
                     this.self["Draw"].stop();
                     this.self["Click"].stop();
                 });
             });
             EventAdmin.reg(Guide.EventType.complete, this, () => {
-                Animation2D.fadeOut(this.self['Hand'], 1, 0, 300);
+                Animation2D.fadeOut(this.self['Hand'], 1, 0, 150);
                 Animation2D.fadeOut(this.self['Background'], 0.5, 0, 300, 0, () => {
                     Guide._complete.bool = true;
                     Admin._closeScene(this.self);
@@ -7419,9 +7425,11 @@
             this.self['BtnBack'].alhpa = 0;
             this.self['BtnBack'].visible = false;
             Laya.timer.once(4500, this, () => {
-                Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
+                Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 200, 0, () => {
                     this.self['BtnBack'].visible = true;
-                    EventAdmin.notify(Guide.EventType.onStep);
+                    if (Guide._whichStepNum == 6) {
+                        EventAdmin.notify(Guide.EventType.onStep);
+                    }
                 });
             });
         }
@@ -7924,6 +7932,7 @@
                     this.self['cardIndex']++;
                     EventAdmin.notify('flop');
                 };
+                PalyAudio.playSound('Game/Voice/fanpai.wav');
                 Animation2D.cardRotateX_OneFace(Card, () => {
                     Card.getChildByName('Pic').visible = true;
                     if (!Card['objData']['repetitionCard']) {
@@ -7945,6 +7954,7 @@
                             }
                         }, true);
                         Animation2D.leftRight_Shake(Card, 20, 100, 300, () => {
+                            PalyAudio.playSound('Game/Voice/xiyoukazhanshi.wav');
                             Animation2D.rotate_Scale(Card, 0, 1, 1, 720, 3, 3, 400, 200, () => {
                                 Animation2D.move_Simple(ReflectPic.getChildByName('LiuGuang'), -21, -9, 131, 180, 500, 400, () => {
                                     Animation2D.fadeOut(ReflectPic.getChildByName('Guang'), 0, 1, 250, 0, () => {
@@ -8122,91 +8132,6 @@
         }
     }
 
-<<<<<<< HEAD
-=======
-    var Guide;
-    (function (Guide) {
-        Guide.data = {
-            da: 'data',
-            get array() {
-                return [];
-            },
-            set array(arr) {
-            },
-            getFunc1: () => {
-                return '测试1';
-            },
-            getFunc2: (any) => {
-                return;
-            },
-            setFunc1: () => {
-            },
-            setFunc2: (any) => {
-                console.log(any);
-            },
-            checkFunc1: (bool) => {
-                return bool;
-            },
-            checkFunc2: (bool) => {
-                return bool;
-            },
-            getTemporaryVariable: () => {
-                if (!Guide.data['name']) {
-                    Guide.data['name'] = '王大哥';
-                }
-                else {
-                    return Guide.data['name'];
-                }
-            }
-        };
-        Guide._complete = {
-            get bool() {
-                return Laya.LocalStorage.getItem('Guide_complete') ? Number(Laya.LocalStorage.getItem('Guide_complete')) : 0;
-            },
-            set bool(date) {
-                Laya.LocalStorage.setItem('Guide_complete', date.toString());
-            }
-        };
-        let EventType;
-        (function (EventType) {
-            EventType["event1"] = "Example_Event1";
-            EventType["event2"] = "Example_Event2";
-        })(EventType = Guide.EventType || (Guide.EventType = {}));
-        let AnyVariableEnum;
-        (function (AnyVariableEnum) {
-            AnyVariableEnum["thisVariable1"] = "thisVariable1";
-            AnyVariableEnum["thisVariable2"] = "thisVariable2";
-        })(AnyVariableEnum = Guide.AnyVariableEnum || (Guide.AnyVariableEnum = {}));
-        class GuideScene extends Admin.Scene {
-            moduleOnAwake() {
-            }
-            moduleOnEnable() {
-            }
-            moduleEventReg() {
-            }
-        }
-        Guide.GuideScene = GuideScene;
-        class Singleton {
-        }
-        Guide.Singleton = Singleton;
-    })(Guide || (Guide = {}));
-    class UIGuide extends Guide.GuideScene {
-        lwgOnAwake() {
-            console.log(this.self);
-            this.self["Mirror"].play(0, true);
-        }
-        lwgNodeDec() { }
-        lwgOnEnable() { }
-        lwgEventReg() { }
-        lwgAdaptive() { }
-        lwgOpenAni() { return 100; }
-        lwgBtnClick() { }
-        lwgVanishAni() { return 100; }
-        lwgOnUpdate() { }
-        lwgOnDisable() { }
-    }
-
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
     class UILoding extends Loding.LodingScene {
         lwgOnAwake() {
             Loding.list_2DPic = [
@@ -8255,6 +8180,216 @@
         }
     }
 
+    var ShieldLevel;
+    (function (ShieldLevel) {
+        ShieldLevel["low"] = "Low";
+        ShieldLevel["mid"] = "Mid";
+        ShieldLevel["high"] = "High";
+    })(ShieldLevel || (ShieldLevel = {}));
+    class ZJADMgr {
+        constructor() {
+            this.tt = Laya.Browser.window.tt;
+            this.shieldLevel = ShieldLevel.high;
+            this.prk_init = "platform_init";
+            this.prk_shareTimes = "platform_shareTimes";
+            this.prk_shareTs = "platform_shareTs";
+            this.shareItv = 1 * 3600 * 1000;
+            this.shareMaxTimes = 5;
+            this.shareImgUrl = "http://image.tomatojoy.cn/fkbxs01.jpg";
+            this.shareContent = "消灭方块，人人有责！";
+            this.shieldArea = false;
+            this.shieldUser = false;
+            this.shieldVersion = false;
+            this.shieldtime = false;
+            this.shareTimes = 0;
+            this.lastShareTs = 0;
+            this.configInited = false;
+            this.ipInfoInited = false;
+            this.inited = false;
+            this.playVideoIndex = 0;
+            ZJADMgr.ins = this;
+            this.requestInfo();
+        }
+        GameCfg() {
+            return __awaiter(this, void 0, void 0, function* () {
+                let www = new TJ.Common.WWW("https://h5.tomatojoy.cn/res/" + TJ.API.AppInfo.AppGuid() + "/config/game.json");
+                yield www.Send();
+                if (www.error == null && www.text != null) {
+                    this.onGameCfgSuccess(www.text);
+                    return;
+                }
+                else {
+                    let www = new TJ.Common.WWW("https://h5.tomatojoy.cn/res/" + TJ.API.AppInfo.AppGuid() + "/config/game.json");
+                    yield www.Send();
+                    if (www.error == null && www.text != null) {
+                        this.onGameCfgSuccess(www.text);
+                        return;
+                    }
+                    else {
+                        let www = new TJ.Common.WWW("https://h5.tomatojoy.cn/res/" + TJ.API.AppInfo.AppGuid() + "/config/game.json");
+                        yield www.Send();
+                        if (www.error == null && www.text != null) {
+                            this.onGameCfgSuccess(www.text);
+                            return;
+                        }
+                    }
+                }
+                return null;
+            });
+        }
+        GetIP() {
+            return __awaiter(this, void 0, void 0, function* () {
+                let www = new TJ.Common.WWW("https://api1.tomatojoy.cn/getIp");
+                yield www.Send();
+                if (www.error == null && www.text != null) {
+                    this.onGetIpSuccess(www.text);
+                    return;
+                }
+                else {
+                    let www = new TJ.Common.WWW("https://api1.tomatojoy.cn/getIp");
+                    yield www.Send();
+                    if (www.error == null && www.text != null) {
+                        this.onGetIpSuccess(www.text);
+                        return;
+                    }
+                    else {
+                        let www = new TJ.Common.WWW("https://api1.tomatojoy.cn/getIp");
+                        yield www.Send();
+                        if (www.error == null && www.text != null) {
+                            this.onGetIpSuccess(www.text);
+                            return;
+                        }
+                        else {
+                            console.log(www.error);
+                        }
+                    }
+                }
+                return null;
+            });
+        }
+        onGameCfgSuccess(config) {
+            let _configinfo = JSON.parse(config);
+            this.configinfo = _configinfo;
+            this.configInited = true;
+            if (this.ipInfoInited) {
+                this.init();
+            }
+        }
+        onGetIpSuccess(ipInfo) {
+            let _iPInfo = JSON.parse(ipInfo);
+            this.iPInfo = _iPInfo;
+            this.ipInfoInited = true;
+            if (this.configInited) {
+                this.init();
+            }
+        }
+        requestInfo() {
+            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                this.GameCfg();
+                this.GetIP();
+            }
+        }
+        init() {
+            if (this.configinfo.shieldStatus) {
+                if (TJ.API.AppInfo.VersionName() == this.configinfo.codeVer)
+                    this.shieldVersion = true;
+            }
+            if (this.iPInfo != null) {
+                if (this.iPInfo.code == 200) {
+                    let m_cityName = this.iPInfo.data.city;
+                    if (this.configinfo.shieldCity != "") {
+                        if (this.configinfo.shieldCity == "all") {
+                            this.shieldArea = true;
+                        }
+                        else {
+                            this.shieldArea = false;
+                            let shieldcities = this.configinfo.shieldCity.split(",");
+                            for (var i = 0; i < shieldcities.length; i++) {
+                                if (m_cityName.indexOf(shieldcities[i]) >= 0) {
+                                    this.shieldArea = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        this.shieldArea = false;
+                    }
+                }
+                else {
+                    this.shieldArea = true;
+                }
+            }
+            if (this.configinfo.shieldTime.status) {
+                let timeLimit = this.configinfo.shieldTime.time.split("-");
+                let date = new Date();
+                if (date.getHours() >= Number(timeLimit[0]) && date.getHours() <= Number(timeLimit[1])) {
+                    this.shieldtime = true;
+                }
+                else {
+                    this.shieldtime = false;
+                }
+            }
+            else {
+                this.shieldtime = false;
+            }
+            let launchRes = this.tt.getLaunchOptionsSync();
+            console.log(launchRes);
+            if (this.configinfo.ShieldScene.status) {
+                let timeLimit = this.configinfo.ShieldScene.Scene.split("|");
+                this.shieldUser = timeLimit.indexOf(launchRes.scene) >= 0;
+                console.log(this.shieldUser);
+            }
+            this.inited = true;
+            if (this.onConFigInited != null)
+                this.onConFigInited();
+            this.tt.getNetworkType({
+                success: (obj) => {
+                    if (obj.networkType == "wifi") {
+                        if (ZJADMgr.ins.shieldArea) {
+                            ZJADMgr.ins.shieldLevel = ShieldLevel.high;
+                        }
+                        else {
+                            ZJADMgr.ins.shieldLevel = ShieldLevel.low;
+                        }
+                    }
+                    else {
+                        ZJADMgr.ins.shieldLevel = ShieldLevel.high;
+                    }
+                    if (ZJADMgr.ins.shieldUser) {
+                        ZJADMgr.ins.shieldLevel = ShieldLevel.high;
+                    }
+                    if (ZJADMgr.ins.shieldVersion) {
+                        ZJADMgr.ins.shieldLevel = ShieldLevel.high;
+                    }
+                    if (ZJADMgr.ins.shieldtime) {
+                        ZJADMgr.ins.shieldLevel = ShieldLevel.high;
+                    }
+                    console.log("--------ZJADMgr.ins.shieldLevel-------");
+                    console.log(ZJADMgr.ins.shieldLevel);
+                },
+                fail: null,
+                complete: null
+            });
+            this.showVideo = this.configinfo.ADPoint;
+        }
+        CheckPlayVideo() {
+            if (!this.inited)
+                return false;
+            if (this.shieldLevel == ShieldLevel.low) {
+                if (this.showVideo[this.playVideoIndex % this.showVideo.length] == '0') {
+                    this.playVideoIndex++;
+                    return false;
+                }
+                else {
+                    this.playVideoIndex++;
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     var LwgInit;
     (function (LwgInit) {
         class LwgInitScene extends Admin.Scene {
@@ -8298,6 +8433,7 @@
     })(LwgInit || (LwgInit = {}));
     class UILwgInit extends LwgInit.LwgInitScene {
         lwgOnEnable() {
+            new ZJADMgr();
             console.log('完成初始化');
             console.log('是否进行过新手引导：', Guide._complete.bool);
             if (Guide._complete.bool) {
@@ -8322,7 +8458,8 @@
 
     class UIPropTry extends PropTry.PropTryScene {
         lwgOnAwake() {
-            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
+            Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
         }
         lwgOnEnable() {
             this.self['BtnClose'].visible = false;
@@ -8331,19 +8468,93 @@
             });
         }
         lwgBtnClick() {
+            Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, this.bytedanceSelectUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, this.bytedanceGetUp);
+            Click.on(Click.Type.noEffect, this.self['Bytedance_Mid_Select'], this, null, null, this.bytedanceSelectUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_Mid_BtnGet'], this, null, null, this.bytedanceGetUp);
+            Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.bytedanceGetUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
             Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
-            Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, () => {
-                this.self['Bytedance_Low_BtnGet'].visible = this.self['Bytedance_Low_Dot'].visible = this.self['Bytedance_Low_Dot'].visible ? false : true;
+        }
+        clickBgtUp() {
+            let Dot;
+            if (this.self['Low'].visible) {
+                Dot = this.self['Bytedance_Low_Dot'];
+            }
+            else if (this.self['Mid'].visible) {
+                Dot = this.self['Bytedance_Mid_Dot'];
+            }
+            if (!Dot) {
+                return;
+            }
+            if (Dot.visible) {
+                this.advFunc();
+            }
+            else {
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            }
+        }
+        bytedanceGetUp(e) {
+            e.stopPropagation();
+            this.advFunc();
+        }
+        bytedanceSelectUp(e) {
+            e.stopPropagation();
+            if (this.self['Low'].visible) {
+                if (!this.self['Low']['count']) {
+                    this.self['Low']['count'] = 0;
+                }
+                this.self['Low']['count']++;
+                if (this.self['Low']['count'] >= 4) {
+                    if (this.self['Bytedance_Low_Dot'].visible) {
+                        this.self['Bytedance_Low_Dot'].visible = false;
+                    }
+                    else {
+                        this.self['Bytedance_Low_Dot'].visible = true;
+                    }
+                }
+                if (ZJADMgr.ins.CheckPlayVideo()) {
+                    ADManager.ShowReward(null);
+                }
+            }
+            else if (this.self['Mid'].visible) {
+                if (!this.self['Mid']['count']) {
+                    this.self['Mid']['count'] = 0;
+                }
+                this.self['Mid']['count']++;
+                if (this.self['Mid']['count'] >= 4) {
+                    if (this.self['Bytedance_Mid_Dot'].visible) {
+                        this.self['Bytedance_Mid_Dot'].visible = false;
+                    }
+                    else {
+                        this.self['Bytedance_Mid_Dot'].visible = true;
+                    }
+                }
+            }
+        }
+        advFunc() {
+            ADManager.ShowReward(() => {
+                Backpack._prop1.num++;
+                Backpack._prop2.num++;
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
-            Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, () => {
-                ADManager.ShowReward(() => {
-                    Backpack._prop1.num++;
-                    Backpack._prop2.num++;
-                    Admin._openScene(Admin.SceneName.GameScene, this.self);
-                });
-            });
+        }
+        btnGetUp(e) {
+            e.stopPropagation();
+            if (Admin._platform == Admin._platformTpye.OPPO) {
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            }
+            else {
+                this.advFunc();
+            }
+        }
+        btnNoUp(event) {
+            Admin._openScene(Admin.SceneName.GameScene, this.self);
         }
     }
 
@@ -8840,14 +9051,9 @@
     class UISkinTry extends Admin.Scene {
         lwgOnAwake() {
             this.randomNoHave();
-            if (Admin._platform == Admin._platformTpye.OPPO) {
-                this.self['BtnGet_OPPO'].visible = true;
-                this.self['BtnGet_WeChat'].visible = false;
-            }
-            else {
-                this.self['BtnGet_OPPO'].visible = false;
-                this.self['BtnGet_WeChat'].visible = true;
-            }
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
+            Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+            console.log(ZJADMgr.ins.shieldLevel);
         }
         randomNoHave() {
             let arrOther = Shop.getwayGoldArr(Shop.GoodsClass.Other, undefined, true);
@@ -8870,11 +9076,92 @@
             Shop._currentProp.name = ele.name;
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
-            Click.on(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
+            Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, this.bytedanceSelectUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, this.bytedanceGetUp);
+            Click.on(Click.Type.noEffect, this.self['Bytedance_Mid_Select'], this, null, null, this.bytedanceSelectUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_Mid_BtnGet'], this, null, null, this.bytedanceGetUp);
+            Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.btnGetUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
         }
-        btnGetUp(event) {
+        clickBgtUp() {
+            let Dot;
+            if (this.self['Low'].visible) {
+                Dot = this.self['Bytedance_Low_Dot'];
+            }
+            else if (this.self['Mid'].visible) {
+                Dot = this.self['Bytedance_Mid_Dot'];
+            }
+            if (!Dot) {
+                return;
+            }
+            if (Dot.visible) {
+                this.advFunc();
+            }
+            else {
+                if (this.beforeTryOtherName) {
+                    Shop._currentOther.name = this.beforeTryOtherName;
+                }
+                if (this.beforeTryPropName) {
+                    Shop._currentProp.name = this.beforeTryPropName;
+                }
+            }
+        }
+        bytedanceGetUp(e) {
+            e.stopPropagation();
+            this.advFunc();
+        }
+        bytedanceSelectUp(e) {
+            e.stopPropagation();
+            if (this.self['Low'].visible) {
+                if (!this.self['Low']['count']) {
+                    this.self['Low']['count'] = 0;
+                }
+                this.self['Low']['count']++;
+                if (this.self['Low']['count'] >= 4) {
+                    if (this.self['Bytedance_Low_Dot'].visible) {
+                        this.self['Bytedance_Low_Dot'].visible = false;
+                    }
+                    else {
+                        this.self['Bytedance_Low_Dot'].visible = true;
+                    }
+                }
+                if (ZJADMgr.ins.CheckPlayVideo()) {
+                    ADManager.ShowReward(null);
+                }
+            }
+            else if (this.self['Mid'].visible) {
+                if (!this.self['Mid']['count']) {
+                    this.self['Mid']['count'] = 0;
+                }
+                this.self['Mid']['count']++;
+                if (this.self['Mid']['count'] >= 4) {
+                    if (this.self['Bytedance_Mid_Dot'].visible) {
+                        this.self['Bytedance_Mid_Dot'].visible = false;
+                    }
+                    else {
+                        this.self['Bytedance_Mid_Dot'].visible = true;
+                    }
+                }
+            }
+        }
+        advFunc() {
+            ADManager.ShowReward(() => {
+                Admin._openScene(Admin.SceneName.UIOperation, this.self);
+            });
+        }
+        btnGetUp(e) {
+            e.stopPropagation();
+            if (Admin._platform == Admin._platformTpye.OPPO) {
+                Admin._openScene(Admin.SceneName.UIOperation, this.self);
+            }
+            else {
+                ADManager.ShowReward(() => {
+                    Admin._openScene(Admin.SceneName.UIOperation, this.self);
+                });
+            }
         }
         btnNoUp(event) {
             if (this.beforeTryOtherName) {
@@ -8883,6 +9170,7 @@
             if (this.beforeTryPropName) {
                 Shop._currentProp.name = this.beforeTryPropName;
             }
+            Admin._openScene(Admin.SceneName.UIOperation, this.self);
         }
         lwgOnDisable() {
             if (this.beforeTryOtherName) {
@@ -8978,20 +9266,21 @@
                 Admin._openScene(Admin.SceneName.UISkinQualified);
             });
             Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-                var func = () => {
-                    EventAdmin.notify(Game3D.EventType.openUICard);
-                    Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
-                };
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 6) {
                         EventAdmin.notify(Guide.EventType.stepComplete);
-                        func();
+                        EventAdmin.notify(Game3D.EventType.openUICard);
+                        Admin._openScene(Admin.SceneName.UICard, this.self, null, Laya.stage.numChildren - 4);
                     }
                     return;
                 }
                 else {
-                    func();
+                    EventAdmin.notify(Game3D.EventType.openUICard);
+                    Admin._openScene(Admin.SceneName.UICard, this.self);
                 }
+            });
+            Click.on(Click.Type.largen, this.self['BtnRanking'], this, null, null, () => {
+                Dialog.createHint_Middle(Dialog.HintContent["尽请期待！"]);
             });
         }
         lwgOnDisable() {

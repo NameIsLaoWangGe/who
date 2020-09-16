@@ -1,4 +1,6 @@
-import { Admin, Tools } from "../Frame/lwg";
+import ZJADMgr from "../../TJ/ZJADMgr";
+import { Admin, Tools, Shop, Click, EventAdmin } from "../Frame/lwg";
+import ADManager from "../../TJ/Admanager";
 
 export default class UISkinTry extends Admin.Scene {
 
@@ -19,14 +21,14 @@ export default class UISkinTry extends Admin.Scene {
         let hair;
         let beard;
         // 查看当前关卡状况
-        for (let index = 0; index < GVariate._taskArr.length; index++) {
-            const element = GVariate._taskArr[index];
-            if (element === GEnum.TaskType.HairParent) {
-                hair = true;
-            } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
-                beard = true;
-            }
-        }
+        // for (let index = 0; index < GVariate._taskArr.length; index++) {
+        //     const element = GVariate._taskArr[index];
+        //     if (element === GEnum.TaskType.HairParent) {
+        //         hair = true;
+        //     } else if (element === GEnum.TaskType.LeftBeard || element === GEnum.TaskType.RightBeard || element === GEnum.TaskType.UpLeftBeard || element === GEnum.TaskType.UpRightBeard || element === GEnum.TaskType.MiddleBeard) {
+        //         beard = true;
+        //     }
+        // }
 
         if (hair) {
             console.log('本关有剃头任务！');
@@ -105,9 +107,9 @@ export default class UISkinTry extends Admin.Scene {
             if (this.beforeTryPropName) {
                 Shop._currentProp.name = this.beforeTryPropName;
             }
-            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-            EventAdmin.notify(GEnum.EventType.changeOther);
-            EventAdmin.notify(GEnum.EventType.changeProp);
+            // Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
+            // EventAdmin.notify(GEnum.EventType.changeOther);
+            // EventAdmin.notify(GEnum.EventType.changeProp);
         }
     }
 
@@ -150,23 +152,23 @@ export default class UISkinTry extends Admin.Scene {
 
     advFunc(): void {
         ADManager.ShowReward(() => {
-            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-            EventAdmin.notify(GEnum.EventType.changeOther);
-            EventAdmin.notify(GEnum.EventType.changeProp);
+            Admin._openScene(Admin.SceneName.UIOperation, this.self);
+            // EventAdmin.notify(GEnum.EventType.changeOther);
+            // EventAdmin.notify(GEnum.EventType.changeProp);
         })
     }
 
     btnGetUp(e: Laya.Event): void {
         e.stopPropagation();
-        if (Game._platform == Game._platformTpye.OPPO) {
-            Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-            EventAdmin.notify(GEnum.EventType.changeOther);
-            EventAdmin.notify(GEnum.EventType.changeProp);
+        if (Admin._platform == Admin._platformTpye.OPPO) {
+            Admin._openScene(Admin.SceneName.UIOperation,  this.self);
+            // EventAdmin.notify(GEnum.EventType.changeOther);
+            // EventAdmin.notify(GEnum.EventType.changeProp);
         } else {
             ADManager.ShowReward(() => {
-                Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-                EventAdmin.notify(GEnum.EventType.changeOther);
-                EventAdmin.notify(GEnum.EventType.changeProp);
+                Admin._openScene(Admin.SceneName.UIOperation,this.self);
+                // EventAdmin.notify(GEnum.EventType.changeOther);
+                // EventAdmin.notify(GEnum.EventType.changeProp);
             })
         }
     }
@@ -178,9 +180,9 @@ export default class UISkinTry extends Admin.Scene {
         if (this.beforeTryPropName) {
             Shop._currentProp.name = this.beforeTryPropName;
         }
-        Admin._openScene(Admin.SceneName.UIOperation, null, this.self);
-        EventAdmin.notify(GEnum.EventType.changeOther);
-        EventAdmin.notify(GEnum.EventType.changeProp);
+        Admin._openScene(Admin.SceneName.UIOperation,  this.self);
+        // EventAdmin.notify(GEnum.EventType.changeOther);
+        // EventAdmin.notify(GEnum.EventType.changeProp);
     }
 
     lwgOnDisable(): void {

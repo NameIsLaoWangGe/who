@@ -1,5 +1,5 @@
 import { lwg3D } from "../Frame/lwg3D";
-import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack, Dialog } from "../Frame/lwg";
+import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack, Dialog, PalyAudio } from "../Frame/lwg";
 export module Game3D {
     /**场景节点枚举*/
     export let Scene3D: Laya.Scene3D;
@@ -888,6 +888,7 @@ export module Game3D {
                             // 只剩两张牌的时候，问题是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {
                                 console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
+                                PalyAudio.playSound('Game/Voice/chaofeng.wav');
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
                                 let name = getNameByChName(question.substring(1, question.length - 2));
                                 console.log('即将倒下的牌是排除', name);
@@ -969,7 +970,6 @@ export module Game3D {
             // 下一关
             EventAdmin.reg(EventAdmin.EventType.nextCustoms, this, () => {
                 Animation3D.moveRotateTo(MainCamera, PerspectiveAwait, 1500, this);
-                this.init();
             })
 
             //前往卡牌界面
@@ -1100,7 +1100,8 @@ export module Game3D {
             }
 
             Laya.timer.once(400, this, () => {
-                if (fallNum >= 2) {
+                if (fallNum >= 4) {
+                    PalyAudio.playSound('Game/Voice/kuazan.wav');
                     if (CardParent == MyCardParent) {
                         EventAdmin.notify(EventType.doWell);
                     }

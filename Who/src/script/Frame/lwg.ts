@@ -87,7 +87,8 @@ export module lwg {
             '没有抽奖次数了，请通过观看广告获取！',
             '没有库存了！',
             '牌数太少，无法使用道具！',
-            '没有可以购买的卡牌了！'
+            '没有可以购买的卡牌了！',
+            '尽请期待！'
         }
         enum Skin {
             blackBord = 'Frame/UI/ui_orthogon_black.png'
@@ -562,6 +563,7 @@ export module lwg {
                     parent.addChild(Gold);
 
                     Animation2D.move_Scale(Gold, 1, firstPoint.x, firstPoint.y, targetPoint.x, targetPoint.y, 1, 350, 0, null, () => {
+                        PalyAudio.playSound(PalyAudio.voiceUrl.huodejinbi);
                         if (index === number - 1) {
 
                             Laya.timer.once(200, this, () => {
@@ -607,6 +609,7 @@ export module lwg {
                 // Gold.rotation = Math.random() * 360;
                 Animation2D.move_Scale(Gold, 0.5, firstPoint.x, firstPoint.y, x, y, 1, 300, Math.random() * 100 + 100, Laya.Ease.expoIn, () => {
                     Animation2D.move_Scale(Gold, 1, Gold.x, Gold.y, targetPoint.x, targetPoint.y, 1, 400, Math.random() * 200 + 100, Laya.Ease.cubicOut, () => {
+                        PalyAudio.playSound(PalyAudio.voiceUrl.huodejinbi);
                         if (index === number - 1) {
 
                             Laya.timer.once(200, this, () => {
@@ -3876,6 +3879,7 @@ export module lwg {
             bgm = 'Frame/Voice/bgm.mp3',
             victory = 'Frame/Voice/guoguan.wav',
             defeated = 'Frame/Voice/wancheng.wav',
+            huodejinbi = 'Frame/Voice/huodejinbi.wav',
         }
 
         /**通用音效播放

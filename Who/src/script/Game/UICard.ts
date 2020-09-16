@@ -8,9 +8,11 @@ export default class UICard extends Admin.Scene {
         this.self['BtnBack'].alhpa = 0;
         this.self['BtnBack'].visible = false;
         Laya.timer.once(4500, this, () => {
-            Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 300, 0, () => {
+            Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 200, 0, () => {
                 this.self['BtnBack'].visible = true;
-                EventAdmin.notify(Guide.EventType.onStep);
+                if (Guide._whichStepNum == 6) {
+                    EventAdmin.notify(Guide.EventType.onStep);
+                }
             });
         })
     }
