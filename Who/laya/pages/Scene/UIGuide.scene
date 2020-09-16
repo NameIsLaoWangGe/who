@@ -5,11 +5,7 @@
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#ffffff","height":1280},
     "nodeParent":-1,
-<<<<<<< HEAD
     "maxID":11,
-=======
-    "maxID":7,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -62,7 +58,6 @@
         },
         {
             "x":15,
-<<<<<<< HEAD
             "type":"Script",
             "switchAble":true,
             "source":"src/script/Frame/Guide.ts",
@@ -77,33 +72,6 @@
             "compId":7,
             "child":[
                 ]
-=======
-            "type":"Image",
-            "searchKey":"Image,Hand,Hand",
-            "props":{"y":486,"x":331,"var":"Hand","name":"Hand"},
-            "nodeParent":2,
-            "label":"Hand",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":5,
-            "child":[
-                {
-                    "x":30,
-                    "type":"Image",
-                    "searchKey":"Image",
-                    "props":{"y":0,"x":0,"width":87,"skin":"Frame/UI/icon_hand.png","height":94},
-                    "nodeParent":5,
-                    "label":"Image",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":6,
-                    "child":[
-                        ]
-                }]
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
         }],
     "animations":[
         {
@@ -113,35 +81,15 @@
                     "keyframes":{
                         "y":[
                             {
-<<<<<<< HEAD
                                 "value":0,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
-=======
-<<<<<<< HEAD
-                                "value":-104,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":6,
-                                "label":null,
-=======
-                                "value":0,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":6,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "key":"y",
                                 "index":0
                             },
                             {
-<<<<<<< HEAD
                                 "value":0,
-=======
-<<<<<<< HEAD
-                                "value":-104,
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
@@ -150,85 +98,35 @@
                                 "index":3
                             },
                             {
-<<<<<<< HEAD
                                 "value":-104,
-=======
-                                "value":174,
-=======
-                                "value":0,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":6,
-                                "label":null,
-                                "key":"y",
-                                "index":5
-                            },
-                            {
-                                "value":33,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"y",
-<<<<<<< HEAD
                                 "index":8
                             },
                             {
-<<<<<<< HEAD
                                 "value":174,
-=======
-                                "value":59,
-=======
-                                "index":15
-                            },
-                            {
-                                "value":215,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"y",
-<<<<<<< HEAD
                                 "index":13
                             },
                             {
-<<<<<<< HEAD
                                 "value":59,
-=======
-                                "value":269,
-=======
-                                "index":25
-                            },
-                            {
-                                "value":150,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"y",
-<<<<<<< HEAD
                                 "index":18
                             },
                             {
-<<<<<<< HEAD
                                 "value":180,
-=======
-                                "value":163,
-=======
-                                "index":35
-                            },
-                            {
-                                "value":343,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"y",
-<<<<<<< HEAD
                                 "index":23
                             },
                             {
@@ -245,30 +143,11 @@
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
-<<<<<<< HEAD
-=======
-                                "label":null,
-=======
-                                "index":45
-                            }],
-                        "x":[
-                            {
-                                "value":0,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":6,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "key":"x",
                                 "index":0
                             },
                             {
-<<<<<<< HEAD
                                 "value":0,
-=======
-<<<<<<< HEAD
-                                "value":188,
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
@@ -277,87 +156,36 @@
                                 "index":3
                             },
                             {
-<<<<<<< HEAD
                                 "value":188,
-=======
-                                "value":12,
-=======
-                                "value":0,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":6,
-                                "label":null,
-                                "key":"x",
-                                "index":5
-                            },
-                            {
-                                "value":80,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"x",
-<<<<<<< HEAD
                                 "index":8
                             },
                             {
-<<<<<<< HEAD
                                 "value":12,
-=======
-                                "value":268,
-=======
-                                "index":15
-                            },
-                            {
-                                "value":50,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"x",
-<<<<<<< HEAD
                                 "index":13
                             },
                             {
-<<<<<<< HEAD
                                 "value":268,
-=======
-                                "value":87,
-=======
-                                "index":25
-                            },
-                            {
-                                "value":167,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"x",
-<<<<<<< HEAD
                                 "index":18
                             },
                             {
-<<<<<<< HEAD
                                 "value":137,
-=======
-                                "value":325,
-=======
-                                "index":35
-                            },
-                            {
-                                "value":118,
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":6,
                                 "key":"x",
-<<<<<<< HEAD
                                 "index":23
-<<<<<<< HEAD
                             },
                             {
                                 "value":325,
@@ -366,28 +194,6 @@
                                 "target":6,
                                 "key":"x",
                                 "index":28
-=======
-=======
-                                "index":45
-                            }],
-                        "name":[
-                            {
-                                "value":"",
-                                "tweenMethod":"linearNone",
-                                "tween":false,
-                                "target":6,
-                                "key":"name",
-                                "index":0
-                            },
-                            {
-                                "value":"Pic",
-                                "tweenMethod":"linearNone",
-                                "tween":false,
-                                "target":6,
-                                "key":"name",
-                                "index":5
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                             }],
                         "alpha":[
                             {
@@ -405,11 +211,7 @@
                                 "target":6,
                                 "label":"start",
                                 "key":"alpha",
-<<<<<<< HEAD
                                 "index":3
-=======
-                                "index":5
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
                             },
                             {
                                 "value":1,
@@ -417,7 +219,6 @@
                                 "tween":true,
                                 "target":6,
                                 "key":"alpha",
-<<<<<<< HEAD
                                 "index":8
                             },
                             {
@@ -427,13 +228,6 @@
                                 "target":6,
                                 "key":"alpha",
                                 "index":28
-=======
-<<<<<<< HEAD
-                                "index":23
-=======
-                                "index":45
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                             },
                             {
                                 "value":0,
@@ -442,46 +236,11 @@
                                 "target":6,
                                 "label":"end",
                                 "key":"alpha",
-<<<<<<< HEAD
                                 "index":31
-=======
-<<<<<<< HEAD
-                                "index":26
->>>>>>> f31849b535ddf3c3da20964188f89402774631b5
                             }]
                     }
                 }],
             "name":"Draw",
-=======
-                                "index":50
-                            }]
-                    }
-                },
-                {
-                    "target":5,
-                    "keyframes":{
-                        "y":[
-                            {
-                                "value":486,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":5,
-                                "key":"y",
-                                "index":0
-                            }],
-                        "x":[
-                            {
-                                "value":331,
-                                "tweenMethod":"linearNone",
-                                "tween":true,
-                                "target":5,
-                                "key":"x",
-                                "index":0
-                            }]
-                    }
-                }],
-            "name":"Mirror",
->>>>>>> 3a96a854000b0417e794b54b5856100ea20473a3
             "id":1,
             "frameRate":10,
             "action":0
