@@ -6,7 +6,7 @@ import { Game3D } from "./Game3D";
 export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
 
     lwgOnAwake(): void {
-        ADManager.TAPoint(TaT.BtnShow, 'Adlimmitget');
+        ADManager.TAPoint(TaT.BtnShow, 'UISkinQualified_BtnGet');
 
         Gold.goldVinish();
         Setting.setBtnVinish();
@@ -213,7 +213,7 @@ export default class UISkinQualified extends SkinQualified.SkinQualifiedScene {
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'Adlimmitget');
+                ADManager.TAPoint(TaT.BtnClick, 'UISkinQualified_BtnGet');
                 SkinQualified._adsNum.value++;
                 if (SkinQualified._adsNum.value >= 7) {
                     Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));

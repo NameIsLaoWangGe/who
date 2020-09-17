@@ -1,18 +1,23 @@
-import { Admin, Click, EventAdmin, Backpack, Dialog, Animation2D } from "../Frame/lwg";
+import { Admin, Click, EventAdmin, Backpack, Dialog, Animation2D, Gold } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
-import ADManager from "../../TJ/Admanager";
+import ADManager, { TaT } from "../../TJ/Admanager";
 import { Guide } from "../Frame/Guide";
 export default class UICard extends Admin.Scene {
 
+    lwgOnAwake(): void {
+        Gold.goldAppear();
+    }
     lwgOnEnable(): void {
+
+        ADManager.TAPoint(TaT.BtnShow, 'UICard_BtnGold');
+        ADManager.TAPoint(TaT.BtnClick, 'UICard_BtnGold');
+        
         this.self['BtnBack'].alhpa = 0;
         this.self['BtnBack'].visible = false;
         Laya.timer.once(4500, this, () => {
             Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 200, 0, () => {
                 this.self['BtnBack'].visible = true;
-                if (Guide._whichStepNum == 6) {
-                    EventAdmin.notify(Guide.EventType.onStep);
-                }
+                EventAdmin.notify(Guide.EventType.onStep);
             });
         })
     }
@@ -40,7 +45,13 @@ export default class UICard extends Admin.Scene {
                         EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
                     })
                 } else if (type == 'gold') {
-                    EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                    ADManager.TAPoint(TaT.BtnClick, 'UICard_BtnGold');
+                    if (Gold._num.value >= 300) {
+                        EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                        Gold.addGold(-300);
+                    } else {
+                        Dialog.createHint_Middle(Dialog.HintContent["金币不够了！"]);
+                    }
                 }
             } else {
                 Dialog.createHint_Middle(Dialog.HintContent["没有可以购买的卡牌了！"]);

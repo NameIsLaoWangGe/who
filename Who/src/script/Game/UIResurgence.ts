@@ -12,8 +12,7 @@ export default class UIResurgence extends Admin.Scene {
 
     lwgOnEnable(): void {
         console.log('打开复活界面！')
-        ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');
-        ADManager.TAPoint(TaT.BtnShow, 'ADrevivebt_revive');
+        ADManager.TAPoint(TaT.BtnShow, 'UIResurgence_BtnResurgence');
 
         TimerAdmin.frameLoop(60, this, () => {
             if (this['CounDownSwitch']) {
@@ -35,14 +34,14 @@ export default class UIResurgence extends Admin.Scene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
-            // ADManager.ShowReward(() => {
-            this['CounDownSwitch'] = false;
-            Admin._gameSwitch = true;
-            ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-            Admin._closeScene(this.self, () => {
-                EventAdmin.notify(EventAdmin.EventType.resurgence);
-            });
-            // })
+            ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT.BtnClick, 'UIResurgence_BtnResurgence');
+                this['CounDownSwitch'] = false;
+                Admin._gameSwitch = true;
+                Admin._closeScene(this.self, () => {
+                    EventAdmin.notify(EventAdmin.EventType.resurgence);
+                });
+            })
         });
 
         Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {

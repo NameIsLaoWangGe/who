@@ -7,8 +7,8 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
     lwgOnAwake(): void {
 
-        ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
-        ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
+        ADManager.TAPoint(TaT.BtnShow, 'UIVictoryBox_BtnAgain_Bytedance');
+        ADManager.TAPoint(TaT.BtnShow, 'UIVictoryBox_Ads');
         Gold.createGoldNode(629, 174);
 
         // ADManager.TAPoint(TaT.BtnShow, 'ADrewardbt_box');
@@ -192,8 +192,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
     // /**看广告获取的最大次数为6次*/
     btnAgainUp(event): void {
-        ADManager.TAPoint(TaT.BtnClick, 'ADrewardbt_box');
-        ADManager.TAPoint(TaT.BtnClick, 'Adboxagain');
+        ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
 
         if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
             ADManager.ShowReward(() => {

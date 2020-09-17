@@ -21,11 +21,11 @@
 		"textures":[
 			{
 				"name":"albedoTexture",
-				"path":"wzry7.jpg",
+				"path":"xxs1.png",
 				"constructParams":[
 					512,
 					512,
-					0,
+					1,
 					true
 				],
 				"propertyParams":{

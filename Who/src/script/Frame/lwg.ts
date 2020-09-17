@@ -1,4 +1,5 @@
 import { Game3D } from "../Game/Game3D";
+import ADManager, { TaT } from "../../TJ/Admanager";
 // import ADManager, { TaT } from "../../TJ/Admanager";
 /**综合模板*/
 export module lwg {
@@ -88,7 +89,7 @@ export module lwg {
             '没有库存了！',
             '牌数太少，无法使用道具！',
             '没有可以购买的卡牌了！',
-            '尽请期待！'
+            '敬请期待!'
         }
         enum Skin {
             blackBord = 'Frame/UI/ui_orthogon_black.png'
@@ -6687,78 +6688,85 @@ export module lwg {
             open = 'open',
             close = 'close',
         }
-        /**
-        * 场景打点,记录玩家进场景和出场景的次数
-        * @param type 两种类型，一种是离开打点，一种是进入打点
-        * @param sceneName 场景名称
-        */
-        export function scenePrintPoint(sceneName: string, type: string): void {
-            // switch (sceneName) {
-            //     case Admin.SceneName.UILoding:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'UIPreload');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'UIPreload');
-            //         }
-            //         break;
-            //     case Admin.SceneName.UIStart:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'mianpage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'mianpage');
-            //         }
-            //         break;
-            //     case Admin.SceneName.UIVictory:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'successpage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'successpage');
-            //         }
-            //         break;
+        // /**
+        // * 场景打点,记录玩家进场景和出场景的次数
+        // * @param type 两种类型，一种是离开打点，一种是进入打点
+        // * @param sceneName 场景名称
+        // */
+        // export function scenePrintPoint(sceneName: string, type: string): void {
+        //     switch (sceneName) {
+        //         case Admin.SceneName.UILoding:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'UIPreload');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'UIPreload');
+        //             }
+        //             break;
+        //         case Admin.SceneName.UIStart:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'mianpage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'mianpage');
+        //             }
+        //             break;
+        //         case Admin.SceneName.UIVictory:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'successpage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'successpage');
+        //             }
+        //             break;
 
-            //     case Admin.SceneName.UIDefeated:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'failpage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'failpage');
-            //         }
-            //         break;
+        //         case Admin.SceneName.UIDefeated:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'failpage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'failpage');
+        //             }
+        //             break;
 
-            //     case Admin.SceneName.UIResurgence:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'revivepage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'revivepage');
-            //         }
-            //         break;
-            //     case Admin.SceneName.UISkinXD:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'limmitpage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'limmitpage');
-            //         }
-            //         break;
-            //     case Admin.SceneName.UIShare:
-            //         if (type === scenePointType.open) {
-            //             ADManager.TAPoint(TaT.PageEnter, 'sharepage');
-            //         } else if (type === scenePointType.close) {
-            //             ADManager.TAPoint(TaT.PageLeave, 'sharepage');
-            //         }
-            //         break;
-            //     default:
+        //         case Admin.SceneName.UIResurgence:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'revivepage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'revivepage');
+        //             }
+        //             break;
+        //         case Admin.SceneName.UISkinQualified:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'limmitpage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'limmitpage');
+        //             }
+        //             break;
+        //         case Admin.SceneName.UIShare:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'sharepage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'sharepage');
+        //             }
+        //             break;
+        //         case Admin.SceneName.UICheckIn:
+        //             if (type === scenePointType.open) {
+        //                 ADManager.TAPoint(TaT.PageEnter, 'signpage');
+        //             } else if (type === scenePointType.close) {
+        //                 ADManager.TAPoint(TaT.PageLeave, 'signpage');
+        //             }
+        //             break;
+        //         default:
 
-            //         break;
-            // }
-        }
-        /**按钮打点类型*/
-        export enum btnPointType {
-            show = 'show',
-            click = 'click',
-        }
-        /**按钮打点*/
-        export function btnPrintPoint(): void {
+        //             break;
+        //     }
+        // }
+        // /**按钮打点类型*/
+        // export enum btnPointType {
+        //     show = 'show',
+        //     click = 'click',
+        // }
+        // /**按钮打点*/
+        // export function btnPrintPoint(): void {
 
-        }
+        // }
     }
 }
 

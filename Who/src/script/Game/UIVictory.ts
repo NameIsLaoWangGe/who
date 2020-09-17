@@ -5,6 +5,7 @@ import RecordManager from "../../TJ/RecordManager";
 export default class UIVictory extends VictoryScene {
 
     lwgOnAwake(): void {
+        ADManager.TAPoint(TaT.BtnShow, 'UIVictory_Three');
         switch (Admin._platform) {
             case Admin._platformTpye.OPPO:
                 this.self['OPPO'].visible = true;
@@ -65,7 +66,7 @@ export default class UIVictory extends VictoryScene {
         Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
             if (this.self['Dot_Bytedance'].visible) {
                 ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT.BtnClick, 'closeword_success');
+                    ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
                     this.getGold(300);
                 })
             } else {

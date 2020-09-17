@@ -1161,6 +1161,7 @@
                 let CardData0 = Tools.objArray_Copy(Game3D.CardData);
                 cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
                 Game3D.myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
+                console.log(cardData16, Game3D.myHandName);
             }
             let AllCardParent = Game3D.AllCardGray.clone();
             let startX = 0.204;
@@ -1340,12 +1341,19 @@
             return arr;
         }
         Game3D.getNotFallCardNameForMe = getNotFallCardNameForMe;
-        function getNotFallCardNameOpposite() {
+        function getNotFallCardNameOpposite(exclude) {
             let arr = [];
             for (let i = 0; i < Game3D.OppositeCardParent.numChildren; i++) {
                 let Card = Game3D.OppositeCardParent.getChildAt(i);
-                if (!Card[CardProperty.fall]) {
-                    arr.push(Card.name);
+                if (exclude) {
+                    if (!Card[CardProperty.fall] && Card[CardProperty.name] !== Game3D.myHandName) {
+                        arr.push(Card.name);
+                    }
+                }
+                else {
+                    if (!Card[CardProperty.fall]) {
+                        arr.push(Card.name);
+                    }
                 }
             }
             return arr;
@@ -1705,8 +1713,8 @@
                                     console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
                                     PalyAudio.playSound('Game/Voice/chaofeng.wav');
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.chaofeng);
-                                    let name = getNameByChName(question.substring(1, question.length - 2));
-                                    console.log('即将倒下的牌是排除', name);
+                                    let name = getNotFallCardNameOpposite(true)[0];
+                                    console.log('即将倒下的牌是', name);
                                     Laya.timer.once(time * 3, this, () => {
                                         this.carFallAni([name], Game3D.OppositeCardParent, true);
                                         Laya.timer.once(time * 3, this, () => {
@@ -1741,11 +1749,9 @@
                                     Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.qupai);
                                 }]);
                             Laya.timer.once(time * 3, this, () => {
-                                console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                                 if (notFallLen == 2) {
-                                    console.log('对方只剩下2张牌了，但是回答错了，我们还有一次机会~！');
-                                    let name = getNameByChName(question.substring(1, question.length - 2));
-                                    console.log('即将倒下的牌是', name);
+                                    let name = getNotFallCardNameOpposite(true)[0];
+                                    console.log('对方只剩下2张牌了，错误的卡牌倒下' + name + '，但是回答错了，我们还有一次机会~！');
                                     Laya.timer.once(time * 1, this, () => {
                                         this.carFallAni([name], Game3D.OppositeCardParent);
                                         Laya.timer.once(time * 3, this, () => {
@@ -1754,6 +1760,7 @@
                                     });
                                 }
                                 else {
+                                    console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                                     Laya.timer.once(time * 1, this, () => {
                                         this.carFallAni(cardArr[0], Game3D.OppositeCardParent);
                                         Laya.timer.once(time * 3, this, () => {
@@ -1848,6 +1855,7 @@
                         Game3D.whichBout = WhichBoutType.me;
                         break;
                     case WhichBoutType.me:
+                        EventAdmin.notify(EventType.hideOption);
                         Game3D.whichBout = WhichBoutType.opposite;
                         break;
                     case WhichBoutType.opposite:
@@ -1919,6 +1927,7 @@
                 this.changeOpppsiteRole();
                 Tools.d3_animatorPlay(Game3D.OppositeRole, RoleAniName.daiji);
                 Game3D.AllCardGray.active = false;
+                console.log(Game3D.myHandName);
             }
             changeOpppsiteRole() {
                 Game3D.OppositeRole = Game3D.OppositeRoleParent.getChildByName('Girl');
@@ -2009,7 +2018,7 @@
                 HintContent[HintContent["\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01"] = 30] = "\u6CA1\u6709\u5E93\u5B58\u4E86\uFF01";
                 HintContent[HintContent["\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01"] = 31] = "\u724C\u6570\u592A\u5C11\uFF0C\u65E0\u6CD5\u4F7F\u7528\u9053\u5177\uFF01";
                 HintContent[HintContent["\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01"] = 32] = "\u6CA1\u6709\u53EF\u4EE5\u8D2D\u4E70\u7684\u5361\u724C\u4E86\uFF01";
-                HintContent[HintContent["\u5C3D\u8BF7\u671F\u5F85\uFF01"] = 33] = "\u5C3D\u8BF7\u671F\u5F85\uFF01";
+                HintContent[HintContent["\u656C\u8BF7\u671F\u5F85!"] = 33] = "\u656C\u8BF7\u671F\u5F85!";
             })(HintContent = Dialog.HintContent || (Dialog.HintContent = {}));
             let Skin;
             (function (Skin) {
@@ -6732,17 +6741,6 @@
                 scenePointType["open"] = "open";
                 scenePointType["close"] = "close";
             })(scenePointType = Tomato.scenePointType || (Tomato.scenePointType = {}));
-            function scenePrintPoint(sceneName, type) {
-            }
-            Tomato.scenePrintPoint = scenePrintPoint;
-            let btnPointType;
-            (function (btnPointType) {
-                btnPointType["show"] = "show";
-                btnPointType["click"] = "click";
-            })(btnPointType = Tomato.btnPointType || (Tomato.btnPointType = {}));
-            function btnPrintPoint() {
-            }
-            Tomato.btnPrintPoint = btnPrintPoint;
         })(Tomato = lwg.Tomato || (lwg.Tomato = {}));
     })(lwg || (lwg = {}));
     let Admin = lwg.Admin;
@@ -6793,8 +6791,199 @@
     let BackpackScene = lwg.Backpack.BackpackScene;
     let Tomato = lwg.Tomato;
 
+    class UIAdsHint extends Admin.Scene {
+        setCallBack(_adAction) {
+            this.adAction = _adAction;
+        }
+        lwgOnEnable() {
+            ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
+            this.self.x = 0;
+            this.self.y = 0;
+            this.self['BtnClose'].visible = false;
+            Laya.timer.frameOnce(120, this, () => {
+                this.self['BtnClose'].visible = true;
+            });
+        }
+        lwgBtnClick() {
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);
+            Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);
+        }
+        btnCloseUp() {
+            this.self.close();
+        }
+        btnConfirmUp() {
+            ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
+            ADManager.ShowReward(this.adAction, null);
+            this.self.close();
+        }
+        lwgOnDisable() {
+            console.log('退出');
+        }
+    }
+
+    class ADManager {
+        static ShowBanner() {
+            let p = new TJ.ADS.Param();
+            p.place = TJ.ADS.Place.BOTTOM | TJ.ADS.Place.CENTER;
+            TJ.ADS.Api.ShowBanner(p);
+        }
+        static CloseBanner() {
+            let p = new TJ.ADS.Param();
+            p.place = TJ.ADS.Place.BOTTOM | TJ.ADS.Place.CENTER;
+            TJ.ADS.Api.RemoveBanner(p);
+        }
+        static ShowNormal() {
+            TJ.API.AdService.ShowNormal(new TJ.API.AdService.Param());
+        }
+        static showNormal2() {
+            TJ.API.AdService.ShowNormal(new TJ.API.AdService.Param());
+        }
+        static ShowReward(rewardAction, CDTime = 500) {
+            if (Admin._platform === Admin._platformTpye.OPPO) {
+                rewardAction();
+                EventAdmin.notify(Task.EventType.adsTime);
+                EventAdmin.notify(EasterEgg.EventType.easterEggAds);
+                return;
+            }
+            if (ADManager.CanShowCD) {
+                PalyAudio.stopMusic();
+                console.log("?????");
+                let p = new TJ.ADS.Param();
+                p.extraAd = true;
+                let getReward = false;
+                p.cbi.Add(TJ.Define.Event.Reward, () => {
+                    getReward = true;
+                    PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
+                    if (rewardAction != null) {
+                        rewardAction();
+                        EventAdmin.notify(Task.EventType.adsTime);
+                        EventAdmin.notify(EasterEgg.EventType.easterEggAds);
+                    }
+                });
+                p.cbi.Add(TJ.Define.Event.Close, () => {
+                    if (!getReward) {
+                        PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
+                        console.log('观看完整广告才能获取奖励哦！');
+                        Admin._openScene(Admin.SceneName.UIAdsHint, null, () => {
+                            Admin._sceneControl['UIAdsHint'].getComponent(UIAdsHint).setCallBack(rewardAction);
+                        });
+                    }
+                });
+                p.cbi.Add(TJ.Define.Event.NoAds, () => {
+                    PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
+                    Dialog.createHint_Middle(Dialog.HintContent["暂时没有广告，过会儿再试试吧！"]);
+                });
+                TJ.ADS.Api.ShowReward(p);
+                ADManager.CanShowCD = false;
+                setTimeout(() => {
+                    ADManager.CanShowCD = true;
+                }, CDTime);
+            }
+        }
+        static Event(param, value) {
+            console.log("Param:>" + param + "Value:>" + value);
+            let p = new TJ.GSA.Param();
+            if (value == null) {
+                p.id = param;
+            }
+            else {
+                p.id = param + value;
+            }
+            console.log(p.id);
+            TJ.GSA.Api.Event(p);
+        }
+        static initShare() {
+            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
+                this.wx.onShareAppMessage(() => {
+                    return {
+                        title: this.shareContent,
+                        imageUrl: this.shareImgUrl,
+                        query: ""
+                    };
+                });
+                this.wx.showShareMenu({
+                    withShareTicket: true,
+                    success: null,
+                    fail: null,
+                    complete: null
+                });
+            }
+        }
+        static lureShare() {
+            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
+                this.wx.shareAppMessage({
+                    title: this.shareContent,
+                    imageUrl: this.shareImgUrl,
+                    query: ""
+                });
+            }
+        }
+        static VibrateShort() {
+            if (!Setting._shake.switch) {
+                return;
+            }
+            TJ.API.Vibrate.Short();
+        }
+        static Vibratelong() {
+            if (!Setting._shake.switch) {
+                return;
+            }
+            TJ.API.Vibrate.Long();
+        }
+        static TAPoint(type, name) {
+            let p = new TJ.API.TA.Param();
+            p.id = name;
+            switch (type) {
+                case TaT$1.BtnShow:
+                    TJ.API.TA.Event_Button_Show(p);
+                    break;
+                case TaT$1.BtnClick:
+                    TJ.API.TA.Event_Button_Click(p);
+                    break;
+                case TaT$1.PageShow:
+                    TJ.API.TA.Event_Page_Show(p);
+                    break;
+                case TaT$1.PageEnter:
+                    TJ.API.TA.Event_Page_Enter(p);
+                    break;
+                case TaT$1.PageLeave:
+                    TJ.API.TA.Event_Page_Leave(p);
+                    break;
+                case TaT$1.LevelStart:
+                    TJ.API.TA.Event_Level_Start(p);
+                    console.log('本关开始打点');
+                    break;
+                case TaT$1.LevelFail:
+                    TJ.API.TA.Event_Level_Fail(p);
+                    console.log('本关失败打点');
+                    break;
+                case TaT$1.LevelFinish:
+                    TJ.API.TA.Event_Level_Finish(p);
+                    console.log('本关胜利打点');
+                    break;
+            }
+        }
+    }
+    ADManager.CanShowCD = true;
+    ADManager.wx = Laya.Browser.window.wx;
+    ADManager.shareImgUrl = "http://image.tomatojoy.cn/6847506204006681a5d5fa0cd91ce408";
+    ADManager.shareContent = "剃头大师！";
+    var TaT$1;
+    (function (TaT) {
+        TaT[TaT["BtnShow"] = 0] = "BtnShow";
+        TaT[TaT["BtnClick"] = 1] = "BtnClick";
+        TaT[TaT["PageShow"] = 2] = "PageShow";
+        TaT[TaT["PageEnter"] = 3] = "PageEnter";
+        TaT[TaT["PageLeave"] = 4] = "PageLeave";
+        TaT[TaT["LevelStart"] = 5] = "LevelStart";
+        TaT[TaT["LevelFinish"] = 6] = "LevelFinish";
+        TaT[TaT["LevelFail"] = 7] = "LevelFail";
+    })(TaT$1 || (TaT$1 = {}));
+
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
+            ADManager.TAPoint(TaT$1.BtnShow, 'GameScene_BtnSC');
+            ADManager.TAPoint(TaT$1.BtnShow, 'GameScene_BtnSC');
             Gold.goldAppear();
         }
         lwgAdaptive() {
@@ -6818,6 +7007,7 @@
                 });
             };
             Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'GameScene_BtnSC');
                 if (Backpack._prop1.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                     return;
@@ -6837,6 +7027,7 @@
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'GameScene_BtnSX');
                 if (Backpack._prop2.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                     return;
@@ -7020,6 +7211,8 @@
                 Animation2D.bombs_Vanish(QuestionBaord, 0, 0, 0, 150, 500);
                 Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
                 Animation2D.cardRotateX_TowFace(Card, 180, null, 200);
+                Animation2D.move_Simple(Card1, Card1.x, Card1.y, -1200, Card1.y, 500, 150);
+                Animation2D.cardRotateX_TowFace(Card1, 180, null, 200);
                 Animation2D.scale_Alpha(BtnNo, 1, 1, 1, 0, 0, 0, 150, 400);
                 Animation2D.scale_Alpha(BtnYes, 1, 1, 1, 0, 0, 0, 150, 400, () => {
                     GuessCard.removeSelf();
@@ -7033,205 +7226,19 @@
             let MainCamera = Game3D.MainCamera.getChildAt(0);
             let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
             let Sp3D;
-            if (hitResult && !Admin._clickLock.switch) {
+            if (hitResult && Admin._gameSwitch) {
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
         }
     }
 
-    class UIAdsHint extends Admin.Scene {
-        setCallBack(_adAction) {
-            this.adAction = _adAction;
-        }
-        lwgOnEnable() {
-            this.self.x = 0;
-            this.self.y = 0;
-            this.self['BtnClose'].visible = false;
-            Laya.timer.frameOnce(120, this, () => {
-                this.self['BtnClose'].visible = true;
-            });
-        }
-        lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);
-            Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);
-        }
-        btnCloseUp() {
-            this.self.close();
-        }
-        btnConfirmUp() {
-            ADManager.ShowReward(this.adAction, null);
-            this.self.close();
-        }
-        lwgOnDisable() {
-            console.log('退出');
-        }
-    }
-
-    class ADManager {
-        static ShowBanner() {
-            let p = new TJ.ADS.Param();
-            p.place = TJ.ADS.Place.BOTTOM | TJ.ADS.Place.CENTER;
-            TJ.ADS.Api.ShowBanner(p);
-        }
-        static CloseBanner() {
-            let p = new TJ.ADS.Param();
-            p.place = TJ.ADS.Place.BOTTOM | TJ.ADS.Place.CENTER;
-            TJ.ADS.Api.RemoveBanner(p);
-        }
-        static ShowNormal() {
-            TJ.API.AdService.ShowNormal(new TJ.API.AdService.Param());
-        }
-        static showNormal2() {
-            TJ.API.AdService.ShowNormal(new TJ.API.AdService.Param());
-        }
-        static ShowReward(rewardAction, CDTime = 500) {
-            if (Admin._platform === Admin._platformTpye.OPPO) {
-                rewardAction();
-                EventAdmin.notify(Task.EventType.adsTime);
-                EventAdmin.notify(EasterEgg.EventType.easterEggAds);
-                return;
-            }
-            if (ADManager.CanShowCD) {
-                PalyAudio.stopMusic();
-                console.log("?????");
-                let p = new TJ.ADS.Param();
-                p.extraAd = true;
-                let getReward = false;
-                p.cbi.Add(TJ.Define.Event.Reward, () => {
-                    getReward = true;
-                    PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
-                    if (rewardAction != null) {
-                        rewardAction();
-                        EventAdmin.notify(Task.EventType.adsTime);
-                        EventAdmin.notify(EasterEgg.EventType.easterEggAds);
-                    }
-                });
-                p.cbi.Add(TJ.Define.Event.Close, () => {
-                    if (!getReward) {
-                        PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
-                        console.log('观看完整广告才能获取奖励哦！');
-                        Admin._openScene(Admin.SceneName.UIAdsHint, null, () => {
-                            Admin._sceneControl['UIAdsHint'].getComponent(UIAdsHint).setCallBack(rewardAction);
-                        });
-                    }
-                });
-                p.cbi.Add(TJ.Define.Event.NoAds, () => {
-                    PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
-                    Dialog.createHint_Middle(Dialog.HintContent["暂时没有广告，过会儿再试试吧！"]);
-                });
-                TJ.ADS.Api.ShowReward(p);
-                ADManager.CanShowCD = false;
-                setTimeout(() => {
-                    ADManager.CanShowCD = true;
-                }, CDTime);
-            }
-        }
-        static Event(param, value) {
-            console.log("Param:>" + param + "Value:>" + value);
-            let p = new TJ.GSA.Param();
-            if (value == null) {
-                p.id = param;
-            }
-            else {
-                p.id = param + value;
-            }
-            console.log(p.id);
-            TJ.GSA.Api.Event(p);
-        }
-        static initShare() {
-            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
-                this.wx.onShareAppMessage(() => {
-                    return {
-                        title: this.shareContent,
-                        imageUrl: this.shareImgUrl,
-                        query: ""
-                    };
-                });
-                this.wx.showShareMenu({
-                    withShareTicket: true,
-                    success: null,
-                    fail: null,
-                    complete: null
-                });
-            }
-        }
-        static lureShare() {
-            if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
-                this.wx.shareAppMessage({
-                    title: this.shareContent,
-                    imageUrl: this.shareImgUrl,
-                    query: ""
-                });
-            }
-        }
-        static VibrateShort() {
-            if (!Setting._shake.switch) {
-                return;
-            }
-            TJ.API.Vibrate.Short();
-        }
-        static Vibratelong() {
-            if (!Setting._shake.switch) {
-                return;
-            }
-            TJ.API.Vibrate.Long();
-        }
-        static TAPoint(type, name) {
-            let p = new TJ.API.TA.Param();
-            p.id = name;
-            switch (type) {
-                case TaT.BtnShow:
-                    TJ.API.TA.Event_Button_Show(p);
-                    break;
-                case TaT.BtnClick:
-                    TJ.API.TA.Event_Button_Click(p);
-                    break;
-                case TaT.PageShow:
-                    TJ.API.TA.Event_Page_Show(p);
-                    break;
-                case TaT.PageEnter:
-                    TJ.API.TA.Event_Page_Enter(p);
-                    break;
-                case TaT.PageLeave:
-                    TJ.API.TA.Event_Page_Leave(p);
-                    break;
-                case TaT.LevelStart:
-                    TJ.API.TA.Event_Level_Start(p);
-                    console.log('本关开始打点');
-                    break;
-                case TaT.LevelFail:
-                    TJ.API.TA.Event_Level_Fail(p);
-                    console.log('本关失败打点');
-                    break;
-                case TaT.LevelFinish:
-                    TJ.API.TA.Event_Level_Finish(p);
-                    console.log('本关胜利打点');
-                    break;
-            }
-        }
-    }
-    ADManager.CanShowCD = true;
-    ADManager.wx = Laya.Browser.window.wx;
-    ADManager.shareImgUrl = "http://image.tomatojoy.cn/6847506204006681a5d5fa0cd91ce408";
-    ADManager.shareContent = "剃头大师！";
-    var TaT;
-    (function (TaT) {
-        TaT[TaT["BtnShow"] = 0] = "BtnShow";
-        TaT[TaT["BtnClick"] = 1] = "BtnClick";
-        TaT[TaT["PageShow"] = 2] = "PageShow";
-        TaT[TaT["PageEnter"] = 3] = "PageEnter";
-        TaT[TaT["PageLeave"] = 4] = "PageLeave";
-        TaT[TaT["LevelStart"] = 5] = "LevelStart";
-        TaT[TaT["LevelFinish"] = 6] = "LevelFinish";
-        TaT[TaT["LevelFail"] = 7] = "LevelFail";
-    })(TaT || (TaT = {}));
-
     class UIAdsHint$1 extends Admin.Scene {
         setCallBack(_adAction) {
             this.adAction = _adAction;
         }
         lwgOnEnable() {
+            ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
             this.self.x = 0;
             this.self.y = 0;
             this.self['BtnClose'].visible = false;
@@ -7247,6 +7254,7 @@
             this.self.close();
         }
         btnConfirmUp() {
+            ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
             ADManager.ShowReward(this.adAction, null);
             this.self.close();
         }
@@ -7429,15 +7437,18 @@
     }
 
     class UICard extends Admin.Scene {
+        lwgOnAwake() {
+            Gold.goldAppear();
+        }
         lwgOnEnable() {
+            ADManager.TAPoint(TaT$1.BtnShow, 'UICard_BtnGold');
+            ADManager.TAPoint(TaT$1.BtnClick, 'UICard_BtnGold');
             this.self['BtnBack'].alhpa = 0;
             this.self['BtnBack'].visible = false;
             Laya.timer.once(4500, this, () => {
                 Animation2D.fadeOut(this.self['BtnBack'], 0, 1, 200, 0, () => {
                     this.self['BtnBack'].visible = true;
-                    if (Guide._whichStepNum == 6) {
-                        EventAdmin.notify(Guide.EventType.onStep);
-                    }
+                    EventAdmin.notify(Guide.EventType.onStep);
                 });
             });
         }
@@ -7467,7 +7478,14 @@
                         });
                     }
                     else if (type == 'gold') {
-                        EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                        ADManager.TAPoint(TaT$1.BtnClick, 'UICard_BtnGold');
+                        if (Gold._num.value >= 300) {
+                            EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
+                            Gold.addGold(-300);
+                        }
+                        else {
+                            Dialog.createHint_Middle(Dialog.HintContent["金币不够了！"]);
+                        }
                     }
                 }
                 else {
@@ -7547,7 +7565,7 @@
             });
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT.BtnShow, 'AD3award');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UICheckIn_BtnThreeGet_WeChat');
             EventAdmin.notify('seven');
             Gold.GoldNode = this.self['GoldNode'];
             let Num2 = this.self['GoldNode'].getChildByName('Num');
@@ -7610,7 +7628,7 @@
         }
         btnThreeGetUp() {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+                ADManager.TAPoint(TaT$1.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                 this.btnGetUpFunc(3);
             });
         }
@@ -7618,7 +7636,7 @@
             if (Admin._platform === Admin._platformTpye.Bytedance) {
                 if (this.self['Dot'].visible) {
                     ADManager.ShowReward(() => {
-                        ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+                        ADManager.TAPoint(TaT$1.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                         this.btnGetUpFunc(3);
                     });
                 }
@@ -7693,10 +7711,10 @@
 
     class UIDefeated extends Defeated.DefeatedScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
-            ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
-            ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
+            ADManager.TAPoint(TaT$1.LevelFail, 'level' + Admin._gameLevel.value);
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIDefeated_BtnNext');
             Admin._gameLevel.value = 0;
+            Admin._gameSwitch = false;
             switch (Admin._platform) {
                 case Admin._platformTpye.OPPO:
                     this.self['OPPO'].visible = true;
@@ -7757,14 +7775,14 @@
             }
         }
         btnAgainUp() {
-            ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
+            ADManager.TAPoint(TaT$1.BtnClick, 'returnword_fail');
             console.log('重新开始！');
             Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         }
         btnNextUp() {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIDefeated_BtnNext');
                 Admin._gameLevel.value += 1;
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(EventAdmin.EventType.nextCustoms);
@@ -7997,13 +8015,15 @@
                 if (!Guide._complete.bool) {
                     return;
                 }
-                DrawCard._freeAds.num++;
-                if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
-                    DrawCard._freeAds.num = 0;
-                    DrawCard._residueDraw.num++;
-                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
-                }
-                this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
+                ADManager.ShowReward(() => {
+                    DrawCard._freeAds.num++;
+                    if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                        DrawCard._freeAds.num = 0;
+                        DrawCard._residueDraw.num++;
+                        this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+                    }
+                    this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
+                });
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 if (!Guide._complete.bool) {
@@ -8466,6 +8486,7 @@
 
     class UIPropTry extends PropTry.PropTryScene {
         lwgOnAwake() {
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIPropTry_BtnGet');
             Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
             Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
         }
@@ -8547,6 +8568,7 @@
         }
         advFunc() {
             ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIPropTry_BtnGet');
                 Backpack._prop1.num++;
                 Backpack._prop2.num++;
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
@@ -8574,8 +8596,7 @@
         }
         lwgOnEnable() {
             console.log('打开复活界面！');
-            ADManager.TAPoint(TaT.BtnShow, 'closeword_revive');
-            ADManager.TAPoint(TaT.BtnShow, 'ADrevivebt_revive');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIResurgence_BtnResurgence');
             TimerAdmin.frameLoop(60, this, () => {
                 if (this['CounDownSwitch']) {
                     let Countdown = this.self['Countdown'];
@@ -8594,15 +8615,17 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
-                this['CounDownSwitch'] = false;
-                Admin._gameSwitch = true;
-                ADManager.TAPoint(TaT.BtnClick, 'ADrevivebt_revive');
-                Admin._closeScene(this.self, () => {
-                    EventAdmin.notify(EventAdmin.EventType.resurgence);
+                ADManager.ShowReward(() => {
+                    ADManager.TAPoint(TaT$1.BtnClick, 'UIResurgence_BtnResurgence');
+                    this['CounDownSwitch'] = false;
+                    Admin._gameSwitch = true;
+                    Admin._closeScene(this.self, () => {
+                        EventAdmin.notify(EventAdmin.EventType.resurgence);
+                    });
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
-                ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
+                ADManager.TAPoint(TaT$1.BtnClick, 'closeword_revive');
                 this['CounDownSwitch'] = false;
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated; });
             });
@@ -8614,7 +8637,7 @@
     class UISet extends Admin.Scene {
         lwgOnAwake() {
             Setting.setBtnVinish();
-            ADManager.TAPoint(TaT.BtnClick, 'setbt_main');
+            ADManager.TAPoint(TaT$1.BtnClick, 'setbt_main');
         }
         lwgOnEnable() {
             EventAdmin.notify('soundOnOff');
@@ -8804,8 +8827,7 @@
             Gold.goldAppear();
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT.BtnShow, 'closeword_share');
-            ADManager.TAPoint(TaT.BtnShow, 'sharebt_share');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIShare_BtnShare');
         }
         lwgBtnClick() {
             Click.on(Click.Type.noEffect, this.self['BtnShare'], this, null, null, this.btnShareUp);
@@ -8815,8 +8837,14 @@
         }
         btnShareUp() {
             console.log('分享！');
+            if (Share._fromWhich == Admin.SceneName.UIDrawCard) {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIDrawCard_BtnShare');
+            }
+            else if (Share._fromWhich == Admin.SceneName.UIVictory) {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIShare_BtnShare');
+            }
+            else if (Share._fromWhich == Admin.SceneName.UIDefeated) ;
             RecordManager._share('award', () => {
-                ADManager.TAPoint(TaT.BtnClick, 'sharebt_share');
                 Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
                     Gold.addGold(150);
                     this.shareFunc();
@@ -8825,10 +8853,12 @@
         }
         shareFunc() {
             if (Share._fromWhich == Admin.SceneName.UIDrawCard) {
+                ADManager.TAPoint(TaT$1.BtnShow, 'UIDrawCard_BtnShare');
                 Admin._closeScene(this.self);
                 EventAdmin.notify(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard);
             }
             else if (Share._fromWhich == Admin.SceneName.UIVictory) {
+                ADManager.TAPoint(TaT$1.BtnShow, 'UIShare_BtnShare');
                 Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
             }
             else if (Share._fromWhich == Admin.SceneName.UIDefeated) {
@@ -8843,7 +8873,7 @@
 
     class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT.BtnShow, 'Adlimmitget');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UISkinQualified_BtnGet');
             Gold.goldVinish();
             Setting.setBtnVinish();
             if (SkinQualified._adsNum.value >= 7) {
@@ -9034,7 +9064,7 @@
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {
                 ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT.BtnClick, 'Adlimmitget');
+                    ADManager.TAPoint(TaT$1.BtnClick, 'UISkinQualified_BtnGet');
                     SkinQualified._adsNum.value++;
                     if (SkinQualified._adsNum.value >= 7) {
                         Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
@@ -9195,6 +9225,12 @@
             Setting.setBtnAppear();
             Gold.createGoldNode(629, 174);
             EventAdmin.notify(Guide.EventType.onStep);
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnStart');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnCard');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnRanking');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnDrawCard');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnChickIn');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnQualifyCard');
         }
         lwgOpenAniAfter() {
             if (Guide._complete.bool) {
@@ -9244,6 +9280,7 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnStart');
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 8) {
                         EventAdmin.notify(Guide.EventType.complete);
@@ -9256,24 +9293,28 @@
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnDrawCard');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
             });
             Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnChickIn');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UICheckIn);
             });
             Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnQualifyCard');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UISkinQualified);
             });
             Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
+                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnCard');
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 6) {
                         EventAdmin.notify(Guide.EventType.stepComplete);
@@ -9288,7 +9329,8 @@
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnRanking'], this, null, null, () => {
-                Dialog.createHint_Middle(Dialog.HintContent["尽请期待！"]);
+                ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnRanking');
+                Dialog.createHint_Middle(Dialog.HintContent["敬请期待!"]);
             });
         }
         lwgOnDisable() {
@@ -9299,6 +9341,7 @@
 
     class UIVictory extends VictoryScene {
         lwgOnAwake() {
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictory_Three');
             switch (Admin._platform) {
                 case Admin._platformTpye.OPPO:
                     this.self['OPPO'].visible = true;
@@ -9352,7 +9395,7 @@
             Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
                 if (this.self['Dot_Bytedance'].visible) {
                     ADManager.ShowReward(() => {
-                        ADManager.TAPoint(TaT.BtnClick, 'closeword_success');
+                        ADManager.TAPoint(TaT$1.BtnClick, 'UIVictory_Three');
                         this.getGold(300);
                     });
                 }
@@ -9423,8 +9466,8 @@
     class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         constructor() { super(); }
         lwgOnAwake() {
-            ADManager.TAPoint(TaT.BtnShow, 'Adboxvideo');
-            ADManager.TAPoint(TaT.BtnShow, 'Adboxagain');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictoryBox_BtnAgain_Bytedance');
+            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictoryBox_Ads');
             Gold.createGoldNode(629, 174);
             if (VictoryBox._openVictoryBoxNum > 1) {
                 let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
@@ -9477,7 +9520,7 @@
                 if (VictoryBox._canOpenNum > 0) {
                     if (dataSource[VictoryBox.BoxProperty.ads]) {
                         ADManager.ShowReward(() => {
-                            ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
+                            ADManager.TAPoint(TaT$1.BtnClick, 'Adboxvideo');
                             this.getRewardFunc(dataSource);
                         });
                     }
@@ -9566,8 +9609,7 @@
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
         }
         btnAgainUp(event) {
-            ADManager.TAPoint(TaT.BtnClick, 'ADrewardbt_box');
-            ADManager.TAPoint(TaT.BtnClick, 'Adboxagain');
+            ADManager.TAPoint(TaT$1.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
             if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
                 ADManager.ShowReward(() => {
                     Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);

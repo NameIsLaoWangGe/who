@@ -5,10 +5,10 @@ export default class UIDefeated extends Defeated.DefeatedScene {
 
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
-        ADManager.TAPoint(TaT.BtnShow, 'ADnextbt_fail');
-        ADManager.TAPoint(TaT.BtnShow, 'returnword_fail');
+        ADManager.TAPoint(TaT.BtnShow, 'UIDefeated_BtnNext');
 
         Admin._gameLevel.value = 0;
+        Admin._gameSwitch = false;
 
         switch (Admin._platform) {
             case Admin._platformTpye.OPPO:
@@ -95,7 +95,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
     btnNextUp(): void {
 
         ADManager.ShowReward(() => {
-            ADManager.TAPoint(TaT.BtnClick, 'ADnextbt_fail');
+            ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
 
             Admin._gameLevel.value += 1;
             Admin._openScene(Admin.SceneName.UIStart, this.self);

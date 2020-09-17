@@ -21,11 +21,11 @@
 		"textures":[
 			{
 				"name":"albedoTexture",
-				"path":"cxk1.jpg",
+				"path":"cxk1.png",
 				"constructParams":[
 					512,
 					512,
-					0,
+					1,
 					true
 				],
 				"propertyParams":{

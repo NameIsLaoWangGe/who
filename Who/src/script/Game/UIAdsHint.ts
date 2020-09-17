@@ -9,6 +9,8 @@ export default class UIAdsHint extends Admin.Scene {
     }
 
     lwgOnEnable(): void {
+        ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
+        
         this.self.x = 0;
         this.self.y = 0;
         this.self['BtnClose'].visible = false;
@@ -25,6 +27,7 @@ export default class UIAdsHint extends Admin.Scene {
         this.self.close();
     }
     btnConfirmUp(): void {
+        ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
         ADManager.ShowReward(this.adAction, null);
         this.self.close();
     }

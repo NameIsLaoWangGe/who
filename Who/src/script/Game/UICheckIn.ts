@@ -47,7 +47,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
 
     lwgOnEnable(): void {
-        ADManager.TAPoint(TaT.BtnShow, 'AD3award');
+        ADManager.TAPoint(TaT.BtnShow, 'UICheckIn_BtnThreeGet_WeChat');
         EventAdmin.notify('seven');
 
         Gold.GoldNode = this.self['GoldNode'];
@@ -125,7 +125,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
     btnThreeGetUp(): void {
         ADManager.ShowReward(() => {
-            ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+            ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
             this.btnGetUpFunc(3);
         })
     }
@@ -134,7 +134,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         if (Admin._platform === Admin._platformTpye.Bytedance) {
             if (this.self['Dot'].visible) {
                 ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT.BtnClick, 'AD3award');
+                    ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                     this.btnGetUpFunc(3);
                 })
             } else {

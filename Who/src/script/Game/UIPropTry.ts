@@ -1,10 +1,12 @@
 import { PropTry, Tools, Admin, Click, Backpack } from "../Frame/lwg";
-import ADManager from "../../TJ/Admanager";
+import ADManager, { TaT } from "../../TJ/Admanager";
 import ZJADMgr from "../../TJ/ZJADMgr";
 
 export default class UIPropTry extends PropTry.PropTryScene {
 
     lwgOnAwake(): void {
+        ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
+
         Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
         Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
     }
@@ -89,6 +91,7 @@ export default class UIPropTry extends PropTry.PropTryScene {
     }
     advFunc(): void {
         ADManager.ShowReward(() => {
+            ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
             Backpack._prop1.num++;
             Backpack._prop2.num++;
             Admin._openScene(Admin.SceneName.GameScene, this.self);

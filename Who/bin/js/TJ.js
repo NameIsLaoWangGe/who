@@ -2,9 +2,9 @@ var DP =
 {
     Basic:
     {
-        appGuid:"6766da55-6f97-9ec5-7fa7-6eb1530342ea",
-        productName:"剃头大师",
-        packageName:"com.tomatojoy.ttds.toutiao",
+        appGuid:"1d291178-ff9a-75a7-8000-c1ec13f70e37",
+        productName:"比谁猜的快",
+        packageName:"com.tomatojoy.bscdk.toutiao",
         versionName:"1.0.0",
         versionCode:1,
         channel:"ZJTD_AppRt",
@@ -19,7 +19,7 @@ var DP =
     },
     WX:   //微信小游戏
     {
-        appId:"wx1bae7e805d15dffb",
+        appId:null,
         bannerId:null,
         insertId:null,
         videoId:null,
@@ -42,14 +42,14 @@ var DP =
     },
     TT:   //字节跳动小游戏
     {
-        appId:"tt2bba5d07b48073ec",
-        bannerId:"27k90ckf1mg1695abo",
-        insertId:"eeiikeccgjaac53li4",
-        videoId:"lk9mc463d799d27k52",
+        appId:"tt6c281a95f313eb43",
+        bannerId:"4e1filmc2hl1mgrva5",
+        insertId:"1ak155d2nnobmcacal",
+        videoId:"4pg2ga2vj821jb800f",
     },
     ReYun:   //热云统计
     {
-        appId:"76951ffa3e9d80bba5f2cd67f2786b17",
+        appId:"7edc6e22942107a728dd3a9aac09ff67",
     },
     QTTGame:   //趣头条游戏
     {
@@ -79,6 +79,11 @@ var DP =
     {
         bannerId:null,
         insertId:null,
+        videoId:null,
+    },
+    Kwai:   //快手小游戏
+    {
+        appId:null,
         videoId:null,
     },
     HG:   //Hago游戏
@@ -147,7 +152,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 /*
 DESKTOP-BT8F2H9
 Microsoft Windows NT 10.0.17763.0
-中国标准时间 2020/8/27 16:41:19
+中国标准时间 2020/9/16 20:29:04
 */
 var TJ;
 (function (TJ) {
@@ -212,6 +217,7 @@ var TJ;
                 AppRt.OPPO_AppRt = "OPPO_AppRt";
                 AppRt.QTT_AppRt = "QTT_AppRt";
                 AppRt.ZJTD_AppRt = "ZJTD_AppRt";
+                AppRt.Kwai_AppRt = "Kwai_AppRt";
                 AppRt.UC_AppRt = "UC_AppRt";
                 AppRt.SQ_AppRt = "SQ_AppRt";
                 AppRt.SY_AppRt = "SY_AppRt";
@@ -258,7 +264,7 @@ var TJ;
     (function (Define) {
         var SDK;
         (function (SDK) {
-            SDK.version = "3.1.1.0";
+            SDK.version = "3.1.2.0";
         })(SDK = Define.SDK || (Define.SDK = {}));
     })(Define = TJ.Define || (TJ.Define = {}));
 })(TJ || (TJ = {}));
@@ -2002,6 +2008,44 @@ var TJ;
 (function (TJ) {
     var Common;
     (function (Common) {
+        var PromiseWrap = /** @class */ (function () {
+            function PromiseWrap(executor) {
+                var _this = this;
+                this.resolved = false;
+                this.rejucted = false;
+                this.promise = new Promise(function (resolve, reject) {
+                    _this.resolve = resolve;
+                    _this.reject = reject;
+                    if (executor != null)
+                        executor(_this.Resolve, _this.Reject);
+                });
+                var pr;
+                this.pending = new Promise(function (res) { pr = res; });
+                this.promise.then(function (val) {
+                    pr();
+                });
+                this.promise["catch"](function (rea) {
+                    pr();
+                });
+            }
+            PromiseWrap.prototype.Resolve = function (value) {
+                this.value = value;
+                this.resolved = true;
+                this.resolve(value);
+            };
+            PromiseWrap.prototype.Reject = function (reason) {
+                this.reason = reason;
+                this.rejucted = true;
+                this.reject(reason);
+            };
+            return PromiseWrap;
+        }());
+        Common.PromiseWrap = PromiseWrap;
+    })(Common = TJ.Common || (TJ.Common = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Common;
+    (function (Common) {
         var SystemInfo = /** @class */ (function () {
             function SystemInfo() {
             }
@@ -2206,6 +2250,59 @@ var TJ;
         }());
         Common.WWW = WWW;
     })(Common = TJ.Common || (TJ.Common = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var API;
+    (function (API) {
+        var Account;
+        (function (Account) {
+            var IAccount = /** @class */ (function (_super) {
+                __extends(IAccount, _super);
+                function IAccount() {
+                    return _super !== null && _super.apply(this, arguments) || this;
+                }
+                IAccount.prototype.Login = function (param) {
+                    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+                        return [2 /*return*/];
+                    }); });
+                };
+                IAccount.prototype.SetUserInfo = function (param) {
+                    return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+                        return [2 /*return*/];
+                    }); });
+                };
+                IAccount.prototype.OnInit = function () {
+                    return __awaiter(this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    if (!Account.autoLogin) return [3 /*break*/, 3];
+                                    return [4 /*yield*/, this.Login(null)];
+                                case 1:
+                                    _a.sent();
+                                    return [4 /*yield*/, this.SetUserInfo(null)];
+                                case 2:
+                                    _a.sent();
+                                    _a.label = 3;
+                                case 3: return [2 /*return*/];
+                            }
+                        });
+                    });
+                };
+                return IAccount;
+            }(TJ.Common.Component.Interface));
+            Account.IAccount = IAccount;
+            var Param = /** @class */ (function () {
+                function Param() {
+                    this.force = false;
+                }
+                return Param;
+            }());
+            Account.Param = Param;
+            Account.autoLogin = true;
+            Account.loginPromiseWrap = new TJ.Common.PromiseWrap();
+        })(Account = API.Account || (API.Account = {}));
+    })(API = TJ.API || (TJ.API = {}));
 })(TJ || (TJ = {}));
 (function (TJ) {
     var API;
@@ -3533,6 +3630,47 @@ var TJ;
     (function (Develop) {
         var Yun;
         (function (Yun) {
+            Yun.apiUrl = "https://yxapi.tomatojoy.cn";
+            var Result = /** @class */ (function () {
+                function Result() {
+                }
+                return Result;
+            }());
+            Yun.Result = Result;
+            function GetResult(www) {
+                return __awaiter(this, void 0, void 0, function () {
+                    var res;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                www.logSend = true;
+                                www.logText = true;
+                                return [4 /*yield*/, www.Send("post", "form")];
+                            case 1:
+                                _a.sent();
+                                if (www.error == null) {
+                                    res = JSON.parse(www.text);
+                                    if (res.E != null) {
+                                        console.error("E = " + res.E);
+                                    }
+                                    else {
+                                        return [2 /*return*/, res.P];
+                                    }
+                                }
+                                return [2 /*return*/, null];
+                        }
+                    });
+                });
+            }
+            Yun.GetResult = GetResult;
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
             var Config;
             (function (Config) {
                 function GameCfg() {
@@ -3563,9 +3701,80 @@ var TJ;
     (function (Develop) {
         var Yun;
         (function (Yun) {
+            var DouYin;
+            (function (DouYin) {
+                DouYin.apiUrl = "https://yxapi.tomatojoy.cn/douyin";
+                function ReportVideoIdInfo(videoIdInfo) {
+                    return __awaiter(this, void 0, void 0, function () {
+                        var req, p, www;
+                        return __generator(this, function (_a) {
+                            req = {};
+                            req.A = "DouYin.ReportVideoIdInfo";
+                            p = {};
+                            p.appguid = TJ.API.AppInfo.AppGuid();
+                            p.videoIdInfo = videoIdInfo;
+                            req.P = JSON.stringify(p);
+                            www = new TJ.Common.WWW(DouYin.apiUrl, req);
+                            Yun.GetResult(www);
+                            return [2 /*return*/];
+                        });
+                    });
+                }
+                DouYin.ReportVideoIdInfo = ReportVideoIdInfo;
+                function GetVideosByTime(startTime, endTime) {
+                    return __awaiter(this, void 0, void 0, function () {
+                        var req, p, www, res;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    req = {};
+                                    req.A = "DouYin.GetVideosByTime";
+                                    p = {};
+                                    p.appguid = TJ.API.AppInfo.AppGuid();
+                                    p.startTime = startTime;
+                                    p.endTime = endTime;
+                                    req.P = JSON.stringify(p);
+                                    www = new TJ.Common.WWW(DouYin.apiUrl, req);
+                                    return [4 /*yield*/, Yun.GetResult(www)];
+                                case 1:
+                                    res = _a.sent();
+                                    if (res == null || res.data == null)
+                                        return [2 /*return*/, []];
+                                    return [2 /*return*/, res.data];
+                            }
+                        });
+                    });
+                }
+                DouYin.GetVideosByTime = GetVideosByTime;
+                function ReportVideoInfo(videoInfo) {
+                    return __awaiter(this, void 0, void 0, function () {
+                        var req, p, www;
+                        return __generator(this, function (_a) {
+                            req = {};
+                            req.A = "DouYin.ReportVideoInfo";
+                            p = {};
+                            p.appguid = TJ.API.AppInfo.AppGuid();
+                            p.videoInfo = videoInfo;
+                            req.P = JSON.stringify(p);
+                            www = new TJ.Common.WWW(DouYin.apiUrl, req);
+                            Yun.GetResult(www);
+                            return [2 /*return*/];
+                        });
+                    });
+                }
+                DouYin.ReportVideoInfo = ReportVideoInfo;
+            })(DouYin = Yun.DouYin || (Yun.DouYin = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
             var Location;
             (function (Location) {
-                TJ.Common.PriorityInit.Add(0, function () {
+                TJ.Common.PriorityInit.Add(10, function () {
                     if (TJ.Engine.RuntimeInfo.platform == TJ.Define.Platform.Unknown)
                         return;
                     setInterval(function () { Sync(); }, 1000 * 60 * 10);
@@ -3614,6 +3823,231 @@ var TJ;
                 }
                 Location.Sync = Sync;
             })(Location = Yun.Location || (Yun.Location = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
+            var Login;
+            (function (Login) {
+                Login.apiUrl = Yun.apiUrl + "/login";
+            })(Login = Yun.Login || (Yun.Login = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
+            var Login;
+            (function (Login) {
+                var CLogin;
+                (function (CLogin) {
+                    function QQAppRT(exInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "CLogin.QQAppRT";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.exInfo = exInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        return [2 /*return*/, res];
+                                }
+                            });
+                        });
+                    }
+                    CLogin.QQAppRT = QQAppRT;
+                    function TTAppRT(exInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "CLogin.TTAppRT";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.exInfo = exInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        return [2 /*return*/, res];
+                                }
+                            });
+                        });
+                    }
+                    CLogin.TTAppRT = TTAppRT;
+                    function WXLogin(exInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "CLogin.WXLogin";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.exInfo = exInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        return [2 /*return*/, res];
+                                }
+                            });
+                        });
+                    }
+                    CLogin.WXLogin = WXLogin;
+                    function VIVOAppRT(exInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "CLogin.VIVOAppRT";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.exInfo = exInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        return [2 /*return*/, res];
+                                }
+                            });
+                        });
+                    }
+                    CLogin.VIVOAppRT = VIVOAppRT;
+                    function QTTAppRT(exInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "CLogin.QTTAppRT";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.exInfo = exInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        return [2 /*return*/, res];
+                                }
+                            });
+                        });
+                    }
+                    CLogin.QTTAppRT = QTTAppRT;
+                })(CLogin = Login.CLogin || (Login.CLogin = {}));
+            })(Login = Yun.Login || (Yun.Login = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
+            var Login;
+            (function (Login) {
+                var Public;
+                (function (Public) {
+                    function GetUserguid(userId) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www, res;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "Public.GetUserguid";
+                                        p = {};
+                                        p.appguid = TJ.API.AppInfo.AppGuid();
+                                        p.channelId = TJ.API.AppInfo.Channel();
+                                        p.userId = userId;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Login.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        res = _a.sent();
+                                        if (res != null) {
+                                            return [2 /*return*/, res.userguid];
+                                        }
+                                        return [2 /*return*/, null];
+                                }
+                            });
+                        });
+                    }
+                    Public.GetUserguid = GetUserguid;
+                })(Public = Login.Public || (Login.Public = {}));
+            })(Login = Yun.Login || (Yun.Login = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
+            var Player;
+            (function (Player) {
+                Player.apiUrl = Yun.apiUrl + "/player";
+            })(Player = Yun.Player || (Yun.Player = {}));
+        })(Yun = Develop.Yun || (Develop.Yun = {}));
+    })(Develop = TJ.Develop || (TJ.Develop = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Develop;
+    (function (Develop) {
+        var Yun;
+        (function (Yun) {
+            var Player;
+            (function (Player_1) {
+                var Player;
+                (function (Player) {
+                    function ReportUserInfo(userInfo) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var req, p, www;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        req = {};
+                                        req.A = "Player.ReportUserInfo";
+                                        p = {};
+                                        p.userguid = TJ.Common.SystemInfo.userGuid;
+                                        p.channelId = TJ.API.AppInfo.Channel();
+                                        p.userInfo = userInfo;
+                                        req.P = JSON.stringify(p);
+                                        www = new TJ.Common.WWW(Player_1.apiUrl, req);
+                                        return [4 /*yield*/, Yun.GetResult(www)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    }
+                    Player.ReportUserInfo = ReportUserInfo;
+                })(Player = Player_1.Player || (Player_1.Player = {}));
+            })(Player = Yun.Player || (Yun.Player = {}));
         })(Yun = Develop.Yun || (Develop.Yun = {}));
     })(Develop = TJ.Develop || (TJ.Develop = {}));
 })(TJ || (TJ = {}));
@@ -4582,7 +5016,7 @@ var TJ;
             (function (SDK) {
                 var AdService;
                 (function (AdService) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OAdService).DoInit();
@@ -4631,7 +5065,7 @@ var TJ;
             (function (SDK) {
                 var Analytics;
                 (function (Analytics) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OAnalytics).DoInit();
@@ -4695,7 +5129,7 @@ var TJ;
             (function (SDK) {
                 var AppCtl;
                 (function (AppCtl) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OAppCtl).DoInit();
@@ -4841,7 +5275,7 @@ var TJ;
             (function (SDK) {
                 var AppInfo;
                 (function (AppInfo) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OAppInfo).DoInit();
@@ -4887,7 +5321,7 @@ var TJ;
             (function (SDK) {
                 var Billing;
                 (function (Billing) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OBilling).DoInit();
@@ -4942,7 +5376,7 @@ var TJ;
                 (function (oppo) {
                     var mobad;
                     (function (mobad) {
-                        TJ.Common.PriorityInit.Add(0, function () {
+                        TJ.Common.PriorityInit.Add(10, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.Android)
                                 return;
                             switch (TJ.API.AppInfo.Channel()) {
@@ -4996,7 +5430,7 @@ var TJ;
             (function (SDK) {
                 var Promo;
                 (function (Promo) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OPromo).DoInit();
@@ -5027,7 +5461,7 @@ var TJ;
             (function (SDK) {
                 var Vibrate;
                 (function (Vibrate) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.Android:
                                 TJ.Common.Component.Manager.AddComponent(OVibrate).DoInit();
@@ -5166,20 +5600,20 @@ var TJ;
                         return CallbackParam;
                     }());
                     HBS.CallbackParam = CallbackParam;
-                    var LoginSuccessResult = /** @class */ (function () {
-                        function LoginSuccessResult() {
+                    var GameLoginResult = /** @class */ (function () {
+                        function GameLoginResult() {
                         }
-                        return LoginSuccessResult;
+                        return GameLoginResult;
                     }());
-                    HBS.LoginSuccessResult = LoginSuccessResult;
-                    var LoginParam = /** @class */ (function (_super) {
-                        __extends(LoginParam, _super);
-                        function LoginParam() {
+                    HBS.GameLoginResult = GameLoginResult;
+                    var GameLoginParam = /** @class */ (function (_super) {
+                        __extends(GameLoginParam, _super);
+                        function GameLoginParam() {
                             return _super !== null && _super.apply(this, arguments) || this;
                         }
-                        return LoginParam;
+                        return GameLoginParam;
                     }(CallbackParam));
-                    HBS.LoginParam = LoginParam;
+                    HBS.GameLoginParam = GameLoginParam;
                     function GameLogin(param) {
                         hbs.gameLogin(param);
                     }
@@ -5255,6 +5689,99 @@ var TJ;
                     }
                     HG.CreateRewardedVideoAd = CreateRewardedVideoAd;
                 })(HG = Extern.HG || (Extern.HG = {}));
+            })(Extern = AppRt.Extern || (AppRt.Extern = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Extern;
+            (function (Extern) {
+                var Kwai;
+                (function (Kwai) {
+                    function Exist() {
+                        return typeof kwaigame != 'undefined';
+                    }
+                    Kwai.Exist = Exist;
+                    function ReadyGo() {
+                        kwaigame.readyGo();
+                    }
+                    Kwai.ReadyGo = ReadyGo;
+                    function WillClose() {
+                        kwaigame.willClose();
+                    }
+                    Kwai.WillClose = WillClose;
+                    function Init(param) {
+                        kwaigame.init(param);
+                    }
+                    Kwai.Init = Init;
+                    var MediaRecoder = /** @class */ (function () {
+                        function MediaRecoder(obj) {
+                            this.obj = obj;
+                        }
+                        MediaRecoder.prototype.Init = function (param) {
+                            this.obj.init(param);
+                        };
+                        MediaRecoder.prototype.Destory = function (param) {
+                            this.obj.destory(param);
+                        };
+                        MediaRecoder.prototype.Start = function (param) {
+                            this.obj.start(param);
+                        };
+                        MediaRecoder.prototype.Stop = function (param) {
+                            this.obj.stop(param);
+                        };
+                        MediaRecoder.prototype.Pause = function (param) {
+                            this.obj.pause(param);
+                        };
+                        MediaRecoder.prototype.Resume = function (param) {
+                            this.obj.resume(param);
+                        };
+                        MediaRecoder.prototype.PublishVideo = function (param) {
+                            this.obj.publishVideo(param);
+                        };
+                        MediaRecoder.prototype.OnError = function (param) {
+                            this.obj.onError(param);
+                        };
+                        return MediaRecoder;
+                    }());
+                    Kwai.MediaRecoder = MediaRecoder;
+                    function CreateMediaRecorder() {
+                        if (kwaigame.createMediaRecorder == null)
+                            return null;
+                        var obj = kwaigame.createMediaRecorder();
+                        if (obj == null)
+                            return null;
+                        return new MediaRecoder(obj);
+                    }
+                    Kwai.CreateMediaRecorder = CreateMediaRecorder;
+                    var RewardVideo = /** @class */ (function () {
+                        function RewardVideo(obj) {
+                            this.rewardVideo = obj;
+                        }
+                        RewardVideo.prototype.Show = function (param) {
+                            this.rewardVideo.show(param);
+                        };
+                        RewardVideo.prototype.OnReward = function (callback) {
+                            this.rewardVideo.onReward(callback);
+                        };
+                        RewardVideo.prototype.OnClose = function (callback) {
+                            this.rewardVideo.onClose(callback);
+                        };
+                        return RewardVideo;
+                    }());
+                    Kwai.RewardVideo = RewardVideo;
+                    function CreateRewardedVideoAd(param) {
+                        if (kwaigame.createRewardedVideoAd == null)
+                            return null;
+                        var obj = kwaigame.createRewardedVideoAd(param);
+                        return new RewardVideo(obj);
+                    }
+                    Kwai.CreateRewardedVideoAd = CreateRewardedVideoAd;
+                })(Kwai = Extern.Kwai || (Extern.Kwai = {}));
             })(Extern = AppRt.Extern || (AppRt.Extern = {}));
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
     })(Platform = TJ.Platform || (TJ.Platform = {}));
@@ -5778,6 +6305,7 @@ var TJ;
                             }
                             return LoginResult;
                         }(QG.CallbackResult));
+                        QG.LoginResult = LoginResult;
                         var LoginParam = /** @class */ (function (_super) {
                             __extends(LoginParam, _super);
                             function LoginParam() {
@@ -5857,6 +6385,119 @@ var TJ;
                         }
                         return CallbackParam;
                     }());
+                    var LoginSuccessResult = /** @class */ (function (_super) {
+                        __extends(LoginSuccessResult, _super);
+                        function LoginSuccessResult() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        return LoginSuccessResult;
+                    }(CallbackResult));
+                    var LoginParam = /** @class */ (function (_super) {
+                        __extends(LoginParam, _super);
+                        function LoginParam() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        return LoginParam;
+                    }(CallbackParam));
+                    QQ.LoginParam = LoginParam;
+                    function Login(param) {
+                        qq.login(param);
+                    }
+                    QQ.Login = Login;
+                    var UserInfo = /** @class */ (function () {
+                        function UserInfo() {
+                        }
+                        return UserInfo;
+                    }());
+                    QQ.UserInfo = UserInfo;
+                    var GetUserInfoSuccessResult = /** @class */ (function (_super) {
+                        __extends(GetUserInfoSuccessResult, _super);
+                        function GetUserInfoSuccessResult() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        return GetUserInfoSuccessResult;
+                    }(CallbackResult));
+                    var GetUserInfoParam = /** @class */ (function (_super) {
+                        __extends(GetUserInfoParam, _super);
+                        function GetUserInfoParam() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        return GetUserInfoParam;
+                    }(CallbackParam));
+                    QQ.GetUserInfoParam = GetUserInfoParam;
+                    function GetUserInfo(param) {
+                        qq.getUserInfo(param);
+                    }
+                    QQ.GetUserInfo = GetUserInfo;
+                    var UserInfoButtonStyle = /** @class */ (function () {
+                        function UserInfoButtonStyle() {
+                        }
+                        return UserInfoButtonStyle;
+                    }());
+                    var CreateUserInfoButtonParam = /** @class */ (function () {
+                        function CreateUserInfoButtonParam() {
+                            this.style = new UserInfoButtonStyle(); //按钮的样式
+                        }
+                        return CreateUserInfoButtonParam;
+                    }());
+                    QQ.CreateUserInfoButtonParam = CreateUserInfoButtonParam;
+                    function CreateUserInfoButton(param) {
+                        if (qq.createUserInfoButton == null)
+                            return null;
+                        var obj = qq.createUserInfoButton(param);
+                        return new UserInfoButton(obj);
+                    }
+                    QQ.CreateUserInfoButton = CreateUserInfoButton;
+                    var UserInfoButton = /** @class */ (function () {
+                        function UserInfoButton(obj) {
+                            this.userInfoButton = obj;
+                        }
+                        Object.defineProperty(UserInfoButton.prototype, "type", {
+                            get: function () {
+                                return this.userInfoButton.type;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        Object.defineProperty(UserInfoButton.prototype, "text", {
+                            get: function () {
+                                return this.userInfoButton.text;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        Object.defineProperty(UserInfoButton.prototype, "image", {
+                            get: function () {
+                                return this.userInfoButton.image;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        Object.defineProperty(UserInfoButton.prototype, "style", {
+                            get: function () {
+                                return this.userInfoButton.style;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        UserInfoButton.prototype.Show = function () {
+                            return this.userInfoButton.show();
+                        };
+                        UserInfoButton.prototype.Hide = function () {
+                            return this.userInfoButton.hide();
+                        };
+                        UserInfoButton.prototype.OnTap = function (callback) {
+                            this.userInfoButton.onTap(callback);
+                        };
+                        UserInfoButton.prototype.OffTap = function (callback) {
+                            this.userInfoButton.offTap(callback);
+                        };
+                        UserInfoButton.prototype.Destroy = function () {
+                            this.userInfoButton.destroy();
+                        };
+                        return UserInfoButton;
+                    }());
+                    QQ.UserInfoButton = UserInfoButton;
                     var ShowShareMenuParam = /** @class */ (function (_super) {
                         __extends(ShowShareMenuParam, _super);
                         function ShowShareMenuParam() {
@@ -6396,6 +7037,13 @@ var TJ;
                         return new GameRecorderManager(obj);
                     }
                     TT.GetGameRecorderManager = GetGameRecorderManager;
+                    var ShareAppMessageResult = /** @class */ (function (_super) {
+                        __extends(ShareAppMessageResult, _super);
+                        function ShareAppMessageResult() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        return ShareAppMessageResult;
+                    }(CallbackResult));
                     var ShareAppMessageParamExtra = /** @class */ (function () {
                         function ShareAppMessageParamExtra() {
                             this.createChallenge = false; //是否分享为挑战视频 (头条支持)
@@ -6418,6 +7066,10 @@ var TJ;
                         tt.shareAppMessage(param);
                     }
                     TT.ShareAppMessage = ShareAppMessage;
+                    function OnShareAppMessage(callback) {
+                        tt.onShareAppMessage(callback);
+                    }
+                    TT.OnShareAppMessage = OnShareAppMessage;
                     function ReportAnalytics(eventName, data) {
                         tt.reportAnalytics(eventName, data);
                     }
@@ -6558,6 +7210,24 @@ var TJ;
                         tt.openAwemeUserProfile(param);
                     }
                     TT.OpenAwemeUserProfile = OpenAwemeUserProfile;
+                    function StartAccelerometer(param) {
+                        tt.startAccelerometer(param);
+                    }
+                    TT.StartAccelerometer = StartAccelerometer;
+                    function StopAccelerometer(param) {
+                        tt.stopAccelerometer(param);
+                    }
+                    TT.StopAccelerometer = StopAccelerometer;
+                    var OnAccelerometerChangeResult = /** @class */ (function () {
+                        function OnAccelerometerChangeResult() {
+                        }
+                        return OnAccelerometerChangeResult;
+                    }());
+                    TT.OnAccelerometerChangeResult = OnAccelerometerChangeResult;
+                    function OnAccelerometerChange(callback) {
+                        tt.onAccelerometerChange(callback);
+                    }
+                    TT.OnAccelerometerChange = OnAccelerometerChange;
                     var BannerAdStyle = /** @class */ (function () {
                         function BannerAdStyle() {
                         }
@@ -6754,30 +7424,6 @@ var TJ;
                         return MoreGameBnaner;
                     }());
                     TT.MoreGameBnaner = MoreGameBnaner;
-                    function StartAccelerometer(param) {
-                        tt.startAccelerometer(param);
-                    }
-                    TT.StartAccelerometer = StartAccelerometer;
-                    function StopAccelerometer(param) {
-                        tt.stopAccelerometer(param);
-                    }
-                    TT.StopAccelerometer = StopAccelerometer;
-                    function OnAccelerometerChange(fun) {
-                        tt.onAccelerometerChange(fun);
-                    }
-                    TT.OnAccelerometerChange = OnAccelerometerChange;
-                    var AccelerometerCallBack = /** @class */ (function () {
-                        function AccelerometerCallBack() {
-                        }
-                        return AccelerometerCallBack;
-                    }());
-                    TT.AccelerometerCallBack = AccelerometerCallBack;
-                    var OnAccelerometerParam = /** @class */ (function () {
-                        function OnAccelerometerParam() {
-                        }
-                        return OnAccelerometerParam;
-                    }());
-                    TT.OnAccelerometerParam = OnAccelerometerParam;
                 })(TT = Extern.TT || (Extern.TT = {}));
             })(Extern = AppRt.Extern || (AppRt.Extern = {}));
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
@@ -7224,13 +7870,6 @@ var TJ;
                         return new UserInfoButton(obj);
                     }
                     WX.CreateUserInfoButton = CreateUserInfoButton;
-                    var UserInfoButtonOnTapResult = /** @class */ (function (_super) {
-                        __extends(UserInfoButtonOnTapResult, _super);
-                        function UserInfoButtonOnTapResult() {
-                            return _super !== null && _super.apply(this, arguments) || this;
-                        }
-                        return UserInfoButtonOnTapResult;
-                    }(WX.CallbackResult));
                     var UserInfoButton = /** @class */ (function () {
                         function UserInfoButton(obj) {
                             this.userInfoButton = obj;
@@ -7502,6 +8141,121 @@ var TJ;
                         return new RewardedVideoAd(obj);
                     }
                     WX.CreateRewardedVideoAd = CreateRewardedVideoAd;
+                    var GridAdStyle = /** @class */ (function () {
+                        function GridAdStyle() {
+                        }
+                        return GridAdStyle;
+                    }());
+                    WX.GridAdStyle = GridAdStyle;
+                    var GridAd = /** @class */ (function () {
+                        function GridAd(obj) {
+                            this.gridAd = obj;
+                        }
+                        Object.defineProperty(GridAd.prototype, "style", {
+                            get: function () {
+                                return this.gridAd.style;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        GridAd.prototype.Show = function () {
+                            return this.gridAd.show();
+                        };
+                        GridAd.prototype.Hide = function () {
+                            return this.gridAd.hide();
+                        };
+                        GridAd.prototype.OnLoad = function (callback) {
+                            this.gridAd.onLoad(callback);
+                        };
+                        GridAd.prototype.OffLoad = function (callback) {
+                            this.gridAd.offLoad(callback);
+                        };
+                        GridAd.prototype.OnError = function (callback) {
+                            this.gridAd.onError(callback);
+                        };
+                        GridAd.prototype.OffError = function (callback) {
+                            this.gridAd.offError(callback);
+                        };
+                        GridAd.prototype.OnResize = function (callback) {
+                            this.gridAd.onResize(callback);
+                        };
+                        GridAd.prototype.OffResize = function (callback) {
+                            this.gridAd.offResize(callback);
+                        };
+                        GridAd.prototype.Destroy = function () {
+                            this.gridAd.destroy();
+                        };
+                        return GridAd;
+                    }());
+                    WX.GridAd = GridAd;
+                    var CreateGridAdParam = /** @class */ (function () {
+                        function CreateGridAdParam() {
+                            this.style = new GridAdStyle(); //grid(格子) 广告组件的样式
+                            this.gridCount = 5; //grid(格子) 广告组件的格子个数，可设置爱5，8两种格子个数样式，默认值为5
+                        }
+                        return CreateGridAdParam;
+                    }());
+                    WX.CreateGridAdParam = CreateGridAdParam;
+                    function CreateGridAd(param) {
+                        var obj = wx.createGridAd(param);
+                        return new GridAd(obj);
+                    }
+                    WX.CreateGridAd = CreateGridAd;
+                    var CustomAd = /** @class */ (function () {
+                        function CustomAd(obj) {
+                            this.customAd = obj;
+                        }
+                        Object.defineProperty(CustomAd.prototype, "style", {
+                            get: function () {
+                                return this.customAd.style;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        CustomAd.prototype.IsShow = function () {
+                            return this.customAd.isShow();
+                        };
+                        CustomAd.prototype.Show = function () {
+                            return this.customAd.show();
+                        };
+                        CustomAd.prototype.Hide = function () {
+                            return this.customAd.hide();
+                        };
+                        CustomAd.prototype.OnLoad = function (callback) {
+                            this.customAd.onLoad(callback);
+                        };
+                        CustomAd.prototype.OffLoad = function (callback) {
+                            this.customAd.offLoad(callback);
+                        };
+                        CustomAd.prototype.OnError = function (callback) {
+                            this.customAd.onError(callback);
+                        };
+                        CustomAd.prototype.OffError = function (callback) {
+                            this.customAd.offError(callback);
+                        };
+                        CustomAd.prototype.OnClose = function (callback) {
+                            this.customAd.onClose(callback);
+                        };
+                        CustomAd.prototype.OffClose = function (callback) {
+                            this.customAd.offClose(callback);
+                        };
+                        CustomAd.prototype.Destroy = function () {
+                            this.customAd.destroy();
+                        };
+                        return CustomAd;
+                    }());
+                    WX.CustomAd = CustomAd;
+                    var CreateCustomAdParam = /** @class */ (function () {
+                        function CreateCustomAdParam() {
+                        }
+                        return CreateCustomAdParam;
+                    }());
+                    WX.CreateCustomAdParam = CreateCustomAdParam;
+                    function CreateCustomAd(param) {
+                        var obj = wx.createCustomAd(param);
+                        return new CustomAd(obj);
+                    }
+                    WX.CreateCustomAd = CreateCustomAd;
                     var ShareAppMessageParam = /** @class */ (function () {
                         function ShareAppMessageParam() {
                         }
@@ -7640,107 +8394,380 @@ var TJ;
         (function (AppRt) {
             var Develop;
             (function (Develop) {
-                var Ground;
-                (function (Ground) {
-                    // let url = "http://192.168.1.159:9500/api/ground/";
-                    var url = "https://xylogin.tomatojoy.cn:442/api/ground/";
-                    function Send(api, param) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                return [2 /*return*/];
+                var HBS;
+                (function (HBS) {
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var result;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(loginWaiter == null)) return [3 /*break*/, 3];
+                                            loginWaiter = new TJ.Common.PromiseWrap();
+                                            if (!(TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.HUAWEI_AppRt)) return [3 /*break*/, 2];
+                                            param = new AppRt.Extern.HBS.GameLoginParam();
+                                            param.success = function (res) {
+                                                console.log("HBS.GameLogin success = " + JSON.stringify(res));
+                                                result = res;
+                                                loginWaiter.Resolve();
+                                            };
+                                            param.fail = function (res) {
+                                                console.log("HBS.GameLogin fail = " + JSON.stringify(res));
+                                                loginWaiter.Resolve();
+                                            };
+                                            AppRt.Extern.HBS.GameLogin(param);
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [3 /*break*/, 3];
+                                        case 2:
+                                            loginWaiter.Resolve();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, loginWaiter.promise];
+                                        case 4:
+                                            _a.sent();
+                                            return [2 /*return*/, result];
+                                    }
+                                });
                             });
-                        });
-                    }
-                    function Heartbeat() {
-                        // let param = {};
-                        // param["startupGuid"] = startupGuid;
-                        // param["clientGuid"] = SystemInfo.clientGuid;
-                        // param["appGuid"] = APP.Api.appGuid;
-                        // Send("heartbeat", param);
-                    }
-                    Ground.Heartbeat = Heartbeat;
-                    function DeviceInfo(deviceInfo) {
-                        // let param = {};
-                        // param["startupGuid"] = startupGuid;
-                        // param["clientGuid"] = SystemInfo.clientGuid;
-                        // param["appGuid"] = APP.Api.appGuid;
-                        // param["deviceInfo"] = deviceInfo;
-                        // Send("deviceInfo", param);
-                    }
-                    Ground.DeviceInfo = DeviceInfo;
-                    function AppInfo(appInfo) {
-                        // let param = {};
-                        // param["startupGuid"] = startupGuid;
-                        // param["clientGuid"] = SystemInfo.clientGuid;
-                        // param["appGuid"] = APP.Api.appGuid;
-                        // param["appInfo"] = appInfo;
-                        // Send("appInfo", param);
-                    }
-                    Ground.AppInfo = AppInfo;
-                    function EventInfo(eventInfo) {
-                        // let param = {};
-                        // param["startupGuid"] = startupGuid;
-                        // param["clientGuid"] = SystemInfo.clientGuid;
-                        // param["appGuid"] = APP.Api.appGuid;
-                        // param["eventInfo"] = eventInfo;
-                        // Send("eventInfo", param);
-                    }
-                    Ground.EventInfo = EventInfo;
-                    function LoginOppo(appGuid, token) {
-                        if (token == null)
-                            return;
-                        var param = {};
-                        param["startupGuid"] = TJ.Common.SystemInfo.startupGuid;
-                        param["clientGuid"] = TJ.Common.SystemInfo.clientGuid;
-                        param["appGuid"] = appGuid;
-                        param["token"] = token;
-                        Send("login/oppo", param);
-                    }
-                    Ground.LoginOppo = LoginOppo;
-                    function LoginTT(appGuid, openid, userInfo) {
-                        // if (code == null) return;
-                        var param = {};
-                        param["startupGuid"] = TJ.Common.SystemInfo.startupGuid;
-                        param["clientGuid"] = TJ.Common.SystemInfo.clientGuid;
-                        param["appGuid"] = appGuid;
-                        // param["code"] = code;
-                        param["openid"] = openid;
-                        param["userInfo"] = userInfo;
-                        Send("login/zijie", param);
-                    }
-                    Ground.LoginTT = LoginTT;
-                    function LoginQTT(appGuid, platform, ticket) {
-                        var param = {};
-                        param["startupGuid"] = TJ.Common.SystemInfo.startupGuid;
-                        param["clientGuid"] = TJ.Common.SystemInfo.clientGuid;
-                        param["appGuid"] = appGuid;
-                        param["platform"] = platform;
-                        param["ticket"] = ticket;
-                        Send("login/qtt", param);
-                    }
-                    Ground.LoginQTT = LoginQTT;
-                    var Api = /** @class */ (function () {
-                        function Api() {
                         }
-                        Api.Event = function (name) {
-                            var eventInfo = {};
-                            eventInfo["timePoint"] = Date.now() - this.startTime;
-                            eventInfo["eventName"] = name;
-                            EventInfo(eventInfo);
+                        Account.Login = Login;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    return [2 /*return*/, result];
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = HBS.Account || (HBS.Account = {}));
+                })(HBS = Develop.HBS || (Develop.HBS = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var Kwai;
+                (function (Kwai) {
+                    var MediaRecoder = /** @class */ (function () {
+                        function MediaRecoder() {
+                            this.recording = false;
+                            if (this.obj == null)
+                                return;
+                            this.obj.OnError({
+                                listener: function (err) {
+                                    console.log("Kwai.MediaRecoder.OnError = " + JSON.stringify(err));
+                                }
+                            });
+                        }
+                        Object.defineProperty(MediaRecoder.prototype, "obj", {
+                            get: function () {
+                                if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.Kwai_AppRt)
+                                    return null;
+                                if (this._obj == null) {
+                                    this._obj = AppRt.Extern.Kwai.CreateMediaRecorder();
+                                }
+                                return this._obj;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        Object.defineProperty(MediaRecoder.prototype, "hasVideo", {
+                            get: function () {
+                                if (this.obj == null)
+                                    return false;
+                                if (!this.recording)
+                                    return false;
+                                return true;
+                            },
+                            enumerable: true,
+                            configurable: true
+                        });
+                        MediaRecoder.prototype.Start = function () {
+                            var _this = this;
+                            if (this._obj == null)
+                                return;
+                            this.obj.Destory({
+                                callback: function (err) {
+                                    console.log("Kwai.MediaRecoder.Destory = " + JSON.stringify(err));
+                                    _this.recording = false;
+                                    _this.obj.Init({
+                                        callback: function (err) {
+                                            console.log("Kwai.MediaRecoder.Init = " + JSON.stringify(err));
+                                            _this.obj.Start({
+                                                callback: function (err) {
+                                                    console.log("Kwai.MediaRecoder.Start = " + JSON.stringify(err));
+                                                    if (err == null || err.code == null) {
+                                                        _this.recording = true;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
                         };
-                        Api.SystemEvent = function (system, name, param) {
-                            var eventInfo = {};
-                            eventInfo["system"] = system;
-                            eventInfo["timePoint"] = Date.now() - this.startTime;
-                            eventInfo["eventName"] = name;
-                            eventInfo["eventParam"] = param;
-                            EventInfo(eventInfo);
+                        MediaRecoder.prototype.Stop = function (share) {
+                            var _this = this;
+                            if (share === void 0) { share = false; }
+                            if (this._obj == null)
+                                return;
+                            this.obj.Stop({
+                                callback: function (err) {
+                                    console.log("Kwai.MediaRecoder.Stop = " + JSON.stringify(err));
+                                    if (share)
+                                        _this.Share();
+                                }
+                            });
                         };
-                        Api.startTime = Date.now();
-                        return Api;
+                        MediaRecoder.prototype.Share = function () {
+                            if (this._obj == null)
+                                return;
+                            this.obj.PublishVideo({
+                                callback: function (err) {
+                                    console.log("Kwai.MediaRecoder.PublishVideo = " + JSON.stringify(err));
+                                }
+                            });
+                        };
+                        return MediaRecoder;
                     }());
-                    Ground.Api = Api;
-                })(Ground = Develop.Ground || (Develop.Ground = {}));
+                    Kwai.MediaRecoder = MediaRecoder;
+                })(Kwai = Develop.Kwai || (Develop.Kwai = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var OPPO;
+                (function (OPPO) {
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var result;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(loginWaiter == null)) return [3 /*break*/, 3];
+                                            loginWaiter = new TJ.Common.PromiseWrap();
+                                            if (!(TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.OPPO_AppRt)) return [3 /*break*/, 2];
+                                            param = new AppRt.Extern.OPPO.QG.LoginParam();
+                                            param.success = function (res) {
+                                                console.log("OPPO.QG.Login success = " + JSON.stringify(res));
+                                                result = res;
+                                                loginWaiter.Resolve();
+                                            };
+                                            param.fail = function (res) {
+                                                console.log("OPPO.QG.Login fail = " + JSON.stringify(res));
+                                                loginWaiter.Resolve();
+                                            };
+                                            AppRt.Extern.OPPO.QG.Login(param);
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [3 /*break*/, 3];
+                                        case 2:
+                                            loginWaiter.Resolve();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, loginWaiter.promise];
+                                        case 4:
+                                            _a.sent();
+                                            return [2 /*return*/, result];
+                                    }
+                                });
+                            });
+                        }
+                        Account.Login = Login;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    return [2 /*return*/, result.data];
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = OPPO.Account || (OPPO.Account = {}));
+                })(OPPO = Develop.OPPO || (Develop.OPPO = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var QQ;
+                (function (QQ) {
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var code;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (loginWaiter == null) {
+                                                loginWaiter = new TJ.Common.PromiseWrap();
+                                                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.SQ_AppRt) {
+                                                    param = new AppRt.Extern.QQ.LoginParam();
+                                                    param.success = function (res) {
+                                                        code = res.code;
+                                                    };
+                                                    param.complete = function (res) {
+                                                        console.log("QQ.Login complete " + JSON.stringify(res));
+                                                        loginWaiter.Resolve();
+                                                    };
+                                                    AppRt.Extern.QQ.Login(param);
+                                                }
+                                                else {
+                                                    loginWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, { code: code }];
+                                    }
+                                });
+                            });
+                        }
+                        Account.Login = Login;
+                        function YLogin() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Login()];
+                                        case 1:
+                                            obj = _a.sent();
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.CLogin.QQAppRT(obj)];
+                                        case 2:
+                                            res = _a.sent();
+                                            return [2 /*return*/, res];
+                                    }
+                                });
+                            });
+                        }
+                        Account.YLogin = YLogin;
+                        var userInfoWaiter;
+                        var userInfo;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param, btn_1;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (userInfoWaiter == null) {
+                                                userInfoWaiter = new TJ.Common.PromiseWrap();
+                                                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.SQ_AppRt) {
+                                                    param = new AppRt.Extern.QQ.CreateUserInfoButtonParam();
+                                                    param.type = "image";
+                                                    param.style.left = 0;
+                                                    param.style.top = 0;
+                                                    param.style.width = TJ.Engine.RuntimeInfo.windowSize.width;
+                                                    param.style.height = TJ.Engine.RuntimeInfo.windowSize.height;
+                                                    btn_1 = AppRt.Extern.QQ.CreateUserInfoButton(param);
+                                                    btn_1.OnTap(function (res) {
+                                                        userInfo = res.userInfo;
+                                                        // if (userInfo != null)
+                                                        {
+                                                            userInfoWaiter.Resolve();
+                                                            btn_1.Destroy();
+                                                        }
+                                                    });
+                                                }
+                                                else {
+                                                    userInfoWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, userInfoWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, userInfo];
+                                    }
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = QQ.Account || (QQ.Account = {}));
+                })(QQ = Develop.QQ || (Develop.QQ = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var QTT;
+                (function (QTT) {
+                    var Account;
+                    (function (Account) {
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj;
+                                return __generator(this, function (_a) {
+                                    obj = TJ.Common.Url.GetArgs();
+                                    return [2 /*return*/, { ticket: obj.ticket, platform: obj.platform }];
+                                });
+                            });
+                        }
+                        Account.Login = Login;
+                        var userInfo;
+                        function YLogin() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Login()];
+                                        case 1:
+                                            obj = _a.sent();
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.CLogin.QTTAppRT(obj)];
+                                        case 2:
+                                            res = _a.sent();
+                                            userInfo = res.data;
+                                            return [2 /*return*/, res];
+                                    }
+                                });
+                            });
+                        }
+                        Account.YLogin = YLogin;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    return [2 /*return*/, userInfo];
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = QTT.Account || (QTT.Account = {}));
+                })(QTT = Develop.QTT || (Develop.QTT = {}));
             })(Develop = AppRt.Develop || (AppRt.Develop = {}));
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
     })(Platform = TJ.Platform || (TJ.Platform = {}));
@@ -8075,183 +9102,487 @@ var TJ;
             (function (Develop) {
                 var TT;
                 (function (TT) {
-                    var Get_video_Result = /** @class */ (function () {
-                        function Get_video_Result() {
-                        }
-                        return Get_video_Result;
-                    }());
-                    var Get_top_video_ids_Result_data = /** @class */ (function () {
-                        function Get_top_video_ids_Result_data() {
-                        }
-                        return Get_top_video_ids_Result_data;
-                    }());
-                    function Get_top_video_ids_by_like(app_id, number_of_top, access_token) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var www, res;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        www = new TJ.Common.WWW("http://gate.snssdk.com/developer/api/get_top_video_ids_by_like", { "app_id": app_id, "number_of_top": number_of_top, "access_token": access_token });
-                                        return [4 /*yield*/, www.Send("post", "json")];
-                                    case 1:
-                                        _a.sent();
-                                        if (www.error != null)
-                                            return [2 /*return*/, []];
-                                        res = JSON.parse(www.text);
-                                        console.log("Get_top_video_ids_by_like", res);
-                                        return [2 /*return*/, res.data];
-                                }
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var code;
+                        var anonymousCode;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (loginWaiter == null) {
+                                                loginWaiter = new TJ.Common.PromiseWrap();
+                                                if (DP.Basic.channel == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                                                    param = new AppRt.Extern.TT.LoginParam();
+                                                    param.force = false;
+                                                    param.success = function (res) {
+                                                        code = res.code;
+                                                        anonymousCode = res.anonymousCode;
+                                                    };
+                                                    param.complete = function (res) {
+                                                        console.log("TT.Login complete " + JSON.stringify(res));
+                                                        loginWaiter.Resolve();
+                                                    };
+                                                    AppRt.Extern.TT.Login(param);
+                                                }
+                                                else {
+                                                    loginWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, { code: code, anonymousCode: anonymousCode }];
+                                    }
+                                });
                             });
-                        });
-                    }
-                    function Get_top_video_ids_by_time(app_id, number_of_top, access_token) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var www, res;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        www = new TJ.Common.WWW("http://gate.snssdk.com/developer/api/get_top_video_ids_by_time", { "app_id": app_id, "number_of_top": number_of_top, "access_token": access_token });
-                                        return [4 /*yield*/, www.Send("post", "json")];
-                                    case 1:
-                                        _a.sent();
-                                        if (www.error != null)
-                                            return [2 /*return*/, []];
-                                        res = JSON.parse(www.text);
-                                        console.log("Get_top_video_ids_by_time", res);
-                                        return [2 /*return*/, res.data];
-                                }
-                            });
-                        });
-                    }
-                    var Get_video_info_Result_data_video_info = /** @class */ (function () {
-                        function Get_video_info_Result_data_video_info() {
                         }
-                        return Get_video_info_Result_data_video_info;
-                    }());
-                    var Get_video_info_Result_data = /** @class */ (function () {
-                        function Get_video_info_Result_data() {
+                        Account.Login = Login;
+                        function YLogin() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Login()];
+                                        case 1:
+                                            obj = _a.sent();
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.CLogin.TTAppRT(obj)];
+                                        case 2:
+                                            res = _a.sent();
+                                            return [2 /*return*/, res];
+                                    }
+                                });
+                            });
                         }
-                        return Get_video_info_Result_data;
-                    }());
-                    function Get_video_info(alias_ids) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var www, res;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0:
-                                        www = new TJ.Common.WWW("https://gate.snssdk.com/developer/api/get_video_info", { "alias_ids": alias_ids });
-                                        return [4 /*yield*/, www.Send("post", "json")];
-                                    case 1:
-                                        _a.sent();
-                                        if (www.error != null)
-                                            return [2 /*return*/, []];
-                                        res = JSON.parse(www.text);
-                                        return [2 /*return*/, res.data];
-                                }
+                        Account.YLogin = YLogin;
+                        var userInfoWaiter;
+                        var userInfo;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (userInfoWaiter == null) {
+                                                userInfoWaiter = new TJ.Common.PromiseWrap();
+                                                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.ZJTD_AppRt) {
+                                                    param = new AppRt.Extern.TT.GetUserInfoParam();
+                                                    param.success = function (res) {
+                                                        userInfo = res.userInfo;
+                                                    };
+                                                    param.complete = function (res) {
+                                                        console.log("TT.GetUserInfo complete " + JSON.stringify(res));
+                                                        userInfoWaiter.Resolve();
+                                                    };
+                                                    AppRt.Extern.TT.GetUserInfo(param);
+                                                }
+                                                else {
+                                                    userInfoWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, userInfoWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, userInfo];
+                                    }
+                                });
                             });
-                        });
-                    }
-                    var VideoInfo = /** @class */ (function () {
-                        function VideoInfo() {
                         }
-                        return VideoInfo;
-                    }());
-                    TT.VideoInfo = VideoInfo;
-                    function GetVideoRankByLike(appid, number_of_top) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var access_token, alias_ids, rankDic, _i, _a, item, list, _b, _c, item;
-                            return __generator(this, function (_d) {
-                                switch (_d.label) {
-                                    case 0: return [4 /*yield*/, Develop.Yun.Login.GetAccessToken()];
-                                    case 1:
-                                        access_token = _d.sent();
-                                        alias_ids = [];
-                                        rankDic = {};
-                                        _i = 0;
-                                        return [4 /*yield*/, Get_top_video_ids_by_like(appid, number_of_top, access_token)];
-                                    case 2:
-                                        _a = _d.sent();
-                                        _d.label = 3;
-                                    case 3:
-                                        if (!(_i < _a.length)) return [3 /*break*/, 5];
-                                        item = _a[_i];
-                                        alias_ids.push(item.video_id);
-                                        rankDic[item.video_id] = item.rank;
-                                        _d.label = 4;
-                                    case 4:
-                                        _i++;
-                                        return [3 /*break*/, 3];
-                                    case 5:
-                                        list = [];
-                                        _b = 0;
-                                        return [4 /*yield*/, Get_video_info(alias_ids)];
-                                    case 6:
-                                        _c = _d.sent();
-                                        _d.label = 7;
-                                    case 7:
-                                        if (!(_b < _c.length)) return [3 /*break*/, 9];
-                                        item = _c[_b];
-                                        list.push({ videoID: item.alias_id, rank: rankDic[item.alias_id], digg_count: item.video_info.digg_count, cover_url: item.video_info.cover_url });
-                                        _d.label = 8;
-                                    case 8:
-                                        _b++;
-                                        return [3 /*break*/, 7];
-                                    case 9:
-                                        list.sort(function (a, b) { return a.rank - b.rank; });
-                                        return [2 /*return*/, list];
-                                }
-                            });
-                        });
-                    }
-                    TT.GetVideoRankByLike = GetVideoRankByLike;
-                    function GetVideoRankByTime(appid, number_of_top) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var access_token, alias_ids, rankDic, _i, _a, item, list, _b, _c, item;
-                            return __generator(this, function (_d) {
-                                switch (_d.label) {
-                                    case 0: return [4 /*yield*/, Develop.Yun.Login.GetAccessToken()];
-                                    case 1:
-                                        access_token = _d.sent();
-                                        alias_ids = [];
-                                        rankDic = {};
-                                        _i = 0;
-                                        return [4 /*yield*/, Get_top_video_ids_by_time(appid, number_of_top, access_token)];
-                                    case 2:
-                                        _a = _d.sent();
-                                        _d.label = 3;
-                                    case 3:
-                                        if (!(_i < _a.length)) return [3 /*break*/, 5];
-                                        item = _a[_i];
-                                        alias_ids.push(item.video_id);
-                                        rankDic[item.video_id] = item.rank;
-                                        _d.label = 4;
-                                    case 4:
-                                        _i++;
-                                        return [3 /*break*/, 3];
-                                    case 5:
-                                        list = [];
-                                        _b = 0;
-                                        return [4 /*yield*/, Get_video_info(alias_ids)];
-                                    case 6:
-                                        _c = _d.sent();
-                                        _d.label = 7;
-                                    case 7:
-                                        if (!(_b < _c.length)) return [3 /*break*/, 9];
-                                        item = _c[_b];
-                                        list.push({ videoID: item.alias_id, rank: rankDic[item.alias_id], digg_count: item.video_info.digg_count, cover_url: item.video_info.cover_url });
-                                        _d.label = 8;
-                                    case 8:
-                                        _b++;
-                                        return [3 /*break*/, 7];
-                                    case 9:
-                                        list.sort(function (a, b) { return a.rank - b.rank; });
-                                        return [2 /*return*/, list];
-                                }
-                            });
-                        });
-                    }
-                    TT.GetVideoRankByTime = GetVideoRankByTime;
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = TT.Account || (TT.Account = {}));
                 })(TT = Develop.TT || (Develop.TT = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var TT;
+                (function (TT) {
+                    var VideoRank;
+                    (function (VideoRank) {
+                        var Get_video_Result = /** @class */ (function () {
+                            function Get_video_Result() {
+                            }
+                            return Get_video_Result;
+                        }());
+                        var Get_top_video_ids_Result_data = /** @class */ (function () {
+                            function Get_top_video_ids_Result_data() {
+                            }
+                            return Get_top_video_ids_Result_data;
+                        }());
+                        function Get_top_video_ids_by_like(app_id, number_of_top, access_token) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var www, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            www = new TJ.Common.WWW("http://gate.snssdk.com/developer/api/get_top_video_ids_by_like", { "app_id": app_id, "number_of_top": number_of_top, "access_token": access_token });
+                                            return [4 /*yield*/, www.Send("post", "json")];
+                                        case 1:
+                                            _a.sent();
+                                            if (www.error != null)
+                                                return [2 /*return*/, []];
+                                            res = JSON.parse(www.text);
+                                            console.log("Get_top_video_ids_by_like", res);
+                                            if (res.err_no != 0)
+                                                return [2 /*return*/, []];
+                                            return [2 /*return*/, res.data];
+                                    }
+                                });
+                            });
+                        }
+                        function Get_top_video_ids_by_time(app_id, number_of_top, access_token) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var www, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            www = new TJ.Common.WWW("http://gate.snssdk.com/developer/api/get_top_video_ids_by_time", { "app_id": app_id, "number_of_top": number_of_top, "access_token": access_token });
+                                            return [4 /*yield*/, www.Send("post", "json")];
+                                        case 1:
+                                            _a.sent();
+                                            if (www.error != null)
+                                                return [2 /*return*/, []];
+                                            res = JSON.parse(www.text);
+                                            console.log("Get_top_video_ids_by_time", res);
+                                            if (res.err_no != 0)
+                                                return [2 /*return*/, []];
+                                            return [2 /*return*/, res.data];
+                                    }
+                                });
+                            });
+                        }
+                        var Get_video_info_Result_data_video_info = /** @class */ (function () {
+                            function Get_video_info_Result_data_video_info() {
+                            }
+                            return Get_video_info_Result_data_video_info;
+                        }());
+                        var Get_video_info_Result_data = /** @class */ (function () {
+                            function Get_video_info_Result_data() {
+                            }
+                            return Get_video_info_Result_data;
+                        }());
+                        function Get_video_info(alias_ids) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var www, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            www = new TJ.Common.WWW("https://gate.snssdk.com/developer/api/get_video_info", { "alias_ids": alias_ids });
+                                            return [4 /*yield*/, www.Send("post", "json")];
+                                        case 1:
+                                            _a.sent();
+                                            if (www.error != null)
+                                                return [2 /*return*/, []];
+                                            res = JSON.parse(www.text);
+                                            if (res.data == null)
+                                                return [2 /*return*/, []];
+                                            return [2 /*return*/, res.data];
+                                    }
+                                });
+                            });
+                        }
+                        var VideoInfo = /** @class */ (function () {
+                            function VideoInfo() {
+                            }
+                            return VideoInfo;
+                        }());
+                        VideoRank.VideoInfo = VideoInfo;
+                        function GetByLike(number_of_top) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var access_token, alias_ids, rankDic, _i, _a, item, list, _b, _c, item;
+                                return __generator(this, function (_d) {
+                                    switch (_d.label) {
+                                        case 0: return [4 /*yield*/, Develop.Yun.Login.GetAccessToken()];
+                                        case 1:
+                                            access_token = _d.sent();
+                                            alias_ids = [];
+                                            rankDic = {};
+                                            _i = 0;
+                                            return [4 /*yield*/, Get_top_video_ids_by_like(DP.TT.appId, number_of_top, access_token)];
+                                        case 2:
+                                            _a = _d.sent();
+                                            _d.label = 3;
+                                        case 3:
+                                            if (!(_i < _a.length)) return [3 /*break*/, 5];
+                                            item = _a[_i];
+                                            alias_ids.push(item.video_id);
+                                            rankDic[item.video_id] = item.rank;
+                                            _d.label = 4;
+                                        case 4:
+                                            _i++;
+                                            return [3 /*break*/, 3];
+                                        case 5:
+                                            list = [];
+                                            _b = 0;
+                                            return [4 /*yield*/, Get_video_info(alias_ids)];
+                                        case 6:
+                                            _c = _d.sent();
+                                            _d.label = 7;
+                                        case 7:
+                                            if (!(_b < _c.length)) return [3 /*break*/, 9];
+                                            item = _c[_b];
+                                            list.push({ videoID: item.alias_id, rank: rankDic[item.alias_id], digg_count: item.video_info.digg_count, cover_url: item.video_info.cover_url });
+                                            _d.label = 8;
+                                        case 8:
+                                            _b++;
+                                            return [3 /*break*/, 7];
+                                        case 9:
+                                            list.sort(function (a, b) { return a.rank - b.rank; });
+                                            return [2 /*return*/, list];
+                                    }
+                                });
+                            });
+                        }
+                        VideoRank.GetByLike = GetByLike;
+                        function GetByTime(number_of_top) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var access_token, alias_ids, rankDic, _i, _a, item, list, _b, _c, item;
+                                return __generator(this, function (_d) {
+                                    switch (_d.label) {
+                                        case 0: return [4 /*yield*/, Develop.Yun.Login.GetAccessToken()];
+                                        case 1:
+                                            access_token = _d.sent();
+                                            alias_ids = [];
+                                            rankDic = {};
+                                            _i = 0;
+                                            return [4 /*yield*/, Get_top_video_ids_by_time(DP.TT.appId, number_of_top, access_token)];
+                                        case 2:
+                                            _a = _d.sent();
+                                            _d.label = 3;
+                                        case 3:
+                                            if (!(_i < _a.length)) return [3 /*break*/, 5];
+                                            item = _a[_i];
+                                            alias_ids.push(item.video_id);
+                                            rankDic[item.video_id] = item.rank;
+                                            _d.label = 4;
+                                        case 4:
+                                            _i++;
+                                            return [3 /*break*/, 3];
+                                        case 5:
+                                            list = [];
+                                            _b = 0;
+                                            return [4 /*yield*/, Get_video_info(alias_ids)];
+                                        case 6:
+                                            _c = _d.sent();
+                                            _d.label = 7;
+                                        case 7:
+                                            if (!(_b < _c.length)) return [3 /*break*/, 9];
+                                            item = _c[_b];
+                                            list.push({ videoID: item.alias_id, rank: rankDic[item.alias_id], digg_count: item.video_info.digg_count, cover_url: item.video_info.cover_url });
+                                            _d.label = 8;
+                                        case 8:
+                                            _b++;
+                                            return [3 /*break*/, 7];
+                                        case 9:
+                                            list.sort(function (a, b) { return a.rank - b.rank; });
+                                            return [2 /*return*/, list];
+                                    }
+                                });
+                            });
+                        }
+                        VideoRank.GetByTime = GetByTime;
+                    })(VideoRank = TT.VideoRank || (TT.VideoRank = {}));
+                })(TT = Develop.TT || (Develop.TT = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var VIVO;
+                (function (VIVO) {
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var token;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(loginWaiter == null)) return [3 /*break*/, 3];
+                                            loginWaiter = new TJ.Common.PromiseWrap();
+                                            if (!(TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.VIVO_AppRt)) return [3 /*break*/, 2];
+                                            param = new AppRt.Extern.VIVO.QG.LoginParam();
+                                            param.success = function (res) {
+                                                console.log("VIVO.QG.Login success = " + JSON.stringify(res));
+                                                token = res.data.token;
+                                                loginWaiter.Resolve();
+                                            };
+                                            param.fail = function (res) {
+                                                console.log("VIVO.QG.Login fail = " + JSON.stringify(res));
+                                                loginWaiter.Resolve();
+                                            };
+                                            AppRt.Extern.VIVO.QG.Login(param);
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [3 /*break*/, 3];
+                                        case 2:
+                                            loginWaiter.Resolve();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, loginWaiter.promise];
+                                        case 4:
+                                            _a.sent();
+                                            return [2 /*return*/, { token: token }];
+                                    }
+                                });
+                            });
+                        }
+                        Account.Login = Login;
+                        var userInfo;
+                        function YLogin() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Login()];
+                                        case 1:
+                                            obj = _a.sent();
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.CLogin.VIVOAppRT(obj)];
+                                        case 2:
+                                            res = _a.sent();
+                                            userInfo = res.data;
+                                            return [2 /*return*/, res];
+                                    }
+                                });
+                            });
+                        }
+                        Account.YLogin = YLogin;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    return [2 /*return*/, userInfo];
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = VIVO.Account || (VIVO.Account = {}));
+                })(VIVO = Develop.VIVO || (Develop.VIVO = {}));
+            })(Develop = AppRt.Develop || (AppRt.Develop = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var Develop;
+            (function (Develop) {
+                var WX;
+                (function (WX) {
+                    var Account;
+                    (function (Account) {
+                        var loginWaiter;
+                        var code;
+                        function Login() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (loginWaiter == null) {
+                                                loginWaiter = new TJ.Common.PromiseWrap();
+                                                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
+                                                    param = new AppRt.Extern.WX.LoginParam();
+                                                    param.success = function (res) {
+                                                        code = res.code;
+                                                    };
+                                                    param.complete = function (res) {
+                                                        console.log("WX.Login complete " + JSON.stringify(res));
+                                                        loginWaiter.Resolve();
+                                                    };
+                                                    AppRt.Extern.WX.Login(param);
+                                                }
+                                                else {
+                                                    loginWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, loginWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, { code: code }];
+                                    }
+                                });
+                            });
+                        }
+                        Account.Login = Login;
+                        function YLogin() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var obj, res;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, Login()];
+                                        case 1:
+                                            obj = _a.sent();
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.CLogin.WXLogin(obj)];
+                                        case 2:
+                                            res = _a.sent();
+                                            return [2 /*return*/, res];
+                                    }
+                                });
+                            });
+                        }
+                        Account.YLogin = YLogin;
+                        var userInfoWaiter;
+                        var userInfo;
+                        function GetUserInfo() {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var param, btn_2;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (userInfoWaiter == null) {
+                                                userInfoWaiter = new TJ.Common.PromiseWrap();
+                                                if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
+                                                    param = new AppRt.Extern.WX.CreateUserInfoButtonParam();
+                                                    param.type = "image";
+                                                    param.style.left = 0;
+                                                    param.style.top = 0;
+                                                    param.style.width = TJ.Engine.RuntimeInfo.windowSize.width;
+                                                    param.style.height = TJ.Engine.RuntimeInfo.windowSize.height;
+                                                    btn_2 = AppRt.Extern.WX.CreateUserInfoButton(param);
+                                                    btn_2.OnTap(function (res) {
+                                                        userInfo = res.userInfo;
+                                                        // if (userInfo != null)
+                                                        {
+                                                            userInfoWaiter.Resolve();
+                                                            btn_2.Destroy();
+                                                        }
+                                                    });
+                                                }
+                                                else {
+                                                    userInfoWaiter.Resolve();
+                                                }
+                                            }
+                                            return [4 /*yield*/, userInfoWaiter.promise];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/, userInfo];
+                                    }
+                                });
+                            });
+                        }
+                        Account.GetUserInfo = GetUserInfo;
+                    })(Account = WX.Account || (WX.Account = {}));
+                })(WX = Develop.WX || (Develop.WX = {}));
             })(Develop = AppRt.Develop || (AppRt.Develop = {}));
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
     })(Platform = TJ.Platform || (TJ.Platform = {}));
@@ -8688,10 +10019,36 @@ var TJ;
         (function (AppRt) {
             var DevKit;
             (function (DevKit) {
+                var _4399;
+                (function (_4399) {
+                    TJ.Common.PriorityInit.Add(0, function () {
+                        if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
+                            return;
+                        switch (DP.Basic.channel) {
+                            case TJ.Define.Channel.AppRt._4399_AppRt:
+                                TJ.Common.WWW.prototype.DoSend = function (url, method, data) {
+                                    this._error = "4399不允许外部通讯";
+                                    this._resolve();
+                                    this.LogError();
+                                };
+                                break;
+                        }
+                    });
+                })(_4399 = DevKit._4399 || (DevKit._4399 = {}));
+            })(DevKit = AppRt.DevKit || (AppRt.DevKit = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var DevKit;
+            (function (DevKit) {
                 var HBS;
                 (function (HBS) {
-                    var loginResolve;
-                    var loginWait;
+                    var loginWaiter;
                     var userInfo;
                     function GameLogin() {
                         return __awaiter(this, void 0, void 0, function () {
@@ -8699,10 +10056,10 @@ var TJ;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
-                                        if (loginWait == null) {
-                                            loginWait = new Promise(function (r) { loginResolve = r; });
+                                        if (loginWaiter == null) {
+                                            loginWaiter = new TJ.Common.PromiseWrap();
                                             if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.HUAWEI_AppRt) {
-                                                param = new AppRt.Extern.HBS.LoginParam();
+                                                param = new AppRt.Extern.HBS.GameLoginParam();
                                                 param.forceLogin = 1;
                                                 param.appid = DP.HBS.appId;
                                                 param.success = function (res) {
@@ -8713,15 +10070,15 @@ var TJ;
                                                     console.log("HBS.GameLogin fail = " + code + " - " + data);
                                                 };
                                                 param.complete = function () {
-                                                    loginResolve();
+                                                    loginWaiter.Resolve();
                                                 };
                                                 AppRt.Extern.HBS.GameLogin(param);
                                             }
                                             else {
-                                                loginResolve();
+                                                loginWaiter.Resolve();
                                             }
                                         }
-                                        return [4 /*yield*/, loginWait];
+                                        return [4 /*yield*/, loginWaiter.promise];
                                     case 1:
                                         _a.sent();
                                         return [2 /*return*/, { userInfo: userInfo }];
@@ -8746,8 +10103,7 @@ var TJ;
                 (function (OPPO) {
                     var QG;
                     (function (QG) {
-                        var loginResolve;
-                        var loginWait;
+                        var loginWaiter;
                         var loginToken;
                         var data;
                         function Login() {
@@ -8756,8 +10112,8 @@ var TJ;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
-                                            if (loginWait == null) {
-                                                loginWait = new Promise(function (r) { loginResolve = r; });
+                                            if (loginWaiter == null) {
+                                                loginWaiter = new TJ.Common.PromiseWrap();
                                                 if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.OPPO_AppRt) {
                                                     param = new AppRt.Extern.OPPO.QG.LoginParam();
                                                     param.success = function (res) {
@@ -8766,15 +10122,15 @@ var TJ;
                                                     };
                                                     param.complete = function (res) {
                                                         console.log("QG.Login complete = " + JSON.stringify(res));
-                                                        loginResolve();
+                                                        loginWaiter.Resolve();
                                                     };
                                                     AppRt.Extern.OPPO.QG.Login(param);
                                                 }
                                                 else {
-                                                    loginResolve();
+                                                    loginWaiter.Resolve();
                                                 }
                                             }
-                                            return [4 /*yield*/, loginWait];
+                                            return [4 /*yield*/, loginWaiter.promise];
                                         case 1:
                                             _a.sent();
                                             return [2 /*return*/, { token: loginToken, userInfo: data }];
@@ -8914,7 +10270,7 @@ var TJ;
                                 case 0:
                                     if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.QTT_AppRt)
                                         return [2 /*return*/];
-                                    return [4 /*yield*/, DevKit.Yun.loginPromise];
+                                    return [4 /*yield*/, TJ.API.Account.loginPromiseWrap.promise];
                                 case 1:
                                     _a.sent();
                                     return [4 /*yield*/, AppRt.Develop.Yun.Player.GetUserInfo()];
@@ -9048,21 +10404,34 @@ var TJ;
                             if (param === void 0) { param = null; }
                             if (this.grm == null)
                                 return;
-                            if (param == null) {
+                            var videoguid = TJ.Common.Guid.New();
+                            if (param == null)
                                 param = new AppRt.Extern.TT.ShareAppMessageParam();
-                                param.success = function (res) {
-                                    console.log("TT.ShareAppMessage success " + JSON.stringify(res));
-                                };
-                                param.fail = function (res) {
-                                    console.log("TT.ShareAppMessage fail " + JSON.stringify(res));
-                                };
-                            }
                             param.channel = "video";
+                            param.query = "GameRecorderVideo=1&videoguid=" + videoguid;
                             param.extra.videoPath = this.videoPath;
+                            param.extra.withVideoId = true;
+                            var success = param.success;
+                            var fail = param.fail;
+                            var complete = param.complete;
+                            param.success = function (res) {
+                                console.log("TT.ShareAppMessage success " + JSON.stringify(res));
+                                if (res.videoId != null) {
+                                    TJ.Develop.Yun.DouYin.ReportVideoIdInfo({ videoId: res.videoId, videoguid: videoguid });
+                                }
+                                if (success != null)
+                                    success(res);
+                            };
+                            param.fail = function (res) {
+                                console.log("TT.ShareAppMessage fail " + JSON.stringify(res));
+                                if (fail != null)
+                                    fail(res);
+                            };
                             param.complete = function (res) {
                                 console.log("TT.ShareAppMessage complete " + JSON.stringify(res));
+                                if (complete != null)
+                                    complete(res);
                             };
-                            param.query = "GameRecorderVideo=1";
                             AppRt.Extern.TT.ShareAppMessage(param);
                         };
                         return GameRecorderVideo;
@@ -9143,8 +10512,7 @@ var TJ;
                         return MoreGamesButton;
                     }());
                     TT.MoreGamesButton = MoreGamesButton;
-                    var loginResolve;
-                    var loginWait;
+                    var loginWaiter;
                     var code;
                     var userInfo;
                     function Login() {
@@ -9153,8 +10521,8 @@ var TJ;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
-                                        if (!(loginWait == null)) return [3 /*break*/, 3];
-                                        loginWait = new Promise(function (r) { loginResolve = r; });
+                                        if (!(loginWaiter == null)) return [3 /*break*/, 3];
+                                        loginWaiter = new TJ.Common.PromiseWrap();
                                         if (!(DP.Basic.channel == TJ.Define.Channel.AppRt.ZJTD_AppRt)) return [3 /*break*/, 2];
                                         param = new AppRt.Extern.TT.LoginParam();
                                         param.force = false;
@@ -9163,27 +10531,27 @@ var TJ;
                                         };
                                         param.complete = function (res) {
                                             console.log("TT.Login complete " + JSON.stringify(res));
-                                            loginResolve();
+                                            loginWaiter.Resolve();
                                         };
                                         AppRt.Extern.TT.Login(param);
-                                        return [4 /*yield*/, loginWait];
+                                        return [4 /*yield*/, loginWaiter.promise];
                                     case 1:
                                         _a.sent();
-                                        loginWait = new Promise(function (r) { loginResolve = r; });
+                                        loginWaiter = new TJ.Common.PromiseWrap();
                                         param2 = new AppRt.Extern.TT.GetUserInfoParam();
                                         param2.success = function (res) {
                                             userInfo = res.userInfo;
                                         };
                                         param2.complete = function (res) {
                                             console.log("TT.GetUserInfo complete " + JSON.stringify(res));
-                                            loginResolve();
+                                            loginWaiter.Resolve();
                                         };
                                         AppRt.Extern.TT.GetUserInfo(param2);
                                         return [3 /*break*/, 3];
                                     case 2:
-                                        loginResolve();
+                                        loginWaiter.Resolve();
                                         _a.label = 3;
-                                    case 3: return [4 /*yield*/, loginWait];
+                                    case 3: return [4 /*yield*/, loginWaiter.promise];
                                     case 4:
                                         _a.sent();
                                         return [2 /*return*/, { code: code, userInfo: userInfo }];
@@ -9208,8 +10576,7 @@ var TJ;
                 (function (VIVO) {
                     var QG;
                     (function (QG) {
-                        var loginResolve;
-                        var loginWait;
+                        var loginWaiter;
                         // let profile: any;
                         // export async function GetProfile()
                         // {
@@ -9262,32 +10629,29 @@ var TJ;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
                                         case 0:
-                                            if (!(loginWait == null)) return [3 /*break*/, 4];
-                                            loginWait = new Promise(function (r) { loginResolve = r; });
+                                            if (!(loginWaiter == null)) return [3 /*break*/, 3];
+                                            loginWaiter = new TJ.Common.PromiseWrap();
                                             if (!(TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.VIVO_AppRt)) return [3 /*break*/, 2];
                                             param = new AppRt.Extern.VIVO.QG.LoginParam();
                                             param.success = function (res) {
                                                 console.log("VIVO.QG.Login success = " + JSON.stringify(res));
                                                 token = res.data.token;
-                                                loginResolve();
+                                                loginWaiter.Resolve();
                                             };
                                             param.fail = function (res) {
                                                 console.log("VIVO.QG.Login fail = " + JSON.stringify(res));
-                                                loginResolve();
+                                                loginWaiter.Resolve();
                                             };
                                             AppRt.Extern.VIVO.QG.Login(param);
-                                            return [4 /*yield*/, loginWait];
+                                            return [4 /*yield*/, loginWaiter.promise];
                                         case 1:
                                             _a.sent();
                                             return [3 /*break*/, 3];
                                         case 2:
-                                            loginResolve();
+                                            loginWaiter.Resolve();
                                             _a.label = 3;
-                                        case 3:
-                                            loginWait = null;
-                                            _a.label = 4;
-                                        case 4: return [4 /*yield*/, loginWait];
-                                        case 5:
+                                        case 3: return [4 /*yield*/, loginWaiter.promise];
+                                        case 4:
                                             _a.sent();
                                             return [2 /*return*/, { token: token }];
                                     }
@@ -9310,29 +10674,33 @@ var TJ;
             (function (DevKit) {
                 var VIVO;
                 (function (VIVO) {
-                    if (TJ.Engine.RuntimeInfo.platform == TJ.Define.Platform.AppRt) {
-                        if (DP.Basic.channel == TJ.Define.Channel.AppRt.VIVO_AppRt && AppRt.Extern.VIVO.QG.Exist()) {
-                            TJ.Common.WWW.prototype.DoSend = function (url, method, data) {
-                                var _this = this;
-                                var param = new AppRt.Extern.VIVO.QG.RequestParam();
-                                param.url = url;
-                                param.method = method.toUpperCase();
-                                param.data = data;
-                                param.dataType = "json";
-                                param.success = function (res) {
-                                    _this._text = JSON.stringify(res.data);
-                                    _this._resolve();
-                                    _this.LogText();
+                    TJ.Common.PriorityInit.Add(0, function () {
+                        if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
+                            return;
+                        switch (DP.Basic.channel) {
+                            case TJ.Define.Channel.AppRt.VIVO_AppRt:
+                                TJ.Common.WWW.prototype.DoSend = function (url, method, data) {
+                                    var _this = this;
+                                    var param = new AppRt.Extern.VIVO.QG.RequestParam();
+                                    param.url = url;
+                                    param.method = method.toUpperCase();
+                                    param.data = data;
+                                    param.dataType = "json";
+                                    param.success = function (res) {
+                                        _this._text = JSON.stringify(res.data);
+                                        _this._resolve();
+                                        _this.LogText();
+                                    };
+                                    param.fail = function (error, code) {
+                                        _this._error = code + " - " + JSON.stringify(error);
+                                        _this._resolve();
+                                        _this.LogError();
+                                    };
+                                    AppRt.Extern.VIVO.QG.Request(param);
                                 };
-                                param.fail = function (error, code) {
-                                    _this._error = code + " - " + JSON.stringify(error);
-                                    _this._resolve();
-                                    _this.LogError();
-                                };
-                                AppRt.Extern.VIVO.QG.Request(param);
-                            };
+                                break;
                         }
-                    }
+                    });
                 })(VIVO = DevKit.VIVO || (DevKit.VIVO = {}));
             })(DevKit = AppRt.DevKit || (AppRt.DevKit = {}));
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
@@ -9347,18 +10715,17 @@ var TJ;
             (function (DevKit) {
                 var WX;
                 (function (WX) {
-                    var loginResolve;
-                    var loginWait;
+                    var loginWaiter;
                     var code;
                     var userInfo;
                     function Login() {
                         return __awaiter(this, void 0, void 0, function () {
-                            var param, param2, btn_1;
+                            var param, param2, btn_3;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
-                                        if (!(loginWait == null)) return [3 /*break*/, 4];
-                                        loginWait = new Promise(function (r) { loginResolve = r; });
+                                        if (!(loginWaiter == null)) return [3 /*break*/, 4];
+                                        loginWaiter = new TJ.Common.PromiseWrap();
                                         if (!(TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt)) return [3 /*break*/, 3];
                                         param = new AppRt.Extern.WX.LoginParam();
                                         param.success = function (res) {
@@ -9366,36 +10733,36 @@ var TJ;
                                         };
                                         param.complete = function (res) {
                                             console.log("WX.Login complete " + JSON.stringify(res));
-                                            loginResolve();
+                                            loginWaiter.Resolve();
                                         };
                                         AppRt.Extern.WX.Login(param);
-                                        return [4 /*yield*/, loginWait];
+                                        return [4 /*yield*/, loginWaiter.promise];
                                     case 1:
                                         _a.sent();
-                                        loginWait = new Promise(function (r) { loginResolve = r; });
+                                        loginWaiter = new TJ.Common.PromiseWrap();
                                         param2 = new AppRt.Extern.WX.CreateUserInfoButtonParam();
                                         param2.type = "image";
                                         param2.style.left = 0;
                                         param2.style.top = 0;
                                         param2.style.width = TJ.Engine.RuntimeInfo.windowSize.width;
                                         param2.style.height = TJ.Engine.RuntimeInfo.windowSize.height;
-                                        btn_1 = AppRt.Extern.WX.CreateUserInfoButton(param2);
-                                        btn_1.OnTap(function (res) {
+                                        btn_3 = AppRt.Extern.WX.CreateUserInfoButton(param2);
+                                        btn_3.OnTap(function (res) {
                                             userInfo = res.userInfo;
                                             // if (userInfo != null)
                                             {
-                                                loginResolve();
-                                                btn_1.Destroy();
+                                                loginWaiter.Resolve();
+                                                btn_3.Destroy();
                                             }
                                         });
-                                        return [4 /*yield*/, loginWait];
+                                        return [4 /*yield*/, loginWaiter.promise];
                                     case 2:
                                         _a.sent();
                                         return [3 /*break*/, 4];
                                     case 3:
-                                        loginResolve();
+                                        loginWaiter.Resolve();
                                         _a.label = 4;
-                                    case 4: return [4 /*yield*/, loginWait];
+                                    case 4: return [4 /*yield*/, loginWaiter.promise];
                                     case 5:
                                         _a.sent();
                                         return [2 /*return*/, { code: code, userInfo: userInfo }];
@@ -9409,110 +10776,96 @@ var TJ;
         })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
     })(Platform = TJ.Platform || (TJ.Platform = {}));
 })(TJ || (TJ = {}));
-(function (TJ) {
-    var Platform;
-    (function (Platform) {
-        var AppRt;
-        (function (AppRt) {
-            var DevKit;
-            (function (DevKit) {
-                var Yun;
-                (function (Yun) {
-                    TJ.Common.PriorityInit.Add(10, function () {
-                        if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
-                            return;
-                        Login();
-                    });
-                    var loginResolve;
-                    Yun.loginPromise = new Promise(function (r) { loginResolve = r; });
-                    function Login() {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var _a, obj, obj, obj, obj, args, obj;
-                            return __generator(this, function (_b) {
-                                switch (_b.label) {
-                                    case 0:
-                                        if (!(TJ.Common.SystemInfo.userGuid == null)) return [3 /*break*/, 18];
-                                        _a = TJ.API.AppInfo.Channel();
-                                        switch (_a) {
-                                            case TJ.Define.Channel.AppRt.OPPO_AppRt: return [3 /*break*/, 1];
-                                            case TJ.Define.Channel.AppRt.VIVO_AppRt: return [3 /*break*/, 4];
-                                            case TJ.Define.Channel.AppRt.ZJTD_AppRt: return [3 /*break*/, 7];
-                                            case TJ.Define.Channel.AppRt.WX_AppRt: return [3 /*break*/, 10];
-                                            case TJ.Define.Channel.AppRt.QTT_AppRt: return [3 /*break*/, 13];
-                                            case TJ.Define.Channel.AppRt.HUAWEI_AppRt: return [3 /*break*/, 15];
-                                        }
-                                        return [3 /*break*/, 18];
-                                    case 1: return [4 /*yield*/, AppRt.DevKit.OPPO.QG.Login()];
-                                    case 2:
-                                        obj = _b.sent();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.OPPOLogin(obj)];
-                                    case 3:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 4: return [4 /*yield*/, AppRt.DevKit.VIVO.QG.Login()];
-                                    case 5:
-                                        obj = _b.sent();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.VIVOLogin2(obj)];
-                                    case 6:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 7: return [4 /*yield*/, AppRt.DevKit.TT.Login()];
-                                    case 8:
-                                        obj = _b.sent();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.TTLogin(obj)];
-                                    case 9:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 10: return [4 /*yield*/, AppRt.DevKit.WX.Login()];
-                                    case 11:
-                                        obj = _b.sent();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.WXLogin(obj)];
-                                    case 12:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 13:
-                                        args = TJ.Common.Url.GetArgs();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.QTTLogin(args)];
-                                    case 14:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 15: return [4 /*yield*/, AppRt.DevKit.HBS.GameLogin()];
-                                    case 16:
-                                        obj = _b.sent();
-                                        return [4 /*yield*/, AppRt.Develop.Yun.Login.HWLogin(obj)];
-                                    case 17:
-                                        _b.sent();
-                                        return [3 /*break*/, 18];
-                                    case 18:
-                                        loginResolve();
-                                        TJ.Develop.ReYun.Register(AppRt.SDK.ReYun.Manager.reyunData);
-                                        TJ.Develop.ReYun.Loggedin(AppRt.SDK.ReYun.Manager.reyunData);
-                                        return [2 /*return*/];
-                                }
-                            });
-                        });
-                    }
-                    function SyncStorage() {
-                        return __awaiter(this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, Yun.loginPromise];
-                                    case 1:
-                                        _a.sent();
-                                        return [4 /*yield*/, TJ.Develop.Yun.Prefs.Player.Sync()];
-                                    case 2:
-                                        _a.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        });
-                    }
-                    Yun.SyncStorage = SyncStorage;
-                })(Yun = DevKit.Yun || (DevKit.Yun = {}));
-            })(DevKit = AppRt.DevKit || (AppRt.DevKit = {}));
-        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
-    })(Platform = TJ.Platform || (TJ.Platform = {}));
-})(TJ || (TJ = {}));
+// namespace TJ.Platform.AppRt.DevKit.Yun
+// {
+//     export let autoLogin = true;
+//     Common.PriorityInit.Add(100, () =>
+//     {
+//         if (Engine.RuntimeInfo.platform != Define.Platform.AppRt) return;
+//         setTimeout(() =>
+//         {
+//             if (autoLogin)
+//             {
+//                 Login();
+//             }
+//             else
+//             {
+//                 loginPromiseWrap.Resolve();
+//             }
+//         }, 1000);
+//     });
+//     export let loginPromiseWrap = new Common.PromiseWrap();
+//     async function Login()
+//     {
+//         if (Common.SystemInfo.userGuid == null)
+//         {
+//             let res = {};
+//             switch (TJ.API.AppInfo.Channel())
+//             {
+//                 case Define.Channel.AppRt.OPPO_AppRt:
+//                     {
+//                         let obj = await AppRt.DevKit.OPPO.QG.Login();
+//                         await Develop.Yun.Login.OPPOLogin(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.VIVO_AppRt:
+//                     {
+//                         let obj = await AppRt.DevKit.VIVO.QG.Login();
+//                         await Develop.Yun.Login.VIVOLogin2(obj);
+//                         // let obj = await Develop.VIVO.Account.Login();
+//                         // res = await TJ.Develop.Yun.Login.CLogin.VIVOAppRT(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.ZJTD_AppRt:
+//                     {
+//                         let obj = await AppRt.DevKit.TT.Login();
+//                         await Develop.Yun.Login.TTLogin(obj);
+//                         // let obj = await Develop.TT.Account.Login();
+//                         // res = await TJ.Develop.Yun.Login.CLogin.TTAppRT(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.WX_AppRt:
+//                     {
+//                         let obj = await AppRt.DevKit.WX.Login();
+//                         await Develop.Yun.Login.WXLogin(obj);
+//                         // let obj = await Develop.WX.Account.Login();
+//                         // res = await TJ.Develop.Yun.Login.CLogin.WXLogin(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.SQ_AppRt:
+//                     {
+//                         let obj = await Develop.QQ.Account.Login();
+//                         res = await TJ.Develop.Yun.Login.CLogin.QQAppRT(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.QTT_AppRt:
+//                     {
+//                         let args = Common.Url.GetArgs();
+//                         await Develop.Yun.Login.QTTLogin(args);
+//                         // let obj = Common.Url.GetArgs();
+//                         // res = await TJ.Develop.Yun.Login.CLogin.QTTAppRT(obj);
+//                     }
+//                     break;
+//                 case Define.Channel.AppRt.HUAWEI_AppRt:
+//                     {
+//                         let obj = await AppRt.DevKit.HBS.GameLogin();
+//                         await Develop.Yun.Login.HWLogin(obj);
+//                     }
+//                     break;
+//             }
+//             // Common.SystemInfo.userGuid = await TJ.Develop.Yun.Login.Public.GetUserguid(res);
+//             // console.log("userGuid = " + Common.SystemInfo.userGuid);
+//         }
+//         loginPromiseWrap.Resolve();
+//         TJ.Develop.ReYun.Register(SDK.ReYun.Manager.reyunData);
+//         TJ.Develop.ReYun.Loggedin(SDK.ReYun.Manager.reyunData);
+//     }
+//     export async function SyncStorage()
+//     {
+//         await loginPromiseWrap.promise;
+//         await TJ.Develop.Yun.Prefs.Player.Sync();
+//     }
+// }
 (function (TJ) {
     var Platform;
     (function (Platform) {
@@ -9522,7 +10875,7 @@ var TJ;
             (function (SDK) {
                 var _4399;
                 (function (_4399) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9531,7 +10884,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9664,7 +11017,7 @@ var TJ;
             (function (SDK) {
                 var AdService;
                 (function (AdService) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.AppRt:
                                 TJ.Common.Component.Manager.AddComponent(OAdService).DoInit();
@@ -9757,7 +11110,7 @@ var TJ;
                             c_1.ShowAD(param, grade);
                         }
                         else {
-                            console.log(AppRt.API.AdPoly.Grade[grade] + " no ads");
+                            console.log((typeof AppRt.API.AdPoly.Grade[grade]) + " no ads");
                             param.cbi.Run(TJ.Define.Event.NoAds);
                         }
                     }
@@ -9775,7 +11128,7 @@ var TJ;
             (function (SDK) {
                 var Adwending;
                 (function (Adwending) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9784,7 +11137,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9898,7 +11251,7 @@ var TJ;
             (function (SDK) {
                 var AppInfo;
                 (function (AppInfo) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.AppRt:
                                 TJ.Common.Component.Manager.AddComponent(OAppInfo).DoInit();
@@ -9941,7 +11294,7 @@ var TJ;
             (function (SDK) {
                 var HBS;
                 (function (HBS) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9950,7 +11303,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -9980,18 +11333,69 @@ var TJ;
                         Manager.prototype.OnInit = function () {
                             if (!AppRt.Extern.HBS.Exist())
                                 return;
+                            TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Quit).DoInit();
                             {
-                                var param = {};
-                                param.app = DP.Basic.appGuid;
-                                param.data = AppRt.Extern.HBS.GetLaunchOptionsSync();
-                                AppRt.Develop.Ground.Api.SystemEvent("LaunchOptions", "HBS", param);
-                                console.log("HBS.GetLaunchOptionsSync " + JSON.stringify(param.data));
+                                var options = AppRt.Extern.HBS.GetLaunchOptionsSync();
+                                AppRt.Develop.TA.LaunchOptions(options);
+                                console.log("HBS.GetLaunchOptionsSync " + JSON.stringify(options));
                             }
                         };
                         return Manager;
                     }(TJ.Common.Component.Interface));
                     HBS.Manager = Manager;
+                    var Account = /** @class */ (function (_super) {
+                        __extends(Account, _super);
+                        function Account() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Account.prototype.Login = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userId, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userId = param.userId;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.HBS.Account.Login()];
+                                        case 2:
+                                            userId = _b.sent();
+                                            _b.label = 3;
+                                        case 3:
+                                            _a = TJ.Common.SystemInfo;
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                        case 4:
+                                            _a.userGuid = _b.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        Account.prototype.SetUserInfo = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userInfo;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userInfo = param.userInfo;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.HBS.Account.GetUserInfo()];
+                                        case 2:
+                                            userInfo = _a.sent();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                        case 4:
+                                            _a.sent();
+                                            TJ.API.Account.loginPromiseWrap.Resolve();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        return Account;
+                    }(TJ.API.Account.IAccount));
                     var Quit = /** @class */ (function (_super) {
                         __extends(Quit, _super);
                         function Quit() {
@@ -10020,7 +11424,7 @@ var TJ;
             (function (SDK) {
                 var HG;
                 (function (HG) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -10029,7 +11433,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -10147,9 +11551,155 @@ var TJ;
         (function (AppRt) {
             var SDK;
             (function (SDK) {
+                var Kwai;
+                (function (Kwai) {
+                    TJ.Common.PriorityInit.Add(10, function () {
+                        if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
+                            return;
+                        switch (DP.Basic.channel) {
+                            case TJ.Define.Channel.AppRt.Kwai_AppRt:
+                                TJ.Common.Component.Manager.AddComponent(AppInfo).DoInit();
+                                break;
+                        }
+                    });
+                    TJ.Common.PriorityInit.Add(100, function () {
+                        if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
+                            return;
+                        switch (DP.Basic.channel) {
+                            case TJ.Define.Channel.AppRt.Kwai_AppRt:
+                                TJ.Common.Component.Manager.AddComponent(Manager).DoInit();
+                                break;
+                        }
+                    });
+                    var AppInfo = /** @class */ (function (_super) {
+                        __extends(AppInfo, _super);
+                        function AppInfo() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        AppInfo.prototype.Channel = function () {
+                            if (AppRt.Extern.Kwai.Exist()) {
+                                return DP.Basic.channel;
+                            }
+                            return null;
+                        };
+                        return AppInfo;
+                    }(TJ.API.AppInfo.IAppInfo));
+                    var Manager = /** @class */ (function (_super) {
+                        __extends(Manager, _super);
+                        function Manager() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Manager.prototype.OnInit = function () {
+                            if (!AppRt.Extern.Kwai.Exist())
+                                return;
+                            AppRt.Extern.Kwai.Init({ appId: DP.Kwai.appId });
+                            AppRt.Extern.Kwai.ReadyGo();
+                            TJ.Common.Component.Manager.AddComponent(Quit).DoInit();
+                            TJ.Common.Component.Manager.AddComponent(Ads).DoInit();
+                        };
+                        return Manager;
+                    }(TJ.Common.Component.Interface));
+                    Kwai.Manager = Manager;
+                    var Quit = /** @class */ (function (_super) {
+                        __extends(Quit, _super);
+                        function Quit() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Quit.prototype.Quit = function () {
+                            AppRt.Extern.Kwai.WillClose();
+                        };
+                        return Quit;
+                    }(TJ.API.AppCtl.IAppCtl));
+                    var Ads = /** @class */ (function (_super) {
+                        __extends(Ads, _super);
+                        function Ads() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Ads.prototype.OnInit = function () {
+                            if (DP.Kwai.videoId != null) {
+                                this.video = new Video();
+                                this.video.Init(DP.Kwai.videoId);
+                            }
+                        };
+                        Ads.prototype.ADReady = function (param, grade) {
+                            switch (grade) {
+                                case AppRt.API.AdPoly.Grade.reward:
+                                    if (this.video != null && this.video.Ready()) {
+                                        return true;
+                                    }
+                                    break;
+                            }
+                            return false;
+                        };
+                        Ads.prototype.ShowAD = function (param, grade) {
+                            switch (grade) {
+                                case AppRt.API.AdPoly.Grade.reward:
+                                    var complete_1 = false;
+                                    param.cbi.Add(TJ.Define.Event.Complete, function () { complete_1 = true; param.cbi.Run(TJ.Define.Event.Reward); });
+                                    param.cbi.Add(TJ.Define.Event.Close, function () { if (!complete_1)
+                                        param.cbi.Run(TJ.Define.Event.NoReward); });
+                                    this.video.Show(param);
+                                    break;
+                            }
+                        };
+                        return Ads;
+                    }(AppRt.API.AdPoly.IAdPoly));
+                    var Video = /** @class */ (function () {
+                        function Video() {
+                        }
+                        Video.prototype.Init = function () {
+                            var _this = this;
+                            var args = [];
+                            for (var _i = 0; _i < arguments.length; _i++) {
+                                args[_i] = arguments[_i];
+                            }
+                            this.posId = args[0];
+                            this.videoAd = AppRt.Extern.Kwai.CreateRewardedVideoAd({ adUnitId: this.posId });
+                            if (this.videoAd == null)
+                                return;
+                            this.videoAd.OnReward(function (res) {
+                                console.log("Kwai.Video.OnReward " + JSON.stringify(res));
+                                _this.param.cbi.Run(TJ.Define.Event.Complete);
+                            });
+                            this.videoAd.OnClose(function (res) {
+                                console.log("Kwai.Video.OnClose " + JSON.stringify(res));
+                                _this.param.cbi.Run(TJ.Define.Event.Close);
+                            });
+                        };
+                        Video.prototype.Ready = function () {
+                            return true;
+                        };
+                        Video.prototype.Show = function (param) {
+                            var _this = this;
+                            this.param = param;
+                            this.videoAd.Show({
+                                success: function (res) {
+                                    console.log("Kwai.Video.Show success = " + JSON.stringify(res));
+                                    _this.param.cbi.Run(TJ.Define.Event.Expose);
+                                },
+                                fail: function (code, msg) {
+                                    console.log("Kwai.Video.Show fail = " + code + " - " + msg);
+                                    _this.param.cbi.Run(TJ.Define.Event.NoAds);
+                                }
+                            });
+                        };
+                        return Video;
+                    }());
+                })(Kwai = SDK.Kwai || (SDK.Kwai = {}));
+            })(SDK = AppRt.SDK || (AppRt.SDK = {}));
+        })(AppRt = Platform.AppRt || (Platform.AppRt = {}));
+    })(Platform = TJ.Platform || (TJ.Platform = {}));
+})(TJ || (TJ = {}));
+(function (TJ) {
+    var Platform;
+    (function (Platform) {
+        var AppRt;
+        (function (AppRt) {
+            var SDK;
+            (function (SDK) {
                 var MZ;
                 (function (MZ) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -10158,7 +11708,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -10450,7 +12000,7 @@ var TJ;
                 (function (OPPO) {
                     var QG;
                     (function (QG) {
-                        TJ.Common.PriorityInit.Add(0, function () {
+                        TJ.Common.PriorityInit.Add(10, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -10459,7 +12009,7 @@ var TJ;
                                     break;
                             }
                         });
-                        TJ.Common.PriorityInit.Add(10, function () {
+                        TJ.Common.PriorityInit.Add(100, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -10489,6 +12039,7 @@ var TJ;
                             Manager.prototype.OnInit = function () {
                                 if (!AppRt.Extern.OPPO.QG.Exist())
                                     return;
+                                TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                                 TJ.Common.Component.Manager.AddComponent(Promo).DoInit();
                                 TJ.Common.Component.Manager.AddComponent(Vibrate).DoInit();
                                 {
@@ -10513,6 +12064,59 @@ var TJ;
                             return Manager;
                         }(TJ.Common.Component.Interface));
                         QG.Manager = Manager;
+                        var Account = /** @class */ (function (_super) {
+                            __extends(Account, _super);
+                            function Account() {
+                                return _super !== null && _super.apply(this, arguments) || this;
+                            }
+                            Account.prototype.Login = function (param) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var userId, res, _a;
+                                    return __generator(this, function (_b) {
+                                        switch (_b.label) {
+                                            case 0:
+                                                if (!(param != null)) return [3 /*break*/, 1];
+                                                userId = param.userId;
+                                                return [3 /*break*/, 3];
+                                            case 1: return [4 /*yield*/, AppRt.Develop.OPPO.Account.Login()];
+                                            case 2:
+                                                res = _b.sent();
+                                                userId = res.data;
+                                                _b.label = 3;
+                                            case 3:
+                                                _a = TJ.Common.SystemInfo;
+                                                return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                            case 4:
+                                                _a.userGuid = _b.sent();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            };
+                            Account.prototype.SetUserInfo = function (param) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var userInfo;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!(param != null)) return [3 /*break*/, 1];
+                                                userInfo = param.userInfo;
+                                                return [3 /*break*/, 3];
+                                            case 1: return [4 /*yield*/, AppRt.Develop.OPPO.Account.GetUserInfo()];
+                                            case 2:
+                                                userInfo = _a.sent();
+                                                _a.label = 3;
+                                            case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                            case 4:
+                                                _a.sent();
+                                                TJ.API.Account.loginPromiseWrap.Resolve();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            };
+                            return Account;
+                        }(TJ.API.Account.IAccount));
                         var Vibrate = /** @class */ (function (_super) {
                             __extends(Vibrate, _super);
                             function Vibrate() {
@@ -10599,6 +12203,9 @@ var TJ;
                                 switch (grade) {
                                     case AppRt.API.AdPoly.Grade.banner:
                                         if (this.banner != null) {
+                                            if (TJ.Common.Date_.nowSeconds - TJ.Common.SystemInfo.startupTime < 60) {
+                                                return false;
+                                            }
                                             return true;
                                         }
                                         break;
@@ -10872,6 +12479,9 @@ var TJ;
                                 this.nad = new NativeAdHelper(DP.OPPO.QG.nativeId);
                             };
                             NativeAd.prototype.LoadNative = function (param) {
+                                if (TJ.Common.Date_.nowSeconds - TJ.Common.SystemInfo.startupTime < 60) {
+                                    return null;
+                                }
                                 return this.nad.Pop();
                             };
                             return NativeAd;
@@ -10970,7 +12580,7 @@ var TJ;
             (function (SDK) {
                 var QQ;
                 (function (QQ) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -10979,7 +12589,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11009,12 +12619,65 @@ var TJ;
                         Manager.prototype.OnInit = function () {
                             if (!AppRt.Extern.QQ.Exist())
                                 return;
+                            TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Ads).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Vibrate).DoInit();
                         };
                         return Manager;
                     }(TJ.Common.Component.Interface));
                     QQ.Manager = Manager;
+                    var Account = /** @class */ (function (_super) {
+                        __extends(Account, _super);
+                        function Account() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Account.prototype.Login = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userId, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userId = param.userId;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.QQ.Account.YLogin()];
+                                        case 2:
+                                            userId = _b.sent();
+                                            _b.label = 3;
+                                        case 3:
+                                            _a = TJ.Common.SystemInfo;
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                        case 4:
+                                            _a.userGuid = _b.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        Account.prototype.SetUserInfo = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userInfo;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userInfo = param.userInfo;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.QQ.Account.GetUserInfo()];
+                                        case 2:
+                                            userInfo = _a.sent();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                        case 4:
+                                            _a.sent();
+                                            TJ.API.Account.loginPromiseWrap.Resolve();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        return Account;
+                    }(TJ.API.Account.IAccount));
                     var Vibrate = /** @class */ (function (_super) {
                         __extends(Vibrate, _super);
                         function Vibrate() {
@@ -11299,7 +12962,7 @@ var TJ;
             (function (SDK) {
                 var QTTGame;
                 (function (QTTGame) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11308,7 +12971,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11338,11 +13001,65 @@ var TJ;
                         Manager.prototype.OnInit = function () {
                             if (!AppRt.Extern.QTTGame.Exist())
                                 return;
+                            TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Ads).DoInit();
                         };
                         return Manager;
                     }(TJ.Common.Component.Interface));
                     QTTGame.Manager = Manager;
+                    var Account = /** @class */ (function (_super) {
+                        __extends(Account, _super);
+                        function Account() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Account.prototype.Login = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userId, res, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userId = param.userId;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.QTT.Account.YLogin()];
+                                        case 2:
+                                            res = _b.sent();
+                                            userId = res.data;
+                                            _b.label = 3;
+                                        case 3:
+                                            _a = TJ.Common.SystemInfo;
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                        case 4:
+                                            _a.userGuid = _b.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        Account.prototype.SetUserInfo = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userInfo;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userInfo = param.userInfo;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.QTT.Account.GetUserInfo()];
+                                        case 2:
+                                            userInfo = _a.sent();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                        case 4:
+                                            _a.sent();
+                                            TJ.API.Account.loginPromiseWrap.Resolve();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        return Account;
+                    }(TJ.API.Account.IAccount));
                     var Ads = /** @class */ (function (_super) {
                         __extends(Ads, _super);
                         function Ads() {
@@ -11449,7 +13166,7 @@ var TJ;
             (function (SDK) {
                 var ReYun;
                 (function (ReYun) {
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         TJ.Common.Component.Manager.AddComponent(Manager).DoInit();
@@ -11522,7 +13239,7 @@ var TJ;
             (function (SDK) {
                 var TA;
                 (function (TA) {
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.AppRt:
                                 TJ.Common.Component.Manager.AddComponent(OTA).DoInit();
@@ -11626,7 +13343,7 @@ var TJ;
             (function (SDK) {
                 var TT;
                 (function (TT) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11635,7 +13352,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11665,6 +13382,7 @@ var TJ;
                         Manager.prototype.OnInit = function () {
                             if (!AppRt.Extern.TT.Exist())
                                 return;
+                            TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Gsa).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Promo).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Vibrate).DoInit();
@@ -11674,10 +13392,85 @@ var TJ;
                                 AppRt.Develop.TA.LaunchOptions(options);
                                 console.log("TT.GetLaunchOptionsSync " + JSON.stringify(options));
                             }
+                            AppRt.Extern.TT.OnShareAppMessage(function (res) {
+                                var param = new AppRt.Extern.TT.ShareAppMessageParam();
+                                switch (res.channel) {
+                                    case "video":
+                                        var videoguid_1 = TJ.Common.Guid.New();
+                                        param.extra.withVideoId = true;
+                                        param.query = "GameRecorderVideo=2&videoguid=" + videoguid_1;
+                                        param.success = function (res) {
+                                            console.log("TT.OnShareAppMessage success " + JSON.stringify(res));
+                                            if (res.videoId != null) {
+                                                TJ.Develop.Yun.DouYin.ReportVideoIdInfo({ videoId: res.videoId, videoguid: videoguid_1 });
+                                            }
+                                        };
+                                        param.fail = function (res) {
+                                            console.log("TT.OnShareAppMessage fail " + JSON.stringify(res));
+                                        };
+                                        param.complete = function (res) {
+                                            console.log("TT.OnShareAppMessage complete " + JSON.stringify(res));
+                                        };
+                                        break;
+                                }
+                                return param;
+                            });
                         };
                         return Manager;
                     }(TJ.Common.Component.Interface));
                     TT.Manager = Manager;
+                    var Account = /** @class */ (function (_super) {
+                        __extends(Account, _super);
+                        function Account() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Account.prototype.Login = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userId, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userId = param.userId;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.TT.Account.YLogin()];
+                                        case 2:
+                                            userId = _b.sent();
+                                            _b.label = 3;
+                                        case 3:
+                                            _a = TJ.Common.SystemInfo;
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                        case 4:
+                                            _a.userGuid = _b.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        Account.prototype.SetUserInfo = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userInfo;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userInfo = param.userInfo;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.TT.Account.GetUserInfo()];
+                                        case 2:
+                                            userInfo = _a.sent();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                        case 4:
+                                            _a.sent();
+                                            TJ.API.Account.loginPromiseWrap.Resolve();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        return Account;
+                    }(TJ.API.Account.IAccount));
                     var Promo = /** @class */ (function (_super) {
                         __extends(Promo, _super);
                         function Promo() {
@@ -11988,7 +13781,7 @@ var TJ;
             (function (SDK) {
                 var UC;
                 (function (UC) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -11997,7 +13790,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -12198,7 +13991,7 @@ var TJ;
                 (function (VIVO) {
                     var QG;
                     (function (QG) {
-                        TJ.Common.PriorityInit.Add(0, function () {
+                        TJ.Common.PriorityInit.Add(10, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -12207,7 +14000,7 @@ var TJ;
                                     break;
                             }
                         });
-                        TJ.Common.PriorityInit.Add(0, function () {
+                        TJ.Common.PriorityInit.Add(100, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -12237,11 +14030,65 @@ var TJ;
                             Manager.prototype.OnInit = function () {
                                 if (!AppRt.Extern.VIVO.QG.Exist())
                                     return;
+                                TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                                 TJ.Common.Component.Manager.AddComponent(Ads).DoInit();
                             };
                             return Manager;
                         }(TJ.Common.Component.Interface));
                         QG.Manager = Manager;
+                        var Account = /** @class */ (function (_super) {
+                            __extends(Account, _super);
+                            function Account() {
+                                return _super !== null && _super.apply(this, arguments) || this;
+                            }
+                            Account.prototype.Login = function (param) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var userId, res, _a;
+                                    return __generator(this, function (_b) {
+                                        switch (_b.label) {
+                                            case 0:
+                                                if (!(param != null)) return [3 /*break*/, 1];
+                                                userId = param.userId;
+                                                return [3 /*break*/, 3];
+                                            case 1: return [4 /*yield*/, AppRt.Develop.VIVO.Account.YLogin()];
+                                            case 2:
+                                                res = _b.sent();
+                                                userId = res.data;
+                                                _b.label = 3;
+                                            case 3:
+                                                _a = TJ.Common.SystemInfo;
+                                                return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                            case 4:
+                                                _a.userGuid = _b.sent();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            };
+                            Account.prototype.SetUserInfo = function (param) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var userInfo;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (!(param != null)) return [3 /*break*/, 1];
+                                                userInfo = param.userInfo;
+                                                return [3 /*break*/, 3];
+                                            case 1: return [4 /*yield*/, AppRt.Develop.VIVO.Account.GetUserInfo()];
+                                            case 2:
+                                                userInfo = _a.sent();
+                                                _a.label = 3;
+                                            case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                            case 4:
+                                                _a.sent();
+                                                TJ.API.Account.loginPromiseWrap.Resolve();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            };
+                            return Account;
+                        }(TJ.API.Account.IAccount));
                         var Ads = /** @class */ (function (_super) {
                             __extends(Ads, _super);
                             function Ads() {
@@ -12562,7 +14409,7 @@ var TJ;
             (function (SDK) {
                 var WX;
                 (function (WX) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -12571,7 +14418,7 @@ var TJ;
                                 break;
                         }
                     });
-                    TJ.Common.PriorityInit.Add(10, function () {
+                    TJ.Common.PriorityInit.Add(100, function () {
                         if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                             return;
                         switch (DP.Basic.channel) {
@@ -12601,6 +14448,7 @@ var TJ;
                         Manager.prototype.OnInit = function () {
                             if (!AppRt.Extern.WX.Exist())
                                 return;
+                            TJ.Common.Component.Manager.AddComponent(Account).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Ads).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Promo).DoInit();
                             TJ.Common.Component.Manager.AddComponent(Vibrate).DoInit();
@@ -12617,6 +14465,58 @@ var TJ;
                         return Manager;
                     }(TJ.Common.Component.Interface));
                     WX.Manager = Manager;
+                    var Account = /** @class */ (function (_super) {
+                        __extends(Account, _super);
+                        function Account() {
+                            return _super !== null && _super.apply(this, arguments) || this;
+                        }
+                        Account.prototype.Login = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userId, _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userId = param.userId;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.WX.Account.YLogin()];
+                                        case 2:
+                                            userId = _b.sent();
+                                            _b.label = 3;
+                                        case 3:
+                                            _a = TJ.Common.SystemInfo;
+                                            return [4 /*yield*/, TJ.Develop.Yun.Login.Public.GetUserguid(userId)];
+                                        case 4:
+                                            _a.userGuid = _b.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        Account.prototype.SetUserInfo = function (param) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var userInfo;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            if (!(param != null)) return [3 /*break*/, 1];
+                                            userInfo = param.userInfo;
+                                            return [3 /*break*/, 3];
+                                        case 1: return [4 /*yield*/, AppRt.Develop.WX.Account.GetUserInfo()];
+                                        case 2:
+                                            userInfo = _a.sent();
+                                            _a.label = 3;
+                                        case 3: return [4 /*yield*/, TJ.Develop.Yun.Player.Player.ReportUserInfo(userInfo)];
+                                        case 4:
+                                            _a.sent();
+                                            TJ.API.Account.loginPromiseWrap.Resolve();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        };
+                        return Account;
+                    }(TJ.API.Account.IAccount));
                     var Vibrate = /** @class */ (function (_super) {
                         __extends(Vibrate, _super);
                         function Vibrate() {
@@ -12891,7 +14791,7 @@ var TJ;
                 (function (XIAOMI) {
                     var QG;
                     (function (QG) {
-                        TJ.Common.PriorityInit.Add(0, function () {
+                        TJ.Common.PriorityInit.Add(10, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -12900,7 +14800,7 @@ var TJ;
                                     break;
                             }
                         });
-                        TJ.Common.PriorityInit.Add(10, function () {
+                        TJ.Common.PriorityInit.Add(100, function () {
                             if (TJ.Engine.RuntimeInfo.platform != TJ.Define.Platform.AppRt)
                                 return;
                             switch (DP.Basic.channel) {
@@ -13134,6 +15034,14 @@ var TJ;
                             this.Debug("AppGuid");
                             return this.sc.CallStatic(TJ.Common.String_, "AppGuid").value;
                         };
+                        Api.UserAgreement = function () {
+                            this.Debug("UserAgreement");
+                            this.sc.CallStatic("UserAgreement");
+                        };
+                        Api.PrivacyPolicy = function () {
+                            this.Debug("PrivacyPolicy");
+                            this.sc.CallStatic("PrivacyPolicy");
+                        };
                         Api.sc = new TJ.Common.iOS.SwiftClass("TJ_APP_Api");
                         return Api;
                     }());
@@ -13270,7 +15178,7 @@ var TJ;
             (function (SDK) {
                 var AdService;
                 (function (AdService) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OAdService).DoInit();
@@ -13319,7 +15227,7 @@ var TJ;
             (function (SDK) {
                 var Analytics;
                 (function (Analytics) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OAnalytics).DoInit();
@@ -13350,7 +15258,7 @@ var TJ;
             (function (SDK) {
                 var AppCtl;
                 (function (AppCtl) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OAppCtl).DoInit();
@@ -13362,6 +15270,12 @@ var TJ;
                         function OAppCtl() {
                             return _super !== null && _super.apply(this, arguments) || this;
                         }
+                        OAppCtl.prototype.UserAgreement = function () {
+                            iOS.Extern.APP.Api.UserAgreement();
+                        };
+                        OAppCtl.prototype.PrivacyPolicy = function () {
+                            iOS.Extern.APP.Api.PrivacyPolicy();
+                        };
                         OAppCtl.prototype.Review = function () {
                             iOS.Extern.Tools.StoreKitHelper.ReviewApp();
                         };
@@ -13381,7 +15295,7 @@ var TJ;
             (function (SDK) {
                 var AppInfo;
                 (function (AppInfo) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OAppInfo).DoInit();
@@ -13415,7 +15329,7 @@ var TJ;
             (function (SDK) {
                 var Promo;
                 (function (Promo) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OPromo).DoInit();
@@ -13446,7 +15360,7 @@ var TJ;
             (function (SDK) {
                 var Vibrate;
                 (function (Vibrate) {
-                    TJ.Common.PriorityInit.Add(0, function () {
+                    TJ.Common.PriorityInit.Add(10, function () {
                         switch (TJ.Engine.RuntimeInfo.platform) {
                             case TJ.Define.Platform.iOS:
                                 TJ.Common.Component.Manager.AddComponent(OVibrate).DoInit();

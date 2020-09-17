@@ -1,6 +1,7 @@
 import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack, Color } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 import UIAdsHint from "./UIADSHint";
+import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
@@ -11,6 +12,9 @@ export default class GameScene extends Admin.Scene {
     public DoWell: Laya.Prefab;
 
     lwgOnAwake(): void {
+        ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
+        ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
+        
         Gold.goldAppear();
     }
 
@@ -40,6 +44,7 @@ export default class GameScene extends Admin.Scene {
         }
 
         Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
+            ADManager.TAPoint(TaT.BtnClick, 'GameScene_BtnSC');
             if (Backpack._prop1.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                 return;
@@ -63,6 +68,7 @@ export default class GameScene extends Admin.Scene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
+            ADManager.TAPoint(TaT.BtnClick, 'GameScene_BtnSX');
             if (Backpack._prop2.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                 return;
@@ -111,7 +117,7 @@ export default class GameScene extends Admin.Scene {
             });
         })
 
-        //隐藏选项卡
+        //隐藏我方选项卡
         EventAdmin.reg(Game3D.EventType.hideOption, this, () => {
             Animation2D.fadeOut(this.self['SceneContent'], 1, 0.5, 500, 100)
         })
@@ -274,6 +280,9 @@ export default class GameScene extends Admin.Scene {
             Animation2D.move_Simple(Card, Card.x, Card.y, 1200, Card.y, 500, 150);
             Animation2D.cardRotateX_TowFace(Card, 180, null, 200);
 
+            Animation2D.move_Simple(Card1, Card1.x, Card1.y, -1200, Card1.y, 500, 150);
+            Animation2D.cardRotateX_TowFace(Card1, 180, null, 200);
+
             Animation2D.scale_Alpha(BtnNo, 1, 1, 1, 0, 0, 0, 150, 400);
             Animation2D.scale_Alpha(BtnYes, 1, 1, 1, 0, 0, 0, 150, 400, () => {
                 GuessCard.removeSelf();
@@ -288,7 +297,7 @@ export default class GameScene extends Admin.Scene {
         let MainCamera = Game3D.MainCamera.getChildAt(0) as Laya.Camera;
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
         let Sp3D;
-        if (hitResult && !Admin._clickLock.switch) {
+        if (hitResult && Admin._gameSwitch) {
             Sp3D = hitResult.collider.owner;
             EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
         }

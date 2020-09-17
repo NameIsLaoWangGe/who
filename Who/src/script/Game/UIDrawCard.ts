@@ -76,7 +76,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         let globalPos = Img.localToGlobal(new Laya.Point(Img.width / 2, Img.height / 2));
         //开始抽卡 
         EventAdmin.reg('drawCardEvent', this, () => {
-        
+
             // 抽卡限制
             if (DrawCard._residueDraw.num <= 0) {
                 Dialog.createHint_Middle(Dialog.HintContent["没有抽奖次数了，请通过观看广告获取！"]);
@@ -258,15 +258,15 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             if (!Guide._complete.bool) {
                 return;
             }
-            // ADManager.ShowReward(() => {
-            DrawCard._freeAds.num++;
-            if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
-                DrawCard._freeAds.num = 0;
-                DrawCard._residueDraw.num++;
-                this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
-            }
-            this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
-            // })
+            ADManager.ShowReward(() => {
+                DrawCard._freeAds.num++;
+                if (DrawCard._freeAds.num % 3 == 0 && DrawCard._freeAds.num !== 0) {
+                    DrawCard._freeAds.num = 0;
+                    DrawCard._residueDraw.num++;
+                    this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
+                }
+                this.self['FreeAds'].value = (DrawCard._freeAds.num % 3).toString();
+            })
         });
 
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {

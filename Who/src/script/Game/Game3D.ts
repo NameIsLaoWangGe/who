@@ -248,6 +248,8 @@ export module Game3D {
             let CardData0 = Tools.objArray_Copy(CardData);
             cardData16 = Tools.arrayRandomGetOut(CardData0, 16);
             myHandName = Tools.arrayRandomGetOut(Tools.objArray_Copy(cardData16), 1)[0][CardProperty.name];
+            console.log(cardData16, myHandName);
+
         }
         let AllCardParent = AllCardGray.clone() as Laya.MeshSprite3D;
         let startX = 0.204;
@@ -469,14 +471,22 @@ export module Game3D {
 
     /**
      * 返回对方没有倒下的卡牌名称
+     * @param exclude 是否排除当前手上正确的卡牌默认为false
      * */
-    export function getNotFallCardNameOpposite(): Array<string> {
+    export function getNotFallCardNameOpposite(exclude?: boolean): Array<string> {
         let arr = [];
         for (let i = 0; i < OppositeCardParent.numChildren; i++) {
             let Card = OppositeCardParent.getChildAt(i);
-            if (!Card[CardProperty.fall]) {
-                arr.push(Card.name);
+            if (exclude) {
+                if (!Card[CardProperty.fall] && Card[CardProperty.name] !== myHandName) {
+                    arr.push(Card.name);
+                }
+            } else {
+                if (!Card[CardProperty.fall]) {
+                    arr.push(Card.name);
+                }
             }
+
         }
         return arr;
     }
@@ -885,8 +895,8 @@ export module Game3D {
                                 console.log('对方只剩下2张牌，并且回答正确了，我方输了~！');
                                 PalyAudio.playSound('Game/Voice/chaofeng.wav');
                                 Tools.d3_animatorPlay(OppositeRole, RoleAniName.chaofeng);
-                                let name = getNameByChName(question.substring(1, question.length - 2));
-                                console.log('即将倒下的牌是排除', name);
+                                let name = getNotFallCardNameOpposite(true)[0];
+                                console.log('即将倒下的牌是', name);
                                 Laya.timer.once(time * 3, this, () => {
                                     this.carFallAni([name], OppositeCardParent, true);
                                     Laya.timer.once(time * 3, this, () => {
@@ -919,12 +929,10 @@ export module Game3D {
                             Tools.d3_animatorPlay(OppositeRole, RoleAniName.qupai)
                         }]);
                         Laya.timer.once(time * 3, this, () => {
-                            console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                             // 只剩两张牌的时候，是人名，而不是问题，所以需要单独判断
                             if (notFallLen == 2) {
-                                console.log('对方只剩下2张牌了，但是回答错了，我们还有一次机会~！');
-                                let name = getNameByChName(question.substring(1, question.length - 2));
-                                console.log('即将倒下的牌是', name);
+                                let name = getNotFallCardNameOpposite(true)[0];
+                                console.log('对方只剩下2张牌了，错误的卡牌倒下' + name + '，但是回答错了，我们还有一次机会~！');
                                 Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni([name], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
@@ -932,6 +940,7 @@ export module Game3D {
                                     })
                                 })
                             } else {
+                                console.log('对方回答错误，倒下的牌将会是：', cardArr[0]);
                                 Laya.timer.once(time * 1, this, () => {
                                     this.carFallAni(cardArr[0], OppositeCardParent);
                                     Laya.timer.once(time * 3, this, () => {
@@ -1037,6 +1046,7 @@ export module Game3D {
                     whichBout = WhichBoutType.me;
                     break;
                 case WhichBoutType.me:
+                    EventAdmin.notify(EventType.hideOption);
                     whichBout = WhichBoutType.opposite;
                     break;
                 case WhichBoutType.opposite:
@@ -1116,6 +1126,7 @@ export module Game3D {
             this.changeOpppsiteRole();
             Tools.d3_animatorPlay(OppositeRole, RoleAniName.daiji);
             AllCardGray.active = false;
+            console.log(myHandName)
         }
 
         /**变换角色和手上的牌*/
