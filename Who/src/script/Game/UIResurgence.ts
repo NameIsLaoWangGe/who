@@ -1,6 +1,7 @@
 import { Admin, Click, EventAdmin, TimerAdmin, Share } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
+import RecordManager from "../../TJ/RecordManager";
 
 export default class UIResurgence extends Admin.Scene {
 
@@ -47,10 +48,10 @@ export default class UIResurgence extends Admin.Scene {
         Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
             ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
             this['CounDownSwitch'] = false;
+            RecordManager.stopAutoRecord();
             Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated });
         });
     }
 
-    lwgOnDisable(): void {
-    }
+   
 }

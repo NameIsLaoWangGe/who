@@ -34,7 +34,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
     }
 
     lwgOnEnable(): void {
-        PalyAudio.playDefeatedSound();
+        // PalyAudio.playDefeatedSound();
         Gold.GoldNode = this.self['GoldNode'];
         let Num2 = this.self['GoldNode'].getChildByName('Num') as Laya.Label;
         Num2.text = Gold._num.value.toString();

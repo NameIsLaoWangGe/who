@@ -1,6 +1,5 @@
 import { Admin, EventAdmin, Task, EasterEgg, PalyAudio, Dialog, Setting } from "../script/Frame/lwg";
-import UIAdsHint from "../script/Game/UIADSHint";
-
+import UIAds from "../script/Game/UIAds";
 export default class ADManager {
 
     public static ShowBanner() {
@@ -63,8 +62,10 @@ export default class ADManager {
                     //UIMgr.show("UISubSkinTry", 2);
                     // Dialog.createHint_Middle(Dialog.HintContent["观看完整广告才能获取奖励哦！"]);
                     console.log('观看完整广告才能获取奖励哦！');
-                    Admin._openScene(Admin.SceneName.UIAdsHint, null, () => {
-                        Admin._sceneControl['UIAdsHint'].getComponent(UIAdsHint).setCallBack(rewardAction);
+                    Admin._openScene(Admin.SceneName.UIAds, null, () => {
+                        console.log(Admin._sceneControl['UIAds']);
+                        // EventAdmin.notify('setCallBack', [rewardAction])
+                        Admin._sceneControl['UIAds'].getComponent(UIAds).setCallBack(rewardAction);
                     });
                     //TipPanel.ins.showString("观看完整广告才能获取奖励哦！");
                 }
@@ -105,7 +106,7 @@ export default class ADManager {
     static wx = Laya.Browser.window.wx;
 
     static shareImgUrl = "http://image.tomatojoy.cn/6847506204006681a5d5fa0cd91ce408";
-    static shareContent = "剃头大师！";
+    static shareContent = "比谁猜的快";
     static initShare() {
         if (TJ.API.AppInfo.Channel() == TJ.Define.Channel.AppRt.WX_AppRt) {
             this.wx.onShareAppMessage(() => {

@@ -1,0 +1,7 @@
+{
+  "code": "import { Click, Admin } from \"../Frame/lwg\";\r\nimport ADManager from \"../../TJ/Admanager\";\r\nexport default class UIAds extends Admin.Scene {\r\n    setCallBack(_adAction) {\r\n        this.adAction = _adAction;\r\n    }\r\n    lwgOnEnable() {\r\n        Laya.timer.frameOnce(120, this, () => {\r\n            this.self['BtnClose'].visible = true;\r\n        });\r\n    }\r\n    lwgBtnClick() {\r\n        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {\r\n            Admin._closeScene(this.self);\r\n        });\r\n        Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, () => {\r\n            ADManager.ShowReward(this.adAction, null);\r\n            Admin._closeScene(this.self);\r\n        });\r\n    }\r\n    onDisable() {\r\n    }\r\n}\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/script/Frame/lwg.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Admanager.ts"
+  ]
+}

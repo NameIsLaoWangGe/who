@@ -185,6 +185,7 @@ P 716E31B7 kuohao.png
 P 08D54593 lingqu.png
 P 127255F4 qiandao.png
 P 1618EA35 sanbei.png
+P 53AD6FA0 shezhi.png
 P BB48B820 shiping.png
 P 7731BE90 woyao.png
 P E3CCA8E7 x.png
@@ -195,27 +196,11 @@ P E7CD30EC yuan-2.png
 P E5BF47BE yuan.png
 P 3B3E37C8 yuan1.png
 P 41D8B346 yuan2.png
+P 786974B9 yuan3.png
 P DC54CB42 yuanhaung-1.png
 P 3BC6B658 yuanhaung-2.png
 P C3B380A8 zaikai.png
 D Game/UI/DesignPic
-R 2B172D41 benguanfuli.png
-R 9D1AE922 fuhuo.png
-R 7AA57674 huigu.png
-R 8B4561FE jiesuan1.png
-R D10A0CEA jiesuan2.png
-R 79A24CC5 jingzi.png
-R A674EB24 jingzi2.png
-R 92EC7C65 loading.png
-R F9C56D24 paihangbang2.png
-R 076F9B79 qiandao.png
-R E58DC15A tishi.png
-R D806BEF6 xianding.png
-R 2666E7CB xuanliwu.png
-R 70EC95D4 youxi2.png
-R 58ABE2D1 yoxui1.png
-R AA355D9A zhujiemian.png
-R BE1BDAD8 设置.png
 D Game/UI/GameScene
 P 94FDDFDD baidi.png
 P 1095C8EC baidi2.png
@@ -223,12 +208,10 @@ P 3D068B3B budui.png
 P 22392773 dui.png
 P 309BC52D heidi.png
 P 1EA50B9B hong.png
-P B3BB7FE4 qipao.png
 P D14CCFA9 shanchu.png
 P 852250CF shuxing.png
 P BCD57DB0 tawen.png
 P 56D074CB wendeka.png
-R A182C39C wenti.png
 P 81A1436B wodeka.png
 D Game/UI/UIAdsHint
 P 2861DD61 queding.png
@@ -245,7 +228,6 @@ D Game/UI/UIDefeated
 P 02B20F84 shibai.png
 D Game/UI/UIDrawCard
 R 76C26590 bj.png
-P 5FEA9F5C drawline.png
 P 1F98456A gongxi.png
 P AE16EA3B guang-1.png
 P 89985C7B guang-2.png
@@ -253,6 +235,7 @@ P DCF4D9D7 guang-3.png
 R 35396491 guang.png
 R F96B9B41 guang2.png
 R EE88D7EC guang3.png
+R E9E243E8 guang5.png
 R CE53F713 jinzi.png
 P 6FB73D6C kuang.png
 P 9FC4A4E0 mianfei.png
@@ -351,7 +334,6 @@ P 064E7DCC zhentan-tiao1.png
 P 5F7BCFD3 zhentan-tiao2.png
 D Game/UI/UITask
 D Game/UI/UIVictory
-R 621CCA29 caidai.png
 P 50B436C9 chenggong.png
 P 10574DC6 dajia.png
 P 3184E4AE fa.png

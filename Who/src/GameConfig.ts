@@ -8,20 +8,19 @@ import P204 from "./TJ/Promo/script/P204"
 import P205 from "./TJ/Promo/script/P205"
 import P106 from "./TJ/Promo/script/P106"
 import GameScene from "./script/Game/GameScene"
-import UIAdsHint from "./script/Game/UIAdsHint"
+import UIAds from "./script/Game/UIAds"
 import UICard from "./script/Game/UICard"
 import UICheckIn from "./script/Game/UICheckIn"
 import UIDefeated from "./script/Game/UIDefeated"
 import UIDrawCard from "./script/Game/UIDrawCard"
 import Guide from "./script/Frame/Guide"
+import UIInit from "./script/Frame/UIInit"
 import UILoding from "./script/Game/UILoding"
-import LwgInit from "./script/Frame/LwgInit"
 import UIPropTry from "./script/Game/UIPropTry"
 import UIResurgence from "./script/Game/UIResurgence"
 import UISet from "./script/Game/UISet"
 import UIShare from "./script/Game/UIShare"
 import UISkinQualified from "./script/Game/UISkinQualified"
-import UISkinTry from "./script/Game/UISkinTry"
 import UIStart from "./script/Game/UIStart"
 import UIVictory from "./script/Game/UIVictory"
 import UIVictoryBox_Cell from "./script/Game/UIVictoryBox_Cell"
@@ -40,7 +39,7 @@ export default class GameConfig{
     static startScene:any="Scene/UILoding.scene";
     static sceneRoot:string="";
     static debug:boolean=false;
-    static stat:boolean=true;
+    static stat:boolean=false;
     static physicsDebug:boolean=false;
     static exportSceneToJson:boolean=true;
     constructor(){}
@@ -55,20 +54,19 @@ export default class GameConfig{
         reg("TJ/Promo/script/P205.ts",P205);
         reg("TJ/Promo/script/P106.ts",P106);
         reg("script/Game/GameScene.ts",GameScene);
-        reg("script/Game/UIAdsHint.ts",UIAdsHint);
+        reg("script/Game/UIAds.ts",UIAds);
         reg("script/Game/UICard.ts",UICard);
         reg("script/Game/UICheckIn.ts",UICheckIn);
         reg("script/Game/UIDefeated.ts",UIDefeated);
         reg("script/Game/UIDrawCard.ts",UIDrawCard);
         reg("script/Frame/Guide.ts",Guide);
+        reg("script/Frame/UIInit.ts",UIInit);
         reg("script/Game/UILoding.ts",UILoding);
-        reg("script/Frame/LwgInit.ts",LwgInit);
         reg("script/Game/UIPropTry.ts",UIPropTry);
         reg("script/Game/UIResurgence.ts",UIResurgence);
         reg("script/Game/UISet.ts",UISet);
         reg("script/Game/UIShare.ts",UIShare);
         reg("script/Game/UISkinQualified.ts",UISkinQualified);
-        reg("script/Game/UISkinTry.ts",UISkinTry);
         reg("script/Game/UIStart.ts",UIStart);
         reg("script/Game/UIVictory.ts",UIVictory);
         reg("script/Game/UIVictoryBox_Cell.ts",UIVictoryBox_Cell);

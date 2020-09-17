@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":493,
+    "selectedBox":552,
+    "selecteID":553,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":544,
+    "maxID":569,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -119,32 +119,17 @@
         {
             "x":15,
             "type":"Sprite",
-            "searchKey":"Sprite",
-            "props":{"y":540,"x":0,"visible":false,"texture":"Game/UI/UIStart/gengduo.png"},
-            "nodeParent":2,
-            "label":"Sprite",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":493,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
             "searchKey":"Sprite,LevelDisplay,LevelDisplay",
             "props":{"y":278,"x":101,"width":510,"var":"LevelDisplay","name":"LevelDisplay","height":168},
             "nodeParent":2,
             "label":"LevelDisplay",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":512,
             "child":[
                 {
-                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite",
                     "props":{"y":-86,"x":-28,"texture":"Game/UI/UIStart/zhentan-di.png","alpha":1},
@@ -158,7 +143,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Image",
                     "searchKey":"Image",
                     "props":{"y":74,"x":43,"width":406,"skin":"Game/UI/UIStart/zhentan-tiao1.png","sizeGrid":"0,9,0,10","height":15},
@@ -173,7 +157,6 @@
                     "$HIDDEN":false
                 },
                 {
-                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,Progress,Progress",
                     "props":{"y":201,"x":1,"var":"Progress","texture":"Game/UI/UIStart/jindu-1.png","name":"Progress"},
@@ -186,7 +169,6 @@
                     "compId":538,
                     "child":[
                         {
-                            "x":45,
                             "type":"Sprite",
                             "searchKey":"Sprite,ProgressBar,ProgressBar",
                             "props":{"y":0,"x":0,"width":460,"var":"ProgressBar","texture":"Game/UI/UIStart/jindu-2.png","name":"ProgressBar","height":24},
@@ -199,7 +181,6 @@
                             "compId":539,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Sprite",
                                     "searchKey":"Sprite,Mask",
                                     "props":{"y":0,"x":-460,"width":460,"texture":"Game/UI/UIStart/jindu-2.png","renderType":"mask","name":"Mask","height":24},
@@ -214,7 +195,6 @@
                                 }]
                         },
                         {
-                            "x":45,
                             "type":"Label",
                             "searchKey":"Label,Percent,Percent",
                             "props":{"y":-6.5,"x":460,"width":60,"var":"Percent","valign":"middle","text":"50%","name":"Percent","height":37,"fontSize":22,"color":"#f5820d","bold":true,"align":"center"},
@@ -229,7 +209,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Sprite",
                     "searchKey":"Sprite,LevelStyle,LevelStyle",
                     "props":{"y":0,"x":9,"width":506,"var":"LevelStyle","name":"LevelStyle","height":171,"cacheAs":"none"},
@@ -242,7 +221,6 @@
                     "compId":514,
                     "child":[
                         {
-                            "x":45,
                             "type":"Image",
                             "searchKey":"Image,location_4",
                             "props":{"y":40,"x":401,"width":75,"name":"location_4","height":121},
@@ -255,7 +233,6 @@
                             "compId":519,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Color",
                                     "props":{"y":34,"x":-36,"width":81,"skin":"Game/UI/UIStart/zhentan-tiao2.png","sizeGrid":"0,16,0,7","name":"Color","height":15,"gray":false},
@@ -270,7 +247,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon4,LvIcon4",
                                     "props":{"y":34,"x":40,"width":101,"var":"LvIcon4","skin":"Game/UI/UIStart/zhentan-huanguang2.png","pivotY":44,"pivotX":51,"name":"LvIcon4","height":88},
@@ -285,7 +261,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Num",
                                     "props":{"y":91,"x":15.5,"value":"0","spaceX":-10,"skin":"Game/UI/UIStart/zhentan-1.png","sheet":"0123456789","name":"Num","align":"center"},
@@ -302,7 +277,6 @@
                             "$HIDDEN":false
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "searchKey":"Image,location_3",
                             "props":{"y":37,"x":267,"width":75,"name":"location_3","height":118},
@@ -315,7 +289,6 @@
                             "compId":523,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Color",
                                     "props":{"y":37,"x":-26,"width":127,"skin":"Game/UI/UIStart/zhentan-tiao2.png","sizeGrid":"0,16,0,7","name":"Color","height":15},
@@ -330,7 +303,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon3,LvIcon3",
                                     "props":{"y":42,"x":37,"width":74,"var":"LvIcon3","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon3","height":84},
@@ -345,7 +317,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Num",
                                     "props":{"y":96,"x":16,"value":"15","spaceX":-10,"skin":"Game/UI/UIStart/zhentan-2.png","sheet":"0123456789","name":"Num","align":"center"},
@@ -362,7 +333,6 @@
                             "$HIDDEN":false
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "searchKey":"Image,location_2",
                             "props":{"y":36,"x":134,"width":86,"name":"location_2","height":125},
@@ -375,7 +345,6 @@
                             "compId":527,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Color",
                                     "props":{"y":38,"x":-19.5,"width":127,"skin":"Game/UI/UIStart/zhentan-tiao2.png","sizeGrid":"0,16,0,7","name":"Color","height":15},
@@ -390,7 +359,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon2,LvIcon2",
                                     "props":{"y":42,"x":44,"width":74,"var":"LvIcon2","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon2","height":84},
@@ -405,7 +373,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Num",
                                     "props":{"y":98,"x":24,"value":"15","spaceX":-10,"skin":"Game/UI/UIStart/zhentan-4.png","sheet":"0123456789","name":"Num","align":"center"},
@@ -422,7 +389,6 @@
                             "$HIDDEN":false
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "searchKey":"Image,location_1",
                             "props":{"y":36,"x":19,"width":75,"name":"location_1","height":119},
@@ -435,7 +401,6 @@
                             "compId":531,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Color",
                                     "props":{"y":38,"x":34,"width":76,"skin":"Game/UI/UIStart/zhentan-tiao2.png","sizeGrid":"0,16,0,7","name":"Color","height":15},
@@ -450,7 +415,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,LvIcon1,LvIcon1",
                                     "props":{"y":43,"x":37,"width":74,"var":"LvIcon1","skin":"Game/UI/UIStart/zhentan-pai1.png","pivotY":42,"pivotX":37,"name":"LvIcon1","height":84},
@@ -465,7 +429,6 @@
                                     "$HIDDEN":false
                                 },
                                 {
-                                    "x":60,
                                     "type":"Image",
                                     "searchKey":"Image,Num",
                                     "props":{"y":98,"x":15.5,"value":"15","spaceX":-10,"skin":"Game/UI/UIStart/zhentan-8.png","sheet":"0123456789","name":"Num","align":"center"},
@@ -484,6 +447,378 @@
                     "$HIDDEN":false
                 }],
             "$HIDDEN":false
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "searchKey":"Image,P205",
+            "props":{"y":646,"x":2,"width":100,"var":"P205","height":100},
+            "nodeParent":2,
+            "label":"P205",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":544,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Box",
+                    "searchKey":"Box,P205",
+                    "props":{"y":247,"x":3,"width":1,"name":"P205","left":2,"height":1,"centerY":92,"anchorY":0.5,"anchorX":0.5},
+                    "nodeParent":544,
+                    "label":"P205",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":545,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Box",
+                            "searchKey":"Box,move",
+                            "props":{"width":1,"name":"move","height":1,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                            "nodeParent":545,
+                            "label":"move",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":546,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "searchKey":"Box,button",
+                                    "props":{"width":1,"name":"button","height":1,"centerY":-200,"centerX":-4,"anchorY":0.5,"anchorX":0.5},
+                                    "nodeParent":546,
+                                    "label":"button",
+                                    "isOpen":true,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":547,
+                                    "child":[
+                                        {
+                                            "x":75,
+                                            "type":"Button",
+                                            "searchKey":"Button,show",
+                                            "props":{"y":50,"x":45,"width":90,"name":"show","height":100,"centerY":0,"centerX":44,"anchorY":0.5,"anchorX":0.5},
+                                            "nodeParent":547,
+                                            "label":"show",
+                                            "isOpen":true,
+                                            "isDirectory":true,
+                                            "isAniNode":true,
+                                            "hasChild":true,
+                                            "compId":548,
+                                            "child":[
+                                                {
+                                                    "x":90,
+                                                    "type":"Image",
+                                                    "searchKey":"Image",
+                                                    "props":{"width":89,"skin":"Game/UI/UIStart/gengduo.png","height":100,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                                                    "nodeParent":548,
+                                                    "label":"Image",
+                                                    "isOpen":true,
+                                                    "isDirectory":true,
+                                                    "isAniNode":true,
+                                                    "hasChild":true,
+                                                    "compId":549,
+                                                    "child":[
+                                                        {
+                                                            "x":105,
+                                                            "type":"Image",
+                                                            "searchKey":"Image",
+                                                            "props":{"width":29,"skin":"TJ/Promo/image/tishi.png","height":32,"centerY":-36,"centerX":33,"anchorY":0.5,"anchorX":0.5},
+                                                            "nodeParent":549,
+                                                            "label":"Image",
+                                                            "isDirectory":false,
+                                                            "isAniNode":true,
+                                                            "hasChild":false,
+                                                            "compId":550,
+                                                            "child":[
+                                                                ],
+                                                            "$HIDDEN":false
+                                                        }],
+                                                    "$HIDDEN":false
+                                                },
+                                                {
+                                                    "x":90,
+                                                    "type":"Script",
+                                                    "switchAble":true,
+                                                    "source":"src/TJ/Promo/script/ButtonScale.ts",
+                                                    "searchKey":"Script,ButtonScale",
+                                                    "removeAble":true,
+                                                    "props":{},
+                                                    "nodeParent":548,
+                                                    "label":"ButtonScale",
+                                                    "isDirectory":false,
+                                                    "isAniNode":true,
+                                                    "hasChild":false,
+                                                    "compId":551,
+                                                    "child":[
+                                                        ]
+                                                }],
+                                            "$HIDDEN":false
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Button",
+                                            "searchKey":"Button,hide",
+                                            "props":{"y":50,"x":45,"width":90,"visible":false,"name":"hide","height":100,"centerY":0,"centerX":44,"anchorY":0.5,"anchorX":0.5},
+                                            "nodeParent":547,
+                                            "label":"hide",
+                                            "isOpen":true,
+                                            "isDirectory":true,
+                                            "isAniNode":true,
+                                            "hasChild":true,
+                                            "compId":552,
+                                            "child":[
+                                                {
+                                                    "x":90,
+                                                    "type":"Image",
+                                                    "searchKey":"Image",
+                                                    "props":{"width":89,"skin":"Game/UI/UIStart/gengduo.png","height":100,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                                                    "nodeParent":552,
+                                                    "label":"Image",
+                                                    "isOpen":true,
+                                                    "isDirectory":false,
+                                                    "isAniNode":true,
+                                                    "hasChild":false,
+                                                    "compId":553,
+                                                    "child":[
+                                                        ],
+                                                    "$HIDDEN":false
+                                                },
+                                                {
+                                                    "x":90,
+                                                    "type":"Script",
+                                                    "switchAble":true,
+                                                    "source":"src/TJ/Promo/script/ButtonScale.ts",
+                                                    "searchKey":"Script,ButtonScale",
+                                                    "removeAble":true,
+                                                    "props":{},
+                                                    "nodeParent":552,
+                                                    "label":"ButtonScale",
+                                                    "isDirectory":false,
+                                                    "isAniNode":true,
+                                                    "hasChild":false,
+                                                    "compId":554,
+                                                    "child":[
+                                                        ]
+                                                }],
+                                            "$HIDDEN":true
+                                        }],
+                                    "$HIDDEN":false
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "searchKey":"Box,board",
+                                    "props":{"width":640,"name":"board","height":680,"centerY":0,"centerX":-324,"anchorY":0.5,"anchorX":0.5},
+                                    "nodeParent":546,
+                                    "label":"board",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":555,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "searchKey":"Image,bg",
+                                            "props":{"top":0,"skin":"TJ/Promo/image/di2.png","sizeGrid":"30,26,34,0","right":0,"name":"bg","left":0,"bottom":0,"anchorY":0.5,"anchorX":0.5},
+                                            "nodeParent":555,
+                                            "label":"bg",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":556,
+                                            "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        },
+                                        {
+                                            "type":"Panel",
+                                            "searchKey":"Panel,scroll",
+                                            "props":{"width":570,"name":"scroll","height":620,"elasticEnabled":false,"centerY":0,"centerX":10,"anchorY":0.5,"anchorX":0.5},
+                                            "nodeParent":555,
+                                            "label":"scroll",
+                                            "isOpen":true,
+                                            "isDirectory":true,
+                                            "isAniNode":true,
+                                            "hasChild":true,
+                                            "compId":557,
+                                            "child":[
+                                                {
+                                                    "type":"List",
+                                                    "searchKey":"List,layout",
+                                                    "props":{"y":0,"x":0,"width":570,"spaceY":0,"spaceX":20,"space":10,"name":"layout","height":620,"anchorY":0,"anchorX":0,"align":"middle"},
+                                                    "nodeParent":557,
+                                                    "label":"layout",
+                                                    "isOpen":true,
+                                                    "isDirectory":true,
+                                                    "isAniNode":true,
+                                                    "hasChild":true,
+                                                    "compId":558,
+                                                    "child":[
+                                                        {
+                                                            "type":"Box",
+                                                            "searchKey":"Box,item",
+                                                            "props":{"y":107.5,"x":95,"width":170,"renderType":"render","name":"item","height":195,"anchorY":0.5,"anchorX":0.5},
+                                                            "nodeParent":558,
+                                                            "label":"item",
+                                                            "isOpen":true,
+                                                            "isDirectory":true,
+                                                            "isAniNode":false,
+                                                            "hasChild":true,
+                                                            "compId":559,
+                                                            "child":[
+                                                                {
+                                                                    "type":"Image",
+                                                                    "searchKey":"Image,icon",
+                                                                    "props":{"width":150,"skin":"TJ/Promo/image/jx8.png","name":"icon","height":150,"centerY":-11,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                                                                    "nodeParent":559,
+                                                                    "label":"icon",
+                                                                    "isOpen":true,
+                                                                    "isDirectory":true,
+                                                                    "isAniNode":false,
+                                                                    "hasChild":true,
+                                                                    "compId":560,
+                                                                    "child":[
+                                                                        {
+                                                                            "type":"Image",
+                                                                            "searchKey":"Image,kk",
+                                                                            "props":{"width":157,"skin":"TJ/Promo/image/kk1.png","name":"kk","height":157,"centerY":0,"centerX":0},
+                                                                            "nodeParent":560,
+                                                                            "label":"kk",
+                                                                            "isDirectory":false,
+                                                                            "isAniNode":false,
+                                                                            "hasChild":false,
+                                                                            "compId":561,
+                                                                            "child":[
+                                                                                ]
+                                                                        },
+                                                                        {
+                                                                            "type":"Image",
+                                                                            "searchKey":"Image,flag1",
+                                                                            "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/new2.png","name":"flag1","height":83,"centerY":-37,"centerX":37,"anchorY":0.5,"anchorX":0.5},
+                                                                            "nodeParent":560,
+                                                                            "label":"flag1",
+                                                                            "isDirectory":false,
+                                                                            "isAniNode":false,
+                                                                            "hasChild":false,
+                                                                            "compId":562,
+                                                                            "child":[
+                                                                                ],
+                                                                            "$HIDDEN":true
+                                                                        },
+                                                                        {
+                                                                            "type":"Image",
+                                                                            "searchKey":"Image,flag2",
+                                                                            "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/remen1.png","name":"flag2","height":83,"centerY":-37,"centerX":37,"anchorY":0.5,"anchorX":0.5},
+                                                                            "nodeParent":560,
+                                                                            "label":"flag2",
+                                                                            "isDirectory":false,
+                                                                            "isAniNode":false,
+                                                                            "hasChild":false,
+                                                                            "compId":563,
+                                                                            "child":[
+                                                                                ],
+                                                                            "$HIDDEN":true
+                                                                        },
+                                                                        {
+                                                                            "type":"Image",
+                                                                            "searchKey":"Image,flag3",
+                                                                            "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/tuijian2.png","name":"flag3","height":83,"centerY":-37,"centerX":37,"anchorY":0.5,"anchorX":0.5},
+                                                                            "nodeParent":560,
+                                                                            "label":"flag3",
+                                                                            "isDirectory":false,
+                                                                            "isAniNode":false,
+                                                                            "hasChild":false,
+                                                                            "compId":564,
+                                                                            "child":[
+                                                                                ],
+                                                                            "$HIDDEN":true
+                                                                        }],
+                                                                    "$HIDDEN":false
+                                                                },
+                                                                {
+                                                                    "type":"Label",
+                                                                    "searchKey":"Label,name",
+                                                                    "props":{"wordWrap":false,"width":170,"valign":"middle","text":"这里是游戏名称","name":"name","multiline":false,"mouseEnabled":false,"height":21,"fontSize":18,"editable":false,"centerY":85,"centerX":0,"anchorY":0.5,"anchorX":0.5,"align":"center"},
+                                                                    "nodeParent":559,
+                                                                    "label":"name",
+                                                                    "isDirectory":false,
+                                                                    "isAniNode":false,
+                                                                    "hasChild":false,
+                                                                    "compId":565,
+                                                                    "child":[
+                                                                        ],
+                                                                    "$HIDDEN":false
+                                                                },
+                                                                {
+                                                                    "type":"Script",
+                                                                    "switchAble":true,
+                                                                    "source":"src/TJ/Promo/script/PromoItem.ts",
+                                                                    "searchKey":"Script,PromoItem",
+                                                                    "removeAble":true,
+                                                                    "props":{},
+                                                                    "nodeParent":559,
+                                                                    "label":"PromoItem",
+                                                                    "isDirectory":false,
+                                                                    "isAniNode":false,
+                                                                    "hasChild":false,
+                                                                    "compId":566,
+                                                                    "child":[
+                                                                        ]
+                                                                },
+                                                                {
+                                                                    "type":"Script",
+                                                                    "switchAble":true,
+                                                                    "source":"src/TJ/Promo/script/ButtonScale.ts",
+                                                                    "searchKey":"Script,ButtonScale",
+                                                                    "removeAble":true,
+                                                                    "props":{},
+                                                                    "nodeParent":559,
+                                                                    "label":"ButtonScale",
+                                                                    "isDirectory":false,
+                                                                    "isAniNode":false,
+                                                                    "hasChild":false,
+                                                                    "compId":567,
+                                                                    "child":[
+                                                                        ]
+                                                                }],
+                                                            "$HIDDEN":false
+                                                        }],
+                                                    "$HIDDEN":false
+                                                }],
+                                            "$HIDDEN":false
+                                        }],
+                                    "$HIDDEN":false
+                                }],
+                            "$HIDDEN":false
+                        },
+                        {
+                            "x":45,
+                            "type":"Script",
+                            "switchAble":true,
+                            "source":"src/TJ/Promo/script/P205.ts",
+                            "searchKey":"Script,P205",
+                            "removeAble":true,
+                            "props":{},
+                            "nodeParent":545,
+                            "label":"P205",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":568,
+                            "child":[
+                                ]
+                        }],
+                    "$HIDDEN":false
+                }]
         }],
     "animations":[
         {

@@ -1,7 +1,8 @@
 import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack, Color } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
-import UIAdsHint from "./UIADSHint";
+
 import ADManager, { TaT } from "../../TJ/Admanager";
+import RecordManager from "../../TJ/RecordManager";
 
 export default class GameScene extends Admin.Scene {
     /** @prop {name:Option, tips:"选项卡预制体", type:Prefab}*/
@@ -14,6 +15,7 @@ export default class GameScene extends Admin.Scene {
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
         ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
+     
         
         Gold.goldAppear();
     }
@@ -102,6 +104,7 @@ export default class GameScene extends Admin.Scene {
 
         // 胜利
         EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
+            RecordManager.stopAutoRecord();
             Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory });
         })
 

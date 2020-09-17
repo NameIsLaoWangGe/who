@@ -1010,6 +1010,111 @@
         lwg3D.Object3D = Object3D;
     })(lwg3D || (lwg3D = {}));
 
+    class RecordManager {
+        constructor() {
+            this.GRV = null;
+            this.isRecordVideoing = false;
+            this.isVideoRecord = false;
+            this.videoRecordTimer = 0;
+            this.isHasVideoRecord = false;
+        }
+        static Init() {
+            RecordManager.grv = new TJ.Platform.AppRt.DevKit.TT.GameRecorderVideo();
+        }
+        static startAutoRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (RecordManager.grv == null)
+                RecordManager.Init();
+            if (RecordManager.recording)
+                return;
+            RecordManager.autoRecording = true;
+            console.log("******************开始录屏");
+            RecordManager._start();
+            RecordManager.lastRecordTime = Date.now();
+        }
+        static stopAutoRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (!RecordManager.autoRecording) {
+                console.log("RecordManager.autoRecording", RecordManager.autoRecording);
+                return false;
+            }
+            RecordManager.autoRecording = false;
+            RecordManager._end(false);
+            if (Date.now() - RecordManager.lastRecordTime > 6000) {
+                return true;
+            }
+            if (Date.now() - RecordManager.lastRecordTime < 3000) {
+                console.log("小于3秒");
+                return false;
+            }
+            return true;
+        }
+        static startRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            if (RecordManager.autoRecording) {
+                this.stopAutoRecord();
+            }
+            RecordManager.recording = true;
+            RecordManager._start();
+            RecordManager.lastRecordTime = Date.now();
+        }
+        static stopRecord() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("time:" + (Date.now() - RecordManager.lastRecordTime));
+            if (Date.now() - RecordManager.lastRecordTime <= 3000) {
+                return false;
+            }
+            RecordManager.recording = false;
+            RecordManager._end(true);
+            return true;
+        }
+        static _start() {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************180s  ？？？？？");
+            RecordManager.grv.Start(180);
+        }
+        static _end(share) {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************180结束 ？？？？？");
+            RecordManager.grv.Stop(share);
+        }
+        static _share(type, successedAc, completedAc = null, failAc = null) {
+            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
+                return;
+            console.log("******************吊起分享 ？？？？？", RecordManager.grv, RecordManager.grv.videoPath);
+            if (RecordManager.grv.videoPath) {
+                let p = new TJ.Platform.AppRt.Extern.TT.ShareAppMessageParam();
+                p.extra.videoTopics = ["剃头大师", "番茄小游戏", "抖音小游戏"];
+                p.channel = "video";
+                p.success = () => {
+                    Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
+                    successedAc();
+                };
+                p.fail = () => {
+                    if (type === 'noAward') {
+                        Dialog.createHint_Middle(Dialog.HintContent["分享成功后才能获取奖励！"]);
+                    }
+                    else {
+                        Dialog.createHint_Middle(Dialog.HintContent["分享失败！"]);
+                    }
+                    failAc();
+                };
+                RecordManager.grv.Share(p);
+            }
+            else {
+                Dialog.createHint_Middle(Dialog.HintContent["暂无视频，玩一局游戏之后分享！"]);
+            }
+        }
+    }
+    RecordManager.recording = false;
+    RecordManager.autoRecording = false;
+
     var Game3D;
     (function (Game3D) {
         Game3D.questionArr = [];
@@ -1591,6 +1696,7 @@
             }
             lwgEventReg() {
                 EventAdmin.reg(EventType.opening, this, () => {
+                    RecordManager.startAutoRecord();
                     this.init();
                     Animation3D.moveRotateTo(Game3D.MainCamera, Game3D.PerspectiveOPPosite, time * 3, this, null, () => {
                         Laya.timer.once(time * 2, this, () => {
@@ -1909,8 +2015,8 @@
                 }
                 Laya.timer.once(400, this, () => {
                     if (fallNum >= 4) {
-                        PalyAudio.playSound('Game/Voice/kuazan.wav');
                         if (CardParent == Game3D.MyCardParent) {
+                            PalyAudio.playSound('Game/Voice/kuazan.wav');
                             EventAdmin.notify(EventType.doWell);
                         }
                     }
@@ -2808,7 +2914,7 @@
                 SceneName["UICheckIn"] = "UICheckIn";
                 SceneName["UIResurgence"] = "UIResurgence";
                 SceneName["UIEasterEgg"] = "UIEasterEgg";
-                SceneName["UIAdsHint"] = "UIAdsHint";
+                SceneName["UIAds"] = "UIAds";
                 SceneName["UILwgInit"] = "UILwgInit";
                 SceneName["GameScene"] = "GameScene";
                 SceneName["UISmallHint"] = "UISmallHint";
@@ -2816,6 +2922,7 @@
                 SceneName["UIDrawCard"] = "UIDrawCard";
                 SceneName["UIPropTry"] = "UIPropTry";
                 SceneName["UICard"] = "UICard";
+                SceneName["UIInit"] = "UIInit";
             })(SceneName = Admin.SceneName || (Admin.SceneName = {}));
             function _openScene(openName, cloesScene, func, zOder) {
                 Admin._clickLock.switch = true;
@@ -2900,7 +3007,7 @@
                     }
                 }
                 else {
-                    console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
+                    console.log('界面关闭失败，可能是脚本名称与场景名称不一样', '场景为：', cloesScene, '类名为：', cloesSceneScript);
                 }
             }
             Admin._closeScene = _closeScene;
@@ -2969,7 +3076,8 @@
                 }
                 onAwake() {
                     this.self = this.owner;
-                    this.calssName = this['__proto__']['constructor'].name;
+                    this.calssName = this.self.name;
+                    console.log(this.self.name);
                     this.self[this.calssName] = this;
                     gameState(this.calssName);
                     this.lwgNodeDec();
@@ -5993,6 +6101,7 @@
         })(VictoryBox = lwg.VictoryBox || (lwg.VictoryBox = {}));
         let CheckIn;
         (function (CheckIn) {
+            CheckIn._fromWhich = Admin.SceneName.UILoding;
             CheckIn._lastCheckDate = {
                 get date() {
                     return Laya.LocalStorage.getItem('Check_lastCheckDate') ? Number(Laya.LocalStorage.getItem('Check_lastCheckDate')) : -1;
@@ -6054,6 +6163,9 @@
                     Admin._openScene(Admin.SceneName.UICheckIn);
                 }
                 else {
+                    if (SkinQualified._adsNum.value < 7) {
+                        Admin._openScene(Admin.SceneName.UISkinQualified);
+                    }
                     console.log('签到过了，今日不可以再签到');
                 }
             }
@@ -6607,7 +6719,7 @@
                     EventAdmin.reg(LodingType.complete, this, () => {
                         let time = this.lodingComplete();
                         PalyAudio.playMusic();
-                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UILwgInit, this.self); });
+                        Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UIInit, this.self); });
                     });
                     EventAdmin.reg(LodingType.progress, this, (skip) => {
                         Loding.currentProgress.value++;
@@ -6791,33 +6903,26 @@
     let BackpackScene = lwg.Backpack.BackpackScene;
     let Tomato = lwg.Tomato;
 
-    class UIAdsHint extends Admin.Scene {
+    class UIAds extends Admin.Scene {
         setCallBack(_adAction) {
             this.adAction = _adAction;
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
-            this.self.x = 0;
-            this.self.y = 0;
             this.self['BtnClose'].visible = false;
             Laya.timer.frameOnce(120, this, () => {
                 this.self['BtnClose'].visible = true;
             });
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);
-            Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
+                Admin._closeScene(this.self);
+            });
+            Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, () => {
+                ADManager.ShowReward(this.adAction, null);
+                Admin._closeScene(this.self);
+            });
         }
-        btnCloseUp() {
-            this.self.close();
-        }
-        btnConfirmUp() {
-            ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
-            ADManager.ShowReward(this.adAction, null);
-            this.self.close();
-        }
-        lwgOnDisable() {
-            console.log('退出');
+        onDisable() {
         }
     }
 
@@ -6864,8 +6969,9 @@
                     if (!getReward) {
                         PalyAudio.playMusic(PalyAudio.voiceUrl.bgm, 0, 1000);
                         console.log('观看完整广告才能获取奖励哦！');
-                        Admin._openScene(Admin.SceneName.UIAdsHint, null, () => {
-                            Admin._sceneControl['UIAdsHint'].getComponent(UIAdsHint).setCallBack(rewardAction);
+                        Admin._openScene(Admin.SceneName.UIAds, null, () => {
+                            console.log(Admin._sceneControl['UIAds']);
+                            Admin._sceneControl['UIAds'].getComponent(UIAds).setCallBack(rewardAction);
                         });
                     }
                 });
@@ -6934,30 +7040,30 @@
             let p = new TJ.API.TA.Param();
             p.id = name;
             switch (type) {
-                case TaT$1.BtnShow:
+                case TaT.BtnShow:
                     TJ.API.TA.Event_Button_Show(p);
                     break;
-                case TaT$1.BtnClick:
+                case TaT.BtnClick:
                     TJ.API.TA.Event_Button_Click(p);
                     break;
-                case TaT$1.PageShow:
+                case TaT.PageShow:
                     TJ.API.TA.Event_Page_Show(p);
                     break;
-                case TaT$1.PageEnter:
+                case TaT.PageEnter:
                     TJ.API.TA.Event_Page_Enter(p);
                     break;
-                case TaT$1.PageLeave:
+                case TaT.PageLeave:
                     TJ.API.TA.Event_Page_Leave(p);
                     break;
-                case TaT$1.LevelStart:
+                case TaT.LevelStart:
                     TJ.API.TA.Event_Level_Start(p);
                     console.log('本关开始打点');
                     break;
-                case TaT$1.LevelFail:
+                case TaT.LevelFail:
                     TJ.API.TA.Event_Level_Fail(p);
                     console.log('本关失败打点');
                     break;
-                case TaT$1.LevelFinish:
+                case TaT.LevelFinish:
                     TJ.API.TA.Event_Level_Finish(p);
                     console.log('本关胜利打点');
                     break;
@@ -6967,8 +7073,8 @@
     ADManager.CanShowCD = true;
     ADManager.wx = Laya.Browser.window.wx;
     ADManager.shareImgUrl = "http://image.tomatojoy.cn/6847506204006681a5d5fa0cd91ce408";
-    ADManager.shareContent = "剃头大师！";
-    var TaT$1;
+    ADManager.shareContent = "比谁猜的快";
+    var TaT;
     (function (TaT) {
         TaT[TaT["BtnShow"] = 0] = "BtnShow";
         TaT[TaT["BtnClick"] = 1] = "BtnClick";
@@ -6978,12 +7084,12 @@
         TaT[TaT["LevelStart"] = 5] = "LevelStart";
         TaT[TaT["LevelFinish"] = 6] = "LevelFinish";
         TaT[TaT["LevelFail"] = 7] = "LevelFail";
-    })(TaT$1 || (TaT$1 = {}));
+    })(TaT || (TaT = {}));
 
     class GameScene extends Admin.Scene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'GameScene_BtnSC');
-            ADManager.TAPoint(TaT$1.BtnShow, 'GameScene_BtnSC');
+            ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
+            ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
             Gold.goldAppear();
         }
         lwgAdaptive() {
@@ -7007,7 +7113,7 @@
                 });
             };
             Click.on(Click.Type.largen, this.self['BtnSC'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'GameScene_BtnSC');
+                ADManager.TAPoint(TaT.BtnClick, 'GameScene_BtnSC');
                 if (Backpack._prop1.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                     return;
@@ -7027,7 +7133,7 @@
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnSX'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'GameScene_BtnSX');
+                ADManager.TAPoint(TaT.BtnClick, 'GameScene_BtnSX');
                 if (Backpack._prop2.num <= 0) {
                     Dialog.createHint_Middle(Dialog.HintContent["没有库存了！"]);
                     return;
@@ -7053,6 +7159,7 @@
                 Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0);
             });
             EventAdmin.reg(EventAdmin.EventType.victory, this, () => {
+                RecordManager.stopAutoRecord();
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIVictory; });
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
@@ -7230,36 +7337,6 @@
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
-        }
-    }
-
-    class UIAdsHint$1 extends Admin.Scene {
-        setCallBack(_adAction) {
-            this.adAction = _adAction;
-        }
-        lwgOnEnable() {
-            ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
-            this.self.x = 0;
-            this.self.y = 0;
-            this.self['BtnClose'].visible = false;
-            Laya.timer.frameOnce(120, this, () => {
-                this.self['BtnClose'].visible = true;
-            });
-        }
-        lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnCloseUp);
-            Click.on(Click.Type.largen, this.self['BtnConfirm'], this, null, null, this.btnConfirmUp);
-        }
-        btnCloseUp() {
-            this.self.close();
-        }
-        btnConfirmUp() {
-            ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
-            ADManager.ShowReward(this.adAction, null);
-            this.self.close();
-        }
-        lwgOnDisable() {
-            console.log('退出');
         }
     }
 
@@ -7441,8 +7518,8 @@
             Gold.goldAppear();
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UICard_BtnGold');
-            ADManager.TAPoint(TaT$1.BtnClick, 'UICard_BtnGold');
+            ADManager.TAPoint(TaT.BtnShow, 'UICard_BtnGold');
+            ADManager.TAPoint(TaT.BtnClick, 'UICard_BtnGold');
             this.self['BtnBack'].alhpa = 0;
             this.self['BtnBack'].visible = false;
             Laya.timer.once(4500, this, () => {
@@ -7478,7 +7555,7 @@
                         });
                     }
                     else if (type == 'gold') {
-                        ADManager.TAPoint(TaT$1.BtnClick, 'UICard_BtnGold');
+                        ADManager.TAPoint(TaT.BtnClick, 'UICard_BtnGold');
                         if (Gold._num.value >= 300) {
                             EventAdmin.notify(Game3D.EventType.UICardBuy, [arr]);
                             Gold.addGold(-300);
@@ -7565,7 +7642,7 @@
             });
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UICheckIn_BtnThreeGet_WeChat');
+            ADManager.TAPoint(TaT.BtnShow, 'UICheckIn_BtnThreeGet_WeChat');
             EventAdmin.notify('seven');
             Gold.GoldNode = this.self['GoldNode'];
             let Num2 = this.self['GoldNode'].getChildByName('Num');
@@ -7624,11 +7701,17 @@
             Click.on('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
         }
         btnBackUp() {
-            Admin._closeScene(this.self);
+            Admin._closeScene(this.self, () => {
+                if (CheckIn._fromWhich == Admin.SceneName.UILoding) {
+                    if (SkinQualified._adsNum.value < 7) {
+                        Admin._openScene(Admin.SceneName.UISkinQualified);
+                    }
+                }
+            });
         }
         btnThreeGetUp() {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
+                ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                 this.btnGetUpFunc(3);
             });
         }
@@ -7636,7 +7719,7 @@
             if (Admin._platform === Admin._platformTpye.Bytedance) {
                 if (this.self['Dot'].visible) {
                     ADManager.ShowReward(() => {
-                        ADManager.TAPoint(TaT$1.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
+                        ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                         this.btnGetUpFunc(3);
                     });
                 }
@@ -7711,8 +7794,8 @@
 
     class UIDefeated extends Defeated.DefeatedScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.LevelFail, 'level' + Admin._gameLevel.value);
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIDefeated_BtnNext');
+            ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
+            ADManager.TAPoint(TaT.BtnShow, 'UIDefeated_BtnNext');
             Admin._gameLevel.value = 0;
             Admin._gameSwitch = false;
             switch (Admin._platform) {
@@ -7737,7 +7820,6 @@
             }
         }
         lwgOnEnable() {
-            PalyAudio.playDefeatedSound();
             Gold.GoldNode = this.self['GoldNode'];
             let Num2 = this.self['GoldNode'].getChildByName('Num');
             Num2.text = Gold._num.value.toString();
@@ -7775,14 +7857,14 @@
             }
         }
         btnAgainUp() {
-            ADManager.TAPoint(TaT$1.BtnClick, 'returnword_fail');
+            ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
             console.log('重新开始！');
             Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         }
         btnNextUp() {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIDefeated_BtnNext');
+                ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
                 Admin._gameLevel.value += 1;
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(EventAdmin.EventType.nextCustoms);
@@ -7950,6 +8032,7 @@
                 if (!Card) {
                     this.self['cardIndex'] = null;
                     Laya.timer.once(500, this, () => {
+                        RecordManager.stopAutoRecord();
                         Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard; });
                     });
                     return;
@@ -8105,6 +8188,7 @@
                 }
             });
             Click.on(Click.Type.noEffect, this.self['Surface'], this, (e) => {
+                RecordManager.startAutoRecord();
                 EventAdmin.notify(Guide.EventType.stepComplete);
                 if (!this.self.getChildByName('DrawSp')) {
                     this.self['Drawlength'] = 0;
@@ -8157,54 +8241,6 @@
         ;
         lwgOnDisable() {
             Setting.setBtnAppear();
-        }
-    }
-
-    class UILoding extends Loding.LodingScene {
-        lwgOnAwake() {
-            Loding.list_2DPic = [
-                "res/atlas/Frame/Effects.png",
-                "res/atlas/Frame/UI.png",
-                "res/atlas/Game/UI/UISkinQualified.png",
-                "res/atlas/Game/UI/UIDrawCard/Card.png",
-            ];
-            Loding.list_2DScene = [
-                "Scene/LwgInit.json",
-                "Scene/UICheckIn.json",
-                "Scene/UIGuide.json",
-                "Scene/UISet.json",
-                "Scene/UISkinQualified.json",
-                "Scene/UIDrawCard.json",
-            ];
-            Loding.list_2DPrefab = [];
-            Loding.list_3DScene = [
-                "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
-            ];
-            Loding.list_3DPrefab = [
-                "3DPrefab/LayaScene_GameMain/Conventional/CardContainer.lh"
-            ];
-            Loding.list_JsonData = [
-                "GameData/VictoryBox/VictoryBox.json",
-                "GameData/CheckIn/CheckIn.json",
-                "GameData/Game/Feature.json",
-                "GameData/Game/Card.json",
-            ];
-        }
-        lwgAdaptive() {
-            this.self['Tag'].y = Laya.stage.height - 100;
-            this.self['ProgressBoard'].y = Laya.stage.height * 0.824;
-            this.self['Pic'].y = Laya.stage.height * 0.505;
-            this.self['Logo'].y = Laya.stage.height * 0.191;
-        }
-        lwgOnEnable() {
-        }
-        lwgOpenAni() { return 0; }
-        lodingPhaseComplete() {
-            this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;
-        }
-        lodingComplete() {
-            this.self['Progress'].mask.x = 0;
-            return 200;
         }
     }
 
@@ -8418,48 +8454,42 @@
         }
     }
 
-    var LwgInit;
-    (function (LwgInit) {
-        class LwgInitScene extends Admin.Scene {
-            moduleOnAwake() {
-                this.admin();
-                this.game3D();
-                this.checkIn();
-                this.shop();
-                this.skin();
-                this.task();
-                this.easterEgg();
-                Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
-            }
-            moduleOnEnable() {
-            }
-            moduleEventReg() {
-            }
-            admin() {
-                Admin._commonVanishAni = true;
-                Admin._platform = Admin._platformTpye.Bytedance;
-            }
-            game3D() {
-                Game3D.dataInit();
-                Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
-                Laya.stage.addChild(Game3D.Scene3D);
-                Game3D.Scene3D.addComponent(Game3D.MainScene);
-            }
-            checkIn() {
-                CheckIn.init();
-            }
-            skin() {
-            }
-            shop() {
-            }
-            task() {
-            }
-            easterEgg() {
-            }
+    class UIInit extends Admin.Scene {
+        moduleOnAwake() {
+            this.admin();
+            this.game3D();
+            this.checkIn();
+            this.shop();
+            this.skin();
+            this.task();
+            this.easterEgg();
+            Setting.createSetBtn(64, 96, 82, 82, 'Game/UI/Common/shezhi.png');
         }
-        LwgInit.LwgInitScene = LwgInitScene;
-    })(LwgInit || (LwgInit = {}));
-    class UILwgInit extends LwgInit.LwgInitScene {
+        moduleOnEnable() {
+        }
+        moduleEventReg() {
+        }
+        admin() {
+            Admin._commonVanishAni = true;
+            Admin._platform = Admin._platformTpye.Bytedance;
+        }
+        game3D() {
+            Game3D.dataInit();
+            Game3D.Scene3D = Laya.loader.getRes(Loding.list_3DScene[0]);
+            Laya.stage.addChild(Game3D.Scene3D);
+            Game3D.Scene3D.addComponent(Game3D.MainScene);
+        }
+        checkIn() {
+            CheckIn.init();
+        }
+        skin() {
+        }
+        shop() {
+        }
+        task() {
+        }
+        easterEgg() {
+        }
         lwgOnEnable() {
             new ZJADMgr();
             console.log('完成初始化');
@@ -8484,9 +8514,57 @@
         }
     }
 
+    class UILoding extends Loding.LodingScene {
+        lwgOnAwake() {
+            Loding.list_2DPic = [
+                "res/atlas/Frame/Effects.png",
+                "res/atlas/Frame/UI.png",
+                "res/atlas/Game/UI/UISkinQualified.png",
+                "res/atlas/Game/UI/UIDrawCard/Card.png",
+            ];
+            Loding.list_2DScene = [
+                "Scene/LwgInit.json",
+                "Scene/UICheckIn.json",
+                "Scene/UIGuide.json",
+                "Scene/UISet.json",
+                "Scene/UISkinQualified.json",
+                "Scene/UIDrawCard.json",
+            ];
+            Loding.list_2DPrefab = [];
+            Loding.list_3DScene = [
+                "3DScene/LayaScene_GameMain/Conventional/GameMain.ls"
+            ];
+            Loding.list_3DPrefab = [
+                "3DPrefab/LayaScene_GameMain/Conventional/CardContainer.lh"
+            ];
+            Loding.list_JsonData = [
+                "GameData/VictoryBox/VictoryBox.json",
+                "GameData/CheckIn/CheckIn.json",
+                "GameData/Game/Feature.json",
+                "GameData/Game/Card.json",
+            ];
+        }
+        lwgAdaptive() {
+            this.self['Tag'].y = Laya.stage.height - 100;
+            this.self['ProgressBoard'].y = Laya.stage.height * 0.824;
+            this.self['Pic'].y = Laya.stage.height * 0.505;
+            this.self['Logo'].y = Laya.stage.height * 0.191;
+        }
+        lwgOnEnable() {
+        }
+        lwgOpenAni() { return 0; }
+        lodingPhaseComplete() {
+            this.self['Progress'].mask.x = -425 + 425 * Loding.currentProgress.value / Loding.sumProgress;
+        }
+        lodingComplete() {
+            this.self['Progress'].mask.x = 0;
+            return 200;
+        }
+    }
+
     class UIPropTry extends PropTry.PropTryScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIPropTry_BtnGet');
+            ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
             Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
             Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
         }
@@ -8568,7 +8646,7 @@
         }
         advFunc() {
             ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIPropTry_BtnGet');
+                ADManager.TAPoint(TaT.BtnClick, 'UIPropTry_BtnGet');
                 Backpack._prop1.num++;
                 Backpack._prop2.num++;
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
@@ -8596,7 +8674,7 @@
         }
         lwgOnEnable() {
             console.log('打开复活界面！');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIResurgence_BtnResurgence');
+            ADManager.TAPoint(TaT.BtnShow, 'UIResurgence_BtnResurgence');
             TimerAdmin.frameLoop(60, this, () => {
                 if (this['CounDownSwitch']) {
                     let Countdown = this.self['Countdown'];
@@ -8616,7 +8694,7 @@
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnResurgence'], this, null, null, () => {
                 ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT$1.BtnClick, 'UIResurgence_BtnResurgence');
+                    ADManager.TAPoint(TaT.BtnClick, 'UIResurgence_BtnResurgence');
                     this['CounDownSwitch'] = false;
                     Admin._gameSwitch = true;
                     Admin._closeScene(this.self, () => {
@@ -8625,19 +8703,18 @@
                 });
             });
             Click.on(Click.Type.largen, this.self['BtnNo'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'closeword_revive');
+                ADManager.TAPoint(TaT.BtnClick, 'closeword_revive');
                 this['CounDownSwitch'] = false;
+                RecordManager.stopAutoRecord();
                 Admin._openScene(Admin.SceneName.UIShare, this.self, () => { Share._fromWhich = Admin.SceneName.UIDefeated; });
             });
-        }
-        lwgOnDisable() {
         }
     }
 
     class UISet extends Admin.Scene {
         lwgOnAwake() {
             Setting.setBtnVinish();
-            ADManager.TAPoint(TaT$1.BtnClick, 'setbt_main');
+            ADManager.TAPoint(TaT.BtnClick, 'setbt_main');
         }
         lwgOnEnable() {
             EventAdmin.notify('soundOnOff');
@@ -8717,148 +8794,42 @@
         }
     }
 
-    class RecordManager {
-        constructor() {
-            this.GRV = null;
-            this.isRecordVideoing = false;
-            this.isVideoRecord = false;
-            this.videoRecordTimer = 0;
-            this.isHasVideoRecord = false;
-        }
-        static Init() {
-            RecordManager.grv = new TJ.Platform.AppRt.DevKit.TT.GameRecorderVideo();
-        }
-        static startAutoRecord() {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            if (RecordManager.grv == null)
-                RecordManager.Init();
-            if (RecordManager.recording)
-                return;
-            RecordManager.autoRecording = true;
-            console.log("******************开始录屏");
-            RecordManager._start();
-            RecordManager.lastRecordTime = Date.now();
-        }
-        static stopAutoRecord() {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            if (!RecordManager.autoRecording) {
-                console.log("RecordManager.autoRecording", RecordManager.autoRecording);
-                return false;
-            }
-            RecordManager.autoRecording = false;
-            RecordManager._end(false);
-            if (Date.now() - RecordManager.lastRecordTime > 6000) {
-                return true;
-            }
-            if (Date.now() - RecordManager.lastRecordTime < 3000) {
-                console.log("小于3秒");
-                return false;
-            }
-            return true;
-        }
-        static startRecord() {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            if (RecordManager.autoRecording) {
-                this.stopAutoRecord();
-            }
-            RecordManager.recording = true;
-            RecordManager._start();
-            RecordManager.lastRecordTime = Date.now();
-        }
-        static stopRecord() {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            console.log("time:" + (Date.now() - RecordManager.lastRecordTime));
-            if (Date.now() - RecordManager.lastRecordTime <= 3000) {
-                return false;
-            }
-            RecordManager.recording = false;
-            RecordManager._end(true);
-            return true;
-        }
-        static _start() {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            console.log("******************180s  ？？？？？");
-            RecordManager.grv.Start(180);
-        }
-        static _end(share) {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            console.log("******************180结束 ？？？？？");
-            RecordManager.grv.Stop(share);
-        }
-        static _share(type, successedAc, completedAc = null, failAc = null) {
-            if (TJ.API.AppInfo.Channel() != TJ.Define.Channel.AppRt.ZJTD_AppRt)
-                return;
-            console.log("******************吊起分享 ？？？？？", RecordManager.grv, RecordManager.grv.videoPath);
-            if (RecordManager.grv.videoPath) {
-                let p = new TJ.Platform.AppRt.Extern.TT.ShareAppMessageParam();
-                p.extra.videoTopics = ["剃头大师", "番茄小游戏", "抖音小游戏"];
-                p.channel = "video";
-                p.success = () => {
-                    Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
-                    successedAc();
-                };
-                p.fail = () => {
-                    if (type === 'noAward') {
-                        Dialog.createHint_Middle(Dialog.HintContent["分享成功后才能获取奖励！"]);
-                    }
-                    else {
-                        Dialog.createHint_Middle(Dialog.HintContent["分享失败！"]);
-                    }
-                    failAc();
-                };
-                RecordManager.grv.Share(p);
-            }
-            else {
-                Dialog.createHint_Middle(Dialog.HintContent["暂无视频，玩一局游戏之后分享！"]);
-            }
-        }
-    }
-    RecordManager.recording = false;
-    RecordManager.autoRecording = false;
-
     class UIShare extends Share.ShareScene {
         lwgOnAwake() {
             Gold.goldAppear();
         }
         lwgOnEnable() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIShare_BtnShare');
+            ADManager.TAPoint(TaT.BtnShow, 'UIShare_BtnShare');
         }
         lwgBtnClick() {
             Click.on(Click.Type.noEffect, this.self['BtnShare'], this, null, null, this.btnShareUp);
             Click.on(Click.Type.noEffect, this.self['Background'], this, null, null, this.btnShareUp);
             Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoShareUp);
-            Click.on(Click.Type.largen, this.self['BtnSkip'], this, null, null, this.btnNoShareUp);
         }
         btnShareUp() {
             console.log('分享！');
             if (Share._fromWhich == Admin.SceneName.UIDrawCard) {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIDrawCard_BtnShare');
+                ADManager.TAPoint(TaT.BtnClick, 'UIDrawCard_BtnShare');
             }
             else if (Share._fromWhich == Admin.SceneName.UIVictory) {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIShare_BtnShare');
+                ADManager.TAPoint(TaT.BtnClick, 'UIShare_BtnShare');
             }
             else if (Share._fromWhich == Admin.SceneName.UIDefeated) ;
             RecordManager._share('award', () => {
                 Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                    Gold.addGold(150);
+                    Gold.addGold(300);
                     this.shareFunc();
                 });
             });
         }
         shareFunc() {
             if (Share._fromWhich == Admin.SceneName.UIDrawCard) {
-                ADManager.TAPoint(TaT$1.BtnShow, 'UIDrawCard_BtnShare');
+                ADManager.TAPoint(TaT.BtnShow, 'UIDrawCard_BtnShare');
                 Admin._closeScene(this.self);
                 EventAdmin.notify(Admin.SceneName.UIShare + Admin.SceneName.UIDrawCard);
             }
             else if (Share._fromWhich == Admin.SceneName.UIVictory) {
-                ADManager.TAPoint(TaT$1.BtnShow, 'UIShare_BtnShare');
+                ADManager.TAPoint(TaT.BtnShow, 'UIShare_BtnShare');
                 Admin._openScene(Admin.SceneName.UIVictoryBox, this.self);
             }
             else if (Share._fromWhich == Admin.SceneName.UIDefeated) {
@@ -8869,11 +8840,14 @@
             e.stopPropagation();
             this.shareFunc();
         }
+        lwgOnUpdate() {
+            Admin._clickLock.switch = false;
+        }
     }
 
     class UISkinQualified extends SkinQualified.SkinQualifiedScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UISkinQualified_BtnGet');
+            ADManager.TAPoint(TaT.BtnShow, 'UISkinQualified_BtnGet');
             Gold.goldVinish();
             Setting.setBtnVinish();
             if (SkinQualified._adsNum.value >= 7) {
@@ -9063,18 +9037,16 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {
-                ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT$1.BtnClick, 'UISkinQualified_BtnGet');
-                    SkinQualified._adsNum.value++;
-                    if (SkinQualified._adsNum.value >= 7) {
-                        Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
-                        Dialog.createHint_Middle(Dialog.HintContent["限定皮肤已经获得，请前往皮肤界面查看。"]);
-                        Animation2D.fadeOut(this.self, 1, 0, 500, 500, () => {
-                            Admin._closeScene(this.self);
-                        });
-                    }
-                    this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
-                });
+                ADManager.TAPoint(TaT.BtnClick, 'UISkinQualified_BtnGet');
+                SkinQualified._adsNum.value++;
+                if (SkinQualified._adsNum.value >= 7) {
+                    Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
+                    Dialog.createHint_Middle(Dialog.HintContent["限定皮肤已经获得，请前往皮肤界面查看。"]);
+                    Animation2D.fadeOut(this.self, 1, 0, 500, 500, () => {
+                        Admin._closeScene(this.self);
+                    });
+                }
+                this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 Admin._closeScene(this.self);
@@ -9086,155 +9058,31 @@
         }
     }
 
-    class UISkinTry extends Admin.Scene {
-        lwgOnAwake() {
-            this.randomNoHave();
-            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
-            Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
-            console.log(ZJADMgr.ins.shieldLevel);
-        }
-        randomNoHave() {
-            let arrOther = Shop.getwayGoldArr(Shop.GoodsClass.Other, undefined, true);
-            let arrProp = Shop.getwayGoldArr(Shop.GoodsClass.Props, undefined, true);
-        }
-        randomOther() {
-            let ele;
-            let arrOther = Shop.getwayGoldArr(Shop.GoodsClass.Other, undefined, true);
-            ele = arrOther[Math.floor(Math.random() * arrOther.length)];
-            this.self['SkinPic'].skin = 'UI/Shop/Other/' + ele.name + '.png';
-            this.beforeTryOtherName = Shop._currentOther.name;
-            Shop._currentOther.name = ele.name;
-        }
-        randomProp() {
-            let ele;
-            let arrProp = Shop.getwayGoldArr(Shop.GoodsClass.Props, undefined, true);
-            ele = arrProp[Math.floor(Math.random() * arrProp.length)];
-            this.self['SkinPic'].skin = 'UI/Shop/Props/' + ele.name + '.png';
-            this.beforeTryPropName = Shop._currentProp.name;
-            Shop._currentProp.name = ele.name;
-        }
-        lwgBtnClick() {
-            Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, this.bytedanceSelectUp);
-            Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, this.bytedanceGetUp);
-            Click.on(Click.Type.noEffect, this.self['Bytedance_Mid_Select'], this, null, null, this.bytedanceSelectUp);
-            Click.on(Click.Type.largen, this.self['Bytedance_Mid_BtnGet'], this, null, null, this.bytedanceGetUp);
-            Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
-            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.btnGetUp);
-            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
-        }
-        clickBgtUp() {
-            let Dot;
-            if (this.self['Low'].visible) {
-                Dot = this.self['Bytedance_Low_Dot'];
-            }
-            else if (this.self['Mid'].visible) {
-                Dot = this.self['Bytedance_Mid_Dot'];
-            }
-            if (!Dot) {
-                return;
-            }
-            if (Dot.visible) {
-                this.advFunc();
-            }
-            else {
-                if (this.beforeTryOtherName) {
-                    Shop._currentOther.name = this.beforeTryOtherName;
-                }
-                if (this.beforeTryPropName) {
-                    Shop._currentProp.name = this.beforeTryPropName;
-                }
-            }
-        }
-        bytedanceGetUp(e) {
-            e.stopPropagation();
-            this.advFunc();
-        }
-        bytedanceSelectUp(e) {
-            e.stopPropagation();
-            if (this.self['Low'].visible) {
-                if (!this.self['Low']['count']) {
-                    this.self['Low']['count'] = 0;
-                }
-                this.self['Low']['count']++;
-                if (this.self['Low']['count'] >= 4) {
-                    if (this.self['Bytedance_Low_Dot'].visible) {
-                        this.self['Bytedance_Low_Dot'].visible = false;
-                    }
-                    else {
-                        this.self['Bytedance_Low_Dot'].visible = true;
-                    }
-                }
-                if (ZJADMgr.ins.CheckPlayVideo()) {
-                    ADManager.ShowReward(null);
-                }
-            }
-            else if (this.self['Mid'].visible) {
-                if (!this.self['Mid']['count']) {
-                    this.self['Mid']['count'] = 0;
-                }
-                this.self['Mid']['count']++;
-                if (this.self['Mid']['count'] >= 4) {
-                    if (this.self['Bytedance_Mid_Dot'].visible) {
-                        this.self['Bytedance_Mid_Dot'].visible = false;
-                    }
-                    else {
-                        this.self['Bytedance_Mid_Dot'].visible = true;
-                    }
-                }
-            }
-        }
-        advFunc() {
-            ADManager.ShowReward(() => {
-                Admin._openScene(Admin.SceneName.UIOperation, this.self);
-            });
-        }
-        btnGetUp(e) {
-            e.stopPropagation();
-            if (Admin._platform == Admin._platformTpye.OPPO) {
-                Admin._openScene(Admin.SceneName.UIOperation, this.self);
-            }
-            else {
-                ADManager.ShowReward(() => {
-                    Admin._openScene(Admin.SceneName.UIOperation, this.self);
-                });
-            }
-        }
-        btnNoUp(event) {
-            if (this.beforeTryOtherName) {
-                Shop._currentOther.name = this.beforeTryOtherName;
-            }
-            if (this.beforeTryPropName) {
-                Shop._currentProp.name = this.beforeTryPropName;
-            }
-            Admin._openScene(Admin.SceneName.UIOperation, this.self);
-        }
-        lwgOnDisable() {
-            if (this.beforeTryOtherName) {
-                Shop._currentOther.name = this.beforeTryOtherName;
-            }
-            if (this.beforeTryPropName) {
-                Shop._currentProp.name = this.beforeTryPropName;
-            }
-        }
-    }
-
     class UIStart extends Start.StartScene {
         lwgOnAwake() {
             Setting.setBtnAppear();
             Gold.createGoldNode(629, 174);
             EventAdmin.notify(Guide.EventType.onStep);
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnStart');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnCard');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnRanking');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnDrawCard');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnChickIn');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnQualifyCard');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnStart');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnCard');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnRanking');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnDrawCard');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnChickIn');
+            ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnQualifyCard');
         }
         lwgOpenAniAfter() {
             if (Guide._complete.bool) {
-                CheckIn.openCheckIn();
+                CheckIn._fromWhich = Admin.SceneName.UILoding;
+                if (!CheckIn._todayCheckIn.bool) {
+                    console.log('没有签到过，弹出签到页面！');
+                    Admin._openScene(Admin.SceneName.UICheckIn);
+                }
+                else {
+                    if (SkinQualified._adsNum.value < 7) {
+                        Admin._openScene(Admin.SceneName.UISkinQualified);
+                    }
+                    console.log('签到过了，今日不可以再签到');
+                }
             }
         }
         lwgAdaptive() {
@@ -9280,7 +9128,7 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnStart');
+                ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnStart');
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 8) {
                         EventAdmin.notify(Guide.EventType.complete);
@@ -9293,28 +9141,29 @@
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnDrawCard');
+                ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnDrawCard');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UIDrawCard, this.self);
             });
             Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnChickIn');
+                CheckIn._fromWhich = Admin.SceneName.UIStart;
+                ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnChickIn');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UICheckIn);
             });
             Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnQualifyCard');
+                ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnQualifyCard');
                 if (!Guide._complete.bool) {
                     return;
                 }
                 Admin._openScene(Admin.SceneName.UISkinQualified);
             });
             Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnClick, 'UIStart_BtnCard');
+                ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnCard');
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 6) {
                         EventAdmin.notify(Guide.EventType.stepComplete);
@@ -9329,7 +9178,7 @@
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnRanking'], this, null, null, () => {
-                ADManager.TAPoint(TaT$1.BtnShow, 'UIStart_BtnRanking');
+                ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnRanking');
                 Dialog.createHint_Middle(Dialog.HintContent["敬请期待!"]);
             });
         }
@@ -9341,7 +9190,7 @@
 
     class UIVictory extends VictoryScene {
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictory_Three');
+            ADManager.TAPoint(TaT.BtnShow, 'UIVictory_Three');
             switch (Admin._platform) {
                 case Admin._platformTpye.OPPO:
                     this.self['OPPO'].visible = true;
@@ -9395,7 +9244,7 @@
             Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
                 if (this.self['Dot_Bytedance'].visible) {
                     ADManager.ShowReward(() => {
-                        ADManager.TAPoint(TaT$1.BtnClick, 'UIVictory_Three');
+                        ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
                         this.getGold(300);
                     });
                 }
@@ -9466,8 +9315,8 @@
     class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         constructor() { super(); }
         lwgOnAwake() {
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictoryBox_BtnAgain_Bytedance');
-            ADManager.TAPoint(TaT$1.BtnShow, 'UIVictoryBox_Ads');
+            ADManager.TAPoint(TaT.BtnShow, 'UIVictoryBox_BtnAgain_Bytedance');
+            ADManager.TAPoint(TaT.BtnShow, 'UIVictoryBox_Ads');
             Gold.createGoldNode(629, 174);
             if (VictoryBox._openVictoryBoxNum > 1) {
                 let arr = Tools.arrayRandomGetOut([0, 1, 2, 3, 4, 5, 6, 7, 8], 3);
@@ -9520,7 +9369,7 @@
                 if (VictoryBox._canOpenNum > 0) {
                     if (dataSource[VictoryBox.BoxProperty.ads]) {
                         ADManager.ShowReward(() => {
-                            ADManager.TAPoint(TaT$1.BtnClick, 'Adboxvideo');
+                            ADManager.TAPoint(TaT.BtnClick, 'Adboxvideo');
                             this.getRewardFunc(dataSource);
                         });
                     }
@@ -9609,7 +9458,7 @@
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
         }
         btnAgainUp(event) {
-            ADManager.TAPoint(TaT$1.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
+            ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
             if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
                 ADManager.ShowReward(() => {
                     Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
@@ -9718,20 +9567,19 @@
             reg("TJ/Promo/script/P205.ts", P205);
             reg("TJ/Promo/script/P106.ts", P106);
             reg("script/Game/GameScene.ts", GameScene);
-            reg("script/Game/UIAdsHint.ts", UIAdsHint$1);
+            reg("script/Game/UIAds.ts", UIAds);
             reg("script/Game/UICard.ts", UICard);
             reg("script/Game/UICheckIn.ts", UICheckIn);
             reg("script/Game/UIDefeated.ts", UIDefeated);
             reg("script/Game/UIDrawCard.ts", UIDrawCard);
             reg("script/Frame/Guide.ts", UIGuide);
+            reg("script/Frame/UIInit.ts", UIInit);
             reg("script/Game/UILoding.ts", UILoding);
-            reg("script/Frame/LwgInit.ts", UILwgInit);
             reg("script/Game/UIPropTry.ts", UIPropTry);
             reg("script/Game/UIResurgence.ts", UIResurgence);
             reg("script/Game/UISet.ts", UISet);
             reg("script/Game/UIShare.ts", UIShare);
             reg("script/Game/UISkinQualified.ts", UISkinQualified);
-            reg("script/Game/UISkinTry.ts", UISkinTry);
             reg("script/Game/UIStart.ts", UIStart);
             reg("script/Game/UIVictory.ts", UIVictory);
             reg("script/Game/UIVictoryBox_Cell.ts", UIVictoryBox_Cell);
@@ -9748,7 +9596,7 @@
     GameConfig.startScene = "Scene/UILoding.scene";
     GameConfig.sceneRoot = "";
     GameConfig.debug = false;
-    GameConfig.stat = true;
+    GameConfig.stat = false;
     GameConfig.physicsDebug = false;
     GameConfig.exportSceneToJson = true;
     GameConfig.init();

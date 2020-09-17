@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":141,
+    "selectedBox":219,
+    "selecteID":220,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":249,
+    "maxID":250,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -448,13 +448,27 @@
                                                     "x":90,
                                                     "type":"Sprite",
                                                     "searchKey":"Sprite,Word",
-                                                    "props":{"y":46,"x":79,"texture":"Game/UI/Common/woyao.png","name":"Word"},
+                                                    "props":{"y":46.5,"x":53,"texture":"Game/UI/Common/woyao.png","name":"Word"},
                                                     "nodeParent":234,
                                                     "label":"Word",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
                                                     "compId":247,
+                                                    "child":[
+                                                        ]
+                                                },
+                                                {
+                                                    "x":90,
+                                                    "type":"Sprite",
+                                                    "searchKey":"Sprite",
+                                                    "props":{"y":43.5,"x":192,"texture":"Game/UI/Common/shiping.png"},
+                                                    "nodeParent":234,
+                                                    "label":"Sprite",
+                                                    "isDirectory":false,
+                                                    "isAniNode":true,
+                                                    "hasChild":false,
+                                                    "compId":249,
                                                     "child":[
                                                         ]
                                                 }]

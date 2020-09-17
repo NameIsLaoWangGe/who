@@ -1204,7 +1204,7 @@ export module lwg {
             UICheckIn = 'UICheckIn',
             UIResurgence = 'UIResurgence',
             UIEasterEgg = 'UIEasterEgg',
-            UIAdsHint = 'UIAdsHint',
+            UIAds = 'UIAds',
             UILwgInit = 'UILwgInit',
             GameScene = 'GameScene',
             UISmallHint = 'UISmallHint',
@@ -1212,6 +1212,7 @@ export module lwg {
             UIDrawCard = 'UIDrawCard',
             UIPropTry = 'UIPropTry',
             UICard = 'UICard',
+            UIInit = 'UIInit'
         }
 
         /**
@@ -1314,7 +1315,7 @@ export module lwg {
                     }
                 }
             } else {
-                console.log('界面关闭失败，可能是脚本名称与场景名称不一样');
+                console.log('界面关闭失败，可能是脚本名称与场景名称不一样', '场景为：', cloesScene, '类名为：', cloesSceneScript);
             }
         }
 
@@ -1397,7 +1398,9 @@ export module lwg {
             onAwake(): void {
                 this.self = this.owner as Laya.Scene;
                 // 类名
-                this.calssName = this['__proto__']['constructor'].name;
+                this.calssName = this.self.name;
+                console.log(this.self.name);
+
                 // 组件变为的self属性
                 this.self[this.calssName] = this;
                 gameState(this.calssName);
@@ -5729,6 +5732,8 @@ export module lwg {
 
     /**签到模块*/
     export module CheckIn {
+        /**从哪个界面弹出的签到*/
+        export let _fromWhich: string = Admin.SceneName.UILoding;
         /**签到list列表*/
         export let _checkList: Laya.List;
         /**列表信息*/
@@ -5816,6 +5821,9 @@ export module lwg {
                 console.log('没有签到过，弹出签到页面！');
                 Admin._openScene(Admin.SceneName.UICheckIn);
             } else {
+                if (SkinQualified._adsNum.value < 7) {
+                    Admin._openScene(Admin.SceneName.UISkinQualified);
+                }
                 console.log('签到过了，今日不可以再签到');
             }
         }
@@ -6541,7 +6549,7 @@ export module lwg {
                 EventAdmin.reg(LodingType.complete, this, () => {
                     let time = this.lodingComplete();
                     PalyAudio.playMusic();
-                    Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UILwgInit, this.self) })
+                    Laya.timer.once(time, this, () => { Admin._openScene(Admin.SceneName.UIInit, this.self) })
                 });
 
                 EventAdmin.reg(LodingType.progress, this, (skip) => {

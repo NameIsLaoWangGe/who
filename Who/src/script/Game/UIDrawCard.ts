@@ -2,6 +2,7 @@ import { Admin, DrawCard, Click, Tools, EventAdmin, Animation2D, Effects, Share,
 import ADManager from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 import { Guide } from "../Frame/Guide";
+import RecordManager from "../../TJ/RecordManager";
 
 export default class UIDrawCard extends DrawCard.DrawCardScene {
     /** @prop {name:Card, tips:"选项卡预制体", type:Prefab}*/
@@ -188,6 +189,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             if (!Card) {
                 this.self['cardIndex'] = null;
                 Laya.timer.once(500, this, () => {
+                    RecordManager.stopAutoRecord();
                     Admin._openScene(Admin.SceneName.UIShare, null, () => { Share._fromWhich = Admin.SceneName.UIDrawCard });
                 })
                 return;
@@ -300,6 +302,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
             var anifunc = () => {
                 Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
+                 
                     EventAdmin.notify(Guide.EventType.onStep);
                     this.self['DrawDisPlay'].x = -800;
                     this.self['DrawDisPlay'].alpha = 1;
@@ -350,6 +353,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
             (e: Laya.Event) => {
+                RecordManager.startAutoRecord();
                 EventAdmin.notify(Guide.EventType.stepComplete);
                 // 初始化一个绘制节点
                 if (!this.self.getChildByName('DrawSp')) {

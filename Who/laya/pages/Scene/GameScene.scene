@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":2,
-    "selecteID":78,
+    "selecteID":58,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#626262","height":1280},
     "nodeParent":-1,
@@ -14,20 +14,6 @@
     "hasChild":true,
     "compId":2,
     "child":[
-        {
-            "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite",
-            "props":{"y":0,"x":-720,"texture":"Game/UI/DesignPic/youxi2.png","alpha":0},
-            "nodeParent":2,
-            "label":"Sprite",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":58,
-            "child":[
-                ]
-        },
         {
             "x":15,
             "type":"Sprite",

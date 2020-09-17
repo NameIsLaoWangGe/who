@@ -1,0 +1,32 @@
+{
+  "code": "import PromoOpen from \"./TJ/Promo/script/PromoOpen\";\r\nimport ButtonScale from \"./TJ/Promo/script/ButtonScale\";\r\nimport PromoItem from \"./TJ/Promo/script/PromoItem\";\r\nimport P201 from \"./TJ/Promo/script/P201\";\r\nimport P202 from \"./TJ/Promo/script/P202\";\r\nimport P204 from \"./TJ/Promo/script/P204\";\r\nimport P205 from \"./TJ/Promo/script/P205\";\r\nimport P106 from \"./TJ/Promo/script/P106\";\r\nimport GameScene from \"./script/Game/GameScene\";\r\nimport UIAds from \"./script/Game/UIAds\";\r\nimport UICard from \"./script/Game/UICard\";\r\nimport UICheckIn from \"./script/Game/UICheckIn\";\r\nimport UIDefeated from \"./script/Game/UIDefeated\";\r\nimport UIDrawCard from \"./script/Game/UIDrawCard\";\r\nimport Guide from \"./script/Frame/Guide\";\r\nimport UIInit from \"./script/Frame/UIInit\";\r\nimport UILoding from \"./script/Game/UILoding\";\r\nimport UIPropTry from \"./script/Game/UIPropTry\";\r\nimport UIResurgence from \"./script/Game/UIResurgence\";\r\nimport UISet from \"./script/Game/UISet\";\r\nimport UIShare from \"./script/Game/UIShare\";\r\nimport UISkinQualified from \"./script/Game/UISkinQualified\";\r\nimport UIStart from \"./script/Game/UIStart\";\r\nimport UIVictory from \"./script/Game/UIVictory\";\r\nimport UIVictoryBox_Cell from \"./script/Game/UIVictoryBox_Cell\";\r\nimport UIVictoryBox from \"./script/Game/UIVictoryBox\";\r\nimport GameUI from \"./script/GameUI\";\r\nexport default class GameConfig {\r\n    constructor() { }\r\n    static init() {\r\n        var reg = Laya.ClassUtils.regClass;\r\n        reg(\"TJ/Promo/script/PromoOpen.ts\", PromoOpen);\r\n        reg(\"TJ/Promo/script/ButtonScale.ts\", ButtonScale);\r\n        reg(\"TJ/Promo/script/PromoItem.ts\", PromoItem);\r\n        reg(\"TJ/Promo/script/P201.ts\", P201);\r\n        reg(\"TJ/Promo/script/P202.ts\", P202);\r\n        reg(\"TJ/Promo/script/P204.ts\", P204);\r\n        reg(\"TJ/Promo/script/P205.ts\", P205);\r\n        reg(\"TJ/Promo/script/P106.ts\", P106);\r\n        reg(\"script/Game/GameScene.ts\", GameScene);\r\n        reg(\"script/Game/UIAds.ts\", UIAds);\r\n        reg(\"script/Game/UICard.ts\", UICard);\r\n        reg(\"script/Game/UICheckIn.ts\", UICheckIn);\r\n        reg(\"script/Game/UIDefeated.ts\", UIDefeated);\r\n        reg(\"script/Game/UIDrawCard.ts\", UIDrawCard);\r\n        reg(\"script/Frame/Guide.ts\", Guide);\r\n        reg(\"script/Frame/UIInit.ts\", UIInit);\r\n        reg(\"script/Game/UILoding.ts\", UILoding);\r\n        reg(\"script/Game/UIPropTry.ts\", UIPropTry);\r\n        reg(\"script/Game/UIResurgence.ts\", UIResurgence);\r\n        reg(\"script/Game/UISet.ts\", UISet);\r\n        reg(\"script/Game/UIShare.ts\", UIShare);\r\n        reg(\"script/Game/UISkinQualified.ts\", UISkinQualified);\r\n        reg(\"script/Game/UIStart.ts\", UIStart);\r\n        reg(\"script/Game/UIVictory.ts\", UIVictory);\r\n        reg(\"script/Game/UIVictoryBox_Cell.ts\", UIVictoryBox_Cell);\r\n        reg(\"script/Game/UIVictoryBox.ts\", UIVictoryBox);\r\n        reg(\"script/GameUI.ts\", GameUI);\r\n    }\r\n}\r\nGameConfig.width = 720;\r\nGameConfig.height = 1280;\r\nGameConfig.scaleMode = \"fixedwidth\";\r\nGameConfig.screenMode = \"vertical\";\r\nGameConfig.alignV = \"top\";\r\nGameConfig.alignH = \"left\";\r\nGameConfig.startScene = \"Scene/UILoding.scene\";\r\nGameConfig.sceneRoot = \"\";\r\nGameConfig.debug = false;\r\nGameConfig.stat = false;\r\nGameConfig.physicsDebug = false;\r\nGameConfig.exportSceneToJson = true;\r\nGameConfig.init();\r\n",
+  "references": [
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/PromoOpen.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/ButtonScale.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/PromoItem.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/P201.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/P202.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/P204.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/P205.ts",
+    "D:/Game/project/Who/Project/Who/src/TJ/Promo/script/P106.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/GameScene.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIAds.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UICard.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UICheckIn.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIDefeated.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIDrawCard.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Frame/Guide.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Frame/UIInit.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UILoding.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIPropTry.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIResurgence.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UISet.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIShare.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UISkinQualified.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIStart.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIVictory.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIVictoryBox_Cell.ts",
+    "D:/Game/project/Who/Project/Who/src/script/Game/UIVictoryBox.ts",
+    "D:/Game/project/Who/Project/Who/src/script/GameUI.ts"
+  ]
+}

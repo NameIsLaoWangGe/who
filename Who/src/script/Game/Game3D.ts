@@ -1,5 +1,6 @@
 import { lwg3D } from "../Frame/lwg3D";
 import { Tools, EventAdmin, Animation3D, Admin, Loding, Backpack, Dialog, PalyAudio } from "../Frame/lwg";
+import RecordManager from "../../TJ/RecordManager";
 export module Game3D {
     /**场景节点枚举*/
     export let Scene3D: Laya.Scene3D;
@@ -760,10 +761,10 @@ export module Game3D {
         lwgOnEnable(): void {
             // this.init();
         }
-
         lwgEventReg(): void {
             //开始游戏
             EventAdmin.reg(EventType.opening, this, () => {
+                RecordManager.startAutoRecord();
                 this.init();
                 Animation3D.moveRotateTo(MainCamera, PerspectiveOPPosite, time * 3, this, null, () => {
                     Laya.timer.once(time * 2, this, () => {
@@ -1106,8 +1107,8 @@ export module Game3D {
 
             Laya.timer.once(400, this, () => {
                 if (fallNum >= 4) {
-                    PalyAudio.playSound('Game/Voice/kuazan.wav');
                     if (CardParent == MyCardParent) {
+                        PalyAudio.playSound('Game/Voice/kuazan.wav');
                         EventAdmin.notify(EventType.doWell);
                     }
                 }

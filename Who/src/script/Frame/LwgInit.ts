@@ -15,7 +15,7 @@ export module LwgInit {
             this.skin();
             this.task();
             this.easterEgg();
-            Setting.createSetBtn(64, 96, 82, 82, 'UI/UIStart/shezhi.png');
+            Setting.createSetBtn(64, 96, 82, 82, 'Game/UI/Common/shezhi.png');
         }
         moduleOnEnable(): void {
         }

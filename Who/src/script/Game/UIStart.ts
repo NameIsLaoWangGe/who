@@ -1,4 +1,4 @@
-import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin, Loding, Dialog } from "../Frame/lwg";
+import { Start, Click, Admin, Setting, Gold, DateAdmin, CheckIn, TimerAdmin, Animation2D, Effects, Tools, Backpack, EventAdmin, Loding, Dialog, SkinQualified } from "../Frame/lwg";
 import UIResurgence from "./UIResurgence";
 import { Game3D } from "./Game3D";
 import { Guide } from "../Frame/Guide";
@@ -17,9 +17,19 @@ export default class UIStart extends Start.StartScene {
         ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnChickIn');
         ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnQualifyCard');
     }
+
     lwgOpenAniAfter(): void {
         if (Guide._complete.bool) {
-            CheckIn.openCheckIn();
+            CheckIn._fromWhich = Admin.SceneName.UILoding;
+            if (!CheckIn._todayCheckIn.bool) {
+                console.log('没有签到过，弹出签到页面！');
+                Admin._openScene(Admin.SceneName.UICheckIn);
+            } else {
+                if (SkinQualified._adsNum.value < 7) {
+                    Admin._openScene(Admin.SceneName.UISkinQualified);
+                }
+                console.log('签到过了，今日不可以再签到');
+            }
         }
     }
 
@@ -68,7 +78,7 @@ export default class UIStart extends Start.StartScene {
     lwgBtnClick(): void {
         Click.on(Click.Type.largen, this.self['BtnStart'], this, null, null, () => {
             ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnStart');
-           
+
             if (!Guide._complete.bool) {
                 if (Guide._whichStepNum == 8) {
                     EventAdmin.notify(Guide.EventType.complete);
@@ -82,7 +92,7 @@ export default class UIStart extends Start.StartScene {
 
         Click.on(Click.Type.largen, this.self['BtnDrawCard'], this, null, null, () => {
             ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnDrawCard');
-         
+
             if (!Guide._complete.bool) {
                 return;
             }
@@ -90,15 +100,15 @@ export default class UIStart extends Start.StartScene {
         });
 
         Click.on(Click.Type.largen, this.self['BtnChickIn'], this, null, null, () => {
+            CheckIn._fromWhich = Admin.SceneName.UIStart;
             ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnChickIn');
-          
             if (!Guide._complete.bool) {
                 return;
             }
             Admin._openScene(Admin.SceneName.UICheckIn);
         });
         Click.on(Click.Type.largen, this.self['BtnQualifyCard'], this, null, null, () => {
-       
+
             ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnQualifyCard');
             if (!Guide._complete.bool) {
                 return;
@@ -106,7 +116,7 @@ export default class UIStart extends Start.StartScene {
             Admin._openScene(Admin.SceneName.UISkinQualified);
         });
         Click.on(Click.Type.largen, this.self['BtnCard'], this, null, null, () => {
-                      
+
             ADManager.TAPoint(TaT.BtnClick, 'UIStart_BtnCard');
 
             if (!Guide._complete.bool) {
@@ -124,7 +134,7 @@ export default class UIStart extends Start.StartScene {
 
         Click.on(Click.Type.largen, this.self['BtnRanking'], this, null, null, () => {
             ADManager.TAPoint(TaT.BtnShow, 'UIStart_BtnRanking');
-            
+
             Dialog.createHint_Middle(Dialog.HintContent["敬请期待!"]);
         });
     }

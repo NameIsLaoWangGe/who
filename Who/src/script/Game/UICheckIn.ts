@@ -1,4 +1,4 @@
-import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold, EventAdmin, TimerAdmin } from "../Frame/lwg";
+import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold, EventAdmin, TimerAdmin, SkinQualified } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UICheckIn extends CheckIn.CheckInScene {
@@ -121,7 +121,13 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         Click.on('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
     }
     btnBackUp(): void {
-        Admin._closeScene(this.self);
+        Admin._closeScene(this.self, () => {
+            if (CheckIn._fromWhich == Admin.SceneName.UILoding) {
+                if (SkinQualified._adsNum.value < 7) {
+                    Admin._openScene(Admin.SceneName.UISkinQualified);
+                }
+            }
+        });
     }
     btnThreeGetUp(): void {
         ADManager.ShowReward(() => {

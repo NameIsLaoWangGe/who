@@ -16,7 +16,7 @@ export default class UIShare extends Share.ShareScene {
         Click.on(Click.Type.noEffect, this.self['BtnShare'], this, null, null, this.btnShareUp);
         Click.on(Click.Type.noEffect, this.self['Background'], this, null, null, this.btnShareUp);
         Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoShareUp);
-        Click.on(Click.Type.largen, this.self['BtnSkip'], this, null, null, this.btnNoShareUp);
+        // Click.on(Click.Type.largen, this.self['BtnSkip'], this, null, null, this.btnNoShareUp);
     }
 
     btnShareUp(): void {
@@ -29,12 +29,11 @@ export default class UIShare extends Share.ShareScene {
         }
         RecordManager._share('award', () => {
             Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                Gold.addGold(150);
+                Gold.addGold(300);
                 this.shareFunc();
             });
         })
     }
-
     shareFunc(): void {
         if (Share._fromWhich == Admin.SceneName.UIDrawCard) {
             ADManager.TAPoint(TaT.BtnShow, 'UIDrawCard_BtnShare');
@@ -51,5 +50,9 @@ export default class UIShare extends Share.ShareScene {
     btnNoShareUp(e: Laya.Event): void {
         e.stopPropagation();
         this.shareFunc();
+    }
+
+    lwgOnUpdate(): void {
+        Admin._clickLock.switch = false;
     }
 }
