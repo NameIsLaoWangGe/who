@@ -7287,7 +7287,6 @@
                     Color.colour(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
-                        Admin._clickLock.switch = false;
                         console.log('回答错误！');
                     }, false);
                 }
@@ -7303,7 +7302,6 @@
                     Color.colour(Card, [255, 0, 0, 1], 100);
                     Animation2D.swell_shrink(Card, 1, 1.05, 80);
                     Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
-                        Admin._clickLock.switch = false;
                         console.log('回答错误！');
                     }, false);
                 }
@@ -7333,7 +7331,7 @@
             let MainCamera = Game3D.MainCamera.getChildAt(0);
             let hitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
             let Sp3D;
-            if (hitResult && Admin._gameSwitch) {
+            if (hitResult && Admin._gameSwitch && !Admin._clickLock.switch) {
                 Sp3D = hitResult.collider.owner;
                 EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
             }
@@ -7750,7 +7748,7 @@
                 Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
                     Gold.addGold(rewardNum * number);
                     Laya.timer.once(500, this, () => {
-                        Admin._closeScene(this.self);
+                        this.btnBackUp();
                     });
                 });
             });
@@ -7859,7 +7857,6 @@
         btnAgainUp() {
             ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
             console.log('重新开始！');
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         }
         btnNextUp() {
@@ -7867,7 +7864,6 @@
                 ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
                 Admin._gameLevel.value += 1;
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
-                EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
         }
         lwgOnDisable() {
@@ -8188,6 +8184,12 @@
                 }
             });
             Click.on(Click.Type.noEffect, this.self['Surface'], this, (e) => {
+                if (!Guide._complete.bool) {
+                    if (Guide._whichStepNum == 1 || Guide._whichStepNum == 3) ;
+                    else {
+                        return;
+                    }
+                }
                 RecordManager.startAutoRecord();
                 EventAdmin.notify(Guide.EventType.stepComplete);
                 if (!this.self.getChildByName('DrawSp')) {
@@ -8841,7 +8843,6 @@
             this.shareFunc();
         }
         lwgOnUpdate() {
-            Admin._clickLock.switch = false;
         }
     }
 
@@ -9037,16 +9038,18 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnGet'], this, null, null, () => {
-                ADManager.TAPoint(TaT.BtnClick, 'UISkinQualified_BtnGet');
-                SkinQualified._adsNum.value++;
-                if (SkinQualified._adsNum.value >= 7) {
-                    Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
-                    Dialog.createHint_Middle(Dialog.HintContent["限定皮肤已经获得，请前往皮肤界面查看。"]);
-                    Animation2D.fadeOut(this.self, 1, 0, 500, 500, () => {
-                        Admin._closeScene(this.self);
-                    });
-                }
-                this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
+                ADManager.ShowReward(() => {
+                    ADManager.TAPoint(TaT.BtnClick, 'UISkinQualified_BtnGet');
+                    SkinQualified._adsNum.value++;
+                    if (SkinQualified._adsNum.value >= 7) {
+                        Backpack._haveCardArray.add(Game3D.getNameArrByObjArr(Game3D.getCardObjByQuality(Game3D.Quality.UR)));
+                        Dialog.createHint_Middle(Dialog.HintContent["限定皮肤已经获得，请前往皮肤界面查看。"]);
+                        Animation2D.fadeOut(this.self, 1, 0, 500, 500, () => {
+                            Admin._closeScene(this.self);
+                        });
+                    }
+                    this.self['AdsNum'].value = SkinQualified._adsNum.value.toString();
+                });
             });
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 Admin._closeScene(this.self);

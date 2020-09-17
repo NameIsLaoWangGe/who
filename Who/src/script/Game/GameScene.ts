@@ -1,4 +1,4 @@
-import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack, Color } from "../Frame/lwg";
+import { Admin, Dialog, Click, EventAdmin, Tools, Loding, DateAdmin, Animation2D, Gold, Animation3D, Effects, Share, Backpack, Color, TimerAdmin } from "../Frame/lwg";
 import { Game3D } from "./Game3D";
 
 import ADManager, { TaT } from "../../TJ/Admanager";
@@ -15,8 +15,6 @@ export default class GameScene extends Admin.Scene {
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
         ADManager.TAPoint(TaT.BtnShow, 'GameScene_BtnSC');
-     
-        
         Gold.goldAppear();
     }
 
@@ -29,6 +27,7 @@ export default class GameScene extends Admin.Scene {
         this.self['BtnSCNum'].text = Backpack._prop1.num;
         this.self['BtnSXNum'].text = Backpack._prop2.num;
         this.self['SceneContent'].alpha = 0;
+
     }
 
     lwgBtnClick(): void {
@@ -206,6 +205,7 @@ export default class GameScene extends Admin.Scene {
     /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
         Admin._clickLock.switch = false;
+
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
         GuessCard.pos(0, 0);
@@ -246,7 +246,6 @@ export default class GameScene extends Admin.Scene {
                 Color.colour(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
-                    Admin._clickLock.switch = false;
                     console.log('回答错误！');
                 }, false);
             }
@@ -264,7 +263,6 @@ export default class GameScene extends Admin.Scene {
                 Color.colour(Card, [255, 0, 0, 1], 100);
                 Animation2D.swell_shrink(Card, 1, 1.05, 80);
                 Animation2D.leftRight_Shake(Card, 30, 50, 0, () => {
-                    Admin._clickLock.switch = false;
                     console.log('回答错误！');
                 }, false);
             }
@@ -300,7 +298,7 @@ export default class GameScene extends Admin.Scene {
         let MainCamera = Game3D.MainCamera.getChildAt(0) as Laya.Camera;
         let hitResult: Laya.HitResult = Tools.d3_rayScanning(MainCamera, Game3D.Scene3D, new Laya.Vector2(e.stageX, e.stageY))[0];
         let Sp3D;
-        if (hitResult && Admin._gameSwitch) {
+        if (hitResult && Admin._gameSwitch && !Admin._clickLock.switch) {
             Sp3D = hitResult.collider.owner;
             EventAdmin.notify(Game3D.EventType.judgeMeClickCard, Sp3D);
         }

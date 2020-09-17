@@ -302,7 +302,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
             }
             var anifunc = () => {
                 Animation2D.fadeOut(this.self['DrawDisPlay'], 1, 0, 200, 0, () => {
-                 
+
                     EventAdmin.notify(Guide.EventType.onStep);
                     this.self['DrawDisPlay'].x = -800;
                     this.self['DrawDisPlay'].alpha = 1;
@@ -353,6 +353,12 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         Click.on(Click.Type.noEffect, this.self['Surface'], this,
             // 按下
             (e: Laya.Event) => {
+                if (!Guide._complete.bool) {
+                    if (Guide._whichStepNum == 1 || Guide._whichStepNum == 3) {
+                    } else {
+                        return;
+                    }
+                }
                 RecordManager.startAutoRecord();
                 EventAdmin.notify(Guide.EventType.stepComplete);
                 // 初始化一个绘制节点

@@ -2850,188 +2850,12 @@
 						},
 						"components":[],
 						"child":[]
-					},
-					{
-						"type":"MeshSprite3D",
-						"instanceID":79,
-						"props":{
-							"name":"chaji",
-							"active":true,
-							"isStatic":false,
-							"layer":0,
-							"position":[
-								1.74,
-								6.03,
-								0.54
-							],
-							"rotation":[
-								0,
-								0,
-								-0.7071068,
-								-0.7071068
-							],
-							"scale":[
-								2,
-								2,
-								2
-							],
-							"meshPath":"Assets/Animator/daoju/changjing/jiajv-Box022.lm",
-							"enableRender":true,
-							"materials":[
-								{
-									"path":"Assets/Animator/daoju/changjing/jiaju1.lmat"
-								}
-							]
-						},
-						"components":[],
-						"child":[
-							{
-								"type":"MeshSprite3D",
-								"instanceID":80,
-								"props":{
-									"name":"Cylinder004",
-									"active":true,
-									"isStatic":false,
-									"layer":0,
-									"position":[
-										0.1399996,
-										-0.135,
-										0.06500006
-									],
-									"rotation":[
-										0,
-										0,
-										0,
-										-1
-									],
-									"scale":[
-										0.3572008,
-										0.3572007,
-										0.3572008
-									],
-									"meshPath":"Assets/Animator/daoju/changjing/jiajv-Cylinder004.lm",
-									"enableRender":true,
-									"materials":[
-										{
-											"path":"Assets/Animator/daoju/changjing/jiaju1.lmat"
-										}
-									]
-								},
-								"components":[],
-								"child":[]
-							},
-							{
-								"type":"MeshSprite3D",
-								"instanceID":81,
-								"props":{
-									"name":"Cylinder005",
-									"active":true,
-									"isStatic":false,
-									"layer":0,
-									"position":[
-										-0.2900004,
-										0.15,
-										0.06499991
-									],
-									"rotation":[
-										0,
-										0,
-										0,
-										-1
-									],
-									"scale":[
-										0.650954,
-										0.6509538,
-										0.6509538
-									],
-									"meshPath":"Assets/Animator/daoju/changjing/jiajv-Cylinder005.lm",
-									"enableRender":true,
-									"materials":[
-										{
-											"path":"Assets/Animator/daoju/changjing/jiaju1.lmat"
-										}
-									]
-								},
-								"components":[],
-								"child":[]
-							},
-							{
-								"type":"MeshSprite3D",
-								"instanceID":82,
-								"props":{
-									"name":"Cylinder006",
-									"active":true,
-									"isStatic":false,
-									"layer":0,
-									"position":[
-										-0.1950005,
-										-0.135,
-										0.06500006
-									],
-									"rotation":[
-										0,
-										0,
-										0,
-										-1
-									],
-									"scale":[
-										0.650954,
-										0.6509538,
-										0.6509538
-									],
-									"meshPath":"Assets/Animator/daoju/changjing/jiajv-Cylinder006.lm",
-									"enableRender":true,
-									"materials":[
-										{
-											"path":"Assets/Animator/daoju/changjing/jiaju1.lmat"
-										}
-									]
-								},
-								"components":[],
-								"child":[]
-							},
-							{
-								"type":"MeshSprite3D",
-								"instanceID":83,
-								"props":{
-									"name":"Cylinder007",
-									"active":true,
-									"isStatic":false,
-									"layer":0,
-									"position":[
-										0.1399997,
-										0.165,
-										0.06500006
-									],
-									"rotation":[
-										0,
-										0,
-										0,
-										-1
-									],
-									"scale":[
-										0.3572008,
-										0.3572007,
-										0.3572008
-									],
-									"meshPath":"Assets/Animator/daoju/changjing/jiajv-Cylinder007.lm",
-									"enableRender":true,
-									"materials":[
-										{
-											"path":"Assets/Animator/daoju/changjing/jiaju1.lmat"
-										}
-									]
-								},
-								"components":[],
-								"child":[]
-							}
-						]
 					}
 				]
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":84,
+				"instanceID":79,
 				"props":{
 					"name":"changjing2",
 					"active":true,
@@ -3058,7 +2882,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":85,
+						"instanceID":80,
 						"props":{
 							"name":"zhuozi (1)",
 							"active":true,
@@ -3093,7 +2917,7 @@
 					},
 					{
 						"type":"Sprite3D",
-						"instanceID":86,
+						"instanceID":81,
 						"props":{
 							"name":"pai",
 							"active":true,
@@ -3120,7 +2944,7 @@
 						"child":[
 							{
 								"type":"Sprite3D",
-								"instanceID":87,
+								"instanceID":82,
 								"props":{
 									"name":"kapai",
 									"active":true,
@@ -3147,7 +2971,7 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":88,
+										"instanceID":83,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3157,6 +2981,181 @@
 												-0.4751537,
 												-0.9555589,
 												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":84,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555589,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":85,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
+												-0.9555589,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":86,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.6273158,
+												-0.9555589,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":87,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.4751537,
+												-0.9555589,
+												1.477189
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61627,
+												14.61629,
+												14.61629
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":88,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555589,
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3189,9 +3188,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555589,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3224,9 +3223,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												0.6273158,
 												-0.9555589,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3259,9 +3258,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.4751537,
 												-0.9555589,
-												2.031072
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3294,9 +3293,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												-0.1096842,
 												-0.9555589,
-												1.477189
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3329,9 +3328,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555589,
-												1.477189
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3364,9 +3363,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												0.6273158,
 												-0.9555589,
-												1.477189
+												0.9331894
 											],
 											"rotation":[
 												-0.7071068,
@@ -3399,9 +3398,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.4751537,
 												-0.9555589,
-												1.477189
+												0.3891895
 											],
 											"rotation":[
 												-0.7071068,
@@ -3434,9 +3433,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												-0.1096842,
 												-0.9555589,
-												0.9331894
+												0.3891895
 											],
 											"rotation":[
 												-0.7071068,
@@ -3469,9 +3468,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555589,
-												0.9331894
+												0.3891895
 											],
 											"rotation":[
 												-0.7071068,
@@ -3498,181 +3497,6 @@
 									{
 										"type":"MeshSprite3D",
 										"instanceID":98,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.256316,
-												-0.9555589,
-												0.9331894
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":99,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.6273158,
-												-0.9555589,
-												0.9331894
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":100,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.4751537,
-												-0.9555589,
-												0.3891895
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":101,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.1096842,
-												-0.9555589,
-												0.3891895
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":102,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.256316,
-												-0.9555589,
-												0.3891895
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61627,
-												14.61629,
-												14.61629
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":103,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3709,7 +3533,7 @@
 							},
 							{
 								"type":"Sprite3D",
-								"instanceID":104,
+								"instanceID":99,
 								"props":{
 									"name":"kapai (1)",
 									"active":true,
@@ -3736,7 +3560,7 @@
 								"child":[
 									{
 										"type":"MeshSprite3D",
-										"instanceID":105,
+										"instanceID":100,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -3746,6 +3570,181 @@
 												-0.4751537,
 												-0.9555588,
 												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":101,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555588,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":102,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.256316,
+												-0.9555588,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":103,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												0.6273158,
+												-0.9555588,
+												2.031072
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":104,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.4751537,
+												-0.9555588,
+												1.477189
+											],
+											"rotation":[
+												-0.7071068,
+												-5.338508E-08,
+												-5.338508E-08,
+												0.7071068
+											],
+											"scale":[
+												14.61628,
+												14.61628,
+												14.61628
+											],
+											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
+											"enableRender":true,
+											"materials":[
+												{
+													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
+												}
+											]
+										},
+										"components":[],
+										"child":[]
+									},
+									{
+										"type":"MeshSprite3D",
+										"instanceID":105,
+										"props":{
+											"name":"Object007",
+											"active":true,
+											"isStatic":false,
+											"layer":0,
+											"position":[
+												-0.1096842,
+												-0.9555588,
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3778,9 +3777,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555588,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3813,9 +3812,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												0.6273158,
 												-0.9555588,
-												2.031072
+												1.477189
 											],
 											"rotation":[
 												-0.7071068,
@@ -3848,9 +3847,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.4751537,
 												-0.9555588,
-												2.031072
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -3883,9 +3882,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												-0.1096842,
 												-0.9555588,
-												1.477189
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -3918,9 +3917,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555588,
-												1.477189
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -3953,9 +3952,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.256316,
+												0.6273158,
 												-0.9555588,
-												1.477189
+												0.9331896
 											],
 											"rotation":[
 												-0.7071068,
@@ -3988,9 +3987,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												0.6273158,
+												-0.4751537,
 												-0.9555588,
-												1.477189
+												0.3891893
 											],
 											"rotation":[
 												-0.7071068,
@@ -4023,9 +4022,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.4751537,
+												-0.1096842,
 												-0.9555588,
-												0.9331896
+												0.3891893
 											],
 											"rotation":[
 												-0.7071068,
@@ -4058,9 +4057,9 @@
 											"isStatic":false,
 											"layer":0,
 											"position":[
-												-0.1096842,
+												0.256316,
 												-0.9555588,
-												0.9331896
+												0.3891893
 											],
 											"rotation":[
 												-0.7071068,
@@ -4087,181 +4086,6 @@
 									{
 										"type":"MeshSprite3D",
 										"instanceID":115,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.256316,
-												-0.9555588,
-												0.9331896
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":116,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.6273158,
-												-0.9555588,
-												0.9331896
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":117,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.4751537,
-												-0.9555588,
-												0.3891893
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":118,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												-0.1096842,
-												-0.9555588,
-												0.3891893
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":119,
-										"props":{
-											"name":"Object007",
-											"active":true,
-											"isStatic":false,
-											"layer":0,
-											"position":[
-												0.256316,
-												-0.9555588,
-												0.3891893
-											],
-											"rotation":[
-												-0.7071068,
-												-5.338508E-08,
-												-5.338508E-08,
-												0.7071068
-											],
-											"scale":[
-												14.61628,
-												14.61628,
-												14.61628
-											],
-											"meshPath":"Assets/Animator/Cardcolor/1mesh-Object007.lm",
-											"enableRender":true,
-											"materials":[
-												{
-													"path":"Assets/Animator/Cardcolor/cxk1.lmat"
-												}
-											]
-										},
-										"components":[],
-										"child":[]
-									},
-									{
-										"type":"MeshSprite3D",
-										"instanceID":120,
 										"props":{
 											"name":"Object007",
 											"active":true,
@@ -4298,7 +4122,7 @@
 							},
 							{
 								"type":"MeshSprite3D",
-								"instanceID":121,
+								"instanceID":116,
 								"props":{
 									"name":"Object007",
 									"active":true,
@@ -4335,7 +4159,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":122,
+						"instanceID":117,
 						"props":{
 							"name":"zhuozi",
 							"active":true,
@@ -4370,7 +4194,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":123,
+						"instanceID":118,
 						"props":{
 							"name":"dengzi",
 							"active":true,
@@ -4407,7 +4231,7 @@
 			},
 			{
 				"type":"Sprite3D",
-				"instanceID":124,
+				"instanceID":119,
 				"props":{
 					"name":"AllCardGray",
 					"active":true,
@@ -4434,7 +4258,7 @@
 				"child":[
 					{
 						"type":"MeshSprite3D",
-						"instanceID":125,
+						"instanceID":120,
 						"props":{
 							"name":"zds1",
 							"active":true,
@@ -4542,7 +4366,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":126,
+						"instanceID":121,
 						"props":{
 							"name":"zds2",
 							"active":true,
@@ -4650,7 +4474,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":127,
+						"instanceID":122,
 						"props":{
 							"name":"zds3",
 							"active":true,
@@ -4758,7 +4582,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":128,
+						"instanceID":123,
 						"props":{
 							"name":"zds4",
 							"active":true,
@@ -4866,7 +4690,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":129,
+						"instanceID":124,
 						"props":{
 							"name":"zds5",
 							"active":true,
@@ -4974,7 +4798,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":130,
+						"instanceID":125,
 						"props":{
 							"name":"lyy1",
 							"active":true,
@@ -5082,7 +4906,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":131,
+						"instanceID":126,
 						"props":{
 							"name":"lyy2",
 							"active":true,
@@ -5190,7 +5014,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":132,
+						"instanceID":127,
 						"props":{
 							"name":"lyy3",
 							"active":true,
@@ -5298,7 +5122,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":133,
+						"instanceID":128,
 						"props":{
 							"name":"lyy4",
 							"active":true,
@@ -5406,7 +5230,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":134,
+						"instanceID":129,
 						"props":{
 							"name":"lyy5",
 							"active":true,
@@ -5514,7 +5338,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":135,
+						"instanceID":130,
 						"props":{
 							"name":"cxk1",
 							"active":true,
@@ -5622,7 +5446,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":136,
+						"instanceID":131,
 						"props":{
 							"name":"cxk2",
 							"active":true,
@@ -5730,7 +5554,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":137,
+						"instanceID":132,
 						"props":{
 							"name":"cxk3",
 							"active":true,
@@ -5838,7 +5662,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":138,
+						"instanceID":133,
 						"props":{
 							"name":"cxk4",
 							"active":true,
@@ -5946,7 +5770,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":139,
+						"instanceID":134,
 						"props":{
 							"name":"cxk5",
 							"active":true,
@@ -6054,7 +5878,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":140,
+						"instanceID":135,
 						"props":{
 							"name":"cxy1",
 							"active":true,
@@ -6162,7 +5986,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":141,
+						"instanceID":136,
 						"props":{
 							"name":"cxy2",
 							"active":true,
@@ -6270,7 +6094,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":142,
+						"instanceID":137,
 						"props":{
 							"name":"cxy3",
 							"active":true,
@@ -6378,7 +6202,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":143,
+						"instanceID":138,
 						"props":{
 							"name":"cxy4",
 							"active":true,
@@ -6486,7 +6310,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":144,
+						"instanceID":139,
 						"props":{
 							"name":"cxy5",
 							"active":true,
@@ -6594,7 +6418,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":145,
+						"instanceID":140,
 						"props":{
 							"name":"xxs1",
 							"active":true,
@@ -6702,7 +6526,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":146,
+						"instanceID":141,
 						"props":{
 							"name":"xxs2",
 							"active":true,
@@ -6810,7 +6634,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":147,
+						"instanceID":142,
 						"props":{
 							"name":"xxs3",
 							"active":true,
@@ -6918,7 +6742,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":148,
+						"instanceID":143,
 						"props":{
 							"name":"xxs4",
 							"active":true,
@@ -7026,7 +6850,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":149,
+						"instanceID":144,
 						"props":{
 							"name":"xxs5",
 							"active":true,
@@ -7134,7 +6958,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":150,
+						"instanceID":145,
 						"props":{
 							"name":"scp1",
 							"active":true,
@@ -7242,7 +7066,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":151,
+						"instanceID":146,
 						"props":{
 							"name":"scp2",
 							"active":true,
@@ -7350,7 +7174,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":152,
+						"instanceID":147,
 						"props":{
 							"name":"scp3",
 							"active":true,
@@ -7458,7 +7282,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":153,
+						"instanceID":148,
 						"props":{
 							"name":"scp4",
 							"active":true,
@@ -7566,7 +7390,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":154,
+						"instanceID":149,
 						"props":{
 							"name":"atm1",
 							"active":true,
@@ -7674,7 +7498,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":155,
+						"instanceID":150,
 						"props":{
 							"name":"atm2",
 							"active":true,
@@ -7782,7 +7606,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":156,
+						"instanceID":151,
 						"props":{
 							"name":"atm3",
 							"active":true,
@@ -7890,7 +7714,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":157,
+						"instanceID":152,
 						"props":{
 							"name":"atm4",
 							"active":true,
@@ -7998,7 +7822,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":158,
+						"instanceID":153,
 						"props":{
 							"name":"atm5",
 							"active":true,
@@ -8106,7 +7930,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":159,
+						"instanceID":154,
 						"props":{
 							"name":"wzry1",
 							"active":true,
@@ -8214,7 +8038,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":160,
+						"instanceID":155,
 						"props":{
 							"name":"wzry2",
 							"active":true,
@@ -8322,7 +8146,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":161,
+						"instanceID":156,
 						"props":{
 							"name":"wzry3",
 							"active":true,
@@ -8430,7 +8254,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":162,
+						"instanceID":157,
 						"props":{
 							"name":"wzry4",
 							"active":true,
@@ -8538,7 +8362,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":163,
+						"instanceID":158,
 						"props":{
 							"name":"wzry5",
 							"active":true,
@@ -8646,7 +8470,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":164,
+						"instanceID":159,
 						"props":{
 							"name":"wzry6",
 							"active":true,
@@ -8754,7 +8578,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":165,
+						"instanceID":160,
 						"props":{
 							"name":"wzry7",
 							"active":true,
@@ -8862,7 +8686,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":166,
+						"instanceID":161,
 						"props":{
 							"name":"wdsj1",
 							"active":true,
@@ -8970,7 +8794,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":167,
+						"instanceID":162,
 						"props":{
 							"name":"wdsj2",
 							"active":true,
@@ -9078,7 +8902,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":168,
+						"instanceID":163,
 						"props":{
 							"name":"wdsj3",
 							"active":true,
@@ -9186,7 +9010,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":169,
+						"instanceID":164,
 						"props":{
 							"name":"wdsj4",
 							"active":true,
@@ -9294,7 +9118,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":170,
+						"instanceID":165,
 						"props":{
 							"name":"wdsj5",
 							"active":true,
@@ -9402,7 +9226,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":171,
+						"instanceID":166,
 						"props":{
 							"name":"wdsj6",
 							"active":true,
@@ -9510,7 +9334,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":172,
+						"instanceID":167,
 						"props":{
 							"name":"wdsj7",
 							"active":true,
@@ -9618,7 +9442,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":173,
+						"instanceID":168,
 						"props":{
 							"name":"wdsj8",
 							"active":true,
@@ -9726,7 +9550,7 @@
 					},
 					{
 						"type":"MeshSprite3D",
-						"instanceID":174,
+						"instanceID":169,
 						"props":{
 							"name":"wdsj9",
 							"active":true,

@@ -88,7 +88,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
 
         console.log('重新开始！');
-        Admin._openScene(Admin.SceneName.UIStart, this.self);
+        // Admin._openScene(Admin.SceneName.UIStart, this.self);
         EventAdmin.notify(EventAdmin.EventType.nextCustoms);
     }
 
@@ -99,7 +99,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
 
             Admin._gameLevel.value += 1;
             Admin._openScene(Admin.SceneName.UIStart, this.self);
-            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
+            // EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         })
     }
 

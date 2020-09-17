@@ -4037,7 +4037,6 @@ export module lwg {
             }
             return childArr;
         }
-
         /**
          * 随机出数个子节点，返回这个子节点数组
          * @param node 节点

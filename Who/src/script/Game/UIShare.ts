@@ -53,6 +53,6 @@ export default class UIShare extends Share.ShareScene {
     }
 
     lwgOnUpdate(): void {
-        Admin._clickLock.switch = false;
+        // Admin._clickLock.switch = false;
     }
 }

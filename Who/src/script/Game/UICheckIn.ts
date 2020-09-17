@@ -140,6 +140,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         if (Admin._platform === Admin._platformTpye.Bytedance) {
             if (this.self['Dot'].visible) {
                 ADManager.ShowReward(() => {
+
                     ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
                     this.btnGetUpFunc(3);
                 })
@@ -174,7 +175,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
             Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
                 Gold.addGold(rewardNum * number);
                 Laya.timer.once(500, this, () => {
-                    Admin._closeScene(this.self);
+                    this.btnBackUp();
                 })
             });
         });
