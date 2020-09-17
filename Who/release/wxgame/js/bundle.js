@@ -1090,7 +1090,7 @@
             console.log("******************吊起分享 ？？？？？", RecordManager.grv, RecordManager.grv.videoPath);
             if (RecordManager.grv.videoPath) {
                 let p = new TJ.Platform.AppRt.Extern.TT.ShareAppMessageParam();
-                p.extra.videoTopics = ["剃头大师", "番茄小游戏", "抖音小游戏"];
+                p.extra.videoTopics = ["比谁猜的快", "番茄小游戏", "抖音小游戏"];
                 p.channel = "video";
                 p.success = () => {
                     Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
@@ -1173,6 +1173,7 @@
             EventType["closeUICard"] = "closeUICard";
             EventType["UICardBuy"] = "UICardBuy";
             EventType["UICardMove"] = "UICardMove";
+            EventType["closeGameScene"] = "closeGameScene";
         })(EventType = Game3D.EventType || (Game3D.EventType = {}));
         let RoleName;
         (function (RoleName) {
@@ -2024,7 +2025,6 @@
             }
             init() {
                 Game3D.AllCardGray.active = true;
-                Admin._gameSwitch = true;
                 Game3D.whichBout = WhichBoutType.stop;
                 Tools.node_RemoveAllChildren(Game3D.MyCardParent);
                 Tools.node_RemoveAllChildren(Game3D.OppositeCardParent);
@@ -3029,7 +3029,7 @@
                             Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
                         }
                         Animation2D.fadeOut(scene, 0, 1, time, 0);
-                        Laya.timer.once(600, this, () => {
+                        Laya.timer.once(500, this, () => {
                             afterAni();
                         });
                         break;
@@ -7095,11 +7095,17 @@
         lwgAdaptive() {
             this.self['SceneContent'].y = Laya.stage.height * 0.792;
         }
+        lwgOpenAniAfter() {
+        }
         lwgOnEnable() {
             EventAdmin.notify(Game3D.EventType.opening);
             this.self['BtnSCNum'].text = Backpack._prop1.num;
             this.self['BtnSXNum'].text = Backpack._prop2.num;
             this.self['SceneContent'].alpha = 0;
+            this.self['BtnBack'].visible = false;
+            Laya.timer.once(4500, this, () => {
+                this.self['BtnBack'].visible = true;
+            });
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
@@ -7126,6 +7132,9 @@
                 Backpack._prop1.num--;
                 this.self['BtnSCNum'].text = Tools.format_StrAddNum(this.self['BtnSCNum'].text, -1);
                 let arr = Tools.node_RandomChildren(this.self['OptionParent']);
+                if (!arr[0]) {
+                    return;
+                }
                 let question = arr[0].getChildByName('Content').text;
                 EventAdmin.notify(Game3D.EventType.BtnSC, [question]);
                 Laya.timer.once(3000, this, () => {
@@ -7151,10 +7160,12 @@
         lwgEventReg() {
             EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
                 Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
+                    this.self['SceneContent'].visible = false;
                     this.createOppositeQuestion(questionAndYesOrNo, cardName);
                 });
             });
             EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+                this.self['SceneContent'].visible = true;
                 this.createQuestion(questionArr);
                 Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0);
             });
@@ -7164,6 +7175,9 @@
             });
             EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
                 Admin._openScene(Admin.SceneName.UIResurgence);
+            });
+            EventAdmin.reg(Game3D.EventType.closeGameScene, this, () => {
+                Admin._closeScene(this.self);
             });
             EventAdmin.reg(EventAdmin.EventType.resurgence, this, () => {
                 Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 500, 100, () => {
@@ -7243,13 +7257,13 @@
             if (click) {
                 Click.on(Click.Type.largen, Option, this, null, null, () => {
                     Admin._clickLock.switch = true;
+                    Admin._gameSwitch = true;
                     EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
                 });
             }
             return Option;
         }
         createOppositeQuestion(questionAndYesOrNo, cardName) {
-            Admin._clickLock.switch = false;
             let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard);
             this.self.addChild(GuessCard);
             GuessCard.pos(0, 0);
@@ -7267,7 +7281,9 @@
             Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
             Card.y = Laya.stage.height * 0.483;
             Animation2D.cardRotateX_TowFace(Card, 180);
-            Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
+            Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500, null, () => {
+                Admin._clickLock.switch = false;
+            });
             let Card1 = GuessCard.getChildByName('Card1');
             Card1.visible = false;
             if (questionAndYesOrNo[2]) {
@@ -7279,8 +7295,9 @@
             }
             let BtnYes = GuessCard.getChildByName('BtnYes');
             var btnYesUp = () => {
-                Admin._clickLock.switch = true;
+                console.log('点击！！！');
                 if (questionAndYesOrNo[1]) {
+                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
                 }
                 else {
@@ -7294,8 +7311,9 @@
             Click.on(Click.Type.largen, BtnYes, this, null, null, btnYesUp);
             let BtnNo = GuessCard.getChildByName('BtnNo');
             var btnNoUp = () => {
-                Admin._clickLock.switch = true;
+                console.log('点击！！！');
                 if (!questionAndYesOrNo[1]) {
+                    Admin._clickLock.switch = true;
                     EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
                 }
                 else {
@@ -7794,6 +7812,7 @@
         lwgOnAwake() {
             ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
             ADManager.TAPoint(TaT.BtnShow, 'UIDefeated_BtnNext');
+            EventAdmin.notify(Game3D.EventType.closeGameScene);
             Admin._gameLevel.value = 0;
             Admin._gameSwitch = false;
             switch (Admin._platform) {
@@ -7821,6 +7840,7 @@
             Gold.GoldNode = this.self['GoldNode'];
             let Num2 = this.self['GoldNode'].getChildByName('Num');
             Num2.text = Gold._num.value.toString();
+            Admin._clickLock.switch = true;
         }
         lwgBtnClick() {
             Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
@@ -7857,6 +7877,7 @@
         btnAgainUp() {
             ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
             console.log('重新开始！');
+            Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         }
         btnNextUp() {
@@ -7864,6 +7885,7 @@
                 ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
                 Admin._gameLevel.value += 1;
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
+                EventAdmin.notify(EventAdmin.EventType.nextCustoms);
             });
         }
         lwgOnDisable() {

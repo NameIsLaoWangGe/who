@@ -21,13 +21,17 @@ export default class GameScene extends Admin.Scene {
     lwgAdaptive(): void {
         this.self['SceneContent'].y = Laya.stage.height * 0.792;
     }
-
+    lwgOpenAniAfter(): void {
+    }
     lwgOnEnable(): void {
         EventAdmin.notify(Game3D.EventType.opening);
         this.self['BtnSCNum'].text = Backpack._prop1.num;
         this.self['BtnSXNum'].text = Backpack._prop2.num;
         this.self['SceneContent'].alpha = 0;
-
+        this.self['BtnBack'].visible = false;
+        Laya.timer.once(4500, this, () => {
+            this.self['BtnBack'].visible = true;
+        });
     }
 
     lwgBtnClick(): void {
@@ -60,6 +64,9 @@ export default class GameScene extends Admin.Scene {
             this.self['BtnSCNum'].text = Tools.format_StrAddNum(this.self['BtnSCNum'].text, -1);
             //四个属性中随机一个属性，然后把我方牌中有这个属性的卡牌倒下，然后再刷新生成四个问题继续作答，此时问题随机选取，而不是中间四个
             let arr = Tools.node_RandomChildren(this.self['OptionParent']);
+            if (!arr[0]) {
+                return;
+            }
             let question = (arr[0].getChildByName('Content') as Laya.Label).text;
             EventAdmin.notify(Game3D.EventType.BtnSC, [question]);
 
@@ -91,12 +98,14 @@ export default class GameScene extends Admin.Scene {
         // 对方答题
         EventAdmin.reg(Game3D.EventType.oppositeAnswer, this, (questionAndYesOrNo, cardName) => {
             Animation2D.fadeOut(this.self['SceneContent'], this.self['SceneContent'].alpha, 0, 300, 0, () => {
+                this.self['SceneContent'].visible = false;//必须隐藏，防止触发
                 this.createOppositeQuestion(questionAndYesOrNo, cardName);
             });
         })
 
         // 我方答题
         EventAdmin.reg(Game3D.EventType.meAnswer, this, (questionArr) => {
+            this.self['SceneContent'].visible = true;
             this.createQuestion(questionArr);
             Animation2D.fadeOut(this.self['SceneContent'], 0, 1, 300, 0);
         })
@@ -110,6 +119,11 @@ export default class GameScene extends Admin.Scene {
         // 失败
         EventAdmin.reg(EventAdmin.EventType.defeated, this, () => {
             Admin._openScene(Admin.SceneName.UIResurgence);
+        })
+
+        //关闭当前界面 
+        EventAdmin.reg(Game3D.EventType.closeGameScene, this, () => {
+            Admin._closeScene(this.self);
         })
 
         // 复活
@@ -196,6 +210,7 @@ export default class GameScene extends Admin.Scene {
         if (click) {
             Click.on(Click.Type.largen, Option, this, null, null, () => {
                 Admin._clickLock.switch = true;
+                Admin._gameSwitch = true;
                 EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
             });
         }
@@ -204,8 +219,6 @@ export default class GameScene extends Admin.Scene {
 
     /**创建对方提问卡*/
     createOppositeQuestion(questionAndYesOrNo: Array<any>, cardName: string): void {
-        Admin._clickLock.switch = false;
-
         let GuessCard = Laya.Pool.getItemByCreateFun('GuessCard', this.GuessCard.create, this.GuessCard) as Laya.Sprite;
         this.self.addChild(GuessCard);
         GuessCard.pos(0, 0);
@@ -225,10 +238,13 @@ export default class GameScene extends Admin.Scene {
         Pic.skin = 'Game/UI/UIDrawCard/Card/' + cardName + '.jpg';
         Card.y = Laya.stage.height * 0.483;
         Animation2D.cardRotateX_TowFace(Card, 180);
-        Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500);
+        Animation2D.move_Simple(Card, -800, Card.y, Laya.stage.width / 2, Card.y, 500, null, () => {
+            Admin._clickLock.switch = false;
+        });
         let Card1 = GuessCard.getChildByName('Card1') as Laya.Sprite;
         Card1.visible = false;
         if (questionAndYesOrNo[2]) {
+
             Card1.visible = true;
             let Pic = Card1.getChildByName('Pic') as Laya.Image;
             Pic.skin = 'Game/UI/UIDrawCard/Card/' + questionAndYesOrNo[2] + '.jpg';
@@ -239,8 +255,9 @@ export default class GameScene extends Admin.Scene {
         let BtnYes = GuessCard.getChildByName('BtnYes') as Laya.Label;
 
         var btnYesUp = () => {
-            Admin._clickLock.switch = true;
+            console.log('点击！！！');
             if (questionAndYesOrNo[1]) {
+                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], true]);
             } else {
                 Color.colour(Card, [255, 0, 0, 1], 100);
@@ -256,8 +273,9 @@ export default class GameScene extends Admin.Scene {
         let BtnNo = GuessCard.getChildByName('BtnNo') as Laya.Label;
 
         var btnNoUp = () => {
-            Admin._clickLock.switch = true;
+            console.log('点击！！！');
             if (!questionAndYesOrNo[1]) {
+                Admin._clickLock.switch = true;
                 EventAdmin.notify(Game3D.EventType.judgeOppositeAnswer, [questionAndYesOrNo[0], false]);
             } else {
                 Color.colour(Card, [255, 0, 0, 1], 100);

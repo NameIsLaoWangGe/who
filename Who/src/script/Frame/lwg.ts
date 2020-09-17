@@ -1338,7 +1338,7 @@ export module lwg {
                         Animation2D.fadeOut(scene, 0, 1, time / 2, delay);
                     }
                     Animation2D.fadeOut(scene, 0, 1, time, 0);
-                    Laya.timer.once(600, this, () => {
+                    Laya.timer.once(500, this, () => {
                         afterAni();
                     })
                     break;

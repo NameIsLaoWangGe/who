@@ -1,12 +1,14 @@
 import { Admin, Setting, PalyAudio, Click, EventAdmin, Defeated, Gold } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
+import { Game3D } from "./Game3D";
 
 export default class UIDefeated extends Defeated.DefeatedScene {
 
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
         ADManager.TAPoint(TaT.BtnShow, 'UIDefeated_BtnNext');
-
+        //关闭当前界面 
+        EventAdmin.notify(Game3D.EventType.closeGameScene);
         Admin._gameLevel.value = 0;
         Admin._gameSwitch = false;
 
@@ -38,6 +40,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         Gold.GoldNode = this.self['GoldNode'];
         let Num2 = this.self['GoldNode'].getChildByName('Num') as Laya.Label;
         Num2.text = Gold._num.value.toString();
+        Admin._clickLock.switch = true;
     }
 
     lwgBtnClick(): void {
@@ -88,7 +91,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
         ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
 
         console.log('重新开始！');
-        // Admin._openScene(Admin.SceneName.UIStart, this.self);
+        Admin._openScene(Admin.SceneName.UIStart, this.self);
         EventAdmin.notify(EventAdmin.EventType.nextCustoms);
     }
 
@@ -99,7 +102,7 @@ export default class UIDefeated extends Defeated.DefeatedScene {
 
             Admin._gameLevel.value += 1;
             Admin._openScene(Admin.SceneName.UIStart, this.self);
-            // EventAdmin.notify(EventAdmin.EventType.nextCustoms);
+            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
         })
     }
 

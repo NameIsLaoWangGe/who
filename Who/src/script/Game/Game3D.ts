@@ -132,6 +132,8 @@ export module Game3D {
         UICardBuy = 'UICardBuy',
         /**卡牌位移*/
         UICardMove = 'UICardMove',
+        /**关闭游戏场景*/
+        closeGameScene = 'closeGameScene',
     }
 
     /**角色名称*/
@@ -1118,7 +1120,6 @@ export module Game3D {
         /**开局*/
         init(): void {
             AllCardGray.active = true;
-            Admin._gameSwitch = true;
             whichBout = WhichBoutType.stop;
             Tools.node_RemoveAllChildren(MyCardParent);
             Tools.node_RemoveAllChildren(OppositeCardParent);

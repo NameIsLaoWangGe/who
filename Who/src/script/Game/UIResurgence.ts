@@ -22,6 +22,7 @@ export default class UIResurgence extends Admin.Scene {
                 if (Countdown.value == '-1') {
                     Countdown.value = '0';
                     Laya.timer.clearAll(this);
+                 
                     Admin._openScene(Admin.SceneName.UIDefeated, this.self);
                 }
             }
@@ -53,5 +54,5 @@ export default class UIResurgence extends Admin.Scene {
         });
     }
 
-   
+
 }
