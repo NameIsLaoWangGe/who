@@ -22,8 +22,8 @@ export module Init {
         /**基础参数初始化*/
         admin(): void {
             Admin._commonVanishAni = true;
-            Admin._platform = Admin._platformTpye.OPPO;
-            Admin._evaluating = true;
+            Admin._platform = Admin._platformTpye.Bytedance;
+            Admin._evaluating = false;
         }
         /**3D模块初始化*/
         game3D(): void {

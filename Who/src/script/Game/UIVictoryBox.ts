@@ -150,7 +150,8 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
             Admin._openScene(Admin.SceneName.UIVictory, this.self);
         }
         // /**看广告获取的最大次数为6次*/
-        var again = (e) => {
+        var again = (e: Laya.Event) => {
+            e.stopPropagation();
             ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
 
             if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
@@ -168,11 +169,13 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
 
         Click.on(Click.Type.largen, this.self['Bytedance_BtnNo'], this, null, null, no);
         Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
-        Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+        Click.on(Click.Type.noEffect, this.self['Bytedance_BtnSelect'], this, null, null, () => {
             if (Dot.visible) {
                 Dot.visible = false;
+                this.self['Bytedance_BtnAgain'].visible = false;
             } else {
                 Dot.visible = true;
+                this.self['Bytedance_BtnAgain'].visible = true;
             }
         });
         Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, no);

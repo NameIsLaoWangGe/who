@@ -7863,6 +7863,9 @@
         lwgOnAwake() {
             Gold.goldAppear();
             Setting.setBtnVinish();
+            if (!Guide._complete.bool) {
+                Gold.createGoldNode(629, 174);
+            }
         }
         lwgOnEnable() {
             this.self['ResidueNum'].text = DrawCard._residueDraw.num.toString();
@@ -8096,7 +8099,7 @@
             Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
                 if (!Guide._complete.bool) {
                     if (Guide._whichStepNum == 5) {
-                        Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
+                        Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 4);
                         EventAdmin.notify(Guide.EventType.stepComplete);
                     }
                     return;
@@ -8464,8 +8467,8 @@
             }
             admin() {
                 Admin._commonVanishAni = true;
-                Admin._platform = Admin._platformTpye.OPPO;
-                Admin._evaluating = true;
+                Admin._platform = Admin._platformTpye.Bytedance;
+                Admin._evaluating = false;
             }
             game3D() {
                 Game3D.dataInit();
@@ -8797,7 +8800,6 @@
         }
         lwgBtnClick() {
             Click.on(Click.Type.noEffect, this.self['BtnShare'], this, null, null, this.btnShareUp);
-            Click.on(Click.Type.noEffect, this.self['Background'], this, null, null, this.btnShareUp);
             Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoShareUp);
         }
         btnShareUp() {
@@ -9436,6 +9438,7 @@
                 Admin._openScene(Admin.SceneName.UIVictory, this.self);
             };
             var again = (e) => {
+                e.stopPropagation();
                 ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
                 if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
                     ADManager.ShowReward(() => {
@@ -9452,12 +9455,14 @@
             Click.on(Click.Type.largen, this.self['OPPO_BtnAgain'], this, null, null, again);
             Click.on(Click.Type.largen, this.self['Bytedance_BtnNo'], this, null, null, no);
             Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
-            Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+            Click.on(Click.Type.noEffect, this.self['Bytedance_BtnSelect'], this, null, null, () => {
                 if (Dot.visible) {
                     Dot.visible = false;
+                    this.self['Bytedance_BtnAgain'].visible = false;
                 }
                 else {
                     Dot.visible = true;
+                    this.self['Bytedance_BtnAgain'].visible = true;
                 }
             });
             Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, no);

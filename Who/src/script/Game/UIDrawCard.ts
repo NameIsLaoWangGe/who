@@ -11,6 +11,9 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
     lwgOnAwake(): void {
         Gold.goldAppear();
         Setting.setBtnVinish();
+        if (!Guide._complete.bool) {
+            Gold.createGoldNode(629, 174);
+        }
     }
 
     lwgOnEnable(): void {
@@ -274,7 +277,7 @@ export default class UIDrawCard extends DrawCard.DrawCardScene {
         Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
             if (!Guide._complete.bool) {
                 if (Guide._whichStepNum == 5) {
-                    Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 3);
+                    Admin._openScene(Admin.SceneName.UIStart, this.self, null, Laya.stage.numChildren - 4);
                     EventAdmin.notify(Guide.EventType.stepComplete);
                 }
                 return;

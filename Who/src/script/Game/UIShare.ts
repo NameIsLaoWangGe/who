@@ -14,7 +14,7 @@ export default class UIShare extends Share.ShareScene {
 
     lwgBtnClick(): void {
         Click.on(Click.Type.noEffect, this.self['BtnShare'], this, null, null, this.btnShareUp);
-        Click.on(Click.Type.noEffect, this.self['Background'], this, null, null, this.btnShareUp);
+        // Click.on(Click.Type.noEffect, this.self['Background'], this, null, null, this.btnShareUp);
         Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoShareUp);
         // Click.on(Click.Type.largen, this.self['BtnSkip'], this, null, null, this.btnNoShareUp);
     }
