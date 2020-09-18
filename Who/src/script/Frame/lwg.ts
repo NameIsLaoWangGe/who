@@ -1021,8 +1021,11 @@ export module lwg {
             /**通用*/
             All = 'All',
         }
-        /**平台，控制一些节点的变化,默认为字节*/
+        /**渠道，控制一些节点的变化,默认为字节*/
         export let _platform: string = _platformTpye.Bytedance;
+
+        /**是否为评测包，评测包广告默认关闭，默认为非评测包，直接获得广告奖励*/
+        export let _evaluating: boolean = false;
 
         /**游戏控制开关*/
         export let _gameSwitch: boolean = false;
@@ -1395,14 +1398,23 @@ export module lwg {
             constructor() {
                 super();
             }
+            var(str): Laya.Sprite {
+                if (this.self[str]) {
+                    return this.self[str] as Laya.Sprite;
+                } else {
+                    console.log('场景内不存在全局节点：', str);
+                }
+            }
             onAwake(): void {
                 this.self = this.owner as Laya.Scene;
                 // 类名
-                this.calssName = this.self.name;
-                console.log(this.self.name);
-
+                if (this.self.name == null) {
+                    console.log('场景名称失效，脚本赋值失败');
+                } else {
+                    this.calssName = this.self.name;
+                    this.self[this.calssName] = this;
+                }
                 // 组件变为的self属性
-                this.self[this.calssName] = this;
                 gameState(this.calssName);
                 this.lwgNodeDec();
                 this.moduleOnAwake();
@@ -4066,23 +4078,23 @@ export module lwg {
         }
 
         /**
-         * 切换隐藏或显示子节点，当输入的名称数组是隐藏时，其他子节点则是显示
+         * 切换显示或隐藏子节点，当输入的名称数组是显示时，其他子节点则是隐藏
          * @param node 节点
          * @param childNameArr 子节点名称数组
-         * @param bool 隐藏还是显示，true为显示，flase为隐藏
+         * @param bool 隐藏还是显示，true为显示，flase为隐藏，默认为true
          */
-        export function node_2DShowExcludedChild(node: Laya.Sprite, childNameArr: Array<string>, bool: boolean): void {
+        export function node_2DShowExcludedChild(node: Laya.Sprite, childNameArr: Array<string>, bool?: boolean): void {
             for (let i = 0; i < node.numChildren; i++) {
                 let Child = node.getChildAt(i) as Laya.Sprite;
                 for (let j = 0; j < childNameArr.length; j++) {
                     if (Child.name == childNameArr[j]) {
-                        if (bool) {
+                        if (bool || bool == undefined) {
                             Child.visible = true;
                         } else {
                             Child.visible = false;
                         }
                     } else {
-                        if (bool) {
+                        if (bool || bool == undefined) {
                             Child.visible = false;
                         } else {
                             Child.visible = true;
@@ -4097,18 +4109,18 @@ export module lwg {
          * @param childNameArr 子节点名称数组
          * @param bool 隐藏还是显示，true为显示，flase为隐藏
          */
-        export function node_3DShowExcludedChild(node: Laya.MeshSprite3D, childNameArr: Array<string>, bool: boolean): void {
+        export function node_3DShowExcludedChild(node: Laya.MeshSprite3D, childNameArr: Array<string>, bool?: boolean): void {
             for (let i = 0; i < node.numChildren; i++) {
                 let Child = node.getChildAt(i) as Laya.MeshSprite3D;
                 for (let j = 0; j < childNameArr.length; j++) {
                     if (Child.name == childNameArr[j]) {
-                        if (bool) {
+                        if (bool || bool == undefined) {
                             Child.active = true;
                         } else {
                             Child.active = false;
                         }
                     } else {
-                        if (bool) {
+                        if (bool || bool == undefined) {
                             Child.active = false;
                         } else {
                             Child.active = true;
@@ -4458,7 +4470,7 @@ export module lwg {
         }
 
         /**绘制类*/
-        export class Draw {
+        export module Draw {
 
             /**
               * 为一个节点绘制一个扇形遮罩
@@ -4467,7 +4479,7 @@ export module lwg {
               * @param startAngle 扇形的初始角度
               * @param endAngle 扇形结束角度
              */
-            static drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
+            export function drawPieMask(parent, startAngle, endAngle): Laya.DrawPieCmd {
                 // 父节点cacheAs模式必须为"bitmap"
                 parent.cacheAs = "bitmap";
                 //新建一个sprite作为绘制扇形节点
@@ -4490,7 +4502,7 @@ export module lwg {
              * @param radius 半径
              * @param eliminate 是否清除其他遮罩，默认为true
              */
-            static reverseRoundMask(node, x: number, y: number, radius: number, eliminate?: boolean): void {
+            export function reverseRoundMask(node, x: number, y: number, radius: number, eliminate?: boolean): void {
                 if (eliminate == undefined || eliminate == true) {
                     node_RemoveAllChildren(node);
                 }
@@ -4517,7 +4529,7 @@ export module lwg {
              * @param round 圆角角度
              * @param eliminate 是否清除其他遮罩，默认为true
              */
-            static reverseRoundrectMask(node, x: number, y: number, width: number, height: number, round: number, eliminate?: boolean): void {
+            export function reverseRoundrectMask(node, x: number, y: number, width: number, height: number, round: number, eliminate?: boolean): void {
                 if (eliminate == undefined || eliminate == true) {
                     node_RemoveAllChildren(node);
                 }

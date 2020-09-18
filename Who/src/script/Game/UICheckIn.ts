@@ -1,33 +1,18 @@
-import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold, EventAdmin, TimerAdmin, SkinQualified } from "../Frame/lwg";
+import { CheckIn, Admin, Setting, Click, Animation2D, Effects, Gold, EventAdmin, TimerAdmin, SkinQualified, Tools, Backpack } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 
 export default class UICheckIn extends CheckIn.CheckInScene {
 
     lwgOnAwake(): void {
-        if (CheckIn._lastCheckDate.date == (new Date).getDate()) {
-            this.self['WeChat'].visible = false;
-            this.self['OPPO'].visible = false;
+        if (CheckIn._todayCheckIn.bool) {
+            Tools.node_RemoveAllChildren(this.self['Platform']);
         } else {
-            switch (Admin._platform) {
-                case Admin._platformTpye.OPPO:
-                    this.self['OPPO'].visible = true;
-                    this.self['WeChat'].visible = false;
-                    break;
-                case Admin._platformTpye.WeChat:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = true;
-                    break;
-                case Admin._platformTpye.Bytedance:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = true;
-                    break;
-
-                default:
-                    break;
-            }
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform]);
         }
         Setting.setBtnVinish();
         Gold.goldVinish();
+
+        // this.var('Platform')
     }
 
     lwgEventReg(): void {
@@ -111,109 +96,82 @@ export default class UICheckIn extends CheckIn.CheckInScene {
     }
 
     lwgBtnClick(): void {
-        Click.on('largen', this.self['BtnGet_WeChat'], this, null, null, this.btnGetUp);
-        Click.on('largen', this.self['BtnThreeGet_WeChat'], this, null, null, this.btnThreeGetUp);
-        Click.on(Click.Type.noEffect, this.self['Select_WeChat'], this, null, null, this.btnSelectUp);
-
-        Click.on(Click.Type.largen, this.self['BtnGet_OPPO'], this, null, null, this.btnGetUp);
-        Click.on(Click.Type.largen, this.self['BtnThreeGet_OPPO'], this, null, null, this.btnThreeGetUp);
-
-        Click.on('largen', this.self['BtnBack'], this, null, null, this.btnBackUp);
-    }
-    btnBackUp(): void {
-        Admin._closeScene(this.self, () => {
-            if (CheckIn._fromWhich == Admin.SceneName.UILoding) {
-                if (SkinQualified._adsNum.value < 7) {
-                    Admin._openScene(Admin.SceneName.UISkinQualified);
-                }
+        let Dot;
+        if (Admin._platform = Admin._platformTpye.Bytedance) {
+            Dot = this.self['Bytedance_Dot'];
+        } else if (Admin._platform = Admin._platformTpye.WeChat) {
+            Dot = this.self['WeChat_Dot'];
+        }
+        var btnSelectUp = () => {
+            if (Dot.visible) {
+                Dot.visible = false;
+            } else {
+                Dot.visible = true;
             }
-        });
-    }
-    btnThreeGetUp(): void {
-        ADManager.ShowReward(() => {
-            ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
-            this.btnGetUpFunc(3);
-        })
-    }
-
-    btnGetUp(): void {
-        if (Admin._platform === Admin._platformTpye.Bytedance) {
-            if (this.self['Dot'].visible) {
+        }
+        var btnGetUp = () => {
+            if (Dot.visible) {
                 ADManager.ShowReward(() => {
-
-                    ADManager.TAPoint(TaT.BtnClick, 'UICheckIn_BtnThreeGet_WeChat');
-                    this.btnGetUpFunc(3);
+                    btnGetUpFunc(3);
                 })
             } else {
-                this.btnGetUpFunc(1);
+                btnGetUpFunc(1);
             }
-        } else {
-            this.btnGetUpFunc(1);
         }
-    }
-
-    /**
-     * 
-     * @param number 几倍领取
-     */
-    btnGetUpFunc(number): void {
-        Admin._clickLock.switch = true;
-        let index = CheckIn._checkInNum.number;
-        let target;
-        if (index < 6) {
-            target = CheckIn._checkList.getCell(index)
-        } else {
-            target = this.self['Seven'];
-        }
-        Animation2D.swell_shrink(target, 1, 1.1, 100, 0, () => {
-            // 特效
-            let arr = [[111, 191], [296, 191], [486, 191], [111, 394], [296, 394], [486, 394], [306, 597
-            ]];
-            Effects.createExplosion_Rotate(this.self['SceneContent'], 25, arr[index][0], arr[index][1], 'star', 10, 15);
-            let rewardNum = CheckIn.todayCheckIn_7Days();
-            EventAdmin.notify('seven');
-            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                Gold.addGold(rewardNum * number);
-                Laya.timer.once(500, this, () => {
-                    this.btnBackUp();
-                })
+        var btnGetUpFunc = (number) => {
+            Admin._clickLock.switch = true;
+            let index = CheckIn._checkInNum.number;
+            let target;
+            if (index < 6) {
+                target = CheckIn._checkList.getCell(index)
+            } else {
+                target = this.self['Seven'];
+            }
+            Animation2D.swell_shrink(target, 1, 1.1, 100, 0, () => {
+                // 特效
+                let arr = [[111, 191], [296, 191], [486, 191], [111, 394], [296, 394], [486, 394], [306, 597
+                ]];
+                Effects.createExplosion_Rotate(this.self['SceneContent'], 25, arr[index][0], arr[index][1], 'star', 10, 15);
+                let rewardNum = CheckIn.todayCheckIn_7Days();
+                EventAdmin.notify('seven');
+                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                    Gold.addGold(rewardNum * number);
+                    Laya.timer.once(500, this, () => {
+                        btnBackUp();
+                    })
+                });
             });
-        });
-    }
-
-    btnSelectUp(): void {
-        if (this.self['Dot'].visible) {
-            this.self['Dot'].visible = false;
-        } else {
-            this.self['Dot'].visible = true;
         }
-    }
-
-    lwgOnUpdate(): void {
-        if (!CheckIn._todayCheckIn.bool) {
-            switch (Admin._platform) {
-                case Admin._platformTpye.WeChat:
-                    if (this.self['Dot'].visible) {
-                        this.self['BtnGet_WeChat'].visible = false;
-                        this.self['BtnThreeGet_WeChat'].visible = true;
-                    } else {
-                        this.self['BtnGet_WeChat'].visible = true;
-                        this.self['BtnThreeGet_WeChat'].visible = false;
+        var btnBackUp = () => {
+            Admin._closeScene(this.self, () => {
+                if (CheckIn._fromWhich == Admin.SceneName.UILoding) {
+                    if (SkinQualified._adsNum.value < 7) {
+                        Admin._openScene(Admin.SceneName.UISkinQualified);
                     }
-                    break;
-
-                case Admin._platformTpye.Bytedance:
-                    this.self['BtnGet_WeChat'].visible = true;
-                    this.self['BtnThreeGet_WeChat'].visible = false;
-                    break;
-                default:
-                    break;
-            }
+                }
+            });
         }
+        Click.on(Click.Type.largen, this.self['WeChat_BtnGet'], this, null, null, btnGetUp);
+        Click.on(Click.Type.largen, this.self['WeChat_BtnThreeGet'], this, null, null, btnGetUp);
+        Click.on(Click.Type.noEffect, this.self['WeChat_BtnSelect'], this, null, null, btnSelectUp);
+
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnGet'], this, null, null, btnGetUp);
+        Click.on(Click.Type.noEffect, this.self['Bytedance_BtnSelect'], this, null, null, btnSelectUp);
+
+        Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, () => {
+            btnGetUpFunc(1);
+        });
+        Click.on(Click.Type.largen, this.self['OPPO_BtnThreeGet'], this, null, null, () => {
+            ADManager.ShowReward(() => {
+                btnGetUpFunc(3);
+            })
+        });
+        Click.on(Click.Type.largen, this.self['BtnBack'], this, null, null, () => {
+            btnBackUp();
+        });
     }
     lwgOnDisable(): void {
         Setting.setBtnAppear();
         Gold.createGoldNode(629, 174);
-        Admin._clickLock.switch = false;
     }
 }

@@ -14,7 +14,7 @@ import UICheckIn from "./script/Game/UICheckIn"
 import UIDefeated from "./script/Game/UIDefeated"
 import UIDrawCard from "./script/Game/UIDrawCard"
 import Guide from "./script/Frame/Guide"
-import UIInit from "./script/Frame/UIInit"
+import Init from "./script/Frame/Init"
 import UILoding from "./script/Game/UILoding"
 import UIPropTry from "./script/Game/UIPropTry"
 import UIResurgence from "./script/Game/UIResurgence"
@@ -60,7 +60,7 @@ export default class GameConfig{
         reg("script/Game/UIDefeated.ts",UIDefeated);
         reg("script/Game/UIDrawCard.ts",UIDrawCard);
         reg("script/Frame/Guide.ts",Guide);
-        reg("script/Frame/UIInit.ts",UIInit);
+        reg("script/Frame/Init.ts",Init);
         reg("script/Game/UILoding.ts",UILoding);
         reg("script/Game/UIPropTry.ts",UIPropTry);
         reg("script/Game/UIResurgence.ts",UIResurgence);
