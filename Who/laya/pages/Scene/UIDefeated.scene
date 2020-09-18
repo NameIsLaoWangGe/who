@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":155,
+    "selectedBox":158,
+    "selecteID":165,
     "searchKey":"View",
     "props":{"width":720,"top":0,"sceneColor":"#000000","right":0,"left":0,"height":1280,"bottom":0},
     "nodeParent":-1,
-    "maxID":230,
+    "maxID":233,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -61,37 +61,37 @@
         },
         {
             "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite,WeChat,WeChat",
-            "props":{"y":997,"x":866,"width":314,"var":"WeChat","name":"WeChat","height":192},
+            "type":"Image",
+            "searchKey":"Image,Platform,Platform",
+            "props":{"y":907,"x":163.5,"width":387,"var":"Platform","name":"Platform","height":322},
             "nodeParent":2,
-            "label":"WeChat",
+            "label":"Platform",
             "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
-            "compId":147,
+            "compId":230,
             "child":[
                 {
                     "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,Select,Select",
-                    "props":{"y":0,"x":-3,"width":317,"var":"Select","name":"Select","height":42},
-                    "nodeParent":147,
-                    "label":"Select",
+                    "type":"Image",
+                    "searchKey":"Image,WeChat,WeChat",
+                    "props":{"y":90,"x":755,"width":356,"var":"WeChat","name":"WeChat","height":202},
+                    "nodeParent":230,
+                    "label":"WeChat",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":142,
+                    "compId":147,
                     "child":[
                         {
                             "x":45,
                             "type":"Sprite",
-                            "searchKey":"Sprite,BtnSelect_WeChat,BtnSelect_WeChat",
-                            "props":{"y":2,"x":21,"visible":true,"var":"BtnSelect_WeChat","texture":"Game/UI/Common/yuan-1.png","name":"BtnSelect_WeChat"},
-                            "nodeParent":142,
-                            "label":"BtnSelect_WeChat",
+                            "searchKey":"Sprite,WeChat_BtnSelect,WeChat_BtnSelect",
+                            "props":{"y":2,"x":18,"visible":true,"var":"WeChat_BtnSelect","texture":"Game/UI/Common/yuan-1.png","name":"WeChat_BtnSelect"},
+                            "nodeParent":147,
+                            "label":"WeChat_BtnSelect",
                             "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
@@ -101,10 +101,24 @@
                                 {
                                     "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite,Dot_WeChat,Dot_WeChat",
-                                    "props":{"y":8.75,"x":7.75,"var":"Dot_WeChat","texture":"Game/UI/Common/yuan-2.png","name":"Dot_WeChat"},
+                                    "searchKey":"Sprite,看广告多被领取",
+                                    "props":{"y":3,"x":40,"texture":"Game/UI/Common/sanbei.png","name":"看广告多被领取"},
                                     "nodeParent":143,
-                                    "label":"Dot_WeChat",
+                                    "label":"看广告多被领取",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":145,
+                                    "child":[
+                                        ]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,WeChat_Dot,WeChat_Dot",
+                                    "props":{"y":6.75,"x":6.75,"var":"WeChat_Dot","texture":"Game/UI/Common/yuan-2.png","name":"WeChat_Dot"},
+                                    "nodeParent":143,
+                                    "label":"WeChat_Dot",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
@@ -117,249 +131,221 @@
                         {
                             "x":45,
                             "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":5.5,"x":61,"texture":"Game/UI/Common/sanbei.png","name":"Dis"},
-                            "nodeParent":142,
-                            "label":"Dis",
-                            "isDirectory":false,
+                            "searchKey":"Sprite,WeChat_BtnAgain,WeChat_BtnAgain",
+                            "props":{"y":117,"x":177.5,"width":288,"var":"WeChat_BtnAgain","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"WeChat_BtnAgain","height":128},
+                            "nodeParent":147,
+                            "label":"WeChat_BtnAgain",
+                            "isOpen":true,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
-                            "compId":145,
+                            "hasChild":true,
+                            "compId":136,
                             "child":[
-                                ]
+                                {
+                                    "x":60,
+                                    "type":"Label",
+                                    "searchKey":"Label,重来",
+                                    "props":{"y":46.5,"x":105.31640625,"text":"重来","styleSkin":"Game/UI/Common/xiayiguan.png","strokeColor":"#702a29","stroke":5,"name":"重来","fontSize":35,"color":"#ffffff","bold":true},
+                                    "nodeParent":136,
+                                    "label":"重来",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":232,
+                                    "child":[
+                                        ]
+                                }]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "searchKey":"Sprite,WeChat_BtnSkip,WeChat_BtnSkip",
+                            "props":{"y":117,"x":178,"width":288,"var":"WeChat_BtnSkip","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"WeChat_BtnSkip","height":128},
+                            "nodeParent":147,
+                            "label":"WeChat_BtnSkip",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":124,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,AdvPic",
+                                    "props":{"y":37.5,"x":193,"texture":"Game/UI/Common/shiping.png","name":"AdvPic"},
+                                    "nodeParent":124,
+                                    "label":"AdvPic",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":126,
+                                    "child":[
+                                        ]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Label",
+                                    "searchKey":"Label,跳过本关",
+                                    "props":{"y":47,"x":45,"text":"跳过本关","styleSkin":"Game/UI/Common/xiayiguan.png","strokeColor":"#702a29","stroke":5,"name":"跳过本关","fontSize":35,"color":"#ffffff","bold":true},
+                                    "nodeParent":124,
+                                    "label":"跳过本关",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":231,
+                                    "child":[
+                                        ]
+                                }]
                         }]
                 },
                 {
                     "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnAgain_WeChat,BtnAgain_WeChat",
-                    "props":{"y":116,"x":160,"width":288,"var":"BtnAgain_WeChat","texture":"Game/UI/Common/anniu1.png","pivotY":64,"pivotX":144,"name":"BtnAgain_WeChat","height":128},
-                    "nodeParent":147,
-                    "label":"BtnAgain_WeChat",
+                    "type":"Image",
+                    "searchKey":"Image,OPPO,OPPO",
+                    "props":{"y":10,"x":33.5,"width":322,"var":"OPPO","name":"OPPO","height":282},
+                    "nodeParent":230,
+                    "label":"OPPO",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":136,
+                    "compId":148,
                     "child":[
                         {
                             "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":44.5,"x":65,"texture":"Game/UI/Common/zaikai.png","name":"Dis"},
-                            "nodeParent":136,
-                            "label":"Dis",
+                            "type":"Image",
+                            "searchKey":"Image,OPPO_BtnAgain,OPPO_BtnAgain",
+                            "props":{"y":223,"x":160,"width":155,"var":"OPPO_BtnAgain","skin":"Game/UI/Common/congxin.png","pivotY":21,"pivotX":78,"name":"OPPO_BtnAgain","height":41},
+                            "nodeParent":148,
+                            "label":"OPPO_BtnAgain",
+                            "isOpen":true,
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
-                            "compId":138,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnNext_WeChat,BtnNext_WeChat",
-                    "props":{"y":116,"x":160,"width":288,"var":"BtnNext_WeChat","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnNext_WeChat","height":128},
-                    "nodeParent":147,
-                    "label":"BtnNext_WeChat",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":124,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,AdvPic",
-                            "props":{"y":12.5,"x":205,"texture":"Game/UI/Common/jinbi.png","name":"AdvPic"},
-                            "nodeParent":124,
-                            "label":"AdvPic",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":126,
+                            "compId":153,
                             "child":[
                                 ]
                         },
                         {
                             "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":42.5,"x":68,"texture":"Game/UI/Common/douyao.png","name":"Dis"},
-                            "nodeParent":124,
-                            "label":"Dis",
-                            "isDirectory":false,
+                            "type":"Image",
+                            "searchKey":"Image,OPPO_BtnSkip,OPPO_BtnSkip",
+                            "props":{"y":116,"x":160,"width":288,"var":"OPPO_BtnSkip","skin":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"OPPO_BtnSkip","height":128},
+                            "nodeParent":148,
+                            "label":"OPPO_BtnSkip",
+                            "isOpen":true,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
-                            "compId":128,
+                            "hasChild":true,
+                            "compId":155,
                             "child":[
-                                ]
+                                {
+                                    "x":60,
+                                    "type":"Image",
+                                    "searchKey":"Image,AdvPic",
+                                    "props":{"y":38,"x":196,"skin":"Game/UI/Common/shiping.png","name":"AdvPic"},
+                                    "nodeParent":155,
+                                    "label":"AdvPic",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":156,
+                                    "child":[
+                                        ]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Label",
+                                    "searchKey":"Label,跳过本关",
+                                    "props":{"y":47.5,"x":45,"text":"跳过本关","styleSkin":"Game/UI/Common/xiayiguan.png","strokeColor":"#702a29","stroke":5,"name":"跳过本关","fontSize":35,"color":"#ffffff","bold":true},
+                                    "nodeParent":155,
+                                    "label":"跳过本关",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":157,
+                                    "child":[
+                                        ]
+                                }]
                         }]
-                }]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite,OPPO,OPPO",
-            "props":{"y":1271,"x":891,"width":322,"var":"OPPO","name":"OPPO","height":282},
-            "nodeParent":2,
-            "label":"OPPO",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":148,
-            "child":[
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnAgain_OPPO,BtnAgain_OPPO",
-                    "props":{"y":227.5,"x":158,"var":"BtnAgain_OPPO","texture":"Game/UI/Common/xiayiguan.png","pivotY":15,"pivotX":61,"name":"BtnAgain_OPPO"},
-                    "nodeParent":148,
-                    "label":"BtnAgain_OPPO",
-                    "isOpen":true,
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":153,
-                    "child":[
-                        ]
                 },
                 {
                     "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnNext_OPPO,BtnNext_OPPO",
-                    "props":{"y":116,"x":160,"width":288,"var":"BtnNext_OPPO","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnNext_OPPO","height":128},
-                    "nodeParent":148,
-                    "label":"BtnNext_OPPO",
+                    "type":"Image",
+                    "searchKey":"Image,Bytedance,Bytedance",
+                    "props":{"y":87,"x":22,"width":346,"var":"Bytedance","name":"Bytedance","height":213},
+                    "nodeParent":230,
+                    "label":"Bytedance",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":155,
+                    "compId":158,
                     "child":[
                         {
                             "x":45,
                             "type":"Sprite",
-                            "searchKey":"Sprite,AdvPic",
-                            "props":{"y":12.5,"x":205,"texture":"Game/UI/Common/jinbi.png","name":"AdvPic"},
-                            "nodeParent":155,
-                            "label":"AdvPic",
-                            "isDirectory":false,
+                            "searchKey":"Sprite,Bytedance_BtnAgain,Bytedance_BtnAgain",
+                            "props":{"y":120,"x":159,"width":312,"var":"Bytedance_BtnAgain","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"Bytedance_BtnAgain","height":140},
+                            "nodeParent":158,
+                            "label":"Bytedance_BtnAgain",
+                            "isOpen":true,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
-                            "compId":156,
+                            "hasChild":true,
+                            "compId":159,
                             "child":[
-                                ]
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,Word",
+                                    "props":{"y":47.75,"x":77.75,"texture":"Game/UI/Common/congxin.png","name":"Word"},
+                                    "nodeParent":159,
+                                    "label":"Word",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":160,
+                                    "child":[
+                                        ]
+                                }]
                         },
                         {
                             "x":45,
                             "type":"Sprite",
-                            "searchKey":"Sprite",
-                            "props":{"y":42.5,"x":68,"texture":"Game/UI/Common/douyao.png"},
-                            "nodeParent":155,
-                            "label":"Sprite",
-                            "isDirectory":false,
+                            "searchKey":"Sprite,Bytedance_BtnSkip,Bytedance_BtnSkip",
+                            "props":{"y":126,"x":170,"width":312,"var":"Bytedance_BtnSkip","texture":"Game/UI/Common/anniu.png","pivotY":70,"pivotX":156,"name":"Bytedance_BtnSkip","height":140},
+                            "nodeParent":158,
+                            "label":"Bytedance_BtnSkip",
+                            "isOpen":true,
+                            "isDirectory":true,
                             "isAniNode":true,
-                            "hasChild":false,
-                            "compId":157,
+                            "hasChild":true,
+                            "compId":165,
                             "child":[
-                                ]
-                        }]
-                }]
-        },
-        {
-            "x":15,
-            "type":"Sprite",
-            "searchKey":"Sprite,Bytedance,Bytedance",
-            "props":{"y":974,"x":193.5,"width":341,"var":"Bytedance","name":"Bytedance","height":207},
-            "nodeParent":2,
-            "label":"Bytedance",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":158,
-            "child":[
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnAgain_Bytedance,BtnAgain_Bytedance",
-                    "props":{"y":120,"x":168,"width":312,"var":"BtnAgain_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnAgain_Bytedance","height":140},
-                    "nodeParent":158,
-                    "label":"BtnAgain_Bytedance",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":159,
-                    "child":[
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,Word",
+                                    "props":{"y":47,"x":96.25,"texture":"Game/UI/Common/xiayiguan.png","name":"Word"},
+                                    "nodeParent":165,
+                                    "label":"Word",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":166,
+                                    "child":[
+                                        ]
+                                }]
+                        },
                         {
                             "x":45,
                             "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":47.75,"x":77.75,"texture":"Game/UI/Common/congxin.png","name":"Dis"},
-                            "nodeParent":159,
-                            "label":"Dis",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":160,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,BtnNext_Bytedance,BtnNext_Bytedance",
-                    "props":{"y":126,"x":180,"width":312,"var":"BtnNext_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":70,"pivotX":156,"name":"BtnNext_Bytedance","height":140},
-                    "nodeParent":158,
-                    "label":"BtnNext_Bytedance",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":165,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":47,"x":96.25,"texture":"Game/UI/Common/xiayiguan.png","name":"Dis"},
-                            "nodeParent":165,
-                            "label":"Dis",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":166,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,Select",
-                    "props":{"y":9,"x":28,"width":321,"name":"Select","height":42},
-                    "nodeParent":158,
-                    "label":"Select",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":161,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,BtnSelect_Bytedance,BtnSelect_Bytedance",
-                            "props":{"y":1,"x":21,"var":"BtnSelect_Bytedance","texture":"Game/UI/Common/yuan.png","name":"BtnSelect_Bytedance"},
-                            "nodeParent":161,
-                            "label":"BtnSelect_Bytedance",
+                            "searchKey":"Sprite,Bytedance_BtnSelect,Bytedance_BtnSelect",
+                            "props":{"y":10,"x":49,"var":"Bytedance_BtnSelect","texture":"Game/UI/Common/yuan.png","name":"Bytedance_BtnSelect"},
+                            "nodeParent":158,
+                            "label":"Bytedance_BtnSelect",
                             "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
@@ -379,21 +365,21 @@
                                     "compId":163,
                                     "child":[
                                         ]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Sprite",
+                                    "searchKey":"Sprite,Word",
+                                    "props":{"y":3,"x":37,"texture":"Game/UI/Common/kanshipin.png","name":"Word"},
+                                    "nodeParent":162,
+                                    "label":"Word",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":164,
+                                    "child":[
+                                        ]
                                 }]
-                        },
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,Dis",
-                            "props":{"y":4,"x":58,"texture":"Game/UI/Common/kanshipin.png","name":"Dis"},
-                            "nodeParent":161,
-                            "label":"Dis",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":164,
-                            "child":[
-                                ]
                         }]
                 }]
         },
@@ -457,17 +443,16 @@
             "x":15,
             "type":"Image",
             "searchKey":"Image,P202",
-            "props":{"y":366,"x":79,"width":579,"var":"P202","height":526},
+            "props":{"y":366,"x":79,"width":574,"var":"P202","height":526},
             "nodeParent":2,
             "label":"P202",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":215,
             "child":[
                 {
-                    "x":30,
                     "type":"Box",
                     "searchKey":"Box,P202",
                     "props":{"y":257,"x":289,"width":552,"visible":true,"name":"P202","height":456,"anchorY":0.5,"anchorX":0.5},
@@ -480,7 +465,6 @@
                     "compId":216,
                     "child":[
                         {
-                            "x":45,
                             "type":"Panel",
                             "searchKey":"Panel,scroll",
                             "props":{"top":0,"right":0,"name":"scroll","left":0,"elasticEnabled":false,"bottom":0,"anchorY":0.5,"anchorX":0.5},
@@ -493,7 +477,6 @@
                             "compId":217,
                             "child":[
                                 {
-                                    "x":60,
                                     "type":"List",
                                     "searchKey":"List,layout",
                                     "props":{"y":0,"spaceY":20,"spaceX":20,"space":10,"right":0,"name":"layout","left":0,"height":470,"anchorY":0,"anchorX":0.5,"align":"middle"},
@@ -506,7 +489,6 @@
                                     "compId":218,
                                     "child":[
                                         {
-                                            "x":75,
                                             "type":"Box",
                                             "searchKey":"Box,item",
                                             "props":{"y":114,"x":92,"width":164,"renderType":"render","name":"item","height":208,"anchorY":0.5,"anchorX":0.5},
@@ -519,7 +501,6 @@
                                             "compId":219,
                                             "child":[
                                                 {
-                                                    "x":90,
                                                     "type":"Image",
                                                     "searchKey":"Image,icon",
                                                     "props":{"width":140,"skin":"TJ/Promo/image/jx8.png","name":"icon","height":140,"centerY":-22,"centerX":0,"anchorY":0.5,"anchorX":0.5},
@@ -532,7 +513,6 @@
                                                     "compId":220,
                                                     "child":[
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "searchKey":"Image,kk",
                                                             "props":{"width":164,"skin":"Game/UI/UIVictory/icon-kuang.png","sizeGrid":"39,67,97,54","name":"kk","height":208,"centerY":22,"centerX":0},
@@ -546,7 +526,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "searchKey":"Image,flag1",
                                                             "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/new2.png","name":"flag1","height":83,"centerY":-39,"centerX":39,"anchorY":0.5,"anchorX":0.5},
@@ -561,7 +540,6 @@
                                                             "$HIDDEN":true
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "searchKey":"Image,flag2",
                                                             "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/remen1.png","name":"flag2","height":83,"centerY":-39,"centerX":39,"anchorY":0.5,"anchorX":0.5},
@@ -576,7 +554,6 @@
                                                             "$HIDDEN":true
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "searchKey":"Image,flag3",
                                                             "props":{"width":83,"visible":false,"skin":"TJ/Promo/image/tuijian2.png","name":"flag3","height":83,"centerY":-39,"centerX":39,"anchorY":0.5,"anchorX":0.5},
@@ -593,7 +570,6 @@
                                                     "$HIDDEN":false
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Label",
                                                     "searchKey":"Label,name",
                                                     "props":{"wordWrap":false,"width":164,"valign":"middle","text":"这里是游戏名称","name":"name","multiline":false,"mouseEnabled":false,"height":19,"fontSize":16,"editable":false,"color":"#000000","centerY":68,"centerX":0,"anchorY":0.5,"anchorX":0.5,"align":"center"},
@@ -608,7 +584,6 @@
                                                     "$HIDDEN":false
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Label",
                                                     "searchKey":"Label,info",
                                                     "props":{"wordWrap":false,"width":164,"valign":"middle","text":"1, 254, 546人在玩","name":"info","multiline":false,"mouseEnabled":false,"height":18,"fontSize":15,"editable":false,"color":"#000000","centerY":89,"centerX":0,"anchorY":0.5,"anchorX":0.5,"align":"center"},
@@ -623,7 +598,6 @@
                                                     "$HIDDEN":false
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Script",
                                                     "switchAble":true,
                                                     "source":"src/TJ/Promo/script/PromoItem.ts",
@@ -640,7 +614,6 @@
                                                         ]
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Script",
                                                     "switchAble":true,
                                                     "source":"src/TJ/Promo/script/ButtonScale.ts",
@@ -663,7 +636,6 @@
                             "$HIDDEN":false
                         },
                         {
-                            "x":45,
                             "type":"Script",
                             "switchAble":true,
                             "source":"src/TJ/Promo/script/P202.ts",

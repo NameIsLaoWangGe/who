@@ -1,4 +1,4 @@
-import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click, Dialog, Backpack } from "../Frame/lwg";
+import { VictoryScene, Admin, Gold, Setting, PalyAudio, Effects, EventAdmin, Task, Click, Dialog, Backpack, Tools } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import RecordManager from "../../TJ/RecordManager";
 
@@ -6,27 +6,7 @@ export default class UIVictory extends VictoryScene {
 
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.BtnShow, 'UIVictory_Three');
-        switch (Admin._platform) {
-            case Admin._platformTpye.OPPO:
-                this.self['OPPO'].visible = true;
-                this.self['WeChat'].visible = false;
-                this.self['Bytedance'].visible = false;
-                break;
-
-            case Admin._platformTpye.WeChat:
-                this.self['OPPO'].visible = false;
-                this.self['WeChat'].visible = true;
-                this.self['Bytedance'].visible = false;
-                break;
-
-            case Admin._platformTpye.Bytedance:
-                this.self['OPPO'].visible = false;
-                this.self['WeChat'].visible = false;
-                this.self['Bytedance'].visible = true;
-                break;
-            default:
-                break;
-        }
+        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform]);
         if (Admin._gameLevel.value % 4 == 0) {
             Backpack._trophy.num += 50;
         } else {
@@ -63,42 +43,75 @@ export default class UIVictory extends VictoryScene {
     }
 
     lwgBtnClick(): void {
-        Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
-            if (this.self['Dot_Bytedance'].visible) {
-                ADManager.ShowReward(() => {
-                    ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
-                    this.getGold(300);
-                })
+        let Dot: Laya.Sprite;
+        if (Admin._platform = Admin._platformTpye.Bytedance) {
+            Dot = this.var('Bytedance_Dot');
+        } else if (Admin._platform = Admin._platformTpye.WeChat) {
+            Dot = this.var('WeChat_Dot');
+        }
+        /**
+         * 奖励
+         * @param number 奖励数量
+         */
+        var generalAward = (number: number) => {
+            Admin._clickLock.switch = true;
+            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                Gold.addGold(number);
+                Admin._openScene(Admin.SceneName.UIStart, this.self);
+                Admin._clickLock.switch = false;
+            });
+        }
+        var moreAwards = () => {
+            ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
+                generalAward(300);
+            })
+        }
+        // 字节
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnNext'], this, null, null, () => {
+            if (Dot.visible) {
+                moreAwards();
             } else {
-                this.getGold(100);
+                generalAward(100);
             }
         });
-
-        Click.on(Click.Type.largen, this.self['BtnShare'], this, null, null, () => {
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnShare'], this, null, null, () => {
             RecordManager._share('noAward', () => {
                 Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
             })
         });
-
-        Click.on(Click.Type.noEffect, this.self['BtnSelect_Bytedance'], this, null, null, () => {
-            if (this.self['Dot_Bytedance'].visible) {
-                this.self['Dot_Bytedance'].visible = false;
+        Click.on(Click.Type.noEffect, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+            if (Dot.visible) {
+                Dot.visible = false;
             } else {
-                this.self['Dot_Bytedance'].visible = true;
+                Dot.visible = true;
             }
         });
-    }
+        // OPPO
+        Click.on(Click.Type.largen, this.self['OPPO_BtnMore'], this, null, null, () => {
+            moreAwards();
+        });
+        Click.on(Click.Type.largen, this.self['OPPO_BtnNext'], this, null, null, () => {
+            generalAward(100);
+        });
 
-    /**
-     * 奖励
-     * @param number 奖励数量
-     */
-    getGold(number: number): void {
-        Admin._clickLock.switch = true;
-        Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-            Gold.addGold(number);
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
-            Admin._clickLock.switch = false;
+        // 微信
+        Click.on(Click.Type.largen, this.self['WeChat_BtnGeneral'], this, null, null, () => {
+            moreAwards();
+        });
+        Click.on(Click.Type.largen, this.self['WeChat_BtnMore'], this, null, null, () => {
+            generalAward(100);
+        });
+        Click.on(Click.Type.largen, this.self['Wechat_BtnSelect'], this, null, null, () => {
+            if (Dot.visible) {
+                this.var('WeChat_BtnMulti').visible = false;
+                this.var('WeChat_BtnNormal').visible = true;
+                Dot.visible = false;
+            } else {
+                this.var('WeChat_BtnMulti').visible = true;
+                this.var('WeChat_BtnNormal').visible = false;
+                Dot.visible = true;
+            }
         });
     }
 

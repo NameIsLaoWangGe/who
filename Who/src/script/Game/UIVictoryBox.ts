@@ -19,25 +19,7 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
                 VictoryBox.setProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
             }
         }
-
-        switch (Admin._platform) {
-            case Admin._platformTpye.WeChat:
-                this.self['Bytedance'].visible = false;
-                this.self['WeChat'].visible = true;
-                this.self['BtnAgain_WeChat'].visible = false;
-                this.self['BtnNo_WeChat'].visible = false;
-                break;
-            case Admin._platformTpye.Bytedance:
-                this.self['Bytedance'].visible = true;
-                this.self['WeChat'].visible = false;
-                this.self['BtnAgain_Bytedance'].visible = false;
-                this.self['BtnNo_Bytedance'].visible = false;
-                this.self['Select_Bytedance'].visible = false;
-
-                break;
-            default:
-                break;
-        }
+        Tools.node_2DShowExcludedChild(this.var('Platform'), [Admin._platform]);
     }
 
     lwgOnEnable(): void {
@@ -98,12 +80,6 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
         // }
 
         VictoryBox._canOpenNum--;
-        if (VictoryBox._canOpenNum == 0) {
-            this.self['BtnAgain_Bytedance'].visible = true;
-            this.self['BtnNo_Bytedance'].visible = true;
-            this.self['Select_Bytedance'].visible = true;
-
-        }
         VictoryBox._selectBox = dataSource[VictoryBox.BoxProperty.name];
         // 特效位置
         let diffX = dataSource.arrange % 3;
@@ -164,58 +140,48 @@ export default class UIVictoryBox extends VictoryBox.VictoryBoxScene {
     }
 
     lwgBtnClick(): void {
-        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoUp);
-
-        Click.on(Click.Type.largen, this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-        Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-
-        Click.on(Click.Type.largen, this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
-        Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-        Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
-    }
-
-    btnSelect_BytedanceUp(): void {
-        if (this.self['Dot_Bytedance'].visible) {
-            this.self['Dot_Bytedance'].visible = false;
-            this.self['BtnNo_Bytedance'].visible = true;
-            this.self['BtnAgain_Bytedance'].visible = false;
-        } else {
-            this.self['Dot_Bytedance'].visible = true;
-            this.self['BtnNo_Bytedance'].visible = false;
-            this.self['BtnAgain_Bytedance'].visible = true;
+        let Dot: Laya.Sprite;
+        if (Admin._platform = Admin._platformTpye.Bytedance) {
+            Dot = this.var('Bytedance_Dot');
+        } else if (Admin._platform = Admin._platformTpye.WeChat) {
+            Dot = this.var('WeChat_Dot');
         }
-    }
-
-    btnNoUp(event): void {
-        Admin._openScene(Admin.SceneName.UIVictory, this.self);
-    }
-
-    // /**看广告获取的最大次数为6次*/
-    btnAgainUp(event): void {
-        ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
-
-        if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
-            ADManager.ShowReward(() => {
-                Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
-                VictoryBox._canOpenNum += 3;
-                VictoryBox._adsMaxOpenNum -= 3;
-                this.self['BtnAgain_Bytedance'].visible = false;
-                this.self['BtnNo_Bytedance'].visible = false;
-                this.self['Select_Bytedance'].visible = false;
-            })
-        } else {
-            Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
+        var no = () => {
+            Admin._openScene(Admin.SceneName.UIVictory, this.self);
         }
-    }
+        // /**看广告获取的最大次数为6次*/
+        var again = (e) => {
+            ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
 
+            if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
+                ADManager.ShowReward(() => {
+                    Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
+                    VictoryBox._canOpenNum += 3;
+                    VictoryBox._adsMaxOpenNum -= 3;
+                })
+            } else {
+                Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
+            }
+        }
+        Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, no);
+        Click.on(Click.Type.largen, this.self['OPPO_BtnAgain'], this, null, null, again);
+
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnNo'], this, null, null, no);
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+            if (Dot.visible) {
+                Dot.visible = false;
+            } else {
+                Dot.visible = true;
+            }
+        });
+        Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, no);
+    }
     lwgOnUpdate(): void {
         if (VictoryBox._canOpenNum > 0) {
-            this.self['BtnAgain_WeChat'].visible = false;
-            this.self['BtnNo_WeChat'].visible = false;
-
+            this.var('Platform').visible = false;
         } else {
-            this.self['BtnAgain_WeChat'].visible = true;
-            this.self['BtnNo_WeChat'].visible = true;
+            this.var('Platform').visible = true;
         }
     }
     lwgOnDisable(): void {

@@ -7118,6 +7118,7 @@
             this.self['SceneContent'].alpha = 0;
             this.self['BtnBack'].visible = false;
             Laya.timer.once(4500, this, () => {
+                Admin._gameSwitch = true;
                 this.self['BtnBack'].visible = true;
             });
         }
@@ -7271,7 +7272,6 @@
             if (click) {
                 Click.on(Click.Type.largen, Option, this, null, null, () => {
                     Admin._clickLock.switch = true;
-                    Admin._gameSwitch = true;
                     EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
                 });
             }
@@ -7795,26 +7795,7 @@
             EventAdmin.notify(Game3D.EventType.closeGameScene);
             Admin._gameLevel.value = 0;
             Admin._gameSwitch = false;
-            switch (Admin._platform) {
-                case Admin._platformTpye.OPPO:
-                    this.self['OPPO'].visible = true;
-                    this.self['WeChat'].visible = false;
-                    this.self['Bytedance'].visible = false;
-                    this.self['P202'].removeSelf();
-                    break;
-                case Admin._platformTpye.WeChat:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = true;
-                    this.self['Bytedance'].visible = false;
-                    this.self['P202'].removeSelf();
-                    break;
-                case Admin._platformTpye.Bytedance:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = false;
-                    this.self['Bytedance'].visible = true;
-                default:
-                    break;
-            }
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform]);
         }
         lwgOnEnable() {
             Gold.GoldNode = this.self['GoldNode'];
@@ -7823,52 +7804,58 @@
             Admin._clickLock.switch = true;
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-            Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
-            Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
-        }
-        btnSelectUp() {
             let Dot;
-            switch (Admin._platform) {
-                case Admin._platformTpye.WeChat:
-                    Dot = this.self['Dot_WeChat'];
-                    break;
-                case Admin._platformTpye.Bytedance:
-                    Dot = this.self['Dot_Bytedance'];
-                    break;
-                default:
-                    break;
+            if (Admin._platform = Admin._platformTpye.Bytedance) {
+                Dot = this.var('Bytedance_Dot');
             }
-            if (Dot.visible) {
-                Dot.visible = false;
-                this.self['BtnNext_WeChat'].visible = false;
-                this.self['BtnAgain_WeChat'].visible = true;
-                this.self['BtnNext_Bytedance'].visible = false;
-                this.self['BtnAgain_Bytedance'].visible = true;
+            else if (Admin._platform = Admin._platformTpye.WeChat) {
+                Dot = this.var('WeChat_Dot');
             }
-            else {
-                Dot.visible = true;
-                this.self['BtnNext_WeChat'].visible = true;
-                this.self['BtnAgain_WeChat'].visible = false;
-                this.self['BtnNext_Bytedance'].visible = true;
-                this.self['BtnAgain_Bytedance'].visible = false;
-            }
-        }
-        btnAgainUp() {
-            ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
-            console.log('重新开始！');
-            Admin._openScene(Admin.SceneName.UIStart, this.self);
-            EventAdmin.notify(EventAdmin.EventType.nextCustoms);
-        }
-        btnNextUp() {
-            ADManager.ShowReward(() => {
-                ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
-                Admin._gameLevel.value += 1;
+            var skip = () => {
+                ADManager.ShowReward(() => {
+                    ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
+                    Admin._gameLevel.value += 1;
+                    again();
+                });
+            };
+            var again = () => {
+                ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
                 Admin._openScene(Admin.SceneName.UIStart, this.self);
                 EventAdmin.notify(EventAdmin.EventType.nextCustoms);
+            };
+            Click.on(Click.Type.largen, this.var('WeChat_BtnAgain'), this, null, null, again);
+            Click.on(Click.Type.largen, this.self['WeChat_BtnSkip'], this, null, null, skip);
+            Click.on(Click.Type.largen, this.self['WeChat_BtnSelect'], this, null, null, () => {
+                if (Dot.visible) {
+                    this.var('WeChat_BtnAgain').visible = false;
+                    this.var('WeChat_BtnSkip').visible = true;
+                    Dot.visible = false;
+                }
+                else {
+                    this.var('WeChat_BtnAgain').visible = true;
+                    this.var('WeChat_BtnSkip').visible = false;
+                    Dot.visible = true;
+                }
             });
-        }
-        lwgOnDisable() {
+            Click.on(Click.Type.largen, this.self['OPPO_BtnAgain'], this, null, null, again);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnSkip'], this, null, null, skip);
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnSkip'], this, null, null, () => {
+                if (Dot.visible) {
+                    skip();
+                }
+                else {
+                    again();
+                }
+            });
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+                if (Dot.visible) {
+                    Dot.visible = false;
+                }
+                else {
+                    Dot.visible = true;
+                }
+            });
         }
     }
 
@@ -8576,8 +8563,10 @@
     class UIPropTry extends PropTry.PropTryScene {
         lwgOnAwake() {
             ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
-            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
-            Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+            if (Admin._platform == Admin._platformTpye.Bytedance) {
+                Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+            }
         }
         lwgOnEnable() {
             this.self['BtnClose'].visible = false;
@@ -8592,9 +8581,15 @@
             Click.on(Click.Type.largen, this.self['Bytedance_Mid_BtnGet'], this, null, null, this.bytedanceGetUp);
             Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
             Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.bytedanceGetUp);
-            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
+            Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            });
+            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, () => {
+                Admin._openScene(Admin.SceneName.GameScene, this.self);
+            });
+            Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, () => {
+                this.advFunc();
+            });
             Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
@@ -8662,18 +8657,6 @@
                 Backpack._prop2.num++;
                 Admin._openScene(Admin.SceneName.GameScene, this.self);
             });
-        }
-        btnGetUp(e) {
-            e.stopPropagation();
-            if (Admin._platform == Admin._platformTpye.OPPO) {
-                Admin._openScene(Admin.SceneName.GameScene, this.self);
-            }
-            else {
-                this.advFunc();
-            }
-        }
-        btnNoUp(event) {
-            Admin._openScene(Admin.SceneName.GameScene, this.self);
         }
     }
 
@@ -9203,25 +9186,7 @@
     class UIVictory extends VictoryScene {
         lwgOnAwake() {
             ADManager.TAPoint(TaT.BtnShow, 'UIVictory_Three');
-            switch (Admin._platform) {
-                case Admin._platformTpye.OPPO:
-                    this.self['OPPO'].visible = true;
-                    this.self['WeChat'].visible = false;
-                    this.self['Bytedance'].visible = false;
-                    break;
-                case Admin._platformTpye.WeChat:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = true;
-                    this.self['Bytedance'].visible = false;
-                    break;
-                case Admin._platformTpye.Bytedance:
-                    this.self['OPPO'].visible = false;
-                    this.self['WeChat'].visible = false;
-                    this.self['Bytedance'].visible = true;
-                    break;
-                default:
-                    break;
-            }
+            Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform]);
             if (Admin._gameLevel.value % 4 == 0) {
                 Backpack._trophy.num += 50;
             }
@@ -9253,37 +9218,71 @@
             });
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, () => {
-                if (this.self['Dot_Bytedance'].visible) {
-                    ADManager.ShowReward(() => {
-                        ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
-                        this.getGold(300);
-                    });
+            let Dot;
+            if (Admin._platform = Admin._platformTpye.Bytedance) {
+                Dot = this.var('Bytedance_Dot');
+            }
+            else if (Admin._platform = Admin._platformTpye.WeChat) {
+                Dot = this.var('WeChat_Dot');
+            }
+            var generalAward = (number) => {
+                Admin._clickLock.switch = true;
+                Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
+                    Gold.addGold(number);
+                    Admin._openScene(Admin.SceneName.UIStart, this.self);
+                    Admin._clickLock.switch = false;
+                });
+            };
+            var moreAwards = () => {
+                ADManager.ShowReward(() => {
+                    ADManager.TAPoint(TaT.BtnClick, 'UIVictory_Three');
+                    generalAward(300);
+                });
+            };
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnNext'], this, null, null, () => {
+                if (Dot.visible) {
+                    moreAwards();
                 }
                 else {
-                    this.getGold(100);
+                    generalAward(100);
                 }
             });
-            Click.on(Click.Type.largen, this.self['BtnShare'], this, null, null, () => {
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnShare'], this, null, null, () => {
                 RecordManager._share('noAward', () => {
                     Dialog.createHint_Middle(Dialog.HintContent["分享成功!"]);
                 });
             });
-            Click.on(Click.Type.noEffect, this.self['BtnSelect_Bytedance'], this, null, null, () => {
-                if (this.self['Dot_Bytedance'].visible) {
-                    this.self['Dot_Bytedance'].visible = false;
+            Click.on(Click.Type.noEffect, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+                if (Dot.visible) {
+                    Dot.visible = false;
                 }
                 else {
-                    this.self['Dot_Bytedance'].visible = true;
+                    Dot.visible = true;
                 }
             });
-        }
-        getGold(number) {
-            Admin._clickLock.switch = true;
-            Gold.getGoldAni_Heap(Laya.stage, 15, 88, 69, 'Game/UI/Common/jinbi.png', new Laya.Point(Laya.stage.width / 2, Laya.stage.height / 2), new Laya.Point(Gold.GoldNode.x - 80, Gold.GoldNode.y), null, () => {
-                Gold.addGold(number);
-                Admin._openScene(Admin.SceneName.UIStart, this.self);
-                Admin._clickLock.switch = false;
+            Click.on(Click.Type.largen, this.self['OPPO_BtnMore'], this, null, null, () => {
+                moreAwards();
+            });
+            Click.on(Click.Type.largen, this.self['OPPO_BtnNext'], this, null, null, () => {
+                generalAward(100);
+            });
+            Click.on(Click.Type.largen, this.self['WeChat_BtnGeneral'], this, null, null, () => {
+                moreAwards();
+            });
+            Click.on(Click.Type.largen, this.self['WeChat_BtnMore'], this, null, null, () => {
+                generalAward(100);
+            });
+            Click.on(Click.Type.largen, this.self['Wechat_BtnSelect'], this, null, null, () => {
+                if (Dot.visible) {
+                    this.var('WeChat_BtnMulti').visible = false;
+                    this.var('WeChat_BtnNormal').visible = true;
+                    Dot.visible = false;
+                }
+                else {
+                    this.var('WeChat_BtnMulti').visible = true;
+                    this.var('WeChat_BtnNormal').visible = false;
+                    Dot.visible = true;
+                }
             });
         }
         lwgOnDisable() {
@@ -9337,23 +9336,7 @@
                     VictoryBox.setProperty('box' + arr[index], VictoryBox.BoxProperty.ads, true);
                 }
             }
-            switch (Admin._platform) {
-                case Admin._platformTpye.WeChat:
-                    this.self['Bytedance'].visible = false;
-                    this.self['WeChat'].visible = true;
-                    this.self['BtnAgain_WeChat'].visible = false;
-                    this.self['BtnNo_WeChat'].visible = false;
-                    break;
-                case Admin._platformTpye.Bytedance:
-                    this.self['Bytedance'].visible = true;
-                    this.self['WeChat'].visible = false;
-                    this.self['BtnAgain_Bytedance'].visible = false;
-                    this.self['BtnNo_Bytedance'].visible = false;
-                    this.self['Select_Bytedance'].visible = false;
-                    break;
-                default:
-                    break;
-            }
+            Tools.node_2DShowExcludedChild(this.var('Platform'), [Admin._platform]);
         }
         lwgOnEnable() {
             for (let index = 0; index < VictoryBox._BoxArray.length; index++) {
@@ -9397,11 +9380,6 @@
         getRewardFunc(dataSource) {
             VictoryBox._alreadyOpenNum++;
             VictoryBox._canOpenNum--;
-            if (VictoryBox._canOpenNum == 0) {
-                this.self['BtnAgain_Bytedance'].visible = true;
-                this.self['BtnNo_Bytedance'].visible = true;
-                this.self['Select_Bytedance'].visible = true;
-            }
             VictoryBox._selectBox = dataSource[VictoryBox.BoxProperty.name];
             let diffX = dataSource.arrange % 3;
             if (diffX == 0) {
@@ -9447,52 +9425,49 @@
             }
         }
         lwgBtnClick() {
-            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['BtnNo_WeChat'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-            Click.on(Click.Type.largen, this.self['BtnNo_Bytedance'], this, null, null, this.btnNoUp);
-            Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-            Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelect_BytedanceUp);
-        }
-        btnSelect_BytedanceUp() {
-            if (this.self['Dot_Bytedance'].visible) {
-                this.self['Dot_Bytedance'].visible = false;
-                this.self['BtnNo_Bytedance'].visible = true;
-                this.self['BtnAgain_Bytedance'].visible = false;
+            let Dot;
+            if (Admin._platform = Admin._platformTpye.Bytedance) {
+                Dot = this.var('Bytedance_Dot');
             }
-            else {
-                this.self['Dot_Bytedance'].visible = true;
-                this.self['BtnNo_Bytedance'].visible = false;
-                this.self['BtnAgain_Bytedance'].visible = true;
+            else if (Admin._platform = Admin._platformTpye.WeChat) {
+                Dot = this.var('WeChat_Dot');
             }
-        }
-        btnNoUp(event) {
-            Admin._openScene(Admin.SceneName.UIVictory, this.self);
-        }
-        btnAgainUp(event) {
-            ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
-            if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
-                ADManager.ShowReward(() => {
-                    Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
-                    VictoryBox._canOpenNum += 3;
-                    VictoryBox._adsMaxOpenNum -= 3;
-                    this.self['BtnAgain_Bytedance'].visible = false;
-                    this.self['BtnNo_Bytedance'].visible = false;
-                    this.self['Select_Bytedance'].visible = false;
-                });
-            }
-            else {
-                Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
-            }
+            var no = () => {
+                Admin._openScene(Admin.SceneName.UIVictory, this.self);
+            };
+            var again = (e) => {
+                ADManager.TAPoint(TaT.BtnClick, 'UIVictoryBox_BtnAgain_Bytedance');
+                if (VictoryBox._alreadyOpenNum < 9 && VictoryBox._adsMaxOpenNum > 0) {
+                    ADManager.ShowReward(() => {
+                        Dialog.createHint_Middle(Dialog.HintContent["增加三次开启宝箱次数！"]);
+                        VictoryBox._canOpenNum += 3;
+                        VictoryBox._adsMaxOpenNum -= 3;
+                    });
+                }
+                else {
+                    Dialog.createHint_Middle(Dialog.HintContent["没有宝箱领可以领了！"]);
+                }
+            };
+            Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, no);
+            Click.on(Click.Type.largen, this.self['OPPO_BtnAgain'], this, null, null, again);
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnNo'], this, null, null, no);
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
+            Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+                if (Dot.visible) {
+                    Dot.visible = false;
+                }
+                else {
+                    Dot.visible = true;
+                }
+            });
+            Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, no);
         }
         lwgOnUpdate() {
             if (VictoryBox._canOpenNum > 0) {
-                this.self['BtnAgain_WeChat'].visible = false;
-                this.self['BtnNo_WeChat'].visible = false;
+                this.var('Platform').visible = false;
             }
             else {
-                this.self['BtnAgain_WeChat'].visible = true;
-                this.self['BtnNo_WeChat'].visible = true;
+                this.var('Platform').visible = true;
             }
         }
         lwgOnDisable() {

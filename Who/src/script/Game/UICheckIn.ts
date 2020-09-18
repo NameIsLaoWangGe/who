@@ -163,6 +163,7 @@ export default class UICheckIn extends CheckIn.CheckInScene {
         });
         Click.on(Click.Type.largen, this.self['OPPO_BtnThreeGet'], this, null, null, () => {
             ADManager.ShowReward(() => {
+                
                 btnGetUpFunc(3);
             })
         });

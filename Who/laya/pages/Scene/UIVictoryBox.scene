@@ -1,12 +1,12 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":84,
+    "selectedBox":92,
+    "selecteID":95,
     "searchKey":"View",
     "props":{"width":720,"sceneColor":"#000000","height":1280},
     "nodeParent":-1,
-    "maxID":107,
+    "maxID":111,
     "label":"View",
     "isOpen":true,
     "isDirectory":true,
@@ -234,163 +234,94 @@
                 },
                 {
                     "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,WeChat,WeChat",
-                    "props":{"y":834,"x":664,"width":319,"var":"WeChat","name":"WeChat","height":195},
+                    "type":"Image",
+                    "searchKey":"Image,Platform,Platform",
+                    "props":{"y":843,"x":41,"width":512,"var":"Platform","name":"Platform","height":325},
                     "nodeParent":10,
-                    "label":"WeChat",
+                    "label":"Platform",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":101,
+                    "compId":107,
                     "child":[
                         {
                             "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,BtnNo_WeChat,BtnNo_WeChat",
-                            "props":{"y":181,"x":144,"width":121,"var":"BtnNo_WeChat","texture":"Game/UI/Common/xiayiguan.png","pivotY":15,"pivotX":61,"name":"BtnNo_WeChat","height":29},
-                            "nodeParent":101,
-                            "label":"BtnNo_WeChat",
-                            "isOpen":true,
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":77,
-                            "child":[
-                                ]
-                        },
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,BtnAgain_WeChat,BtnAgain_WeChat",
-                            "props":{"y":71,"x":126,"var":"BtnAgain_WeChat","texture":"Game/UI/Common/anniu.png","pivotY":63,"pivotX":117,"name":"BtnAgain_WeChat"},
-                            "nodeParent":101,
-                            "label":"BtnAgain_WeChat",
+                            "type":"Image",
+                            "searchKey":"Image,Bytedance,Bytedance",
+                            "props":{"y":-9,"x":84,"width":324,"var":"Bytedance","name":"Bytedance","height":294},
+                            "nodeParent":107,
+                            "label":"Bytedance",
                             "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
-                            "compId":74,
+                            "compId":92,
                             "child":[
                                 {
                                     "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite,Dis",
-                                    "props":{"y":40,"x":37,"texture":"Game/UI/Common/zaikai.png","name":"Dis"},
-                                    "nodeParent":74,
-                                    "label":"Dis",
-                                    "isDirectory":false,
+                                    "searchKey":"Sprite,Bytedance_BtnNo,Bytedance_BtnNo",
+                                    "props":{"y":198,"x":168,"width":288,"var":"Bytedance_BtnNo","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"Bytedance_BtnNo","height":128},
+                                    "nodeParent":92,
+                                    "label":"Bytedance_BtnNo",
+                                    "isOpen":true,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":75,
+                                    "hasChild":true,
+                                    "compId":95,
                                     "child":[
-                                        ]
+                                        {
+                                            "x":75,
+                                            "type":"Sprite",
+                                            "searchKey":"Sprite,Dis",
+                                            "props":{"y":40,"x":67,"texture":"Game/UI/UIVictoryBox/buxiexie.png","name":"Dis"},
+                                            "nodeParent":95,
+                                            "label":"Dis",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":96,
+                                            "child":[
+                                                ]
+                                        }]
                                 },
                                 {
                                     "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite,AdvPic",
-                                    "props":{"y":19,"x":192,"texture":"Game/UI/Common/x.png","name":"AdvPic"},
-                                    "nodeParent":74,
-                                    "label":"AdvPic",
-                                    "isDirectory":false,
+                                    "searchKey":"Sprite,Bytedance_BtnAgain,Bytedance_BtnAgain",
+                                    "props":{"y":198,"x":168,"width":288,"var":"Bytedance_BtnAgain","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"Bytedance_BtnAgain","height":128},
+                                    "nodeParent":92,
+                                    "label":"Bytedance_BtnAgain",
+                                    "isOpen":true,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":76,
+                                    "hasChild":true,
+                                    "compId":93,
                                     "child":[
-                                        ]
-                                }]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Sprite",
-                    "searchKey":"Sprite,Bytedance,Bytedance",
-                    "props":{"y":841,"x":129,"width":341,"var":"Bytedance","name":"Bytedance","height":294},
-                    "nodeParent":10,
-                    "label":"Bytedance",
-                    "isOpen":true,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":92,
-                    "child":[
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,BtnNo_Bytedance,BtnNo_Bytedance",
-                            "props":{"y":198,"x":168,"width":288,"var":"BtnNo_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnNo_Bytedance","height":128},
-                            "nodeParent":92,
-                            "label":"BtnNo_Bytedance",
-                            "isOpen":true,
-                            "isDirectory":true,
-                            "isAniNode":true,
-                            "hasChild":true,
-                            "compId":95,
-                            "child":[
+                                        {
+                                            "x":75,
+                                            "type":"Sprite",
+                                            "searchKey":"Sprite,再开一次",
+                                            "props":{"y":44,"x":64.5,"texture":"Game/UI/Common/zaikai.png","name":"再开一次"},
+                                            "nodeParent":93,
+                                            "label":"再开一次",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":94,
+                                            "child":[
+                                                ],
+                                            "$LOCKED":true
+                                        }]
+                                },
                                 {
                                     "x":60,
                                     "type":"Sprite",
-                                    "searchKey":"Sprite,Dis",
-                                    "props":{"y":40,"x":67,"texture":"Game/UI/UIVictoryBox/buxiexie.png","name":"Dis"},
-                                    "nodeParent":95,
-                                    "label":"Dis",
-                                    "isDirectory":false,
-                                    "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":96,
-                                    "child":[
-                                        ]
-                                }]
-                        },
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,BtnAgain_Bytedance,BtnAgain_Bytedance",
-                            "props":{"y":198,"x":168,"width":288,"var":"BtnAgain_Bytedance","texture":"Game/UI/Common/anniu.png","pivotY":64,"pivotX":144,"name":"BtnAgain_Bytedance","height":128},
-                            "nodeParent":92,
-                            "label":"BtnAgain_Bytedance",
-                            "isOpen":true,
-                            "isDirectory":true,
-                            "isAniNode":true,
-                            "hasChild":true,
-                            "compId":93,
-                            "child":[
-                                {
-                                    "x":60,
-                                    "type":"Sprite",
-                                    "searchKey":"Sprite,Dis",
-                                    "props":{"y":41,"x":64.5,"texture":"Game/UI/Common/zaikai.png","name":"Dis"},
-                                    "nodeParent":93,
-                                    "label":"Dis",
-                                    "isDirectory":false,
-                                    "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":94,
-                                    "child":[
-                                        ]
-                                }]
-                        },
-                        {
-                            "x":45,
-                            "type":"Sprite",
-                            "searchKey":"Sprite,Select_Bytedance,Select_Bytedance",
-                            "props":{"y":26,"x":-30,"width":396,"var":"Select_Bytedance","name":"Select_Bytedance","height":42},
-                            "nodeParent":92,
-                            "label":"Select_Bytedance",
-                            "isOpen":false,
-                            "isDirectory":true,
-                            "isAniNode":true,
-                            "hasChild":true,
-                            "compId":97,
-                            "child":[
-                                {
-                                    "type":"Sprite",
-                                    "searchKey":"Sprite,BtnSelect_Bytedance,BtnSelect_Bytedance",
-                                    "props":{"y":2,"x":21,"var":"BtnSelect_Bytedance","texture":"Game/UI/Common/yuan-1.png","name":"BtnSelect_Bytedance"},
-                                    "nodeParent":97,
-                                    "label":"BtnSelect_Bytedance",
+                                    "searchKey":"Sprite,Bytedance_BtnSelect,Bytedance_BtnSelect",
+                                    "props":{"y":28,"x":-9,"var":"Bytedance_BtnSelect","texture":"Game/UI/Common/yuan-1.png","name":"Bytedance_BtnSelect"},
+                                    "nodeParent":92,
+                                    "label":"Bytedance_BtnSelect",
                                     "isOpen":true,
                                     "isDirectory":true,
                                     "isAniNode":true,
@@ -398,31 +329,117 @@
                                     "compId":98,
                                     "child":[
                                         {
+                                            "x":75,
                                             "type":"Sprite",
-                                            "searchKey":"Sprite,Dot_Bytedance,Dot_Bytedance",
-                                            "props":{"y":6.75,"x":6.75,"var":"Dot_Bytedance","texture":"Game/UI/Common/yuan-2.png","name":"Dot_Bytedance"},
+                                            "searchKey":"Sprite,Bytedance_Dot,Bytedance_Dot",
+                                            "props":{"y":7,"x":7,"var":"Bytedance_Dot","texture":"Game/UI/Common/yuan-2.png","name":"Bytedance_Dot"},
                                             "nodeParent":98,
-                                            "label":"Dot_Bytedance",
+                                            "label":"Bytedance_Dot",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
                                             "compId":99,
                                             "child":[
                                                 ]
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Sprite",
+                                            "searchKey":"Sprite,Dis",
+                                            "props":{"y":1,"x":34,"texture":"Game/UI/UIVictoryBox/3ci.png","name":"Dis"},
+                                            "nodeParent":98,
+                                            "label":"Dis",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":100,
+                                            "child":[
+                                                ]
+                                        }]
+                                }]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "searchKey":"Image,OPPO,OPPO",
+                            "props":{"y":176,"x":245,"width":319,"var":"OPPO","pivotY":85,"pivotX":160,"name":"OPPO","height":195},
+                            "nodeParent":107,
+                            "label":"OPPO",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":101,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Image",
+                                    "searchKey":"Image,OPPO_BtnNo,OPPO_BtnNo",
+                                    "props":{"y":173,"x":162,"width":123,"var":"OPPO_BtnNo","pivotY":15,"pivotX":61,"name":"OPPO_BtnNo","height":37},
+                                    "nodeParent":101,
+                                    "label":"OPPO_BtnNo",
+                                    "isOpen":true,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":77,
+                                    "child":[
+                                        {
+                                            "x":75,
+                                            "type":"Label",
+                                            "searchKey":"Label,不，谢谢",
+                                            "props":{"y":0,"x":0,"width":120,"text":"不，谢谢","name":"不，谢谢","height":42,"fontSize":30,"color":"#ffffff"},
+                                            "nodeParent":77,
+                                            "label":"不，谢谢",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":110,
+                                            "child":[
+                                                ]
                                         }]
                                 },
                                 {
-                                    "type":"Sprite",
-                                    "searchKey":"Sprite,Dis",
-                                    "props":{"y":3,"x":55,"texture":"Game/UI/UIVictoryBox/3ci.png","name":"Dis"},
-                                    "nodeParent":97,
-                                    "label":"Dis",
-                                    "isDirectory":false,
+                                    "x":60,
+                                    "type":"Image",
+                                    "searchKey":"Image,OPPO_BtnAgain,OPPO_BtnAgain",
+                                    "props":{"y":71,"x":126,"var":"OPPO_BtnAgain","skin":"Game/UI/Common/anniu.png","pivotY":63,"pivotX":117,"name":"OPPO_BtnAgain"},
+                                    "nodeParent":101,
+                                    "label":"OPPO_BtnAgain",
+                                    "isOpen":true,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":100,
+                                    "hasChild":true,
+                                    "compId":74,
                                     "child":[
-                                        ]
+                                        {
+                                            "x":75,
+                                            "type":"Sprite",
+                                            "searchKey":"Sprite,再开一次",
+                                            "props":{"y":50,"x":55,"texture":"Game/UI/Common/zaikai.png","name":"再开一次"},
+                                            "nodeParent":74,
+                                            "label":"再开一次",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":75,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Sprite",
+                                            "searchKey":"Sprite,AdsPic",
+                                            "props":{"y":44,"x":219,"texture":"Game/UI/Common/shiping.png","name":"AdsPic"},
+                                            "nodeParent":74,
+                                            "label":"AdsPic",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":76,
+                                            "child":[
+                                                ]
+                                        }]
                                 }]
                         }]
                 }]

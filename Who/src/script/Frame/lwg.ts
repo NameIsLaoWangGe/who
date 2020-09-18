@@ -4147,7 +4147,7 @@ export module lwg {
         }
 
         /**
-         *2D隐藏或者打开所有子节点
+         *3D隐藏或者打开所有子节点
          * @param node 节点
          * @param bool visible控制
         */

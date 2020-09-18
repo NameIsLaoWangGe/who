@@ -7,8 +7,10 @@ export default class UIPropTry extends PropTry.PropTryScene {
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.BtnShow, 'UIPropTry_BtnGet');
 
-        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platformTpye.Bytedance], true);
-        Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform], true);
+        if (Admin._platform == Admin._platformTpye.Bytedance) {
+            Tools.node_2DShowExcludedChild(this.self[Admin._platformTpye.Bytedance], [ZJADMgr.ins.shieldLevel], true);
+        }
     }
 
     lwgOnEnable(): void {
@@ -19,6 +21,7 @@ export default class UIPropTry extends PropTry.PropTryScene {
     }
 
     lwgBtnClick(): void {
+
         Click.on(Click.Type.noEffect, this.self['Bytedance_Low_Select'], this, null, null, this.bytedanceSelectUp);
         Click.on(Click.Type.largen, this.self['Bytedance_Low_BtnGet'], this, null, null, this.bytedanceGetUp);
 
@@ -27,10 +30,16 @@ export default class UIPropTry extends PropTry.PropTryScene {
 
         Click.on(Click.Type.noEffect, this.self['ClickBg'], this, null, null, this.clickBgtUp);
         Click.on(Click.Type.largen, this.self['Bytedance_High_BtnGet'], this, null, null, this.bytedanceGetUp);
-        Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, this.btnNoUp);
+        Click.on(Click.Type.largen, this.self['Bytedance_High_BtnNo'], this, null, null, () => {
+            Admin._openScene(Admin.SceneName.GameScene, this.self);
+        });
 
-        Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, this.btnNoUp);
-        Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, this.btnGetUp);
+        Click.on(Click.Type.largen, this.self['OPPO_BtnNo'], this, null, null, () => {
+            Admin._openScene(Admin.SceneName.GameScene, this.self);
+        });
+        Click.on(Click.Type.largen, this.self['OPPO_BtnGet'], this, null, null, () => {
+            this.advFunc();
+        });
 
         Click.on(Click.Type.largen, this.self['BtnClose'], this, null, null, () => {
             Admin._openScene(Admin.SceneName.GameScene, this.self);
@@ -96,18 +105,5 @@ export default class UIPropTry extends PropTry.PropTryScene {
             Backpack._prop2.num++;
             Admin._openScene(Admin.SceneName.GameScene, this.self);
         })
-    }
-
-    btnGetUp(e: Laya.Event): void {
-        e.stopPropagation();
-        if (Admin._platform == Admin._platformTpye.OPPO) {
-            Admin._openScene(Admin.SceneName.GameScene, this.self);
-        } else {
-            this.advFunc();
-        }
-    }
-
-    btnNoUp(event): void {
-        Admin._openScene(Admin.SceneName.GameScene, this.self);
     }
 }

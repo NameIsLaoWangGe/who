@@ -1,4 +1,4 @@
-import { Admin, Setting, PalyAudio, Click, EventAdmin, Defeated, Gold } from "../Frame/lwg";
+import { Admin, Setting, PalyAudio, Click, EventAdmin, Defeated, Gold, Tools } from "../Frame/lwg";
 import ADManager, { TaT } from "../../TJ/Admanager";
 import { Game3D } from "./Game3D";
 
@@ -7,32 +7,10 @@ export default class UIDefeated extends Defeated.DefeatedScene {
     lwgOnAwake(): void {
         ADManager.TAPoint(TaT.LevelFail, 'level' + Admin._gameLevel.value);
         ADManager.TAPoint(TaT.BtnShow, 'UIDefeated_BtnNext');
-        //关闭当前界面 
         EventAdmin.notify(Game3D.EventType.closeGameScene);
         Admin._gameLevel.value = 0;
         Admin._gameSwitch = false;
-
-        switch (Admin._platform) {
-            case Admin._platformTpye.OPPO:
-                this.self['OPPO'].visible = true;
-                this.self['WeChat'].visible = false;
-                this.self['Bytedance'].visible = false;
-                this.self['P202'].removeSelf();
-                break;
-            case Admin._platformTpye.WeChat:
-                this.self['OPPO'].visible = false;
-                this.self['WeChat'].visible = true;
-                this.self['Bytedance'].visible = false;
-                this.self['P202'].removeSelf();
-                break;
-            case Admin._platformTpye.Bytedance:
-                this.self['OPPO'].visible = false;
-                this.self['WeChat'].visible = false;
-                this.self['Bytedance'].visible = true;
-
-            default:
-                break;
-        }
+        Tools.node_2DShowExcludedChild(this.self['Platform'], [Admin._platform]);
     }
 
     lwgOnEnable(): void {
@@ -44,68 +22,51 @@ export default class UIDefeated extends Defeated.DefeatedScene {
     }
 
     lwgBtnClick(): void {
-        // Click.on(Click.Type.largen, this.self['BtnAgain_WeChat'], this, null, null, this.btnAgainUp);
-        // Click.on(Click.Type.largen, this.self['BtnNext_WeChat'], this, null, null, this.btnNextUp);
-        // Click.on(Click.Type.largen, this.self['BtnSelect_WeChat'], this, null, null, this.btnSelectUp);
-
-        // Click.on(Click.Type.largen, this.self['BtnAgain_OPPO'], this, null, null, this.btnAgainUp);
-        // Click.on(Click.Type.largen, this.self['BtnNext_OPPO'], this, null, null, this.btnNextUp);
-
-        Click.on(Click.Type.largen, this.self['BtnAgain_Bytedance'], this, null, null, this.btnAgainUp);
-        Click.on(Click.Type.largen, this.self['BtnNext_Bytedance'], this, null, null, this.btnNextUp);
-        Click.on(Click.Type.largen, this.self['BtnSelect_Bytedance'], this, null, null, this.btnSelectUp);
-    }
-
-    btnSelectUp(): void {
-        let Dot;
-        switch (Admin._platform) {
-            case Admin._platformTpye.WeChat:
-                Dot = this.self['Dot_WeChat'];
-                break;
-            case Admin._platformTpye.Bytedance:
-                Dot = this.self['Dot_Bytedance'];
-                break;
-
-            default:
-                break;
+        let Dot: Laya.Sprite;
+        if (Admin._platform = Admin._platformTpye.Bytedance) {
+            Dot = this.var('Bytedance_Dot');
+        } else if (Admin._platform = Admin._platformTpye.WeChat) {
+            Dot = this.var('WeChat_Dot');
         }
-
-        if (Dot.visible) {
-            Dot.visible = false;
-            this.self['BtnNext_WeChat'].visible = false;
-            this.self['BtnAgain_WeChat'].visible = true;
-
-            this.self['BtnNext_Bytedance'].visible = false;
-            this.self['BtnAgain_Bytedance'].visible = true;
-        } else {
-            Dot.visible = true;
-            this.self['BtnNext_WeChat'].visible = true;
-            this.self['BtnAgain_WeChat'].visible = false;
-
-            this.self['BtnNext_Bytedance'].visible = true;
-            this.self['BtnAgain_Bytedance'].visible = false;
+        var skip = () => {
+            ADManager.ShowReward(() => {
+                ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
+                Admin._gameLevel.value += 1;
+                again();
+            })
         }
-    }
-
-    btnAgainUp(): void {
-        ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
-
-        console.log('重新开始！');
-        Admin._openScene(Admin.SceneName.UIStart, this.self);
-        EventAdmin.notify(EventAdmin.EventType.nextCustoms);
-    }
-
-    btnNextUp(): void {
-
-        ADManager.ShowReward(() => {
-            ADManager.TAPoint(TaT.BtnClick, 'UIDefeated_BtnNext');
-
-            Admin._gameLevel.value += 1;
+        var again = () => {
+            ADManager.TAPoint(TaT.BtnClick, 'returnword_fail');
             Admin._openScene(Admin.SceneName.UIStart, this.self);
             EventAdmin.notify(EventAdmin.EventType.nextCustoms);
-        })
-    }
+        }
+        Click.on(Click.Type.largen, this.var('WeChat_BtnAgain'), this, null, null, again);
+        Click.on(Click.Type.largen, this.self['WeChat_BtnSkip'], this, null, null, skip);
+        Click.on(Click.Type.largen, this.self['WeChat_BtnSelect'], this, null, null, () => {
+            if (Dot.visible) {
+                this.var('WeChat_BtnAgain').visible = false;
+                this.var('WeChat_BtnSkip').visible = true;
+                Dot.visible = false;
+            } else {
+                this.var('WeChat_BtnAgain').visible = true;
+                this.var('WeChat_BtnSkip').visible = false;
+                Dot.visible = true;
+            }
+        });
 
-    lwgOnDisable(): void {
+        Click.on(Click.Type.largen, this.self['OPPO_BtnAgain'], this, null, null, again);
+        Click.on(Click.Type.largen, this.self['OPPO_BtnSkip'], this, null, null, skip);
+
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnAgain'], this, null, null, again);
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnSkip'], this, null, null, () => {
+            if (Dot.visible) {
+                skip();
+            } else {
+                again();
+            }
+        });
+        Click.on(Click.Type.largen, this.self['Bytedance_BtnSelect'], this, null, null, () => {
+            if (Dot.visible) { Dot.visible = false; } else { Dot.visible = true; }
+        });
     }
 }

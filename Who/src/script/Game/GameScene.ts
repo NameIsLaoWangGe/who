@@ -30,6 +30,7 @@ export default class GameScene extends Admin.Scene {
         this.self['SceneContent'].alpha = 0;
         this.self['BtnBack'].visible = false;
         Laya.timer.once(4500, this, () => {
+            Admin._gameSwitch = true;
             this.self['BtnBack'].visible = true;
         });
     }
@@ -210,7 +211,6 @@ export default class GameScene extends Admin.Scene {
         if (click) {
             Click.on(Click.Type.largen, Option, this, null, null, () => {
                 Admin._clickLock.switch = true;
-                Admin._gameSwitch = true;
                 EventAdmin.notify(Game3D.EventType.judgeMeAnswer, question);
             });
         }
